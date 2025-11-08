@@ -2,6 +2,15 @@ import Image from 'next/image'
 import { motion } from 'framer-motion' // Make sure motion is imported
 
 const projects = [
+	// --- New Praylio Project Added ---
+	{
+		title: 'Praylio',
+		href: 'https://praylio.jeffhogg.com',
+		description:
+			'A full-stack personal prayer journal built with the Next.js App Router and Supabase. Features auth, a full CRUD database for prayers and notes, categories, and drag-and-drop reordering.',
+		imageUrl: '/images/praylio.png',
+		tags: ['Next.js', 'Supabase', 'shadcn/ui', 'dnd-kit'],
+	},
 	{
 		title: 'Southern Rental Cars',
 		href: 'https://southernrentalcars.com/',
@@ -20,7 +29,6 @@ const projects = [
 	},
 ]
 
-// Animation variants
 const containerVariants = {
 	hidden: { opacity: 0 },
 	visible: {
@@ -53,7 +61,6 @@ export default function ProjectList() {
 					Check out some projects I've worked on.
 				</p>
 
-				{/* Apply container variants to the grid */}
 				<motion.div
 					className='mt-12 max-w-lg mx-auto grid gap-8 lg:grid-cols-3 lg:max-w-none items-stretch'
 					variants={containerVariants}
@@ -61,7 +68,6 @@ export default function ProjectList() {
 					animate='visible'
 				>
 					{projects.map((post) => (
-						// Apply item variants to each card
 						<motion.div
 							key={post.title}
 							variants={itemVariants}
@@ -77,7 +83,6 @@ export default function ProjectList() {
 								/>
 							</div>
 							<div className='flex-1 bg-white p-6 flex flex-col justify-between'>
-								{/* --- Start of Card Content --- */}
 								<div className='flex-1'>
 									<div className='flex space-x-2'>
 										{post.tags.map((tag) => (
@@ -105,9 +110,7 @@ export default function ProjectList() {
 									>
 										View Live
 									</a>
-									{/* Optional View Code button */}
 								</div>
-								{/* --- End of Card Content --- */}
 							</div>
 						</motion.div>
 					))}

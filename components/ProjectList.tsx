@@ -1,8 +1,7 @@
 import Image from 'next/image'
-import { motion } from 'framer-motion' // Make sure motion is imported
+import { motion } from 'framer-motion'
 
 const projects = [
-	// --- New Praylio Project Added ---
 	{
 		title: 'Prayer Journal',
 		href: 'https://pray.jeffhogg.com',

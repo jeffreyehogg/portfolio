@@ -4,11 +4,11 @@ import { motion } from 'framer-motion' // Make sure motion is imported
 const projects = [
 	// --- New Praylio Project Added ---
 	{
-		title: 'Praylio',
-		href: 'https://praylio.jeffhogg.com',
+		title: 'Prayer Journal',
+		href: 'https://pray.jeffhogg.com',
 		description:
 			'A full-stack personal prayer journal built with the Next.js App Router and Supabase. Features auth, a full CRUD database for prayers and notes, categories, and drag-and-drop reordering.',
-		imageUrl: '/images/praylio.png',
+		imageUrl: '/images/pray.png',
 		tags: ['Next.js', 'Supabase', 'shadcn/ui', 'dnd-kit'],
 	},
 	{

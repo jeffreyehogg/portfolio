@@ -3,6 +3,14 @@ import { motion } from 'framer-motion'
 
 const projects = [
 	{
+		title: 'Webex Control Hub',
+		href: 'https://www.webex.com/control-hub.html',
+		description:
+			'An enterprise-grade platform for administrators to manage users, devices, and services across the entire Webex suite. I contributed to its development as a software engineer at Cisco.',
+		imageUrl: '/images/controlhub.png',
+		tags: ['Angular', 'Enterprise', 'SaaS'],
+	},
+	{
 		title: 'Prayer Journal',
 		href: 'https://pray.jeffhogg.com',
 		description:

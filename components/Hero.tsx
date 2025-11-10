@@ -1,3 +1,5 @@
+"use client"
+
 import Typist from './Typist'
 import Link from 'next/link' // Import the Next.js Link component
 

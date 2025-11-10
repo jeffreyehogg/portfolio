@@ -15,10 +15,9 @@
     "framer-motion": "^12.23.24",
     "headlessui": "^0.0.0",
     "lazysizes": "^5.3.2",
-    "next": "^13.5.7",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-player": "^2.16.0",
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest",
     "react-recaptcha": "^2.3.10",
     "react-typist": "^2.0.5"
   },

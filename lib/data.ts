@@ -4,6 +4,7 @@ export interface Project {
 	description: string
 	imageUrl: string
 	tags: string[]
+	learnings?: string
 }
 
 export interface ServiceTier {
@@ -45,6 +46,8 @@ export const projectsData: Project[] = [
 			'An enterprise-grade platform for administrators to manage users, devices, and services across the entire Webex suite. I contributed to its development as a software engineer at Cisco.',
 		imageUrl: '/images/controlhub.png',
 		tags: ['Angular', 'Enterprise', 'SaaS'],
+		learnings:
+			'Learned how to work in a large-scale enterprise codebase with a focus on scalability, security, and maintaining industry-standard clean code.',
 	},
 	{
 		title: 'Prayer Journal',
@@ -53,6 +56,18 @@ export const projectsData: Project[] = [
 			'A full-stack personal prayer journal built with the Next.js App Router and Supabase. Features auth, a full CRUD database for prayers and notes, categories, and drag-and-drop reordering.',
 		imageUrl: '/images/pray.png',
 		tags: ['Next.js', 'Supabase', 'shadcn/ui', 'dnd-kit'],
+		learnings:
+			'This project was a deep dive into the Next.js App Router, Server Actions, and using dnd-kit for complex drag-and-drop state management.',
+	},
+	{
+		title: 'Personal Portfolio',
+		href: 'https://github.com/jeffreyehogg/portfolio',
+		description:
+			'The site you are on right now. A personal portfolio built with Next.js (App Router), React, TypeScript, and Tailwind CSS.',
+		imageUrl: '/images/portfolio.png',
+		tags: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Server Actions'],
+		learnings:
+			'Refactored a personal project to use the latest standards, including centralizing all site content into a single file (this one!) for maintainability.',
 	},
 	{
 		title: 'Southern Rental Cars',
@@ -60,6 +75,8 @@ export const projectsData: Project[] = [
 		description: 'A website built with Next.js, TailwindCSS, and Prisma.',
 		imageUrl: '/images/southern.png',
 		tags: ['Next.js', 'Prisma', 'TailwindCSS'],
+		learnings:
+			'Explored modern web design trends and component-based architecture for a client-facing site.',
 	},
 	{
 		title: 'Texas Tint',
@@ -68,6 +85,8 @@ export const projectsData: Project[] = [
 			'A static website built with Next.js and TailwindCSS. Features a contact form and a gallery of previous work.',
 		imageUrl: '/images/texas-tint.png',
 		tags: ['Next.js', 'TailwindCSS'],
+		learnings:
+			'Focused on SEO, static site generation, and building a high-performance, mobile-first landing page.',
 	},
 ]
 

@@ -59,7 +59,7 @@ export default function ProjectList() {
 							</div>
 							<div className='flex-1 bg-white p-6 flex flex-col justify-between'>
 								<div className='flex-1'>
-									<div className='flex space-x-2'>
+									<div className='flex flex-wrap gap-2'>
 										{post.tags.map((tag) => (
 											<span
 												key={tag}
@@ -75,6 +75,17 @@ export default function ProjectList() {
 									<p className='mt-3 text-base text-gray-500'>
 										{post.description}
 									</p>
+
+									{post.learnings && (
+										<div className='mt-4 pt-4 border-t border-gray-200'>
+											<p className='text-sm font-semibold text-gray-700'>
+												Key Learning:
+											</p>
+											<p className='mt-1 text-sm text-gray-600 italic'>
+												{post.learnings}
+											</p>
+										</div>
+									)}
 								</div>
 								<div className='mt-6 flex space-x-4'>
 									<a

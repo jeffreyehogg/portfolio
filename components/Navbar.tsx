@@ -5,13 +5,12 @@ import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import Avatar from './Avatar';
 import { githubUrl, linkedInUrl, twitterUrl } from '../lib/data';
-import { usePathname } from 'next/navigation'; // 2. Import usePathname
-import Link from 'next/link'; // 3. Import Link for client-side navigation
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 
 const navigation = [
   { name: 'Home', href: '/', current: false },
   { name: 'Portfolio', href: '/portfolio', current: false },
-  // { name: 'Videos', href: '/videos', current: false },
   { name: 'About', href: '/about', current: false },
 ];
 
@@ -20,7 +19,7 @@ function classNames(...classes: string[]): string {
 }
 
 export default function Navbar() {
-  const pathname = usePathname(); // 4. Use usePathname to get the current route
+  const pathname = usePathname();
 
   return (
     <Disclosure as="nav" className="bg-space top-0">
@@ -43,11 +42,10 @@ export default function Navbar() {
                 <div className="hidden sm:block sm:ml-6">
                   <div className="flex space-x-4">
                     {navigation.map((item) => {
-                      // 5. Check against pathname
                       const isCurrent = pathname === item.href; 
 
                       return (
-                        <Link // 6. Use Link instead of <a>
+                        <Link
                           key={item.name}
                           href={item.href}
                           className={classNames(
@@ -73,9 +71,9 @@ export default function Navbar() {
                       <Menu.Button
                         className={classNames(
                           'relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800',
-                          'h-10 w-10', // Explicitly set height and width
-                          'items-center justify-center', // Center content
-                          'transition-opacity hover:opacity-90 focus:opacity-90' // Add hover/focus state
+                          'h-10 w-10',
+                          'items-center justify-center',
+                          'transition-opacity hover:opacity-90 focus:opacity-90'
                         )}
                       >
                         <span className="absolute -inset-1.5" />
@@ -153,11 +151,11 @@ export default function Navbar() {
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 px-2 pb-3 pt-2">
               {navigation.map((item) => {
-                const isCurrent = pathname === item.href; // 7. Check against pathname
+                const isCurrent = pathname === item.href;
                 return (
                   <Disclosure.Button
                     key={item.name}
-                    as={Link} // 8. Use 'as={Link}'
+                    as={Link}
                     href={item.href}
                     className={classNames(
                       isCurrent

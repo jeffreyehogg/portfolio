@@ -8,7 +8,6 @@
     "start": "next start"
   },
   "dependencies": {
-    "@emailjs/browser": "^3.12.1",
     "@headlessui/react": "^1.7.19",
     "@heroicons/react": "^2.1.5",
     "eslint-config-next": "^13.5.7",
@@ -18,8 +17,10 @@
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "react-recaptcha": "^2.3.10",
-    "react-typist": "^2.0.5"
+    "react-google-recaptcha-v3": "^1.11.0",
+    "react-typist": "^2.0.5",
+    "resend": "^6.4.2",
+    "zod": "^4.1.12"
   },
   "devDependencies": {
     "@tailwindcss/aspect-ratio": "^0.4.2",
@@ -34,5 +35,5 @@
     "tailwindcss": "^3.4.13",
     "typescript": "^4.9.5"
   },
-  "packageManager": "pnpm@9.11.0+sha512.0a203ffaed5a3f63242cd064c8fb5892366c103e328079318f78062f24ea8c9d50bc6a47aa3567cabefd824d170e78fa2745ed1f16b132e16436146b7688f19b"
+  "packageManager": "pnpm@10.21.0"
 }

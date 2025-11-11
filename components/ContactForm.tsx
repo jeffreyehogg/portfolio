@@ -1,87 +1,58 @@
-import { useRef, useState, FormEvent } from 'react'
-import { sendForm } from '@emailjs/browser'
-import Recaptcha from 'react-recaptcha'
-import MessageSent from './MessageSent' // Import your existing component
-import { XCircleIcon } from '@heroicons/react/24/solid' // For the error message
+'use client'
 
-// Define an initial state for the form data
-const initialFormData = {
-	firstName: '',
-	lastName: '',
-	email: '',
-	phone: '',
-	subject: '',
-	message: '',
+import { useEffect, useRef, useState } from 'react'
+import { useFormState, useFormStatus } from 'react-dom'
+import { sendEmail, type FormState } from '../app/actions/contact-action'
+import {
+	GoogleReCaptchaProvider,
+	useGoogleReCaptcha,
+} from 'react-google-recaptcha-v3'
+import MessageSent from './MessageSent'
+import { XCircleIcon } from '@heroicons/react/24/solid'
+
+const initialState: FormState = { status: 'idle', message: '' }
+
+function SubmitButton() {
+	const { pending } = useFormStatus()
+	return (
+		<button
+			type='submit'
+			disabled={pending}
+			className='mt-2 px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-400 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto disabled:bg-gray-400'
+		>
+			{pending ? 'Submitting...' : 'Submit'}
+		</button>
+	)
 }
 
-export default function ContactForm() {
-	const [formData, setFormData] = useState(initialFormData)
-	const [recaptchaLoad, setRecaptchaLoad] = useState(false)
-	const [isVerified, setIsVerified] = useState(false)
-	const [status, setStatus] = useState<
-		'idle' | 'sending' | 'success' | 'error'
-	>('idle')
-	const [errorMessage, setErrorMessage] = useState('')
+function ContactFormInner() {
+	const [state, formAction] = useFormState(sendEmail, initialState)
+	const [recaptchaToken, setRecaptchaToken] = useState<string>('')
+	const { executeRecaptcha } = useGoogleReCaptcha()
+	const formRef = useRef<HTMLFormElement>(null)
 
-	const form = useRef<HTMLFormElement>(null)
-
-	const recaptchaLoaded = () => {
-		setRecaptchaLoad(true)
-	}
-
-	const verifiedRecaptcha = (response: string) => {
-		if (response) {
-			setIsVerified(true)
-		}
-	}
-
-	// Handle input changes for all fields
-	const handleChange = (
-		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-	) => {
-		const { name, value } = e.target
-		setFormData((prevData) => ({
-			...prevData,
-			[name]: value,
-		}))
-	}
-
-	const handleSubmit = async (e: FormEvent) => {
-		e.preventDefault()
-		if (!isVerified || !recaptchaLoad) {
-			setErrorMessage('Please verify you are not a robot.')
-			setStatus('error')
+	useEffect(() => {
+		if (!executeRecaptcha) {
 			return
 		}
-
-		if (!form.current) return
-
-		setStatus('sending')
-		setErrorMessage('')
-
-		try {
-			await sendForm(
-				'jeffehogg',
-				'contact_form',
-				form.current,
-				process.env.NEXT_PUBLIC_EMAILJS_USER_ID
-			)
-			setStatus('success')
-			setFormData(initialFormData) // Reset form on success
-			// Note: reCAPTCHA will need to be checked again by the user automatically
-			setIsVerified(false)
-		} catch (error) {
-			console.error('EmailJS Error:', error)
-			setErrorMessage('Something went wrong, please try again.')
-			setStatus('error')
+		const getToken = async () => {
+			const token = await executeRecaptcha('contactForm')
+			setRecaptchaToken(token)
 		}
-	}
+		getToken()
+	}, [executeRecaptcha])
+
+	useEffect(() => {
+		if (state.status === 'success') {
+			formRef.current?.reset()
+		}
+	}, [state.status])
 
 	return (
 		<div className='md:shadow-lg md:rounded-lg md:p-8 md:m-4 max-w-4xl mx-auto px-4'>
 			<form
-				ref={form}
-				onSubmit={handleSubmit} // Use onSubmit on the form
+				ref={formRef}
+				action={formAction}
 				className='md:m-6 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8'
 			>
 				<div>
@@ -95,14 +66,17 @@ export default function ContactForm() {
 						<input
 							type='text'
 							name='firstName'
-							value={formData.firstName}
-							onChange={handleChange}
 							id='firstName'
 							autoComplete='given-name'
-							required // Add browser validation
+							required
 							className='py-3 px-4 block w-full shadow-sm text-gray-900 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md'
 						/>
 					</div>
+					{state.errors?.firstName && (
+						<p className='text-sm text-red-500 mt-1'>
+							{state.errors.firstName[0]}
+						</p>
+					)}
 				</div>
 				<div>
 					<label
@@ -115,14 +89,17 @@ export default function ContactForm() {
 						<input
 							type='text'
 							name='lastName'
-							value={formData.lastName}
-							onChange={handleChange}
 							id='lastName'
 							autoComplete='family-name'
-							required // Add browser validation
+							required
 							className='py-3 px-4 block w-full shadow-sm text-gray-900 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md'
 						/>
 					</div>
+					{state.errors?.lastName && (
+						<p className='text-sm text-red-500 mt-1'>
+							{state.errors.lastName[0]}
+						</p>
+					)}
 				</div>
 				<div>
 					<label
@@ -135,14 +112,15 @@ export default function ContactForm() {
 						<input
 							id='email'
 							name='email'
-							value={formData.email}
-							onChange={handleChange}
-							type='email' // Use email type for browser validation
+							type='email'
 							autoComplete='email'
-							required // Add browser validation
+							required
 							className='py-3 px-4 block w-full shadow-sm text-gray-900 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md'
 						/>
 					</div>
+					{state.errors?.email && (
+						<p className='text-sm text-red-500 mt-1'>{state.errors.email[0]}</p>
+					)}
 				</div>
 				<div>
 					<div className='flex justify-between'>
@@ -160,8 +138,6 @@ export default function ContactForm() {
 						<input
 							type='text'
 							name='phone'
-							value={formData.phone}
-							onChange={handleChange}
 							id='phone'
 							autoComplete='tel'
 							className='py-3 px-4 block w-full shadow-sm text-gray-900 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md'
@@ -180,13 +156,16 @@ export default function ContactForm() {
 						<input
 							type='text'
 							name='subject'
-							value={formData.subject}
-							onChange={handleChange}
 							id='subject'
-							required // Add browser validation
+							required
 							className='py-3 px-4 block w-full shadow-sm text-gray-900 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md'
 						/>
 					</div>
+					{state.errors?.subject && (
+						<p className='text-sm text-red-500 mt-1'>
+							{state.errors.subject[0]}
+						</p>
+					)}
 				</div>
 				<div className='sm:col-span-2'>
 					<div className='flex justify-between'>
@@ -204,29 +183,25 @@ export default function ContactForm() {
 						<textarea
 							id='message'
 							name='message'
-							value={formData.message}
-							onChange={handleChange}
 							rows={4}
-							required // Add browser validation
-							maxLength={500} // Enforce character limit
+							required
+							maxLength={500}
 							className='py-3 px-4 block w-full shadow-sm text-gray-900 focus:ring-indigo-500 focus:border-indigo-500 border border-gray-300 rounded-md'
 							aria-describedby='message-max'
 						/>
 					</div>
-				</div>
-				<div className='overflow-hidden'>
-					<Recaptcha
-						sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-						render='explicit'
-						onloadCallback={recaptchaLoaded}
-						verifyCallback={verifiedRecaptcha}
-					/>
+					{state.errors?.message && (
+						<p className='text-sm text-red-500 mt-1'>
+							{state.errors.message[0]}
+						</p>
+					)}
 				</div>
 
-				{/* --- STATUS MESSAGES --- */}
+				<input type='hidden' name='recaptchaToken' value={recaptchaToken} />
+
 				<div className='col-span-1 sm:col-span-2'>
-					{status === 'success' && <MessageSent />}
-					{status === 'error' && (
+					{state.status === 'success' && <MessageSent />}
+					{state.status === 'error' && (
 						<div className='rounded-md bg-red-50 p-4'>
 							<div className='flex'>
 								<div className='shrink-0'>
@@ -237,25 +212,32 @@ export default function ContactForm() {
 								</div>
 								<div className='ml-3'>
 									<p className='text-sm font-medium text-red-800'>
-										{errorMessage}
+										{state.message}
 									</p>
 								</div>
 							</div>
 						</div>
 					)}
 				</div>
-				{/* --- END STATUS MESSAGES --- */}
 
 				<div className='col-span-1 md:col-span-2'>
-					<button
-						type='submit'
-						disabled={status === 'sending'} // Disable button when sending
-						className='mt-2 px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-400 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto disabled:bg-gray-400'
-					>
-						{status === 'sending' ? 'Submitting...' : 'Submit'}
-					</button>
+					<SubmitButton />
 				</div>
 			</form>
 		</div>
+	)
+}
+
+export default function ContactForm() {
+	const recaptchaKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
+
+	if (!recaptchaKey) {
+		return <p>reCAPTCHA key not found. Contact form is disabled.</p>
+	}
+
+	return (
+		<GoogleReCaptchaProvider reCaptchaKey={recaptchaKey}>
+			<ContactFormInner />
+		</GoogleReCaptchaProvider>
 	)
 }

@@ -24,7 +24,7 @@ export default function Services() {
 							tier.mostPopular
 								? 'border-2 border-indigo-500 shadow-lg'
 								: 'border border-gray-200 shadow-sm',
-							'relative p-8 bg-white rounded-2xl flex flex-col transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-2xl cursor-pointer'
+							'relative p-8 bg-white rounded-2xl flex flex-col transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-2xl'
 						)}
 					>
 						<div className='flex-1 flex flex-col'>
@@ -59,7 +59,7 @@ export default function Services() {
 								tier.mostPopular
 									? 'bg-indigo-500 text-white hover:bg-indigo-600'
 									: 'bg-indigo-50 text-indigo-700 hover:bg-indigo-100',
-								'mt-10 block w-full py-3 px-6 border border-transparent rounded-md text-center font-medium'
+								'mt-10 block w-full py-3 px-6 border border-transparent rounded-md text-center font-medium cursor-pointer'
 							)}
 						>
 							{tier.cta}

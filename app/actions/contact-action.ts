@@ -61,8 +61,8 @@ export async function sendEmail(
 
 	try {
 		await resend.emails.send({
-			from: 'Portfolio Contact <onboarding@resend.dev>', // Use your verified domain
-			to: 'YOUR_EMAIL@gmail.com', // Your personal email
+			from: 'Portfolio Contact <contact@jeffhogg.com>',
+			to: process.env.RESEND_EMAIL_TO!,
 			subject: emailContent.subject,
 			text: `
         From: ${emailContent.firstName} ${emailContent.lastName}

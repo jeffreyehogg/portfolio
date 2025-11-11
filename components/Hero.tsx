@@ -1,7 +1,4 @@
-"use client"
-
-import Typist from './Typist'
-import Link from 'next/link' // Import the Next.js Link component
+import Link from 'next/link'
 
 export default function Hero() {
 	return (
@@ -14,9 +11,7 @@ export default function Hero() {
 			<div className='relative px-4 py-16 sm:px-6 sm:py-24 lg:py-32 lg:px-8'>
 				<h1 className='text-center text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl'>
 					<span className='block text-white'>Hi, I'm Jeff</span>
-					<span className='block text-indigo-200'>
-						<Typist />
-					</span>
+					<span className='block text-indigo-200'>Software Developer</span>
 				</h1>
 				<p className='mt-6 max-w-lg mx-auto text-center text-xl text-white sm:max-w-3xl'>
 					Check out my portfolio and web development services below.

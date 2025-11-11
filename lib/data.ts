@@ -57,8 +57,7 @@ export const projectsData: Project[] = [
 	{
 		title: 'Southern Rental Cars',
 		href: 'https://southernrentalcars.com/',
-		description:
-			'A full stack web app built with Next.js, TailwindCSS, and Prisma. Pending a booking system, admin dashboard, and user authentication.',
+		description: 'A website built with Next.js, TailwindCSS, and Prisma.',
 		imageUrl: '/images/southern.png',
 		tags: ['Next.js', 'Prisma', 'TailwindCSS'],
 	},

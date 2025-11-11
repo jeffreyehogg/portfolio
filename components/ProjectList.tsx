@@ -2,41 +2,7 @@
 
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-
-const projects = [
-	{
-		title: 'Webex Control Hub',
-		href: 'https://www.webex.com/control-hub.html',
-		description:
-			'An enterprise-grade platform for administrators to manage users, devices, and services across the entire Webex suite. I contributed to its development as a software engineer at Cisco.',
-		imageUrl: '/images/controlhub.png',
-		tags: ['Angular', 'Enterprise', 'SaaS'],
-	},
-	{
-		title: 'Prayer Journal',
-		href: 'https://pray.jeffhogg.com',
-		description:
-			'A full-stack personal prayer journal built with the Next.js App Router and Supabase. Features auth, a full CRUD database for prayers and notes, categories, and drag-and-drop reordering.',
-		imageUrl: '/images/pray.png',
-		tags: ['Next.js', 'Supabase', 'shadcn/ui', 'dnd-kit'],
-	},
-	{
-		title: 'Southern Rental Cars',
-		href: 'https://southernrentalcars.com/',
-		description:
-			'A full stack web app built with Next.js, TailwindCSS, and Prisma. Pending a booking system, admin dashboard, and user authentication.',
-		imageUrl: '/images/southern.png',
-		tags: ['Next.js', 'Prisma', 'TailwindCSS'],
-	},
-	{
-		title: 'Texas Tint',
-		href: 'https://texastint.com/',
-		description:
-			'A static website built with Next.js and TailwindCSS. Features a contact form and a gallery of previous work.',
-		imageUrl: '/images/texas-tint.png',
-		tags: ['Next.js', 'TailwindCSS'],
-	},
-]
+import { projectsData } from '../lib/data'
 
 const containerVariants = {
 	hidden: { opacity: 0 },
@@ -76,7 +42,7 @@ export default function ProjectList() {
 					initial='hidden'
 					animate='visible'
 				>
-					{projects.map((post) => (
+					{projectsData.map((post) => (
 						<motion.div
 							key={post.title}
 							variants={itemVariants}

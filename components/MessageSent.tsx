@@ -18,7 +18,7 @@ export default function MessageSent() {
           <div className='-mx-1.5 -my-1.5'>
             <button
               type='button'
-              className='inline-flex bg-green-50 rounded-md p-1.5 text-green-500 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-50 focus:ring-green-600'
+              className='inline-flex bg-green-50 rounded-full p-1.5 text-green-500 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-50 focus:ring-green-600'
             >
               <span className='sr-only'>Dismiss</span>
               <XMarkIcon className='h-5 w-5' aria-hidden='true' />

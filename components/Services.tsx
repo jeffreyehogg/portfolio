@@ -59,7 +59,7 @@ export default function Services() {
 								tier.mostPopular
 									? 'bg-indigo-500 text-white hover:bg-indigo-600'
 									: 'bg-indigo-50 text-indigo-700 hover:bg-indigo-100',
-								'mt-10 block w-full py-3 px-6 border border-transparent rounded-md text-center font-medium cursor-pointer'
+								'mt-10 block w-full py-3 px-6 border border-transparent rounded-full text-center font-medium cursor-pointer'
 							)}
 						>
 							{tier.cta}

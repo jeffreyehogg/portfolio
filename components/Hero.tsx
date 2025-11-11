@@ -20,13 +20,13 @@ export default function Hero() {
 					<div className='space-y-4 sm:space-y-0 sm:mx-auto sm:inline-grid sm:grid-cols-2 sm:gap-5'>
 						<Link
 							href='/portfolio'
-							className='flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-700 hover:bg-opacity-70 sm:px-8 transition-transform duration-200 hover:scale-105'
+							className='flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-indigo-700 hover:bg-opacity-70 sm:px-8 transition-transform duration-200 hover:scale-105'
 						>
 							Portfolio
 						</Link>
 						<Link
 							href='/about'
-							className='flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-indigo-700 bg-white hover:bg-indigo-50 sm:px-8 transition-transform duration-200 hover:scale-105'
+							className='flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-indigo-700 bg-white hover:bg-indigo-50 sm:px-8 transition-transform duration-200 hover:scale-105'
 						>
 							About
 						</Link>

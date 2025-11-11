@@ -81,7 +81,7 @@ export default function ProjectList() {
 										href={post.href}
 										target='_blank'
 										rel='noopener noreferrer'
-										className='inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md shadow-sm text-white bg-indigo-700 hover:bg-opacity-70 transition ease-in-out duration-150'
+										className='inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-full shadow-sm text-white bg-indigo-700 hover:bg-opacity-70 transition ease-in-out duration-150'
 									>
 										View Live
 									</a>

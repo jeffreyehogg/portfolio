@@ -4,7 +4,7 @@ import { Fragment } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import Avatar from './Avatar';
-import { githubUrl, linkedInUrl, twitterUrl } from '../lib/constants';
+import { githubUrl, linkedInUrl, twitterUrl } from '../lib/data';
 import { usePathname } from 'next/navigation'; // 2. Import usePathname
 import Link from 'next/link'; // 3. Import Link for client-side navigation
 

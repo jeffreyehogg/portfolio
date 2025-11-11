@@ -13,7 +13,7 @@ export default function AboutMe() {
 						About Me
 					</h2>
 					<p className='text-xl text-gray-500 leading-relaxed'>
-						A full-time software engineer with hands-on experience in
+						A software developer with hands-on experience in
 						enterprise-level software development. Specialized in front-end,
 						industry-standard clean code, with a keen eye for design.
 						Well-rounded in modern technologies and frameworks like Angular,

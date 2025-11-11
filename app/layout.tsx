@@ -9,7 +9,7 @@ import { Suspense } from 'react'
 const inter = Inter({ subsets: ['latin'], display: 'swap' })
 
 export const metadata: Metadata = {
-	title: 'Jeff Hogg - Software Engineer',
+	title: 'Jeff Hogg - Software Developer',
 	description: 'A personal portfolio Website. Built with Next.js and Tailwind',
 	openGraph: {
 		title: 'Jeff Hogg',

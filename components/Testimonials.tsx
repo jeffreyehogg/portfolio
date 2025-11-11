@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import { motion } from 'framer-motion'
+import { testimonialsData } from '../lib/data'
 
 const containerVariants = {
 	hidden: { opacity: 0 },
@@ -22,28 +23,6 @@ const itemVariants = {
 }
 
 const Testimonials = () => {
-	const testimonies = [
-		{
-			name: 'Elon Musk',
-			company: 'Space X',
-			testimonial:
-				'Jeff is a great guy, I would hire him in a heartbeat if he would return my calls.',
-			image: '/images/headshots/elonmusk.jpeg',
-		},
-		{
-			name: 'Tim Cook',
-			company: 'Apple',
-			testimonial: "Wow, he is amazing! I'm surprised he's not my boss yet!",
-			image: '/images/headshots/timcook.png',
-		},
-		{
-			name: 'Chuck Robbins',
-			company: 'Cisco',
-			testimonial:
-				"Jeff is probably the best developer I have ever met. He's definitely my best hire.",
-			image: '/images/headshots/chuckrobbins.jpeg',
-		},
-	]
 
 	return (
 		<div>
@@ -55,15 +34,14 @@ const Testimonials = () => {
 						</h2>
 						<p className='mt-3 text-xl text-gray-500 sm:mt-4'>(Probably) </p>
 
-						{/* --- Updated this motion.div --- */}
 						<motion.div
 							className='mt-8 grid grid-cols-1 md:grid-cols-3  gap-8 items-stretch'
 							variants={containerVariants}
 							initial='hidden'
-							whileInView='visible' // Changed animate to whileInView
-							viewport={{ once: true, amount: 0.2 }} // Trigger once when 20% is visible
+								whileInView='visible'
+							viewport={{ once: true, amount: 0.2 }}
 						>
-							{testimonies.map((testimony) => (
+							{testimonialsData.map((testimony) => (
 								<motion.div
 									key={testimony.name}
 									variants={itemVariants}

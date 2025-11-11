@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import ContactForm from '../components/ContactForm'
 import Socials from './Socials'
+import { skillsData } from '../lib/data'
 
 export default function AboutMe() {
 	return (
@@ -41,13 +42,15 @@ export default function AboutMe() {
 						Skills
 					</h2>
 
-					<div className='text-lg leading-6 font-medium space-y-1'>
-						<h3>Languages, Libraries and frameworks:</h3>
-						<p className='text-indigo-600'>
-							JavaScript, TypeScript, Angular, React, Nextjs, Node.js, Express,
-							PlaneScale, MongoDB
-						</p>
-					</div>
+					{skillsData.map((skill) => (
+						<div
+							key={skill.category}
+							className='text-lg leading-6 font-medium space-y-1'
+						>
+							<h3>{skill.category}:</h3>
+							<p className='text-indigo-600'>{skill.list}</p>
+						</div>
+					))}
 				</div>
 
 				<div className='md:col-span-3 space-y-4'>

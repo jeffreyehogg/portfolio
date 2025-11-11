@@ -38,9 +38,6 @@ importers:
       react-google-recaptcha-v3:
         specifier: ^1.11.0
         version: 1.11.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
-      react-typist:
-        specifier: ^2.0.5
-        version: 2.0.5(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       resend:
         specifier: ^6.4.2
         version: 6.4.2
@@ -1536,12 +1533,6 @@ packages:
 
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
-
-  react-typist@2.0.5:
-    resolution: {integrity: sha512-iZCkeqeegO0TlkTMiH2JD1tvMtY9RrXkRylnAI6m8aCVAUUwNzoWTVF7CKLij6THeOMcUDCznLDDvNp55s+YZA==}
-    peerDependencies:
-      react: ^0.14 || ^15.0 || ^16.0
-      react-dom: ^^0.14 || ^15.0 || ^16.0
 
   react@19.2.0:
     resolution: {integrity: sha512-tmbWg6W31tQLeB5cdIBOicJDJRR2KzXsV7uSK9iNfLWQ5bIZfxuPEHp7M8wiHyHnn0DD1i7w3Zmin0FtkrwoCQ==}
@@ -3460,12 +3451,6 @@ snapshots:
       react-dom: 19.2.0(react@19.2.0)
 
   react-is@16.13.1: {}
-
-  react-typist@2.0.5(react-dom@19.2.0(react@19.2.0))(react@19.2.0):
-    dependencies:
-      prop-types: 15.8.1
-      react: 19.2.0
-      react-dom: 19.2.0(react@19.2.0)
 
   react@19.2.0: {}
 

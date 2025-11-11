@@ -1,3 +1,5 @@
+'use client'
+
 import Image from 'next/image'
 import ContactForm from '../components/ContactForm'
 import Socials from './Socials'

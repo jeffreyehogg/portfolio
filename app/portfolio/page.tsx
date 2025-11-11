@@ -1,7 +1,5 @@
-"use client"
-
-import ProjectList from '../../components/ProjectList';
+import ProjectList from '../../components/ProjectList'
 
 export default function Portfolio() {
-  return <ProjectList />;
+	return <ProjectList />
 }

@@ -1,7 +1,5 @@
-"use client"
-
-import AboutMe from '../../components/AboutMe';
+import AboutMe from '../../components/AboutMe'
 
 export default function About() {
-  return <AboutMe />;
+	return <AboutMe />
 }

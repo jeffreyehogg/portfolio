@@ -24,7 +24,7 @@ export interface FormState {
 }
 
 export async function sendEmail(
-	prevState: FormState,
+	_prevState: FormState,
 	formData: FormData
 ): Promise<FormState> {
 	const rawFormData = Object.fromEntries(formData)

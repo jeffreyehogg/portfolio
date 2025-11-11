@@ -41,7 +41,7 @@ export async function sendEmail(
 
 	const { recaptchaToken, ...emailContent } = validatedFields.data
 
-	const recaptchaSecret = process.env.NEXT_PUBLIC_RECAPTCHA_SECRET_KEY
+	const recaptchaSecret = process.env.RECAPTCHA_SECRET_KEY
 	const recaptchaUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${recaptchaSecret}&response=${recaptchaToken}`
 
 	try {

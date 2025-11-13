@@ -2,13 +2,24 @@ import Link from 'next/link'
 
 export default function Hero() {
 	return (
-		<div className='relative shadow-xl sm:overflow-hidden bg-space bg-cover bg-center'>
+		<div className='relative shadow-xl sm:overflow-hidden'>
+			<video
+				autoPlay
+				loop
+				muted
+				playsInline
+				className='absolute inset-0 w-full h-full object-cover z-0'
+			>
+				<source src='/videos/space.mp4' type='video/mp4' />
+				Your browser does not support the video tag.
+			</video>
+
 			<div
-				className='absolute inset-0 bg-black bg-opacity-60 mix-blend-multiply'
+				className='absolute inset-0 bg-black bg-opacity-60 mix-blend-multiply z-10'
 				aria-hidden='true'
 			/>
 
-			<div className='relative px-4 py-16 sm:px-6 sm:py-24 lg:py-32 lg:px-8'>
+			<div className='relative px-4 py-16 sm:px-6 sm:py-24 lg:py-32 lg:px-8 z-20'>
 				<h1 className='text-center text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl'>
 					<span className='block text-white'>Hi, I'm Jeff</span>
 					<span className='block text-indigo-200'>Software Developer</span>

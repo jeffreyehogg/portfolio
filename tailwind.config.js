@@ -7,9 +7,6 @@ module.exports = {
 	media: false,
 	theme: {
 		extend: {
-			backgroundImage: (theme) => ({
-				space: "url('/images/space.jpg')",
-			}),
 			fontFamily: {
 				sans: ['Inter var', ...defaultTheme.fontFamily.sans],
 			},

@@ -50,7 +50,7 @@ const navigation = {
 
 const Footer = () => {
 	return (
-		<footer className='bg-gray-900'>
+		<footer className='bg-black'>
 			<div className='mx-auto max-w-md py-12 px-4 overflow-hidden sm:max-w-3xl sm:px-6 lg:max-w-7xl lg:px-8'>
 				<nav
 					className='-mx-5 -my-2 flex flex-wrap justify-center'

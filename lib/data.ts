@@ -50,6 +50,16 @@ export const projectsData: Project[] = [
 			'Learned how to work in a large-scale enterprise codebase with a focus on scalability, security, and maintaining industry-standard clean code.',
 	},
 	{
+		title: 'Personal Portfolio',
+		href: 'https://github.com/jeffreyehogg/portfolio',
+		description:
+			'The site you are on right now. A personal portfolio built with Next.js (App Router), React, TypeScript, and Tailwind CSS.',
+		imageUrl: '/images/portfolio.png',
+		tags: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Server Actions'],
+		learnings:
+			'Refactored a personal project to use the latest standards, including centralizing all site content into a single file (this one!) for maintainability.',
+	},
+	{
 		title: 'Prayer Journal',
 		href: 'https://pray.jeffhogg.com',
 		description:
@@ -60,14 +70,24 @@ export const projectsData: Project[] = [
 			'This project was a deep dive into the Next.js App Router, Server Actions, and using dnd-kit for complex drag-and-drop state management.',
 	},
 	{
-		title: 'Personal Portfolio',
-		href: 'https://github.com/jeffreyehogg/portfolio',
+		title: 'ForexFlow',
+		href: 'https://forexflow-dashboard.vercel.app/',
 		description:
-			'The site you are on right now. A personal portfolio built with Next.js (App Router), React, TypeScript, and Tailwind CSS.',
-		imageUrl: '/images/portfolio.png',
-		tags: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Server Actions'],
+			'A real-time forex dashboard tracking institutional exchange rates. Features live updates, 24h high/low stats, and interactive trend charts.',
+		imageUrl: '/images/forexflow.png',
+		tags: ['Nuxt', 'Vue', 'TypeScript', 'Nuxt UI', 'Chart.js'],
 		learnings:
-			'Refactored a personal project to use the latest standards, including centralizing all site content into a single file (this one!) for maintainability.',
+			'Server-side API proxying in Nuxt to secure API keys and utilized ClientOnly wrappers to seamlessly integrate Chart.js for real-time data visualization.',
+	},
+	{
+		title: 'Vision Integrated Systems',
+		href: 'https://vision-hogg.vercel.app/',
+		description:
+			'The official company website for Vision Integrated Systems, a leading provider of audio-video, structured cabling, and security solutions in Texas.',
+		imageUrl: '/images/vision.png',
+		tags: ['Next.js', 'React 19', 'Tailwind CSS', 'Framer Motion'],
+		learnings:
+			'Built using the latest web standards including Next.js 16 and Tailwind CSS v4. Focused on component modularity and performance to deliver a fast, accessible corporate experience.',
 	},
 	{
 		title: 'Southern Rental Cars',

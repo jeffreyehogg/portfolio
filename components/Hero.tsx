@@ -8,11 +8,10 @@ export default function Hero() {
 				loop
 				muted
 				playsInline
+				poster="/images/space-poster.png"
 				className='absolute inset-0 w-full h-full object-cover z-0'
-			>
-				<source src='/videos/space.mp4' type='video/mp4' />
-				Your browser does not support the video tag.
-			</video>
+				src="https://uew8wzjetllsk5wf.public.blob.vercel-storage.com/space.mp4"
+			/>
 
 			<div
 				className='absolute inset-0 bg-black bg-opacity-60 mix-blend-multiply z-10'

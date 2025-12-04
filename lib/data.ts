@@ -40,6 +40,16 @@ export const twitterUrl = 'https://twitter.com/jeffreyehogg'
 
 export const projectsData: Project[] = [
 	{
+		title: 'Kingdom Connect',
+		href: 'https://kingdom-connect-psi.vercel.app/',
+		description:
+			'A digital platform designed to bridge the gap between church needs and volunteer service. Empowering churches to post service opportunities and fundraising needs, while providing a seamless dashboard for volunteers.',
+		imageUrl: '/images/kingdom-connect.png',
+		tags: ['Next.js', 'Clerk', 'Neon', 'Drizzle ORM', 'Tailwind CSS'],
+		learnings:
+			'Mastered the modern "Pro" Next.js stack by integrating serverless PostgreSQL (Neon), type-safe database interactions with Drizzle ORM, and secure authentication flows using Clerk.',
+	},
+	{
 		title: 'Webex Control Hub',
 		href: 'https://www.webex.com/control-hub.html',
 		description:
@@ -51,7 +61,7 @@ export const projectsData: Project[] = [
 	},
 	{
 		title: 'Personal Portfolio',
-		href: 'https://github.com/jeffreyehogg/portfolio',
+		href: 'https://jeffhogg.com',
 		description:
 			'The site you are on right now. A personal portfolio built with Next.js (App Router), React, TypeScript, and Tailwind CSS.',
 		imageUrl: '/images/portfolio.png',

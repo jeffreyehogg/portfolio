@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
-import GoogleAnalytics from '../components/GoogleAnalytics'
 import '../styles/globals.css'
 import { Suspense } from 'react'
 
@@ -32,10 +31,6 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang='en' className={inter.className}>
-			<Suspense fallback={null}>
-				<GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
-			</Suspense>
-
 			<body>
 				<div className='flex flex-col h-screen'>
 					<Navbar />

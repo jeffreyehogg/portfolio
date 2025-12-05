@@ -41,7 +41,7 @@ export const twitterUrl = 'https://twitter.com/jeffreyehogg'
 export const projectsData: Project[] = [
 	{
 		title: 'Kingdom Connect',
-		href: 'https://kingdom-connect-psi.vercel.app/',
+		href: 'https://kingdom.jeffhogg.com',
 		description:
 			'A digital platform designed to bridge the gap between church needs and volunteer service. Empowering churches to post service opportunities and fundraising needs, while providing a seamless dashboard for volunteers.',
 		imageUrl: '/images/kingdom-connect.png',
@@ -91,7 +91,7 @@ export const projectsData: Project[] = [
 	},
 	{
 		title: 'Vision Integrated Systems',
-		href: 'https://vision-hogg.vercel.app/',
+		href: 'https://vision.jeffhogg.com',
 		description:
 			'The official company website for Vision Integrated Systems, a leading provider of audio-video, structured cabling, and security solutions in Texas.',
 		imageUrl: '/images/vision.png',

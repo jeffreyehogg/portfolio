@@ -1,7 +1,6 @@
 'use client'
 
 import Image from 'next/image'
-import ContactForm from '../components/ContactForm'
 import Socials from './Socials'
 import Experience from './Experience'
 import { skillsData } from '../lib/data'
@@ -19,7 +18,6 @@ export default function AboutMe() {
 							src='/images/headshots/me.jpg'
 							alt='Jeff Hogg headshot'
 						/>
-						{/* Decorative blob behind image */}
 						<div className='absolute -z-10 -top-4 -right-4 w-full h-full bg-indigo-100 rounded-2xl' />
 					</div>
 
@@ -39,12 +37,10 @@ export default function AboutMe() {
 					</div>
 				</div>
 
-				{/* Right Column: Experience, Skills, Form */}
+				{/* Right Column: Experience & Skills */}
 				<div className='lg:col-span-8 space-y-16'>
-					{/* Experience Section */}
 					<Experience />
 
-					{/* Skills Section */}
 					<div>
 						<h3 className='text-2xl font-bold text-gray-900 mb-6'>
 							Technical Skills
@@ -53,7 +49,7 @@ export default function AboutMe() {
 							{skillsData.map((skill) => (
 								<div
 									key={skill.category}
-									className='bg-gray-50 p-6 rounded-xl border border-gray-100'
+									className='bg-gray-50 p-6 rounded-xl border border-gray-100 transition-colors hover:border-indigo-100'
 								>
 									<h4 className='font-semibold text-gray-900 mb-2'>
 										{skill.category}
@@ -62,18 +58,6 @@ export default function AboutMe() {
 								</div>
 							))}
 						</div>
-					</div>
-
-					{/* Contact Section */}
-					<div id='contact-form'>
-						<h3 className='text-2xl font-bold text-gray-900 mb-6'>
-							Get in Touch
-						</h3>
-						<p className='text-gray-500 mb-8'>
-							Have a project in mind or want to discuss the latest in tech? Send
-							me a message below.
-						</p>
-						<ContactForm />
 					</div>
 				</div>
 			</div>

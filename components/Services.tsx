@@ -13,7 +13,7 @@ export default function Services() {
 			<h2 className='text-3xl leading-9 tracking-tight font-extrabold text-gray-900 sm:text-4xl sm:leading-10'>
 				Services
 			</h2>
-				<p className='mt-6 max-w-2xl text-xl text-gray-500'>
+			<p className='mt-6 max-w-2xl text-xl text-gray-500'>
 				Choose a website option that fits your business needs.
 			</p>
 			<div className='mt-24 space-y-12 lg:space-y-0 lg:grid lg:grid-cols-3 lg:gap-x-8'>
@@ -54,12 +54,12 @@ export default function Services() {
 						</div>
 
 						<a
-							href='/about#contact-form'
+							href='/contact' // Changed from '/about#contact-form'
 							className={classNames(
 								tier.mostPopular
 									? 'bg-indigo-500 text-white hover:bg-indigo-600'
 									: 'bg-indigo-50 text-indigo-700 hover:bg-indigo-100',
-								'mt-10 block w-full py-3 px-6 border border-transparent rounded-full text-center font-medium cursor-pointer'
+								'mt-10 block w-full py-3 px-6 border border-transparent rounded-full text-center font-medium cursor-pointer transition-colors duration-200'
 							)}
 						>
 							{tier.cta}

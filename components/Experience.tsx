@@ -4,8 +4,8 @@ import { motion } from 'framer-motion'
 const experience = [
 	{
 		company: 'Vision Integrated Systems',
-		role: 'Software Engineer',
-		period: 'Dec 2021 - Jun 2024',
+		role: 'Solutions Engineer',
+		period: 'Aug 2025 - Present',
 		logo: '/images/logos/vision.png',
 		description:
 			'Contributing to the development of the Webex Control Hub enterprise platform. Focusing on scalability, security, and maintaining industry-standard clean code in a large-scale Angular codebase.',

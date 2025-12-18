@@ -1,4 +1,3 @@
-// components/Hero.tsx
 'use client'
 
 import Link from 'next/link'
@@ -18,8 +17,6 @@ export default function Hero() {
 				src='https://uew8wzjetllsk5wf.public.blob.vercel-storage.com/space.mp4'
 			/>
 
-			{/* Modern Dark Overlay with Blur */}
-			{/* This ensures text readability while keeping the video visible */}
 			<div
 				className='absolute inset-0 bg-slate-900/60 backdrop-blur-[2px] z-10'
 				aria-hidden='true'

@@ -1,4 +1,3 @@
-/* This example requires Tailwind CSS v2.0+ */
 import { CheckCircleIcon, XMarkIcon } from '@heroicons/react/24/solid'
 
 export default function MessageSent() {

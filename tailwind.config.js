@@ -1,18 +1,49 @@
-/** @type {import("@types/tailwindcss/tailwind-config").TailwindConfig } */
-
+// tailwind.config.js
+/** @type {import('tailwindcss').Config} */
 const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
 	content: ['./app/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
-	media: false,
 	theme: {
 		extend: {
 			fontFamily: {
 				sans: ['Inter var', ...defaultTheme.fontFamily.sans],
 			},
+			colors: {
+				// A modern, deep slate palette for a "professional" dark mode feel if desired
+				slate: {
+					850: '#151e2e',
+					900: '#0f172a',
+				},
+				// Richer primary color
+				indigo: {
+					500: '#6366f1',
+					600: '#4f46e5',
+					700: '#4338ca',
+				},
+			},
+			animation: {
+				'fade-in': 'fadeIn 0.5s ease-in-out',
+				'fade-in-up': 'fadeInUp 0.8s ease-out',
+				'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+				float: 'float 6s ease-in-out infinite',
+			},
+			keyframes: {
+				fadeIn: {
+					'0%': { opacity: '0' },
+					'100%': { opacity: '1' },
+				},
+				fadeInUp: {
+					'0%': { opacity: '0', transform: 'translateY(20px)' },
+					'100%': { opacity: '1', transform: 'translateY(0)' },
+				},
+				float: {
+					'0%, 100%': { transform: 'translateY(0)' },
+					'50%': { transform: 'translateY(-10px)' },
+				},
+			},
 		},
 	},
-	variants: {},
 	plugins: [
 		require('@tailwindcss/aspect-ratio'),
 		require('@tailwindcss/typography'),

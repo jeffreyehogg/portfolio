@@ -1,107 +1,102 @@
+// components/ProjectList.tsx
 'use client'
 
 import Image from 'next/image'
-import { motion } from 'framer-motion'
+import { motion, Variants } from 'framer-motion'
 import { projectsData } from '../lib/data'
+import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline'
 
-const containerVariants = {
+const containerVariants: Variants = {
 	hidden: { opacity: 0 },
 	visible: {
 		opacity: 1,
-		transition: {
-			staggerChildren: 0.2,
-		},
+		transition: { staggerChildren: 0.15 },
 	},
 }
 
-const itemVariants = {
-	hidden: { y: 20, opacity: 0 },
-	visible: {
-		y: 0,
-		opacity: 1,
-	},
+const itemVariants: Variants = {
+	hidden: { y: 30, opacity: 0 },
+	visible: { y: 0, opacity: 1, transition: { type: 'spring', stiffness: 50 } },
 }
 
 export default function ProjectList() {
 	return (
-		<div className='relative bg-gray-50 pt-16 pb-20 px-4 sm:px-6 lg:pt-24 lg:pb-28 lg:px-8'>
-			<div className='absolute inset-0'>
-				<div className='bg-white h-1/3 sm:h-2/3' />
-			</div>
-			<div className='relative max-w-7xl mx-auto'>
-				<h2 className='text-3xl font-extrabold text-gray-900 sm:text-5xl sm:leading-none sm:tracking-tight lg:text-6xl'>
-					Portfolio
-				</h2>
-				<p className='mt-6 max-w-2xl text-xl text-gray-500'>
-					Check out some projects I've worked on.
-				</p>
+		<section className='relative py-24 bg-gray-50'>
+			<div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+				<div className='text-center max-w-3xl mx-auto mb-16'>
+					<h2 className='text-indigo-600 font-semibold tracking-wide uppercase text-sm'>
+						My Work
+					</h2>
+					<h3 className='mt-2 text-3xl font-extrabold text-gray-900 sm:text-4xl'>
+						Featured Projects
+					</h3>
+					<p className='mt-4 text-xl text-gray-500'>
+						A selection of enterprise work and personal applications.
+					</p>
+				</div>
 
 				<motion.div
-					className='mt-12 max-w-lg mx-auto grid gap-8 lg:grid-cols-3 lg:max-w-none items-stretch'
+					className='grid gap-10 lg:grid-cols-3'
 					variants={containerVariants}
 					initial='hidden'
-					animate='visible'
+					whileInView='visible'
+					viewport={{ once: true, amount: 0.1 }}
 				>
-					{projectsData.map((post) => (
+					{projectsData.map((project) => (
 						<motion.div
-							key={post.title}
+							key={project.title}
 							variants={itemVariants}
-							className='group flex flex-col rounded-lg shadow-lg overflow-hidden transition-all duration-300 ease-in-out hover:shadow-2xl hover:scale-105'
+							className='group relative flex flex-col bg-white rounded-2xl shadow-sm hover:shadow-2xl transition-shadow duration-300 overflow-hidden border border-gray-100'
 						>
-							<div className='shrink-0 overflow-hidden'>
+							{/* Image Section with Overlay */}
+							<div className='relative h-64 overflow-hidden'>
+								<div className='absolute inset-0 bg-indigo-900/0 group-hover:bg-indigo-900/10 transition-colors duration-300 z-10' />
 								<Image
-									className='h-48 w-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-110'
-									width={400}
-									height={200}
-									src={post.imageUrl}
-									alt={`Screenshot of the ${post.title} project`}
+									className='object-cover w-full h-full transform transition-transform duration-500 group-hover:scale-110'
+									src={project.imageUrl}
+									alt={project.title}
+									width={800}
+									height={600}
 								/>
 							</div>
-							<div className='flex-1 bg-white p-6 flex flex-col justify-between'>
+
+							{/* Content Section */}
+							<div className='flex-1 p-8 flex flex-col'>
 								<div className='flex-1'>
-									<div className='flex flex-wrap gap-2'>
-										{post.tags.map((tag) => (
+									<div className='flex justify-between items-start'>
+										<h4 className='text-2xl font-bold text-gray-900 group-hover:text-indigo-600 transition-colors'>
+											{project.title}
+										</h4>
+										<a
+											href={project.href}
+											target='_blank'
+											rel='noopener noreferrer'
+											className='text-gray-400 hover:text-indigo-600 transition-colors'
+										>
+											<ArrowTopRightOnSquareIcon className='h-6 w-6' />
+										</a>
+									</div>
+
+									<p className='mt-4 text-base text-gray-500 leading-relaxed'>
+										{project.description}
+									</p>
+
+									<div className='mt-6 flex flex-wrap gap-2'>
+										{project.tags.map((tag) => (
 											<span
 												key={tag}
-												className='inline-block px-2 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-700'
+												className='inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-indigo-50 text-indigo-700 border border-indigo-100'
 											>
 												{tag}
 											</span>
 										))}
 									</div>
-									<p className='text-xl font-semibold text-gray-900 mt-4'>
-										{post.title}
-									</p>
-									<p className='mt-3 text-base text-gray-500'>
-										{post.description}
-									</p>
-
-									{post.learnings && (
-										<div className='mt-4 pt-4 border-t border-gray-200'>
-											<p className='text-sm font-semibold text-gray-700'>
-												Key Learning:
-											</p>
-											<p className='mt-1 text-sm text-gray-600 italic'>
-												{post.learnings}
-											</p>
-										</div>
-									)}
-								</div>
-								<div className='mt-6 flex space-x-4'>
-									<a
-										href={post.href}
-										target='_blank'
-										rel='noopener noreferrer'
-										className='inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-full shadow-sm text-white bg-indigo-700 hover:bg-opacity-70 transition ease-in-out duration-150'
-									>
-										View Live
-									</a>
 								</div>
 							</div>
 						</motion.div>
 					))}
 				</motion.div>
 			</div>
-		</div>
+		</section>
 	)
 }

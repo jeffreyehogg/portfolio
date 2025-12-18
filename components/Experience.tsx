@@ -8,7 +8,7 @@ const experience = [
 		period: 'Aug 2025 - Present',
 		logo: '/images/logos/vision.png',
 		description:
-			'Contributing to the development of the Webex Control Hub enterprise platform. Focusing on scalability, security, and maintaining industry-standard clean code in a large-scale Angular codebase.',
+			'Managed project lifecycles and coordinated resources to ensure on-time delivery of enterprise systems, bridging sales requirements with technical execution. Role included translating SOWs, performing SQL data migrations, and leading final system commissioning.',
 	},
 	{
 		company: 'Cisco',
@@ -18,7 +18,6 @@ const experience = [
 		description:
 			'Contributing to the development of the Webex Control Hub enterprise platform. Focusing on scalability, security, and maintaining industry-standard clean code in a large-scale Angular codebase.',
 	},
-	// Add more roles here if you have them, e.g. "Freelance", "Previous Company"
 ]
 
 export default function Experience() {

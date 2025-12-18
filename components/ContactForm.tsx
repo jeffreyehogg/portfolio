@@ -1,12 +1,13 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
-import { useFormState, useFormStatus } from 'react-dom'
+import { useEffect, useRef, useState, useActionState } from 'react'
+import { useFormStatus } from 'react-dom'
 import { sendEmail, type FormState } from '../app/actions/contact-action'
 import {
 	GoogleReCaptchaProvider,
 	useGoogleReCaptcha,
 } from 'react-google-recaptcha-v3'
+import { motion, AnimatePresence } from 'framer-motion'
 import MessageSent from './MessageSent'
 import { XCircleIcon } from '@heroicons/react/24/solid'
 
@@ -18,15 +19,41 @@ function SubmitButton() {
 		<button
 			type='submit'
 			disabled={pending}
-			className='mt-2 px-6 py-3 border border-transparent rounded-full shadow-sm text-base font-medium text-white bg-indigo-400 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto disabled:bg-gray-400'
+			className='w-full sm:w-auto flex justify-center py-3 px-6 border border-transparent rounded-full shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg'
 		>
-			{pending ? 'Submitting...' : 'Submit'}
+			{pending ? (
+				<span className='flex items-center'>
+					<svg
+						className='animate-spin -ml-1 mr-3 h-5 w-5 text-white'
+						xmlns='http://www.w3.org/2000/svg'
+						fill='none'
+						viewBox='0 0 24 24'
+					>
+						<circle
+							className='opacity-25'
+							cx='12'
+							cy='12'
+							r='10'
+							stroke='currentColor'
+							strokeWidth='4'
+						></circle>
+						<path
+							className='opacity-75'
+							fill='currentColor'
+							d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z'
+						></path>
+					</svg>
+					Sending...
+				</span>
+			) : (
+				'Send Message'
+			)}
 		</button>
 	)
 }
 
 function ContactFormInner() {
-	const [state, formAction] = useFormState(sendEmail, initialState)
+	const [state, formAction] = useActionState(sendEmail, initialState)
 	const [recaptchaToken, setRecaptchaToken] = useState<string>('')
 	const { executeRecaptcha } = useGoogleReCaptcha()
 	const formRef = useRef<HTMLFormElement>(null)
@@ -49,27 +76,32 @@ function ContactFormInner() {
 	}, [state.status])
 
 	return (
-		<div className='md:shadow-lg md:rounded-lg md:p-8 md:m-4 max-w-4xl mx-auto px-4'>
+		<motion.div
+			initial={{ opacity: 0, y: 20 }}
+			animate={{ opacity: 1, y: 0 }}
+			transition={{ duration: 0.5 }}
+			className='bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl border border-white/20 p-8 sm:p-10'
+		>
 			<form
 				ref={formRef}
 				action={formAction}
-				className='md:m-6 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8'
+				className='grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8'
 			>
 				<div>
 					<label
 						htmlFor='firstName'
-						className='block text-sm font-medium text-gray-900'
+						className='block text-sm font-semibold text-gray-900'
 					>
 						First name
 					</label>
-					<div className='mt-1'>
+					<div className='mt-2'>
 						<input
 							type='text'
 							name='firstName'
 							id='firstName'
 							autoComplete='given-name'
 							required
-							className='py-3 px-4 block w-full shadow-sm text-gray-900 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md'
+							className='block w-full rounded-lg border-0 px-4 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-gray-50/50 focus:bg-white transition-colors'
 						/>
 					</div>
 					{state.errors?.firstName && (
@@ -81,18 +113,18 @@ function ContactFormInner() {
 				<div>
 					<label
 						htmlFor='lastName'
-						className='block text-sm font-medium text-gray-900'
+						className='block text-sm font-semibold text-gray-900'
 					>
 						Last name
 					</label>
-					<div className='mt-1'>
+					<div className='mt-2'>
 						<input
 							type='text'
 							name='lastName'
 							id='lastName'
 							autoComplete='family-name'
 							required
-							className='py-3 px-4 block w-full shadow-sm text-gray-900 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md'
+							className='block w-full rounded-lg border-0 px-4 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-gray-50/50 focus:bg-white transition-colors'
 						/>
 					</div>
 					{state.errors?.lastName && (
@@ -101,64 +133,64 @@ function ContactFormInner() {
 						</p>
 					)}
 				</div>
-				<div>
+
+				<div className='sm:col-span-2'>
 					<label
 						htmlFor='email'
-						className='block text-sm font-medium text-gray-900'
+						className='block text-sm font-semibold text-gray-900'
 					>
 						Email
 					</label>
-					<div className='mt-1'>
+					<div className='mt-2'>
 						<input
 							id='email'
 							name='email'
 							type='email'
 							autoComplete='email'
 							required
-							className='py-3 px-4 block w-full shadow-sm text-gray-900 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md'
+							className='block w-full rounded-lg border-0 px-4 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-gray-50/50 focus:bg-white transition-colors'
 						/>
 					</div>
 					{state.errors?.email && (
 						<p className='text-sm text-red-500 mt-1'>{state.errors.email[0]}</p>
 					)}
 				</div>
-				<div>
+
+				<div className='sm:col-span-2'>
 					<div className='flex justify-between'>
 						<label
 							htmlFor='phone'
-							className='block text-sm font-medium text-gray-900'
+							className='block text-sm font-semibold text-gray-900'
 						>
 							Phone
 						</label>
-						<span id='phone-optional' className='text-sm text-gray-500'>
-							Optional
-						</span>
+						<span className='text-sm text-gray-500'>Optional</span>
 					</div>
-					<div className='mt-1'>
+					<div className='mt-2'>
 						<input
 							type='text'
 							name='phone'
 							id='phone'
 							autoComplete='tel'
-							className='py-3 px-4 block w-full shadow-sm text-gray-900 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md'
-							aria-describedby='phone-optional'
+							className='block w-full rounded-lg border-0 px-4 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-gray-50/50 focus:bg-white transition-colors'
 						/>
 					</div>
 				</div>
+
 				<div className='sm:col-span-2'>
 					<label
 						htmlFor='subject'
-						className='block text-sm font-medium text-gray-900'
+						className='block text-sm font-semibold text-gray-900'
 					>
 						Subject
 					</label>
-					<div className='mt-1'>
+					<div className='mt-2'>
 						<input
 							type='text'
 							name='subject'
 							id='subject'
 							required
-							className='py-3 px-4 block w-full shadow-sm text-gray-900 focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md'
+							className='block w-full rounded-lg border-0 px-4 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-gray-50/50 focus:bg-white transition-colors'
 						/>
 					</div>
 					{state.errors?.subject && (
@@ -167,27 +199,25 @@ function ContactFormInner() {
 						</p>
 					)}
 				</div>
+
 				<div className='sm:col-span-2'>
 					<div className='flex justify-between'>
 						<label
 							htmlFor='message'
-							className='block text-sm font-medium text-gray-900'
+							className='block text-sm font-semibold text-gray-900'
 						>
 							Message
 						</label>
-						<span id='message-max' className='text-sm text-gray-500'>
-							Max. 500 characters
-						</span>
+						<span className='text-sm text-gray-500'>Max. 500 characters</span>
 					</div>
-					<div className='mt-1'>
+					<div className='mt-2'>
 						<textarea
 							id='message'
 							name='message'
 							rows={4}
 							required
 							maxLength={500}
-							className='py-3 px-4 block w-full shadow-sm text-gray-900 focus:ring-indigo-500 focus:border-indigo-500 border border-gray-300 rounded-md'
-							aria-describedby='message-max'
+							className='block w-full rounded-lg border-0 px-4 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-gray-50/50 focus:bg-white transition-colors resize-none'
 						/>
 					</div>
 					{state.errors?.message && (
@@ -200,31 +230,46 @@ function ContactFormInner() {
 				<input type='hidden' name='recaptchaToken' value={recaptchaToken} />
 
 				<div className='col-span-1 sm:col-span-2'>
-					{state.status === 'success' && <MessageSent />}
-					{state.status === 'error' && (
-						<div className='rounded-md bg-red-50 p-4'>
-							<div className='flex'>
-								<div className='shrink-0'>
-									<XCircleIcon
-										className='h-5 w-5 text-red-400'
-										aria-hidden='true'
-									/>
+					<AnimatePresence>
+						{state.status === 'success' && (
+							<motion.div
+								initial={{ opacity: 0, height: 0 }}
+								animate={{ opacity: 1, height: 'auto' }}
+								exit={{ opacity: 0, height: 0 }}
+							>
+								<MessageSent />
+							</motion.div>
+						)}
+						{state.status === 'error' && (
+							<motion.div
+								initial={{ opacity: 0, height: 0 }}
+								animate={{ opacity: 1, height: 'auto' }}
+								exit={{ opacity: 0, height: 0 }}
+								className='rounded-md bg-red-50 p-4'
+							>
+								<div className='flex'>
+									<div className='shrink-0'>
+										<XCircleIcon
+											className='h-5 w-5 text-red-400'
+											aria-hidden='true'
+										/>
+									</div>
+									<div className='ml-3'>
+										<p className='text-sm font-medium text-red-800'>
+											{state.message}
+										</p>
+									</div>
 								</div>
-								<div className='ml-3'>
-									<p className='text-sm font-medium text-red-800'>
-										{state.message}
-									</p>
-								</div>
-							</div>
-						</div>
-					)}
+							</motion.div>
+						)}
+					</AnimatePresence>
 				</div>
 
-				<div className='col-span-1 md:col-span-2'>
+				<div className='col-span-1 sm:col-span-2 flex justify-end mt-4'>
 					<SubmitButton />
 				</div>
 			</form>
-		</div>
+		</motion.div>
 	)
 }
 
@@ -232,7 +277,22 @@ export default function ContactForm() {
 	const recaptchaKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
 
 	if (!recaptchaKey) {
-		return <p>reCAPTCHA key not found. Contact form is disabled.</p>
+		return (
+			<div className='rounded-md bg-yellow-50 p-4'>
+				<div className='flex'>
+					<div className='ml-3'>
+						<h3 className='text-sm font-medium text-yellow-800'>
+							Configuration Missing
+						</h3>
+						<div className='mt-2 text-sm text-yellow-700'>
+							<p>
+								reCAPTCHA key not found. Contact form is currently disabled.
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		)
 	}
 
 	return (

@@ -1,72 +1,111 @@
 'use client'
 
-import { CheckIcon } from '@heroicons/react/24/outline'
+import { CheckIcon } from '@heroicons/react/24/solid'
+import { motion, Variants } from 'framer-motion'
 import { servicesData } from '../lib/data'
 
 function classNames(...classes: string[]) {
 	return classes.filter(Boolean).join(' ')
 }
 
+const containerVariants: Variants = {
+	hidden: { opacity: 0 },
+	visible: {
+		opacity: 1,
+		transition: { staggerChildren: 0.2 },
+	},
+}
+
+const itemVariants: Variants = {
+	hidden: { y: 40, opacity: 0 },
+	visible: { y: 0, opacity: 1, transition: { type: 'spring', stiffness: 50 } },
+}
+
 export default function Services() {
 	return (
-		<div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 rounded-lg shadow-xl m-20'>
-			<h2 className='text-3xl leading-9 tracking-tight font-extrabold text-gray-900 sm:text-4xl sm:leading-10'>
-				Services
-			</h2>
-			<p className='mt-6 max-w-2xl text-xl text-gray-500'>
-				Choose a website option that fits your business needs.
-			</p>
-			<div className='mt-24 space-y-12 lg:space-y-0 lg:grid lg:grid-cols-3 lg:gap-x-8'>
-				{servicesData.map((tier) => (
-					<div
-						key={tier.title}
-						className={classNames(
-							tier.mostPopular
-								? 'border-2 border-indigo-500 shadow-lg'
-								: 'border border-gray-200 shadow-sm',
-							'relative p-8 bg-white rounded-2xl flex flex-col transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-2xl'
-						)}
-					>
-						<div className='flex-1 flex flex-col'>
-							<h3 className='text-xl font-semibold text-gray-900'>
-								{tier.title}
-							</h3>
-							{tier.mostPopular ? (
-								<p className='absolute top-0 py-1.5 px-4 bg-indigo-500 rounded-full text-xs font-semibold uppercase tracking-wide text-white transform -translate-y-1/2'>
-									Most popular
-								</p>
-							) : null}
+		<section className='py-24 bg-gray-50 relative overflow-hidden'>
+			{/* Background Blobs */}
+			<div className='absolute inset-0 pointer-events-none'>
+				<div className='absolute top-0 left-1/4 w-96 h-96 bg-indigo-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob' />
+				<div className='absolute top-0 right-1/4 w-96 h-96 bg-purple-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000' />
+				<div className='absolute -bottom-32 left-1/2 w-96 h-96 bg-pink-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-4000' />
+			</div>
 
-							<p className='mt-6 text-gray-500'>{tier.description}</p>
+			<div className='relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+				<div className='text-center max-w-3xl mx-auto mb-16'>
+					<h2 className='text-indigo-600 font-semibold tracking-wide uppercase text-sm'>
+						Services
+					</h2>
+					<p className='mt-2 text-3xl font-extrabold text-gray-900 sm:text-4xl'>
+						Tailored Solutions for Your Growth
+					</p>
+					<p className='mt-4 text-xl text-gray-500'>
+						Choose a website package that fits your business needs perfectly.
+					</p>
+				</div>
 
-							{/* Feature list */}
-							<ul role='list' className='mt-8 space-y-4 flex-grow'>
+				<motion.div
+					className='grid gap-8 lg:grid-cols-3 lg:gap-10'
+					variants={containerVariants}
+					initial='hidden'
+					whileInView='visible'
+					viewport={{ once: true, amount: 0.1 }}
+				>
+					{servicesData.map((tier) => (
+						<motion.div
+							key={tier.title}
+							variants={itemVariants}
+							className={classNames(
+								tier.mostPopular
+									? 'ring-2 ring-indigo-600 shadow-2xl scale-105 z-10'
+									: 'ring-1 ring-gray-200 shadow-sm hover:shadow-xl',
+								'relative flex flex-col bg-white rounded-3xl p-8 transition-all duration-300'
+							)}
+						>
+							{tier.mostPopular && (
+								<div className='absolute top-0 right-0 -translate-y-1/2 translate-x-1/4'>
+									<span className='inline-flex items-center px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-md'>
+										Most Popular
+									</span>
+								</div>
+							)}
+
+							<h3 className='text-xl font-bold text-gray-900'>{tier.title}</h3>
+							<p className='mt-4 text-gray-500 text-sm leading-relaxed min-h-[60px]'>
+								{tier.description}
+							</p>
+
+							<ul role='list' className='mt-8 space-y-4 flex-1'>
 								{tier.features.map((feature) => (
-									<li key={feature} className='flex'>
-										<CheckIcon
-											className='shrink-0 w-6 h-6 text-indigo-500'
-											aria-hidden='true'
-										/>
-										<span className='ml-3 text-gray-500'>{feature}</span>
+									<li key={feature} className='flex items-start'>
+										<div className='shrink-0'>
+											<CheckIcon
+												className='h-5 w-5 text-indigo-500'
+												aria-hidden='true'
+											/>
+										</div>
+										<p className='ml-3 text-sm text-gray-700'>{feature}</p>
 									</li>
 								))}
 							</ul>
-						</div>
 
-						<a
-							href='/contact' // Changed from '/about#contact-form'
-							className={classNames(
-								tier.mostPopular
-									? 'bg-indigo-500 text-white hover:bg-indigo-600'
-									: 'bg-indigo-50 text-indigo-700 hover:bg-indigo-100',
-								'mt-10 block w-full py-3 px-6 border border-transparent rounded-full text-center font-medium cursor-pointer transition-colors duration-200'
-							)}
-						>
-							{tier.cta}
-						</a>
-					</div>
-				))}
+							<div className='mt-8'>
+								<a
+									href='/contact'
+									className={classNames(
+										tier.mostPopular
+											? 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg shadow-indigo-200'
+											: 'bg-indigo-50 text-indigo-700 hover:bg-indigo-100',
+										'block w-full py-3 px-6 rounded-xl text-center font-semibold transition-all duration-200 hover:-translate-y-0.5'
+									)}
+								>
+									{tier.cta}
+								</a>
+							</div>
+						</motion.div>
+					))}
+				</motion.div>
 			</div>
-		</div>
+		</section>
 	)
 }

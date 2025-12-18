@@ -30,10 +30,10 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang='en' className={inter.className}>
-			<body>
-				<div className='flex flex-col h-screen'>
+			<body className='bg-white'>
+				<div className='flex flex-col min-h-screen'>
 					<Navbar />
-					<main className='flex-1'>{children}</main>
+					<main className='flex-1 flex flex-col'>{children}</main>
 					<Footer />
 				</div>
 			</body>

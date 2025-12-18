@@ -55,7 +55,7 @@ export default function Testimonials() {
 					whileInView='visible'
 					viewport={{ once: true, amount: 0.2 }}
 				>
-					{testimonialsData.map((testimony, index) => (
+					{testimonialsData.map((testimony) => (
 						<motion.div
 							key={testimony.name}
 							variants={itemVariants}

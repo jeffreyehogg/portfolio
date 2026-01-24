@@ -12,7 +12,7 @@ export default function Hero() {
 				loop
 				muted
 				playsInline
-				poster='/images/space-poster.png'
+				poster='/images/space-poster.webp'
 				className='absolute inset-0 w-full h-full object-cover z-0'
 				src='https://uew8wzjetllsk5wf.public.blob.vercel-storage.com/space.mp4'
 			/>

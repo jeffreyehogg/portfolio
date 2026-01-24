@@ -50,15 +50,15 @@ export const projectsData: Project[] = [
 			'Mastered the modern "Pro" Next.js stack by integrating serverless PostgreSQL (Neon), type-safe database interactions with Drizzle ORM, and secure authentication flows using Clerk.',
 	},
 	{
-        title: 'Legacy Link',
-        href: 'https://legacy-link.jeffhogg.com',
-        description:
-            'A specialized middleware utility designed to modernize physical security data migration. It ingests raw exports from legacy systems (Lenel, DNA Fusion) and provides a visual interface to map, sanitize, and transform data for import into Genetec, reducing days of manual work to minutes.',
-        imageUrl: '/images/legacy-link.png',
-        tags: ['Next.js', 'TypeScript', 'Clerk', 'Vercel Postgres', 'PapaParse'],
-        learnings:
-            'Architected a flexible data schema using PostgreSQL JSONB to ingest unpredictable legacy datasets without schema migrations. Built a stateful "wizard" interface for complex data mapping and implemented secure, signed file handling for sensitive security records.',
-    },
+		title: 'Legacy Link',
+		href: 'https://legacy-link.jeffhogg.com',
+		description:
+			'A specialized middleware utility designed to modernize physical security data migration. It ingests raw exports from legacy systems (Lenel, DNA Fusion) and provides a visual interface to map, sanitize, and transform data for import into Genetec, reducing days of manual work to minutes.',
+		imageUrl: '/images/legacy-link.png',
+		tags: ['Next.js', 'TypeScript', 'Clerk', 'Vercel Postgres', 'PapaParse'],
+		learnings:
+			'Architected a flexible data schema using PostgreSQL JSONB to ingest unpredictable legacy datasets without schema migrations. Built a stateful "wizard" interface for complex data mapping and implemented secure, signed file handling for sensitive security records.',
+	},
 	{
 		title: 'Webex Control Hub',
 		href: 'https://www.webex.com/control-hub.html',
@@ -194,25 +194,25 @@ export const testimonialsData: Testimonial[] = [
 export const trustedCompaniesData: CompanyLogo[] = [
 	{
 		name: 'Cisco',
-		imageUrl: '/images/logos/cisco.png',
+		imageUrl: '/images/logos/cisco.webp',
 		width: 200,
 		height: 100,
 	},
 	{
 		name: 'San Francisco 49ers',
-		imageUrl: '/images/logos/49ers.png',
+		imageUrl: '/images/logos/49ers.webp',
 		width: 170,
 		height: 100,
 	},
 	{
 		name: 'San Francisco Giants',
-		imageUrl: '/images/logos/giants.png',
+		imageUrl: '/images/logos/giants.webp',
 		width: 200,
 		height: 100,
 	},
 	{
 		name: 'Golden State Warriors',
-		imageUrl: '/images/logos/warriors.png',
+		imageUrl: '/images/logos/warriors.webp',
 		width: 90,
 		height: 100,
 	},

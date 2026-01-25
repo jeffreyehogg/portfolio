@@ -3,8 +3,8 @@
 import { Fragment, useState, useEffect } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import Avatar from './Avatar'
-import { githubUrl, linkedInUrl, twitterUrl } from '../lib/data'
+import Avatar from '../ui/Avatar'
+import { githubUrl, linkedInUrl, twitterUrl } from '../../lib/data'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 
@@ -50,7 +50,7 @@ export default function Navbar() {
 			as='nav'
 			className={classNames(
 				'fixed top-0 w-full z-50 transition-all duration-300 ease-in-out',
-				navBackgroundClass
+				navBackgroundClass,
 			)}
 		>
 			{({ open }) => (
@@ -84,7 +84,7 @@ export default function Navbar() {
 														isCurrent
 															? 'bg-white/10 text-white shadow-[0_0_10px_rgba(255,255,255,0.1)]'
 															: 'text-gray-300 hover:bg-white/5 hover:text-white',
-														'px-3 py-2 rounded-md text-sm font-medium transition-all duration-200'
+														'px-3 py-2 rounded-md text-sm font-medium transition-all duration-200',
 													)}
 													aria-current={isCurrent ? 'page' : undefined}
 												>
@@ -104,7 +104,7 @@ export default function Navbar() {
 											<Menu.Button
 												className={classNames(
 													'relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800',
-													'h-10 w-10 overflow-hidden border-2 border-transparent hover:border-indigo-500 transition-colors duration-200'
+													'h-10 w-10 overflow-hidden border-2 border-transparent hover:border-indigo-500 transition-colors duration-200',
 												)}
 											>
 												<span className='absolute -inset-1.5' />
@@ -133,7 +133,7 @@ export default function Navbar() {
 																rel='noreferrer'
 																className={classNames(
 																	active ? 'bg-gray-100' : '',
-																	'block px-4 py-2 text-sm text-gray-700'
+																	'block px-4 py-2 text-sm text-gray-700',
 																)}
 															>
 																LinkedIn
@@ -148,7 +148,7 @@ export default function Navbar() {
 																rel='noreferrer'
 																className={classNames(
 																	active ? 'bg-gray-100' : '',
-																	'block px-4 py-2 text-sm text-gray-700'
+																	'block px-4 py-2 text-sm text-gray-700',
 																)}
 															>
 																Github
@@ -163,7 +163,7 @@ export default function Navbar() {
 																rel='noreferrer'
 																className={classNames(
 																	active ? 'bg-gray-100' : '',
-																	'block px-4 py-2 text-sm text-gray-700'
+																	'block px-4 py-2 text-sm text-gray-700',
 																)}
 															>
 																Twitter
@@ -193,7 +193,7 @@ export default function Navbar() {
 											isCurrent
 												? 'bg-white/10 text-white'
 												: 'text-gray-300 hover:bg-white/5 hover:text-white',
-											'block rounded-md px-3 py-2 text-base font-medium'
+											'block rounded-md px-3 py-2 text-base font-medium',
 										)}
 										aria-current={isCurrent ? 'page' : undefined}
 									>

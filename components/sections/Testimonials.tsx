@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { motion, Variants } from 'framer-motion'
 import { StarIcon } from '@heroicons/react/24/solid'
-import { testimonialsData } from '../lib/data'
+import { testimonialsData } from '../../lib/data'
 
 const containerVariants: Variants = {
 	hidden: { opacity: 0 },

@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { motion, Variants } from 'framer-motion'
-import { projectsData } from '../lib/data'
+import { projectsData } from '../../lib/data'
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline'
 
 const containerVariants: Variants = {

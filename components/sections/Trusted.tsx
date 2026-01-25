@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { trustedCompaniesData } from '../lib/data'
+import { trustedCompaniesData } from '../../lib/data'
 
 const Trusted = () => {
 	return (

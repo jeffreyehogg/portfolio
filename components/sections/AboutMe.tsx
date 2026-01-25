@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Socials from './Socials'
 import Experience from './Experience'
-import { skillsData } from '../lib/data'
+import { skillsData } from '../../lib/data'
 
 export default function AboutMe() {
 	return (

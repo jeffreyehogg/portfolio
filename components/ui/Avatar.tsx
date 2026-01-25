@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import headshot from '../public/images/headshots/me.jpg'
+import headshot from '../../public/images/headshots/me.jpg'
 
 function Avatar() {
 	return (

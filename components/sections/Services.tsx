@@ -2,7 +2,7 @@
 
 import { CheckIcon } from '@heroicons/react/24/solid'
 import { motion, Variants } from 'framer-motion'
-import { servicesData } from '../lib/data'
+import { servicesData } from '../../lib/data'
 
 function classNames(...classes: string[]) {
 	return classes.filter(Boolean).join(' ')
@@ -59,7 +59,7 @@ export default function Services() {
 								tier.mostPopular
 									? 'ring-2 ring-indigo-600 shadow-2xl scale-105 z-10'
 									: 'ring-1 ring-gray-200 shadow-sm hover:shadow-xl',
-								'relative flex flex-col bg-white rounded-3xl p-8 transition-all duration-300'
+								'relative flex flex-col bg-white rounded-3xl p-8 transition-all duration-300',
 							)}
 						>
 							{tier.mostPopular && (
@@ -96,7 +96,7 @@ export default function Services() {
 										tier.mostPopular
 											? 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg shadow-indigo-200'
 											: 'bg-indigo-50 text-indigo-700 hover:bg-indigo-100',
-										'block w-full py-3 px-6 rounded-xl text-center font-semibold transition-all duration-200 hover:-translate-y-0.5'
+										'block w-full py-3 px-6 rounded-xl text-center font-semibold transition-all duration-200 hover:-translate-y-0.5',
 									)}
 								>
 									{tier.cta}

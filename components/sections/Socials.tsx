@@ -1,4 +1,4 @@
-import { githubUrl, linkedInUrl, twitterUrl } from '../lib/data'
+import { githubUrl, linkedInUrl, twitterUrl } from '../../lib/data'
 
 const Socials = () => {
 	return (

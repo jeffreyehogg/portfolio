@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import ProjectList from '../../components/ProjectList'
+import ProjectList from '../../components/sections/ProjectList'
 
 export const metadata: Metadata = {
 	title: 'Portfolio - Jeff Hogg',

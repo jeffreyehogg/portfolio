@@ -1,7 +1,7 @@
-import Hero from '../components/Hero';
-import Services from '../components/Services';
-import Testimonials from '../components/Testimonials';
-import Trusted from '../components/Trusted';
+import Hero from '../components/sections/Hero';
+import Services from '../components/sections/Services';
+import Testimonials from '../components/sections/Testimonials';
+import Trusted from '../components/sections/Trusted';
 
 export default function Home() {
   return (

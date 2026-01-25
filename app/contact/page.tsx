@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import ContactForm from '../../components/ContactForm'
+import ContactForm from '../../components/forms/ContactForm'
 
 export const metadata: Metadata = {
 	title: 'Contact - Jeff Hogg',

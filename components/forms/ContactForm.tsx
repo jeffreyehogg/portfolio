@@ -2,13 +2,13 @@
 
 import { useEffect, useRef, useState, useActionState } from 'react'
 import { useFormStatus } from 'react-dom'
-import { sendEmail, type FormState } from '../app/actions/contact-action'
+import { sendEmail, type FormState } from '../../app/actions/contact-action'
 import {
 	GoogleReCaptchaProvider,
 	useGoogleReCaptcha,
 } from 'react-google-recaptcha-v3'
 import { motion, AnimatePresence } from 'framer-motion'
-import MessageSent from './MessageSent'
+import MessageSent from '../ui/MessageSent'
 import { XCircleIcon } from '@heroicons/react/24/solid'
 
 const initialState: FormState = { status: 'idle', message: '' }

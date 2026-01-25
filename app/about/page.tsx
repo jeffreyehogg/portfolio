@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import AboutMe from '../../components/AboutMe'
+import AboutMe from '../../components/sections/AboutMe'
 
 export const metadata: Metadata = {
 	title: 'About - Jeff Hogg',

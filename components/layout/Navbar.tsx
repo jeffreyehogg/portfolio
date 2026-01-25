@@ -15,7 +15,7 @@ const navigation = [
 	{ name: 'Contact', href: '/contact', current: false },
 ]
 
-function classNames(...classes: string[]): string {
+function cn(...classes: string[]): string {
 	return classes.filter(Boolean).join(' ')
 }
 
@@ -48,7 +48,7 @@ export default function Navbar() {
 	return (
 		<Disclosure
 			as='nav'
-			className={classNames(
+			className={cn(
 				'fixed top-0 w-full z-50 transition-all duration-300 ease-in-out',
 				navBackgroundClass,
 			)}
@@ -80,7 +80,7 @@ export default function Navbar() {
 												<Link
 													key={item.name}
 													href={item.href}
-													className={classNames(
+													className={cn(
 														isCurrent
 															? 'bg-white/10 text-white shadow-[0_0_10px_rgba(255,255,255,0.1)]'
 															: 'text-gray-300 hover:bg-white/5 hover:text-white',
@@ -102,7 +102,7 @@ export default function Navbar() {
 									{({ open }) => (
 										<>
 											<Menu.Button
-												className={classNames(
+												className={cn(
 													'relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800',
 													'h-10 w-10 overflow-hidden border-2 border-transparent hover:border-indigo-500 transition-colors duration-200',
 												)}
@@ -131,7 +131,7 @@ export default function Navbar() {
 																href={linkedInUrl}
 																target='_blank'
 																rel='noreferrer'
-																className={classNames(
+																className={cn(
 																	active ? 'bg-gray-100' : '',
 																	'block px-4 py-2 text-sm text-gray-700',
 																)}
@@ -146,7 +146,7 @@ export default function Navbar() {
 																href={githubUrl}
 																target='_blank'
 																rel='noreferrer'
-																className={classNames(
+																className={cn(
 																	active ? 'bg-gray-100' : '',
 																	'block px-4 py-2 text-sm text-gray-700',
 																)}
@@ -161,7 +161,7 @@ export default function Navbar() {
 																href={twitterUrl}
 																target='_blank'
 																rel='noreferrer'
-																className={classNames(
+																className={cn(
 																	active ? 'bg-gray-100' : '',
 																	'block px-4 py-2 text-sm text-gray-700',
 																)}
@@ -189,7 +189,7 @@ export default function Navbar() {
 										key={item.name}
 										as={Link}
 										href={item.href}
-										className={classNames(
+										className={cn(
 											isCurrent
 												? 'bg-white/10 text-white'
 												: 'text-gray-300 hover:bg-white/5 hover:text-white',

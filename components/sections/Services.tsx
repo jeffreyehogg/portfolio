@@ -5,7 +5,7 @@ import { motion, Variants } from 'framer-motion'
 import { servicesData } from '../../lib/data'
 import BackgroundBlobs from '../ui/BackgroundBlobs'
 
-function classNames(...classes: string[]) {
+function cn(...classes: string[]) {
 	return classes.filter(Boolean).join(' ')
 }
 
@@ -52,7 +52,7 @@ export default function Services() {
 						<motion.div
 							key={tier.title}
 							variants={itemVariants}
-							className={classNames(
+							className={cn(
 								tier.mostPopular
 									? 'ring-2 ring-indigo-600 shadow-2xl scale-105 z-10'
 									: 'ring-1 ring-gray-200 shadow-sm hover:shadow-xl',
@@ -89,7 +89,7 @@ export default function Services() {
 							<div className='mt-8'>
 								<a
 									href='/contact'
-									className={classNames(
+									className={cn(
 										tier.mostPopular
 											? 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg shadow-indigo-200'
 											: 'bg-indigo-50 text-indigo-700 hover:bg-indigo-100',

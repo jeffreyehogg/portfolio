@@ -3,16 +3,14 @@
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { trustedCompaniesData } from '../../lib/data'
+import BackgroundBlobs from '../ui/BackgroundBlobs'
 
 const Trusted = () => {
 	return (
 		<section className='py-20 bg-white sm:py-24'>
 			{/* Background Blobs */}
-			<div className='absolute inset-0 pointer-events-none'>
-				<div className='absolute top-0 left-1/4 w-96 h-96 bg-indigo-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob' />
-				<div className='absolute top-0 right-1/4 w-96 h-96 bg-purple-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000' />
-				<div className='absolute -bottom-32 left-1/2 w-96 h-96 bg-pink-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-4000' />
-			</div>
+			<BackgroundBlobs />
+
 			<div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
 				<div className='max-w-2xl mx-auto text-center mb-16'>
 					<h2 className='text-3xl font-extrabold text-gray-900 sm:text-4xl'>

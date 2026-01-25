@@ -40,6 +40,16 @@ export const twitterUrl = 'https://twitter.com/jeffreyehogg'
 
 export const projectsData: Project[] = [
 	{
+		title: 'Vision Integrated Systems',
+		href: 'https://vision.jeffhogg.com',
+		description:
+			'The official company website for Vision Integrated Systems, a leading provider of audio-video, structured cabling, and security solutions in Texas.',
+		imageUrl: '/images/projects/vision.png',
+		tags: ['Next.js', 'React 19', 'Tailwind CSS', 'Framer Motion'],
+		learnings:
+			'Built using the latest web standards including Next.js 16 and Tailwind CSS v4. Focused on component modularity and performance to deliver a fast, accessible corporate experience.',
+	},
+	{
 		title: 'Kingdom Connect',
 		href: 'https://kingdom.jeffhogg.com',
 		description:
@@ -98,16 +108,6 @@ export const projectsData: Project[] = [
 		tags: ['Nuxt', 'Vue', 'TypeScript', 'Nuxt UI', 'Chart.js'],
 		learnings:
 			'Server-side API proxying in Nuxt to secure API keys and utilized ClientOnly wrappers to seamlessly integrate Chart.js for real-time data visualization.',
-	},
-	{
-		title: 'Vision Integrated Systems',
-		href: 'https://vision.jeffhogg.com',
-		description:
-			'The official company website for Vision Integrated Systems, a leading provider of audio-video, structured cabling, and security solutions in Texas.',
-		imageUrl: '/images/projects/vision.png',
-		tags: ['Next.js', 'React 19', 'Tailwind CSS', 'Framer Motion'],
-		learnings:
-			'Built using the latest web standards including Next.js 16 and Tailwind CSS v4. Focused on component modularity and performance to deliver a fast, accessible corporate experience.',
 	},
 	{
 		title: 'Southern Rental Cars',

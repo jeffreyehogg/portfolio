@@ -44,7 +44,7 @@ export const projectsData: Project[] = [
 		href: 'https://kingdom.jeffhogg.com',
 		description:
 			'A digital platform designed to bridge the gap between church needs and volunteer service. Empowering churches to post service opportunities and fundraising needs, while providing a seamless dashboard for volunteers.',
-		imageUrl: '/images/kingdom-connect.png',
+		imageUrl: '/images/projects/kingdom-connect.png',
 		tags: ['Next.js', 'Clerk', 'Neon', 'Drizzle ORM', 'Tailwind CSS'],
 		learnings:
 			'Mastered the modern "Pro" Next.js stack by integrating serverless PostgreSQL (Neon), type-safe database interactions with Drizzle ORM, and secure authentication flows using Clerk.',
@@ -54,7 +54,7 @@ export const projectsData: Project[] = [
 		href: 'https://legacy-link.jeffhogg.com',
 		description:
 			'A specialized middleware utility designed to modernize physical security data migration. It ingests raw exports from legacy systems (Lenel, DNA Fusion) and provides a visual interface to map, sanitize, and transform data for import into Genetec, reducing days of manual work to minutes.',
-		imageUrl: '/images/legacy-link.png',
+		imageUrl: '/images/projects/legacy-link.png',
 		tags: ['Next.js', 'TypeScript', 'Clerk', 'Vercel Postgres', 'PapaParse'],
 		learnings:
 			'Architected a flexible data schema using PostgreSQL JSONB to ingest unpredictable legacy datasets without schema migrations. Built a stateful "wizard" interface for complex data mapping and implemented secure, signed file handling for sensitive security records.',
@@ -64,7 +64,7 @@ export const projectsData: Project[] = [
 		href: 'https://www.webex.com/control-hub.html',
 		description:
 			'An enterprise-grade platform for administrators to manage users, devices, and services across the entire Webex suite. I contributed to its development as a software engineer at Cisco.',
-		imageUrl: '/images/controlhub.png',
+		imageUrl: '/images/projects/controlhub.png',
 		tags: ['Angular', 'Enterprise', 'SaaS'],
 		learnings:
 			'Learned how to work in a large-scale enterprise codebase with a focus on scalability, security, and maintaining industry-standard clean code.',
@@ -74,7 +74,7 @@ export const projectsData: Project[] = [
 		href: 'https://jeffhogg.com',
 		description:
 			'The site you are on right now. A personal portfolio built with Next.js (App Router), React, TypeScript, and Tailwind CSS.',
-		imageUrl: '/images/portfolio.png',
+		imageUrl: '/images/projects/portfolio.png',
 		tags: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Server Actions'],
 		learnings:
 			'Refactored a personal project to use the latest standards, including centralizing all site content into a single file (this one!) for maintainability.',
@@ -84,7 +84,7 @@ export const projectsData: Project[] = [
 		href: 'https://pray.jeffhogg.com',
 		description:
 			'A full-stack personal prayer journal built with the Next.js App Router and Supabase. Features auth, a full CRUD database for prayers and notes, categories, and drag-and-drop reordering.',
-		imageUrl: '/images/pray.png',
+		imageUrl: '/images/projects/pray.png',
 		tags: ['Next.js', 'Supabase', 'shadcn/ui', 'dnd-kit'],
 		learnings:
 			'This project was a deep dive into the Next.js App Router, Server Actions, and using dnd-kit for complex drag-and-drop state management.',
@@ -94,7 +94,7 @@ export const projectsData: Project[] = [
 		href: 'https://forexflow-dashboard.vercel.app/',
 		description:
 			'A real-time forex dashboard tracking institutional exchange rates. Features live updates, 24h high/low stats, and interactive trend charts.',
-		imageUrl: '/images/forexflow.png',
+		imageUrl: '/images/projects/forexflow.png',
 		tags: ['Nuxt', 'Vue', 'TypeScript', 'Nuxt UI', 'Chart.js'],
 		learnings:
 			'Server-side API proxying in Nuxt to secure API keys and utilized ClientOnly wrappers to seamlessly integrate Chart.js for real-time data visualization.',
@@ -104,7 +104,7 @@ export const projectsData: Project[] = [
 		href: 'https://vision.jeffhogg.com',
 		description:
 			'The official company website for Vision Integrated Systems, a leading provider of audio-video, structured cabling, and security solutions in Texas.',
-		imageUrl: '/images/vision.png',
+		imageUrl: '/images/projects/vision.png',
 		tags: ['Next.js', 'React 19', 'Tailwind CSS', 'Framer Motion'],
 		learnings:
 			'Built using the latest web standards including Next.js 16 and Tailwind CSS v4. Focused on component modularity and performance to deliver a fast, accessible corporate experience.',
@@ -113,7 +113,7 @@ export const projectsData: Project[] = [
 		title: 'Southern Rental Cars',
 		href: 'https://southernrentalcars.com/',
 		description: 'A website built with Next.js, TailwindCSS, and Prisma.',
-		imageUrl: '/images/southern.png',
+		imageUrl: '/images/projects/southern.png',
 		tags: ['Next.js', 'Prisma', 'TailwindCSS'],
 		learnings:
 			'Explored modern web design trends and component-based architecture for a client-facing site.',
@@ -123,7 +123,7 @@ export const projectsData: Project[] = [
 		href: 'https://texastint.com/',
 		description:
 			'A static website built with Next.js and TailwindCSS. Features a contact form and a gallery of previous work.',
-		imageUrl: '/images/texas-tint.png',
+		imageUrl: '/images/projects/texas-tint.png',
 		tags: ['Next.js', 'TailwindCSS'],
 		learnings:
 			'Focused on SEO, static site generation, and building a high-performance, mobile-first landing page.',

@@ -58,8 +58,8 @@ export default function ProjectList() {
 									className='object-cover w-full h-full transform transition-transform duration-500 group-hover:scale-110'
 									src={project.imageUrl}
 									alt={project.title}
-									width={800}
-									height={600}
+									fill
+									sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
 								/>
 							</div>
 

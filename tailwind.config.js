@@ -7,7 +7,7 @@ module.exports = {
 	theme: {
 		extend: {
 			fontFamily: {
-				sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+				sans: ['var(--font-inter)', ...defaultTheme.fontFamily.sans],
 			},
 			colors: {
 				// A modern, deep slate palette for a "professional" dark mode feel if desired

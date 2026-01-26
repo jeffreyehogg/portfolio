@@ -6,7 +6,6 @@ const experience = [
 		company: 'Vision Integrated Systems',
 		role: 'Solutions Engineer',
 		period: 'Aug 2025 - Present',
-		logo: '/images/logos/vision.png',
 		description:
 			'Bridging technical execution with business needs. I lead data migrations (Python/SQL) and manage project lifecycles for enterprise systems, ensuring rigorous design specifications are met during commissioning.',
 	},
@@ -14,15 +13,13 @@ const experience = [
 		company: 'Cisco',
 		role: 'Software Engineer',
 		period: 'Dec 2021 - Jun 2024',
-		logo: '/images/logos/cisco.png',
 		description:
 			'Engineered features for the Webex Control Hub platform using Angular and TypeScript. Focused on enterprise-grade scalability, security, and reducing post-deployment bugs by 30% through comprehensive Cypress testing.',
 	},
 	{
 		company: 'Program Productions / Freelance',
 		role: 'Camera Operator & Technical Director',
-		period: 'Apr 2012 - Dec 2022',
-		logo: '/images/logos/nfl.png', // You might want to add a generic broadcast logo or specific network logo
+		period: 'Apr 2012 - Present',
 		description:
 			'Delivered live, high-pressure broadcasts for major sporting events including the Super Bowl, World Series, and NBA Finals. Directed technical aspects of productions and operated cameras to capture defining moments for millions of viewers.',
 	},

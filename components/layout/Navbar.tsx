@@ -1,80 +1,58 @@
 'use client'
 
-import { Fragment, useState, useEffect } from 'react'
+import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import Avatar from '../ui/Avatar'
 import { githubUrl, linkedInUrl, twitterUrl } from '../../lib/data'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
+import { motion } from 'framer-motion'
+import { cn } from '../../lib/utils'
 
 const navigation = [
-	{ name: 'Home', href: '/', current: false },
-	{ name: 'Portfolio', href: '/portfolio', current: false },
+	{ name: 'Home', href: '/' },
+	{ name: 'Portfolio', href: '/portfolio' },
 	{ name: 'Broadcasting', href: '/broadcasting' },
-	{ name: 'About', href: '/about', current: false },
-	{ name: 'Contact', href: '/contact', current: false },
+	{ name: 'About', href: '/about' },
+	{ name: 'Contact', href: '/contact' },
 ]
-
-function cn(...classes: string[]): string {
-	return classes.filter(Boolean).join(' ')
-}
 
 export default function Navbar() {
 	const pathname = usePathname()
-	const isHome = pathname === '/'
-	const [scrolled, setScrolled] = useState(false)
-
-	// Handle scroll detection
-	useEffect(() => {
-		const handleScroll = () => {
-			if (window.scrollY > 20) {
-				setScrolled(true)
-			} else {
-				setScrolled(false)
-			}
-		}
-
-		window.addEventListener('scroll', handleScroll)
-		return () => window.removeEventListener('scroll', handleScroll)
-	}, [])
-
-	// Determine Navbar Background Style
-	const navBackgroundClass = isHome
-		? scrolled
-			? 'bg-slate-900/90 backdrop-blur-md shadow-lg border-b border-white/5' // Scrolled on Home (Dark Glass)
-			: 'bg-transparent' // Top of Home (Transparent)
-		: 'bg-slate-900/95 backdrop-blur-md shadow-sm border-b border-white/5' // Other Pages (Always Dark Glass)
 
 	return (
-		<Disclosure
-			as='nav'
-			className={cn(
-				'fixed top-0 w-full z-50 transition-all duration-300 ease-in-out',
-				navBackgroundClass,
-			)}
-		>
-			{({ open }) => (
-				<>
-					<div className='max-w-7xl mx-auto px-2 sm:px-6 lg:px-8'>
-						<div className='relative flex items-center h-16'>
-							{/* Mobile menu button */}
-							<div className='absolute inset-y-0 left-0 flex items-center sm:hidden'>
-								<Disclosure.Button className='inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white'>
-									<span className='sr-only'>Open main menu</span>
-									{open ? (
-										<XMarkIcon className='block h-6 w-6' aria-hidden='true' />
-									) : (
-										<Bars3Icon className='block h-6 w-6' aria-hidden='true' />
-									)}
-								</Disclosure.Button>
-							</div>
+		<div className='fixed top-0 inset-x-0 z-50 flex justify-center pointer-events-none p-4 sm:p-6'>
+			<Disclosure as='nav' className='pointer-events-auto w-full max-w-5xl'>
+				{({ open }) => (
+					<motion.div
+						layout
+						className={cn(
+							'mx-auto transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]',
+							open ? 'rounded-3xl' : 'rounded-full',
+							'bg-slate-900/80 backdrop-blur-xl border border-slate-800 shadow-2xl shadow-indigo-500/10',
+						)}
+						initial={{ y: -100, opacity: 0 }}
+						animate={{ y: 0, opacity: 1 }}
+						transition={{ duration: 0.6 }}
+					>
+						<div className='px-4 sm:px-6'>
+							<div className='relative flex items-center justify-between h-14 sm:h-16'>
+								{/* Mobile menu button */}
+								<div className='absolute inset-y-0 left-0 flex items-center sm:hidden'>
+									<Disclosure.Button className='inline-flex items-center justify-center p-2 rounded-full text-slate-400 hover:text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500'>
+										<span className='sr-only'>Open main menu</span>
+										{open ? (
+											<XMarkIcon className='block h-6 w-6' aria-hidden='true' />
+										) : (
+											<Bars3Icon className='block h-6 w-6' aria-hidden='true' />
+										)}
+									</Disclosure.Button>
+								</div>
 
-							{/* Logo / Links */}
-							<div className='flex-1 flex items-center justify-center sm:items-stretch sm:justify-start'>
-								{/* Optional: Add Logo Here if desired */}
-								<div className='hidden sm:block sm:ml-6'>
-									<div className='flex space-x-4'>
+								{/* Desktop Navigation Links */}
+								<div className='flex-1 flex items-center justify-center sm:items-stretch sm:justify-start'>
+									<div className='hidden sm:flex space-x-1'>
 										{navigation.map((item) => {
 											const isCurrent = pathname === item.href
 											return (
@@ -82,50 +60,53 @@ export default function Navbar() {
 													key={item.name}
 													href={item.href}
 													className={cn(
+														'relative px-4 py-2 text-sm font-medium rounded-full transition-colors duration-200',
 														isCurrent
-															? 'bg-white/10 text-white shadow-[0_0_10px_rgba(255,255,255,0.1)]'
-															: 'text-gray-300 hover:bg-white/5 hover:text-white',
-														'px-3 py-2 rounded-md text-sm font-medium transition-all duration-200',
+															? 'text-white'
+															: 'text-slate-400 hover:text-white hover:bg-white/5',
 													)}
 													aria-current={isCurrent ? 'page' : undefined}
 												>
-													{item.name}
+													{isCurrent && (
+														<motion.span
+															layoutId='nav-pill'
+															className='absolute inset-0 bg-white/10 rounded-full'
+															transition={{
+																type: 'spring',
+																bounce: 0.2,
+																duration: 0.6,
+															}}
+														/>
+													)}
+													<span className='relative z-10'>{item.name}</span>
 												</Link>
 											)
 										})}
 									</div>
 								</div>
-							</div>
 
-							{/* Right Side Icons / Profile */}
-							<div className='absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0'>
-								<Menu as='div' className='ml-3 relative'>
-									{({ open }) => (
-										<>
-											<Menu.Button
-												className={cn(
-													'relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800',
-													'h-10 w-10 overflow-hidden border-2 border-transparent hover:border-indigo-500 transition-colors duration-200',
-												)}
-											>
-												<span className='absolute -inset-1.5' />
-												<span className='sr-only'>Open user menu</span>
+								{/* Right Side: Profile */}
+								<div className='absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 gap-3'>
+									{/* Profile Dropdown */}
+									<Menu as='div' className='ml-3 relative'>
+										<Menu.Button className='flex rounded-full bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-slate-900 transition-transform hover:scale-105'>
+											<span className='sr-only'>Open user menu</span>
+											<div className='h-9 w-9 overflow-hidden rounded-full border-2 border-slate-700'>
 												<Avatar />
-											</Menu.Button>
-											<Transition
-												show={open}
-												as={Fragment}
-												enter='transition ease-out duration-100'
-												enterFrom='transform opacity-0 scale-95'
-												enterTo='transform opacity-100 scale-100'
-												leave='transition ease-in duration-75'
-												leaveFrom='transform opacity-100 scale-100'
-												leaveTo='transform opacity-0 scale-95'
-											>
-												<Menu.Items
-													static
-													className='absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'
-												>
+											</div>
+										</Menu.Button>
+
+										<Transition
+											as={Fragment}
+											enter='transition ease-out duration-200'
+											enterFrom='transform opacity-0 scale-95'
+											enterTo='transform opacity-100 scale-100'
+											leave='transition ease-in duration-75'
+											leaveFrom='transform opacity-100 scale-100'
+											leaveTo='transform opacity-0 scale-95'
+										>
+											<Menu.Items className='absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-xl bg-slate-900 py-1 shadow-lg ring-1 ring-white/10 focus:outline-none border border-slate-800'>
+												<div className='px-1 py-1'>
 													<Menu.Item>
 														{({ active }) => (
 															<a
@@ -133,8 +114,10 @@ export default function Navbar() {
 																target='_blank'
 																rel='noreferrer'
 																className={cn(
-																	active ? 'bg-gray-100' : '',
-																	'block px-4 py-2 text-sm text-gray-700',
+																	active
+																		? 'bg-indigo-600 text-white'
+																		: 'text-slate-300',
+																	'group flex w-full items-center rounded-lg px-2 py-2 text-sm transition-colors',
 																)}
 															>
 																LinkedIn
@@ -148,8 +131,10 @@ export default function Navbar() {
 																target='_blank'
 																rel='noreferrer'
 																className={cn(
-																	active ? 'bg-gray-100' : '',
-																	'block px-4 py-2 text-sm text-gray-700',
+																	active
+																		? 'bg-indigo-600 text-white'
+																		: 'text-slate-300',
+																	'group flex w-full items-center rounded-lg px-2 py-2 text-sm transition-colors',
 																)}
 															>
 																Github
@@ -163,49 +148,51 @@ export default function Navbar() {
 																target='_blank'
 																rel='noreferrer'
 																className={cn(
-																	active ? 'bg-gray-100' : '',
-																	'block px-4 py-2 text-sm text-gray-700',
+																	active
+																		? 'bg-indigo-600 text-white'
+																		: 'text-slate-300',
+																	'group flex w-full items-center rounded-lg px-2 py-2 text-sm transition-colors',
 																)}
 															>
 																Twitter
 															</a>
 														)}
 													</Menu.Item>
-												</Menu.Items>
-											</Transition>
-										</>
-									)}
-								</Menu>
+												</div>
+											</Menu.Items>
+										</Transition>
+									</Menu>
+								</div>
 							</div>
 						</div>
-					</div>
 
-					{/* Mobile Menu Panel */}
-					<Disclosure.Panel className='sm:hidden bg-slate-900/95 backdrop-blur-md border-t border-white/5'>
-						<div className='space-y-1 px-2 pb-3 pt-2'>
-							{navigation.map((item) => {
-								const isCurrent = pathname === item.href
-								return (
-									<Disclosure.Button
-										key={item.name}
-										as={Link}
-										href={item.href}
-										className={cn(
-											isCurrent
-												? 'bg-white/10 text-white'
-												: 'text-gray-300 hover:bg-white/5 hover:text-white',
-											'block rounded-md px-3 py-2 text-base font-medium',
-										)}
-										aria-current={isCurrent ? 'page' : undefined}
-									>
-										{item.name}
-									</Disclosure.Button>
-								)
-							})}
-						</div>
-					</Disclosure.Panel>
-				</>
-			)}
-		</Disclosure>
+						{/* Mobile Menu Panel */}
+						<Disclosure.Panel className='sm:hidden border-t border-slate-800/50'>
+							<div className='space-y-1 px-4 pb-4 pt-2'>
+								{navigation.map((item) => {
+									const isCurrent = pathname === item.href
+									return (
+										<Disclosure.Button
+											key={item.name}
+											as={Link}
+											href={item.href}
+											className={cn(
+												isCurrent
+													? 'bg-indigo-600 text-white'
+													: 'text-slate-300 hover:bg-slate-800 hover:text-white',
+												'block rounded-xl px-3 py-2 text-base font-medium transition-colors',
+											)}
+											aria-current={isCurrent ? 'page' : undefined}
+										>
+											{item.name}
+										</Disclosure.Button>
+									)
+								})}
+							</div>
+						</Disclosure.Panel>
+					</motion.div>
+				)}
+			</Disclosure>
+		</div>
 	)
 }

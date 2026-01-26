@@ -7,6 +7,7 @@ const navigation = {
 	main: [
 		{ name: 'Home', href: '/' },
 		{ name: 'Portfolio', href: '/portfolio' },
+		{ name: 'Broadcasting', href: '/broadcasting' },
 		{ name: 'About', href: '/about' },
 		{ name: 'Contact', href: '/contact' },
 	],
@@ -51,23 +52,18 @@ const navigation = {
 
 export default function Footer() {
 	return (
-		<footer className='relative bg-slate-950 border-t border-white/10 overflow-hidden'>
-			{/* Ambient Background Glow */}
-			<div className='absolute inset-0 pointer-events-none'>
-				<div className='absolute -top-40 -left-40 w-96 h-96 bg-indigo-900/30 rounded-full blur-[100px]' />
-				<div className='absolute -bottom-40 -right-40 w-96 h-96 bg-purple-900/30 rounded-full blur-[100px]' />
-			</div>
-
-			<div className='relative max-w-7xl mx-auto py-12 px-4 overflow-hidden sm:px-6 lg:px-8'>
+		<footer className='bg-slate-950 border-t border-slate-900 relative z-10'>
+			<div className='max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8'>
+				{/* Navigation Links */}
 				<nav
-					className='-mx-5 -my-2 flex flex-wrap justify-center'
+					className='-mx-5 -my-2 flex flex-wrap justify-center mb-8'
 					aria-label='Footer'
 				>
 					{navigation.main.map((item) => (
 						<div key={item.name} className='px-5 py-2'>
 							<Link
 								href={item.href}
-								className='text-base text-gray-400 hover:text-white transition-colors duration-200'
+								className='text-sm text-slate-400 hover:text-indigo-400 transition-colors duration-200 uppercase tracking-wide font-medium'
 							>
 								{item.name}
 							</Link>
@@ -75,28 +71,33 @@ export default function Footer() {
 					))}
 				</nav>
 
-				<div className='mt-8 flex justify-center space-x-6'>
+				{/* Social Icons */}
+				<div className='flex justify-center space-x-6'>
 					{navigation.social.map((item) => (
 						<a
 							key={item.name}
 							href={item.href}
 							target='_blank'
 							rel='noreferrer'
-							className='group relative p-3 rounded-full bg-white/5 hover:bg-white/10 transition-all duration-300'
+							className='group relative p-3 rounded-full bg-slate-900 border border-slate-800 hover:border-indigo-500/50 hover:bg-slate-800 transition-all duration-300'
 						>
 							<item.icon
-								className='h-6 w-6 text-gray-400 group-hover:text-white transition-colors duration-300'
+								className='h-5 w-5 text-slate-400 group-hover:text-white transition-colors duration-300'
 								aria-hidden='true'
 							/>
-							{/* Glow effect on hover */}
-							<span className='absolute inset-0 rounded-full ring-1 ring-white/10 group-hover:ring-white/30 transition-all duration-300' />
+							{/* Subtle Glow effect on hover */}
+							<div className='absolute inset-0 rounded-full ring-2 ring-indigo-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm' />
 						</a>
 					))}
 				</div>
 
-				<div className='mt-10 border-t border-white/10 pt-8'>
-					<p className='text-center text-base text-gray-500'>
-						&copy; {new Date().getFullYear()} Jeff Hogg. All rights reserved.
+				{/* Copyright */}
+				<div className='mt-8 border-t border-slate-900 pt-8 flex flex-col items-center'>
+					<p className='text-center text-sm text-slate-500'>
+						&copy; {new Date().getFullYear()} Jeff Hogg.
+					</p>
+					<p className='text-center text-xs text-slate-600 mt-2'>
+						Built with Next.js, Tailwind & Precision.
 					</p>
 				</div>
 			</div>

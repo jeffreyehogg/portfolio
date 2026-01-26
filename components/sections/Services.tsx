@@ -4,10 +4,7 @@ import { CheckIcon } from '@heroicons/react/24/solid'
 import { motion, Variants } from 'framer-motion'
 import { servicesData } from '../../lib/data'
 import BackgroundBlobs from '../ui/BackgroundBlobs'
-
-function cn(...classes: string[]) {
-	return classes.filter(Boolean).join(' ')
-}
+import { cn } from '../../lib/utils'
 
 const containerVariants: Variants = {
 	hidden: { opacity: 0 },
@@ -24,19 +21,20 @@ const itemVariants: Variants = {
 
 export default function Services() {
 	return (
-		<section className='py-24 bg-gray-50 relative overflow-hidden'>
-			{/* Background Blobs */}
-			<BackgroundBlobs />
+		<section className='py-24 bg-slate-950 relative overflow-hidden'>
+			<div className='absolute inset-0 pointer-events-none opacity-20'>
+				<BackgroundBlobs />
+			</div>
 
 			<div className='relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
 				<div className='text-center max-w-3xl mx-auto mb-16'>
-					<h2 className='text-indigo-600 font-semibold tracking-wide uppercase text-sm'>
+					<h2 className='text-indigo-400 font-semibold tracking-wide uppercase text-sm'>
 						Services
 					</h2>
-					<p className='mt-2 text-3xl font-extrabold text-gray-900 sm:text-4xl'>
+					<p className='mt-2 text-3xl font-extrabold text-white sm:text-4xl'>
 						Tailored Solutions for Your Growth
 					</p>
-					<p className='mt-4 text-xl text-gray-500'>
+					<p className='mt-4 text-xl text-slate-400'>
 						Choose a website package that fits your business needs perfectly.
 					</p>
 				</div>
@@ -54,9 +52,9 @@ export default function Services() {
 							variants={itemVariants}
 							className={cn(
 								tier.mostPopular
-									? 'ring-2 ring-indigo-600 shadow-2xl scale-105 z-10'
-									: 'ring-1 ring-gray-200 shadow-sm hover:shadow-xl',
-								'relative flex flex-col bg-white rounded-3xl p-8 transition-all duration-300',
+									? 'ring-2 ring-indigo-500 shadow-2xl shadow-indigo-500/10 scale-105 z-10 bg-slate-900'
+									: 'ring-1 ring-slate-800 shadow-sm hover:shadow-xl hover:shadow-indigo-500/10 bg-slate-900/50',
+								'relative flex flex-col rounded-3xl p-8 transition-all duration-300 backdrop-blur-sm',
 							)}
 						>
 							{tier.mostPopular && (
@@ -67,8 +65,8 @@ export default function Services() {
 								</div>
 							)}
 
-							<h3 className='text-xl font-bold text-gray-900'>{tier.title}</h3>
-							<p className='mt-4 text-gray-500 text-sm leading-relaxed min-h-[60px]'>
+							<h3 className='text-xl font-bold text-white'>{tier.title}</h3>
+							<p className='mt-4 text-slate-400 text-sm leading-relaxed min-h-[60px]'>
 								{tier.description}
 							</p>
 
@@ -77,11 +75,11 @@ export default function Services() {
 									<li key={feature} className='flex items-start'>
 										<div className='shrink-0'>
 											<CheckIcon
-												className='h-5 w-5 text-indigo-500'
+												className='h-5 w-5 text-indigo-400'
 												aria-hidden='true'
 											/>
 										</div>
-										<p className='ml-3 text-sm text-gray-700'>{feature}</p>
+										<p className='ml-3 text-sm text-slate-300'>{feature}</p>
 									</li>
 								))}
 							</ul>
@@ -91,8 +89,8 @@ export default function Services() {
 									href='/contact'
 									className={cn(
 										tier.mostPopular
-											? 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg shadow-indigo-200'
-											: 'bg-indigo-50 text-indigo-700 hover:bg-indigo-100',
+											? 'bg-indigo-600 text-white hover:bg-indigo-500 shadow-lg shadow-indigo-900/20'
+											: 'bg-slate-800 text-white hover:bg-slate-700',
 										'block w-full py-3 px-6 rounded-xl text-center font-semibold transition-all duration-200 hover:-translate-y-0.5',
 									)}
 								>

@@ -9,20 +9,24 @@ export const metadata: Metadata = {
 
 export default function Contact() {
 	return (
-		<div className='min-h-screen bg-gray-50 relative overflow-hidden pt-24 pb-12 px-4 sm:px-6 lg:px-8'>
-			<BackgroundBlobs />
+		<div className='min-h-screen bg-slate-950 relative overflow-hidden pt-24 pb-12 px-4 sm:px-6 lg:px-8'>
+			{/* Background Blobs with reduced opacity for dark theme */}
+			<div className='absolute inset-0 pointer-events-none opacity-20'>
+				<BackgroundBlobs />
+			</div>
 
 			<div className='max-w-3xl mx-auto relative z-10'>
 				<div className='text-center mb-12'>
-					<h2 className='text-indigo-600 font-semibold tracking-wide uppercase text-sm'>
+					<h2 className='text-indigo-400 font-semibold tracking-wide uppercase text-sm'>
 						Contact
 					</h2>
-					<h1 className='mt-2 text-3xl font-extrabold text-gray-900 sm:text-4xl'>
+					<h1 className='mt-2 text-3xl font-extrabold text-white sm:text-4xl'>
 						Let&apos;s Build Something Amazing
 					</h1>
-					<p className='mt-4 text-xl text-gray-500 max-w-2xl mx-auto'>
-						Have a project in mind or want to discuss the latest in tech?
-						I&apos;m currently available for new opportunities.
+					<p className='mt-4 text-xl text-slate-400 max-w-2xl mx-auto'>
+						Have a project in mind or want to discuss the latest in tech? Feel
+						free to reach out—I&apos;m always open to new opportunities and
+						connections.
 					</p>
 				</div>
 

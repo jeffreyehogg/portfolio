@@ -34,6 +34,15 @@ export interface Skill {
 	list: string
 }
 
+// New Interface for Broadcasting
+export interface BroadcastCredit {
+	event: string
+	role: string
+	network: string
+	year: string
+	image?: string
+}
+
 export const linkedInUrl = 'https://www.linkedin.com/in/jeffreyehogg/'
 export const githubUrl = 'http://github.com/jeffreyehogg'
 export const twitterUrl = 'https://twitter.com/jeffreyehogg'
@@ -127,6 +136,72 @@ export const projectsData: Project[] = [
 		tags: ['Next.js', 'TailwindCSS'],
 		learnings:
 			'Focused on SEO, static site generation, and building a high-performance, mobile-first landing page.',
+	},
+]
+
+export const broadcastCredits: BroadcastCredit[] = [
+	{
+		event: 'NBA Western Conference Finals',
+		role: 'Camera Operator',
+		network: 'Warriors TV',
+		year: '2015',
+		image: '/images/broadcast/warriors-cam.jpeg',
+	},
+	{
+		event: 'San Francisco Giants',
+		role: 'Technical Director',
+		network: 'SFG Productions',
+		year: '2013',
+		image: '/images/broadcast/giants-td.jpg',
+	},
+	{
+		event: 'Golden State Warriors',
+		role: 'Camera Operator',
+		network: 'NBC Sports Bay Area',
+		year: '2016',
+		image: '/images/broadcast/me-steph.jpeg',
+	},
+	{
+		event: 'Oakland Athletics',
+		role: 'Camera Operator',
+		network: 'NBC Sports Bay Area',
+		year: '2021',
+		image: '/images/broadcast/mlb-cam.jpeg',
+	},
+	{
+		event: 'Houston Dynamo',
+		role: 'Camera Operator',
+		network: 'AT&T SportsNet Southwest',
+		year: '2025',
+		image: '/images/broadcast/dynamo-cam.jpeg',
+	},
+	{
+		event: 'Houston Rockets',
+		role: 'Camera Operator',
+		network: 'Space City Home Network',
+		year: '2025',
+		image: '/images/broadcast/rockets-cam.jpeg',
+	},
+	{
+		event: 'Red Owl Boxing',
+		role: 'Camera Operator',
+		network: 'DAZN',
+		year: '2025',
+		image: '/images/broadcast/boxing.jpeg',
+	},
+	{
+		event: 'Texas A&M Football',
+		role: 'Camera Operator',
+		network: 'ESPN',
+		year: '2023',
+		image: '/images/broadcast/college-football.jpeg',
+	},
+	{
+		event: 'Various',
+		role: 'Camera Operator',
+		network: 'ESPN',
+		year: '2016',
+		image: '/images/broadcast/espn.jpg',
 	},
 ]
 

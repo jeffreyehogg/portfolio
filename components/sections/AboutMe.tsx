@@ -30,10 +30,16 @@ export default function AboutMe() {
 							About Me
 						</h2>
 						<p className='text-lg text-gray-500 leading-relaxed'>
-							I'm a software developer with a passion for building clean,
-							enterprise-level applications. Whether it's complex Angular
-							dashboards or modern Next.js sites, I focus on performance and
-							user experience.
+							I specialize in translating complex requirements into reliable,
+							scalable code. But my understanding of "high performance" didn't
+							start in a terminal.
+						</p>
+						<p className='text-lg text-gray-500 leading-relaxed mt-4'>
+							I spent over a decade as a Camera Operator and Technical Director
+							for major networks, bringing the World Series, Super Bowl, and NBA
+							Finals to millions of viewers. Whether I'm refactoring a codebase
+							or framing a live shot for ESPN, my goal is always the same:
+							clarity, reliability, and excellence.
 						</p>
 						<div className='mt-6'>
 							<Socials />

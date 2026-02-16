@@ -10,13 +10,11 @@ module.exports = {
 				sans: ['var(--font-inter)', ...defaultTheme.fontFamily.sans],
 			},
 			colors: {
-				// A modern, deep slate palette for a "professional" dark mode feel if desired
 				slate: {
 					850: '#151e2e',
 					900: '#0f172a',
 					950: '#020617',
 				},
-				// Richer primary color
 				indigo: {
 					500: '#6366f1',
 					600: '#4f46e5',
@@ -28,7 +26,9 @@ module.exports = {
 				'fade-in-up': 'fadeInUp 0.8s ease-out',
 				'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
 				float: 'float 6s ease-in-out infinite',
-				blob: 'blob 7s infinite', // Ensure this matches your CSS if you added blob animation
+				blob: 'blob 7s infinite',
+				'spin-slow': 'spin 20s linear infinite',
+				shimmer: 'shimmer 2s linear infinite',
 			},
 			keyframes: {
 				fadeIn: {
@@ -49,6 +49,13 @@ module.exports = {
 					'66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
 					'100%': { transform: 'translate(0px, 0px) scale(1)' },
 				},
+				shimmer: {
+					'0%': { transform: 'translateX(-100%)' },
+					'100%': { transform: 'translateX(100%)' },
+				},
+			},
+			backgroundImage: {
+				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
 			},
 		},
 	},

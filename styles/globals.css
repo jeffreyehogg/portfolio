@@ -1,3 +1,112 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+	/* Smooth scrolling */
+	html {
+		scroll-behavior: smooth;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	}
+
+	/* Custom scrollbar for dark theme */
+	::-webkit-scrollbar {
+		width: 8px;
+	}
+
+	::-webkit-scrollbar-track {
+		background: #020617;
+	}
+
+	::-webkit-scrollbar-thumb {
+		background: #1e293b;
+		border-radius: 4px;
+	}
+
+	::-webkit-scrollbar-thumb:hover {
+		background: #334155;
+	}
+
+	/* Firefox scrollbar */
+	* {
+		scrollbar-width: thin;
+		scrollbar-color: #1e293b #020617;
+	}
+
+	/* Better focus styles */
+	:focus-visible {
+		outline: 2px solid #6366f1;
+		outline-offset: 2px;
+	}
+
+	/* Selection color */
+	::selection {
+		background-color: rgba(99, 102, 241, 0.3);
+		color: #fff;
+	}
+}
+
+@layer utilities {
+	/* Gradient text animation referenced in Hero */
+	@keyframes gradient-x {
+		0%,
+		100% {
+			background-size: 200% 200%;
+			background-position: left center;
+		}
+		50% {
+			background-size: 200% 200%;
+			background-position: right center;
+		}
+	}
+
+	.animate-gradient-x {
+		animation: gradient-x 4s ease infinite;
+	}
+
+	/* Animation delay utilities referenced in BackgroundBlobs */
+	.animation-delay-2000 {
+		animation-delay: 2s;
+	}
+
+	.animation-delay-4000 {
+		animation-delay: 4s;
+	}
+
+	/* Stagger delays for list animations */
+	.animation-delay-100 {
+		animation-delay: 100ms;
+	}
+	.animation-delay-200 {
+		animation-delay: 200ms;
+	}
+	.animation-delay-300 {
+		animation-delay: 300ms;
+	}
+
+	/* Text balance for headings */
+	.text-balance {
+		text-wrap: balance;
+	}
+
+	/* Grid background pattern */
+	.bg-grid {
+		background-image: linear-gradient(
+				rgba(99, 102, 241, 0.03) 1px,
+				transparent 1px
+			),
+			linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
+		background-size: 64px 64px;
+	}
+
+	/* Noise texture overlay */
+	.noise-overlay::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.02'/%3E%3C/svg%3E");
+		pointer-events: none;
+		z-index: 1;
+	}
+}

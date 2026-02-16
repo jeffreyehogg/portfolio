@@ -1,6 +1,6 @@
 'use client'
 
-import { Fragment } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import Avatar from '../ui/Avatar'
@@ -20,6 +20,13 @@ const navigation = [
 
 export default function Navbar() {
 	const pathname = usePathname()
+	const [scrolled, setScrolled] = useState(false)
+
+	useEffect(() => {
+		const onScroll = () => setScrolled(window.scrollY > 50)
+		window.addEventListener('scroll', onScroll, { passive: true })
+		return () => window.removeEventListener('scroll', onScroll)
+	}, [])
 
 	return (
 		<div className='fixed top-0 inset-x-0 z-50 flex justify-center pointer-events-none p-4 sm:p-6'>
@@ -28,9 +35,12 @@ export default function Navbar() {
 					<motion.div
 						layout
 						className={cn(
-							'mx-auto transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]',
+							'mx-auto transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]',
 							open ? 'rounded-3xl' : 'rounded-full',
-							'bg-slate-900/80 backdrop-blur-xl border border-slate-800 shadow-2xl shadow-indigo-500/10',
+							scrolled
+								? 'bg-slate-900/90 backdrop-blur-xl border-slate-700/50 shadow-2xl shadow-black/20'
+								: 'bg-slate-900/60 backdrop-blur-lg border-slate-800/50 shadow-lg shadow-black/10',
+							'border',
 						)}
 						initial={{ y: -100, opacity: 0 }}
 						animate={{ y: 0, opacity: 1 }}
@@ -87,11 +97,10 @@ export default function Navbar() {
 
 								{/* Right Side: Profile */}
 								<div className='absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 gap-3'>
-									{/* Profile Dropdown */}
 									<Menu as='div' className='ml-3 relative'>
-										<Menu.Button className='flex rounded-full bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-slate-900 transition-transform hover:scale-105'>
+										<Menu.Button className='flex rounded-full bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-slate-900 transition-transform hover:scale-105'>
 											<span className='sr-only'>Open user menu</span>
-											<div className='h-9 w-9 overflow-hidden rounded-full border-2 border-slate-700'>
+											<div className='h-9 w-9 overflow-hidden rounded-full border-2 border-slate-700 hover:border-indigo-500/50 transition-colors'>
 												<Avatar />
 											</div>
 										</Menu.Button>
@@ -105,7 +114,7 @@ export default function Navbar() {
 											leaveFrom='transform opacity-100 scale-100'
 											leaveTo='transform opacity-0 scale-95'
 										>
-											<Menu.Items className='absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-xl bg-slate-900 py-1 shadow-lg ring-1 ring-white/10 focus:outline-none border border-slate-800'>
+											<Menu.Items className='absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-xl bg-slate-900/95 backdrop-blur-xl py-1 shadow-lg ring-1 ring-white/10 focus:outline-none border border-slate-800'>
 												<div className='px-1 py-1'>
 													<Menu.Item>
 														{({ active }) => (
@@ -117,7 +126,7 @@ export default function Navbar() {
 																	active
 																		? 'bg-indigo-600 text-white'
 																		: 'text-slate-300',
-																	'group flex w-full items-center rounded-lg px-2 py-2 text-sm transition-colors',
+																	'group flex w-full items-center rounded-lg px-3 py-2 text-sm transition-colors',
 																)}
 															>
 																LinkedIn
@@ -134,10 +143,10 @@ export default function Navbar() {
 																	active
 																		? 'bg-indigo-600 text-white'
 																		: 'text-slate-300',
-																	'group flex w-full items-center rounded-lg px-2 py-2 text-sm transition-colors',
+																	'group flex w-full items-center rounded-lg px-3 py-2 text-sm transition-colors',
 																)}
 															>
-																Github
+																GitHub
 															</a>
 														)}
 													</Menu.Item>
@@ -151,7 +160,7 @@ export default function Navbar() {
 																	active
 																		? 'bg-indigo-600 text-white'
 																		: 'text-slate-300',
-																	'group flex w-full items-center rounded-lg px-2 py-2 text-sm transition-colors',
+																	'group flex w-full items-center rounded-lg px-3 py-2 text-sm transition-colors',
 																)}
 															>
 																Twitter

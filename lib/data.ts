@@ -34,7 +34,6 @@ export interface Skill {
 	list: string
 }
 
-// New Interface for Broadcasting
 export interface BroadcastCredit {
 	event: string
 	role: string
@@ -44,7 +43,7 @@ export interface BroadcastCredit {
 }
 
 export const linkedInUrl = 'https://www.linkedin.com/in/jeffreyehogg/'
-export const githubUrl = 'http://github.com/jeffreyehogg'
+export const githubUrl = 'https://github.com/jeffreyehogg'
 export const twitterUrl = 'https://twitter.com/jeffreyehogg'
 
 export const projectsData: Project[] = [
@@ -295,11 +294,15 @@ export const trustedCompaniesData: CompanyLogo[] = [
 
 export const skillsData: Skill[] = [
 	{
-		category: 'Languages, Libraries and frameworks',
-		list: 'JavaScript, TypeScript, Angular, React, Nextjs, Node.js, Express, PlaneScale, MongoDB',
+		category: 'Languages & Frameworks',
+		list: 'JavaScript, TypeScript, Angular, React, Next.js, Vue, Nuxt, Node.js, Express, Python, SQL',
+	},
+	{
+		category: 'Databases & ORMs',
+		list: 'PostgreSQL, Supabase, Neon, PlanetScale, MongoDB, Drizzle ORM, Prisma',
 	},
 	{
 		category: 'Tools & Platforms',
-		list: 'Git, GitHub, Vercel, Supabase, Docker',
+		list: 'Git, GitHub, Vercel, Docker, Clerk, Cypress, Tailwind CSS',
 	},
 ]

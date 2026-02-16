@@ -50,7 +50,7 @@ export const twitterUrl = 'https://twitter.com/jeffreyehogg'
 export const projectsData: Project[] = [
 	{
 		title: 'Vision Integrated Systems',
-		href: 'https://vision.jeffhogg.com',
+		href: 'https://vision-texas.com/',
 		description:
 			'The official company website for Vision Integrated Systems, a leading provider of audio-video, structured cabling, and security solutions in Texas.',
 		imageUrl: '/images/projects/vision.png',

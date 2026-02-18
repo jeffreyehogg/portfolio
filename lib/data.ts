@@ -275,7 +275,7 @@ export const trustedCompaniesData: CompanyLogo[] = [
 	{
 		name: 'San Francisco 49ers',
 		imageUrl: '/images/logos/49ers.webp',
-		width: 170,
+		width: 200,
 		height: 100,
 	},
 	{
@@ -287,9 +287,33 @@ export const trustedCompaniesData: CompanyLogo[] = [
 	{
 		name: 'Golden State Warriors',
 		imageUrl: '/images/logos/warriors.webp',
-		width: 90,
+		width: 200,
 		height: 100,
 	},
+	{
+		name: 'Vision Integrated Systems',
+		imageUrl: '/images/logos/vision.webp',
+		width: 200,
+		height: 100,
+	},
+	{
+		name: 'ESPN',
+		imageUrl: '/images/logos/espn.webp',
+		width: 200,
+		height: 100,
+	},
+	{
+		name: 'FOX Sports',
+		imageUrl: '/images/logos/fox.webp',
+		width: 200,
+		height: 100,
+	},
+	{
+		name: 'NBC Sports Bay Area',
+		imageUrl: '/images/logos/nbc.webp',
+		width: 200,
+		height: 100,
+	}
 ]
 
 export const skillsData: Skill[] = [

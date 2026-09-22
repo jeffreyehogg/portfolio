@@ -19,4 +19,13 @@ module.exports = {
 	reactStrictMode: true,
 	// Compress output for smaller bundle sizes
 	compress: true,
+	async redirects() {
+		return [
+			{
+				source: '/broadcasting',
+				destination: '/portfolio',
+				permanent: true,
+			},
+		]
+	},
 }

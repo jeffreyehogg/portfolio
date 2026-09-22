@@ -20,23 +20,23 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
 	title: {
-		default: 'Jeff Hogg - Software Developer',
+		default: 'Jeff Hogg | Full-Stack Developer & Systems Architect',
 		template: '%s | Jeff Hogg',
 	},
 	description:
-		'Software Engineer & Solutions Lead specializing in TypeScript, React, Angular, and Next.js. Previously at Cisco.',
+		'Full-Stack Developer & Solo Technical Lead at LGI Homes. Specializing in DevOps, system architecture, API integration, and distributed databases.',
 	metadataBase: new URL('https://jeffhogg.com'),
 	openGraph: {
-		title: 'Jeff Hogg - Software Developer',
+		title: 'Jeff Hogg | Full-Stack Developer & Systems Architect',
 		description:
-			'Software Engineer & Solutions Lead specializing in TypeScript, React, Angular, and Next.js.',
+			'Full-Stack Developer & Solo Technical Lead at LGI Homes. Specializing in DevOps, system architecture, API integration, and distributed databases.',
 		url: 'https://jeffhogg.com/',
 		siteName: 'Jeff Hogg',
 		type: 'website',
 		locale: 'en_US',
 		images: [
 			{
-				url: '/images/portfolio.png',
+				url: '/images/projects/portfolio.png',
 				width: 1200,
 				height: 630,
 				alt: 'Jeff Hogg Portfolio',
@@ -45,11 +45,11 @@ export const metadata: Metadata = {
 	},
 	twitter: {
 		card: 'summary_large_image',
-		title: 'Jeff Hogg - Software Developer',
+		title: 'Jeff Hogg | Full-Stack Developer & Systems Architect',
 		description:
-			'Software Engineer & Solutions Lead specializing in TypeScript, React, Angular, and Next.js.',
+			'Full-Stack Developer & Solo Technical Lead at LGI Homes. Specializing in DevOps, system architecture, API integration, and distributed databases.',
 		creator: '@jeffreyehogg',
-		images: ['/images/portfolio.png'],
+		images: ['/images/projects/portfolio.png'],
 	},
 	robots: {
 		index: true,

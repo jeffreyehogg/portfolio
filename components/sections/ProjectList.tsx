@@ -126,6 +126,14 @@ export default function ProjectList() {
 										sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
 									/>
 
+									{project.metrics && (
+										<div className='absolute top-3 left-3 z-20'>
+											<span className='px-2.5 py-1 rounded-full text-xs font-mono font-medium bg-slate-950/80 text-emerald-400 border border-emerald-500/30 backdrop-blur-md shadow-md'>
+												{project.metrics}
+											</span>
+										</div>
+									)}
+
 									<div className='absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20'>
 										<span className='bg-white/10 backdrop-blur-md border border-white/20 text-white px-4 py-2 rounded-full font-medium text-sm flex items-center gap-2'>
 											View Project{' '}

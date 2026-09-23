@@ -81,9 +81,10 @@ pnpm lint
 - Focus on real-world engineering impact: API integration, database architecture, CI/CD automation, and modern full-stack TypeScript.
 - Package manager is flexible.
 - Model efficiency: Leverage Flash Lite / Flash for everyday work, reserve Pro for heavy architectural decisions.
+- **Server Lifecycle**: Stop all dev servers and background daemon processes after pushing to GitHub or completing verification.
 
 ### Known Gotchas & Solutions
-- *(Record recurring build issues, library compatibility notes, or environment quirks here)*
+- **Next.js HMR Image Imports**: Avoid relative imports from `public/` (e.g. `import img from '../../public/...'`) inside client components, as Webpack's image loader can cause chunk module ID mismatches during HMR (`TypeError: __webpack_modules__[moduleId] is not a function`). Use standard string paths (`src='/images/...'`).
 
 ---
 

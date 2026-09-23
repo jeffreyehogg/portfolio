@@ -268,6 +268,7 @@ export const projectsData: Project[] = [
 	{
 		title: 'Personal Portfolio & Design System',
 		href: 'https://jeffhogg.com',
+		githubUrl: 'https://github.com/jeffreyehogg/portfolio',
 		description:
 			'Modern portfolio engineering platform built with Next.js App Router, React 19, and Tailwind CSS. Features dark/light themes, agentic workflow memory, and native server action forms.',
 		imageUrl: '/images/projects/portfolio.png',

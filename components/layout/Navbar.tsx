@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from 'react'
 import { Disclosure } from '@headlessui/react'
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon, XMarkIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 import Avatar from '../ui/Avatar'
+import CommandPalette from '../ui/CommandPalette'
 import { githubUrl, linkedInUrl } from '../../lib/data'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
@@ -20,6 +21,7 @@ const navigation = [
 export default function Navbar() {
 	const pathname = usePathname()
 	const [scrolled, setScrolled] = useState(false)
+	const [commandPaletteOpen, setCommandPaletteOpen] = useState(false)
 
 	useEffect(() => {
 		const onScroll = () => setScrolled(window.scrollY > 30)
@@ -28,8 +30,9 @@ export default function Navbar() {
 	}, [])
 
 	return (
-		<div className='fixed top-0 inset-x-0 z-50 flex justify-center pointer-events-none p-4 sm:p-5'>
-			<Disclosure as='nav' className='pointer-events-auto w-full max-w-4xl'>
+		<>
+			<div className='fixed top-0 inset-x-0 z-50 flex justify-center pointer-events-none p-4 sm:p-5'>
+				<Disclosure as='nav' className='pointer-events-auto w-full max-w-4xl'>
 				{({ open }) => (
 					<motion.div
 						layout
@@ -96,10 +99,25 @@ export default function Navbar() {
 								})}
 							</div>
 
-							{/* Right: Quick Socials & Mobile Toggle */}
-							<div className='flex items-center gap-2'>
+							{/* Right: Quick Search, Socials & Mobile Toggle */}
+							<div className='flex items-center gap-1.5 sm:gap-2'>
+								{/* Search / Command Palette Trigger */}
+								<button
+									type='button'
+									onClick={() => setCommandPaletteOpen(true)}
+									className='flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-mono text-slate-400 bg-slate-800/60 hover:text-white hover:bg-slate-800 border border-slate-700/60 hover:border-indigo-500/40 transition-all cursor-pointer'
+									aria-label='Quick Search (Press ⌘K)'
+									title='Quick Search (⌘K)'
+								>
+									<MagnifyingGlassIcon className='w-3.5 h-3.5 text-indigo-400' />
+									<span className='hidden lg:inline'>Search</span>
+									<kbd className='px-1 py-0.2 text-[10px] font-sans font-semibold rounded bg-slate-700/60 text-slate-300 border border-slate-600/40'>
+										⌘K
+									</kbd>
+								</button>
+
 								{/* Social Icons for Desktop */}
-								<div className='hidden sm:flex items-center gap-1 border-l border-slate-800/80 pl-3 ml-2'>
+								<div className='hidden sm:flex items-center gap-1 border-l border-slate-800/80 pl-2 ml-1'>
 									<a
 										href={githubUrl}
 										target='_blank'
@@ -196,5 +214,8 @@ export default function Navbar() {
 				)}
 			</Disclosure>
 		</div>
+
+		<CommandPalette isOpen={commandPaletteOpen} setIsOpen={setCommandPaletteOpen} />
+	</>
 	)
 }

@@ -9,6 +9,7 @@ import {
 	ServerStackIcon,
 	CircleStackIcon,
 	CpuChipIcon,
+	ArrowDownTrayIcon,
 } from '@heroicons/react/24/outline'
 import { profileData } from '../../lib/data'
 
@@ -75,25 +76,34 @@ export default function Hero() {
 
 				{/* Action Buttons */}
 				<motion.div
-					className='mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center'
+					className='mt-10 flex flex-wrap gap-3.5 justify-center items-center'
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ delay: 0.4, duration: 0.6 }}
 				>
 					<Link
 						href='/portfolio'
-						className='group inline-flex items-center gap-2.5 px-7 py-3.5 text-sm sm:text-base font-semibold rounded-xl text-white bg-indigo-600 hover:bg-indigo-500 transition-all duration-300 shadow-[0_0_25px_rgba(79,70,229,0.35)] hover:shadow-[0_0_35px_rgba(79,70,229,0.6)] hover:-translate-y-0.5'
+						className='group inline-flex items-center gap-2 px-6 py-3 text-sm sm:text-base font-semibold rounded-xl text-white bg-indigo-600 hover:bg-indigo-500 transition-all duration-300 shadow-[0_0_25px_rgba(79,70,229,0.35)] hover:shadow-[0_0_35px_rgba(79,70,229,0.6)] hover:-translate-y-0.5'
 					>
 						<CommandLineIcon className='w-5 h-5' />
-						Explore Systems & Projects
+						Explore Systems
 					</Link>
 					<Link
 						href='/about'
-						className='group inline-flex items-center gap-2 px-7 py-3.5 text-sm sm:text-base font-semibold rounded-xl text-slate-200 border border-slate-800 bg-slate-900/80 hover:bg-slate-800/90 hover:text-white backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5'
+						className='group inline-flex items-center gap-2 px-6 py-3 text-sm sm:text-base font-semibold rounded-xl text-slate-200 border border-slate-800 bg-slate-900/80 hover:bg-slate-800/90 hover:text-white backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5'
 					>
 						<BriefcaseIcon className='w-5 h-5 text-indigo-400' />
-						Career Timeline & Background
+						Career Timeline
 					</Link>
+					<a
+						href='/Jeff_Hogg_Resume.pdf'
+						target='_blank'
+						rel='noopener noreferrer'
+						className='group inline-flex items-center gap-2 px-5 py-3 text-sm sm:text-base font-medium rounded-xl text-slate-300 border border-slate-800/80 bg-slate-900/50 hover:bg-slate-800 hover:text-white backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5'
+					>
+						<ArrowDownTrayIcon className='w-4 h-4 text-slate-400 group-hover:text-indigo-400 transition-colors' />
+						Resume PDF
+					</a>
 				</motion.div>
 
 				{/* Metrics Grid */}

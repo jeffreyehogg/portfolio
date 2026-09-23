@@ -1,6 +1,7 @@
 'use client'
 
 import { CheckIcon } from '@heroicons/react/24/solid'
+import Link from 'next/link'
 import { motion, Variants } from 'framer-motion'
 import { servicesData } from '../../lib/data'
 import { cn } from '../../lib/utils'
@@ -91,8 +92,8 @@ export default function Services() {
 							</ul>
 
 							<div className='mt-8'>
-								<a
-									href='/contact'
+								<Link
+									href={`/contact?service=${encodeURIComponent(tier.title)}`}
 									className={cn(
 										'block w-full py-3 px-6 rounded-xl text-center font-semibold transition-all duration-200 hover:-translate-y-0.5',
 										tier.mostPopular
@@ -101,7 +102,7 @@ export default function Services() {
 									)}
 								>
 									{tier.cta}
-								</a>
+								</Link>
 							</div>
 						</motion.div>
 					))}

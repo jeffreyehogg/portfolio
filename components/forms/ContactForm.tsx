@@ -1,7 +1,8 @@
 'use client'
 
-import { useEffect, useRef, useState, useActionState } from 'react'
+import { useEffect, useRef, useState, useActionState, Suspense } from 'react'
 import { useFormStatus } from 'react-dom'
+import { useSearchParams } from 'next/navigation'
 import { sendEmail, type FormState } from '../../app/actions/contact-action'
 import {
 	GoogleReCaptchaProvider,
@@ -53,6 +54,10 @@ function SubmitButton() {
 }
 
 function ContactFormInner() {
+	const searchParams = useSearchParams()
+	const serviceParam = searchParams.get('service')
+	const defaultSubject = serviceParam ? `Inquiry: ${serviceParam}` : ''
+
 	const [state, formAction] = useActionState(sendEmail, initialState)
 	const [recaptchaToken, setRecaptchaToken] = useState<string>('')
 	const { executeRecaptcha } = useGoogleReCaptcha()
@@ -189,6 +194,8 @@ function ContactFormInner() {
 							type='text'
 							name='subject'
 							id='subject'
+							defaultValue={defaultSubject}
+							key={defaultSubject}
 							required
 							className='block w-full rounded-lg border-0 px-4 py-3 text-slate-100 shadow-sm ring-1 ring-inset ring-slate-700 placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 bg-slate-950/50 focus:bg-slate-950 transition-colors'
 						/>
@@ -297,7 +304,13 @@ export default function ContactForm() {
 
 	return (
 		<GoogleReCaptchaProvider reCaptchaKey={recaptchaKey}>
-			<ContactFormInner />
+			<Suspense
+				fallback={
+					<div className='bg-slate-900/80 backdrop-blur-xl rounded-3xl border border-slate-800 p-8 sm:p-10 animate-pulse h-96' />
+				}
+			>
+				<ContactFormInner />
+			</Suspense>
 		</GoogleReCaptchaProvider>
 	)
 }

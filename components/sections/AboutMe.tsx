@@ -1,12 +1,14 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 import Socials from './Socials'
 import Experience from './Experience'
 import { skillsData } from '../../lib/data'
 import BackgroundBlobs from '../ui/BackgroundBlobs'
 import { motion } from 'framer-motion'
 import { CheckCircleIcon } from '@heroicons/react/24/solid'
+import { ArrowDownTrayIcon, EnvelopeIcon } from '@heroicons/react/24/outline'
 
 const coreCapabilities = [
 	'Modernizing legacy infrastructure to Git & automated CI/CD',
@@ -103,7 +105,27 @@ export default function AboutMe() {
 								</ul>
 							</div>
 
-							<div className='mt-8 pt-6 border-t border-slate-800'>
+							{/* Actions: Resume & Contact */}
+							<div className='mt-8 pt-6 border-t border-slate-800/80 flex flex-col sm:flex-row gap-3'>
+								<a
+									href='/Jeff_Hogg_Resume.pdf'
+									target='_blank'
+									rel='noopener noreferrer'
+									className='inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-500 shadow-md shadow-indigo-600/20 transition-all duration-200 hover:-translate-y-0.5'
+								>
+									<ArrowDownTrayIcon className='w-4 h-4' />
+									Download Resume (PDF)
+								</a>
+								<Link
+									href='/contact'
+									className='inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-slate-300 bg-slate-900 border border-slate-800 hover:bg-slate-800 hover:text-white transition-all duration-200 hover:-translate-y-0.5'
+								>
+									<EnvelopeIcon className='w-4 h-4 text-indigo-400' />
+									Get in Touch
+								</Link>
+							</div>
+
+							<div className='mt-6 pt-6 border-t border-slate-800'>
 								<Socials />
 							</div>
 						</motion.div>

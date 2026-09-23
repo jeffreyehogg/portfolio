@@ -3,198 +3,209 @@
 import { useState, useMemo } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { motion, AnimatePresence, Variants } from 'framer-motion'
-import { projectsData } from '../../lib/data'
+import { motion, AnimatePresence } from 'framer-motion'
+import { projectsData, Project } from '../../lib/data'
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline'
 import BackgroundBlobs from '../ui/BackgroundBlobs'
 import { cn } from '../../lib/utils'
 
-const containerVariants: Variants = {
-	hidden: { opacity: 0 },
-	visible: {
-		opacity: 1,
-		transition: { staggerChildren: 0.1 },
-	},
-}
+type CategoryFilter = 'all' | 'systems' | 'fullstack'
 
-const itemVariants: Variants = {
-	hidden: { y: 30, opacity: 0 },
-	visible: {
-		y: 0,
-		opacity: 1,
-		transition: { type: 'spring', stiffness: 60, damping: 20 },
-	},
-	exit: { y: -20, opacity: 0 },
-}
-
-// Extract unique tags from all projects
-const allTags = Array.from(
-	new Set(projectsData.flatMap((p) => p.tags))
-).sort()
+const categories: { id: CategoryFilter; label: string }[] = [
+	{ id: 'all', label: 'All Projects' },
+	{ id: 'systems', label: 'Systems & Middleware' },
+	{ id: 'fullstack', label: 'Full-Stack SaaS' },
+]
 
 export default function ProjectList() {
-	const [activeFilter, setActiveFilter] = useState<string | null>(null)
+	const [activeCategory, setActiveCategory] = useState<CategoryFilter>('all')
 
-	const filteredProjects = useMemo(
-		() =>
-			activeFilter
-				? projectsData.filter((p) => p.tags.includes(activeFilter))
-				: projectsData,
-		[activeFilter]
-	)
+	const filteredProjects = useMemo(() => {
+		if (activeCategory === 'all') return projectsData
+		if (activeCategory === 'systems') {
+			return projectsData.filter((p) =>
+				p.tags.some((t) =>
+					['Enterprise SaaS', 'PostgreSQL JSONB', 'Cypress', 'Jenkins', 'PapaParse', 'Angular'].includes(t)
+				)
+			)
+		}
+		if (activeCategory === 'fullstack') {
+			return projectsData.filter((p) =>
+				p.tags.some((t) =>
+					['Next.js', 'Nuxt', 'Supabase', 'Neon Postgres', 'Drizzle ORM'].includes(t)
+				)
+			)
+		}
+		return projectsData
+	}, [activeCategory])
 
 	return (
-		<section className='relative py-24 bg-slate-950 overflow-hidden'>
+		<section className='relative pt-32 sm:pt-40 pb-24 bg-slate-950 overflow-hidden min-h-screen'>
+			{/* Ambient background lighting */}
 			<div className='absolute inset-0 pointer-events-none opacity-20'>
 				<BackgroundBlobs />
 			</div>
 
 			<div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
-				<div className='text-center max-w-3xl mx-auto mb-12'>
-					<h2 className='text-indigo-400 font-semibold tracking-wide uppercase text-sm'>
-						My Work
-					</h2>
-					<h3 className='mt-2 text-3xl font-extrabold text-white sm:text-4xl text-balance'>
-						Featured Projects
-					</h3>
-					<p className='mt-4 text-xl text-slate-400'>
-						A selection of enterprise work and personal applications.
-					</p>
-				</div>
-
-				{/* Tag Filter Bar */}
-				<div className='flex flex-wrap justify-center gap-2 mb-12'>
-					<button
-						onClick={() => setActiveFilter(null)}
-						className={cn(
-							'px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 border cursor-pointer',
-							!activeFilter
-								? 'bg-indigo-600 text-white border-indigo-500'
-								: 'bg-slate-900/50 text-slate-400 border-slate-700 hover:border-indigo-500/50 hover:text-white'
-						)}
+				{/* Clean Header */}
+				<div className='text-center max-w-3xl mx-auto mb-12 sm:mb-16'>
+					<motion.div
+						initial={{ opacity: 0, y: 15 }}
+						animate={{ opacity: 1, y: 0 }}
+						className='inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-mono uppercase tracking-wider mb-4'
 					>
-						All
-					</button>
-					{allTags.map((tag) => (
-						<button
-							key={tag}
-							onClick={() =>
-								setActiveFilter(activeFilter === tag ? null : tag)
-							}
-							className={cn(
-								'px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 border cursor-pointer',
-								activeFilter === tag
-									? 'bg-indigo-600 text-white border-indigo-500'
-									: 'bg-slate-900/50 text-slate-400 border-slate-700 hover:border-indigo-500/50 hover:text-white'
-							)}
-						>
-							{tag}
-						</button>
-					))}
+						Systems & Applications
+					</motion.div>
+					<motion.h1
+						initial={{ opacity: 0, y: 15 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ delay: 0.1 }}
+						className='text-3xl sm:text-5xl font-extrabold text-white tracking-tight'
+					>
+						Selected Engineering Work
+					</motion.h1>
+					<motion.p
+						initial={{ opacity: 0, y: 15 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ delay: 0.2 }}
+						className='mt-4 text-base sm:text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed'
+					>
+						A curated showcase of enterprise architectures, data migration middleware,
+						and modern full-stack web platforms.
+					</motion.p>
 				</div>
 
+				{/* Minimal 3-Segment Category Switcher */}
+				<div className='flex justify-center mb-12 sm:mb-16'>
+					<div className='inline-flex p-1 rounded-full bg-slate-900/90 border border-slate-800 shadow-inner backdrop-blur-md'>
+						{categories.map((cat) => {
+							const isActive = activeCategory === cat.id
+							return (
+								<button
+									key={cat.id}
+									onClick={() => setActiveCategory(cat.id)}
+									className={cn(
+										'relative px-5 py-2 text-xs sm:text-sm font-medium rounded-full transition-all duration-300 cursor-pointer',
+										isActive
+											? 'text-white'
+											: 'text-slate-400 hover:text-slate-200'
+									)}
+								>
+									{isActive && (
+										<motion.span
+											layoutId='active-category-pill'
+											className='absolute inset-0 bg-indigo-600 rounded-full shadow-md'
+											transition={{ type: 'spring', bounce: 0.2, duration: 0.5 }}
+										/>
+									)}
+									<span className='relative z-10'>{cat.label}</span>
+								</button>
+							)
+						})}
+					</div>
+				</div>
+
+				{/* Elegant Project Cards Grid */}
 				<AnimatePresence mode='wait'>
 					<motion.div
-						key={activeFilter ?? 'all'}
-						className='grid gap-10 lg:grid-cols-3'
-						variants={containerVariants}
-						initial='hidden'
-						animate='visible'
-						exit='hidden'
+						key={activeCategory}
+						initial={{ opacity: 0, y: 20 }}
+						animate={{ opacity: 1, y: 0 }}
+						exit={{ opacity: 0, y: -15 }}
+						transition={{ duration: 0.4 }}
+						className='grid gap-8 md:grid-cols-2 lg:grid-cols-3'
 					>
-						{filteredProjects.map((project) => (
-							<motion.div
-								key={project.title}
-								variants={itemVariants}
-								layout
-								className='group relative flex flex-col bg-slate-900 rounded-2xl border border-slate-800 shadow-xl hover:shadow-2xl hover:shadow-indigo-500/5 hover:border-indigo-500/30 transition-all duration-300 overflow-hidden'
-							>
-								{/* Clickable Image Section */}
-								<Link
-									href={project.href}
-									target='_blank'
-									rel='noopener noreferrer'
-									className='relative h-64 overflow-hidden cursor-pointer block'
+						{filteredProjects.map((project: Project, idx: number) => {
+							// Display top 3-4 tags to avoid wrapping clutter
+							const displayTags = project.tags.slice(0, 4)
+
+							return (
+								<motion.div
+									key={project.title}
+									initial={{ opacity: 0, y: 20 }}
+									animate={{ opacity: 1, y: 0 }}
+									transition={{ delay: idx * 0.08, duration: 0.4 }}
+									className='group relative flex flex-col rounded-2xl bg-slate-900/70 border border-slate-800/80 shadow-xl hover:shadow-2xl hover:border-indigo-500/40 hover:bg-slate-900/95 transition-all duration-300 overflow-hidden'
 								>
-									<div className='absolute inset-0 bg-indigo-900/0 group-hover:bg-indigo-900/20 transition-colors duration-300 z-10' />
+									{/* Clean Image Header (No awkward overlay badges) */}
+									<Link
+										href={project.href}
+										target='_blank'
+										rel='noopener noreferrer'
+										className='relative aspect-[16/10] w-full overflow-hidden block bg-slate-950 border-b border-slate-800/60'
+									>
+										<div className='absolute inset-0 bg-slate-950/20 group-hover:bg-transparent transition-colors z-10' />
+										<Image
+											src={project.imageUrl}
+											alt={project.title}
+											fill
+											className='object-cover transform transition-transform duration-700 ease-out group-hover:scale-105'
+											sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+										/>
 
-									<Image
-										className='object-cover w-full h-full transform transition-transform duration-700 group-hover:scale-110'
-										src={project.imageUrl}
-										alt={project.title}
-										fill
-										sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
-									/>
-
-									{project.metrics && (
-										<div className='absolute top-3 left-3 z-20'>
-											<span className='px-2.5 py-1 rounded-full text-xs font-mono font-medium bg-slate-950/80 text-emerald-400 border border-emerald-500/30 backdrop-blur-md shadow-md'>
-												{project.metrics}
+										{/* Subtle Hover Reveal */}
+										<div className='absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 bg-slate-950/40 backdrop-blur-[2px]'>
+											<span className='px-4 py-1.5 rounded-full text-xs font-semibold text-white bg-slate-900/90 border border-slate-700 flex items-center gap-1.5 shadow-lg'>
+												View Live System
+												<ArrowTopRightOnSquareIcon className='w-3.5 h-3.5 text-indigo-400' />
 											</span>
 										</div>
-									)}
+									</Link>
 
-									<div className='absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20'>
-										<span className='bg-white/10 backdrop-blur-md border border-white/20 text-white px-4 py-2 rounded-full font-medium text-sm flex items-center gap-2'>
-											View Project{' '}
-											<ArrowTopRightOnSquareIcon className='w-4 h-4' />
-										</span>
-									</div>
-								</Link>
+									{/* Card Content */}
+									<div className='p-6 sm:p-7 flex-1 flex flex-col justify-between'>
+										<div>
+											{/* Metric Pill cleanly placed above title */}
+											{project.metrics && (
+												<div className='flex items-center gap-1.5 text-xs font-mono text-emerald-400 font-medium mb-2.5'>
+													<span className='h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse' />
+													<span>{project.metrics}</span>
+												</div>
+											)}
 
-								{/* Content Section */}
-								<div className='flex-1 p-8 flex flex-col'>
-									<div className='flex-1'>
-										<div className='flex justify-between items-start'>
-											<h4 className='text-2xl font-bold text-white group-hover:text-indigo-400 transition-colors'>
-												<Link
+											<div className='flex items-center justify-between mb-2.5'>
+												<h3 className='text-xl font-bold text-white group-hover:text-indigo-300 transition-colors'>
+													<Link
+														href={project.href}
+														target='_blank'
+														rel='noopener noreferrer'
+													>
+														{project.title}
+													</Link>
+												</h3>
+												<a
 													href={project.href}
 													target='_blank'
 													rel='noopener noreferrer'
+													className='text-slate-500 hover:text-indigo-400 transition-colors p-1'
+													aria-label={`Visit ${project.title}`}
 												>
-													{project.title}
-												</Link>
-											</h4>
-											<a
-												href={project.href}
-												target='_blank'
-												rel='noopener noreferrer'
-												className='text-slate-500 hover:text-indigo-400 transition-colors flex-shrink-0 ml-2'
-												aria-label={`Visit ${project.title}`}
-											>
-												<ArrowTopRightOnSquareIcon className='h-5 w-5' />
-											</a>
+													<ArrowTopRightOnSquareIcon className='w-4 h-4' />
+												</a>
+											</div>
+
+											<p className='text-sm text-slate-400 leading-relaxed font-light line-clamp-3 mb-6'>
+												{project.description}
+											</p>
 										</div>
 
-										<p className='mt-4 text-base text-slate-400 leading-relaxed'>
-											{project.description}
-										</p>
-
-										<div className='mt-6 flex flex-wrap gap-2'>
-											{project.tags.map((tag) => (
+										{/* Curated Technology Badges */}
+										<div className='pt-4 border-t border-slate-800/80 flex flex-wrap gap-1.5'>
+											{displayTags.map((tag) => (
 												<span
 													key={tag}
-													className='inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-indigo-500/10 text-indigo-300 border border-indigo-500/20'
+													className='text-xs font-mono text-slate-300 bg-slate-800/50 border border-slate-700/50 px-2.5 py-1 rounded-md'
 												>
 													{tag}
 												</span>
 											))}
 										</div>
 									</div>
-								</div>
-							</motion.div>
-						))}
+								</motion.div>
+							)
+						})}
 					</motion.div>
 				</AnimatePresence>
-
-				{/* Empty state */}
-				{filteredProjects.length === 0 && (
-					<div className='text-center py-16'>
-						<p className='text-slate-500 text-lg'>
-							No projects match that filter.
-						</p>
-					</div>
-				)}
 			</div>
 		</section>
 	)

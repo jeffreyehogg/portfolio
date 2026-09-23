@@ -24,10 +24,10 @@ export default function AboutMe() {
 				<BackgroundBlobs />
 			</div>
 
-			<div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 relative z-10'>
+			<div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 sm:pt-40 pb-24 relative z-10'>
 				<div className='grid grid-cols-1 lg:grid-cols-12 gap-16'>
 					{/* Left Column: Bio & Image */}
-					<div className='lg:col-span-5 space-y-10'>
+					<div className='lg:col-span-5 space-y-10 lg:sticky lg:top-36 self-start'>
 						{/* Profile Image with Glow */}
 						<motion.div
 							initial={{ opacity: 0, scale: 0.95 }}

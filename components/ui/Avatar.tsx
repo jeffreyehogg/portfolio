@@ -1,6 +1,4 @@
 import Image from 'next/image'
-import headshot from '../../public/images/headshots/me.jpg'
-
 function Avatar() {
 	return (
 		<Image
@@ -8,7 +6,7 @@ function Avatar() {
 			loading='eager'
 			width={40}
 			height={40}
-			src={headshot}
+			src='/images/headshots/me.jpg'
 			alt='Headshot of Jeff Hogg'
 		/>
 	)

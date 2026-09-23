@@ -6,7 +6,7 @@ import { experienceData } from '../../lib/data'
 
 export default function Experience() {
 	return (
-		<div id='experience' className='py-12'>
+		<div id='experience' className='py-12 scroll-mt-32 sm:scroll-mt-36'>
 			<div className='flex items-center justify-between mb-10'>
 				<h3 className='text-2xl font-bold text-white flex items-center gap-3'>
 					<BriefcaseIcon className='w-6 h-6 text-indigo-400' />

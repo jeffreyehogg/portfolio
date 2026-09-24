@@ -6,30 +6,37 @@ This file is automatically loaded by Antigravity as the primary context and oper
 
 ## 1. Project Overview & Architecture
 
-- **Framework**: Next.js 15 (App Router)
-- **Runtime / UI**: React 19, TypeScript
-- **Package Manager**: `pnpm` (version `10.x`)
-- **Styling**: Tailwind CSS v3 with `@tailwindcss/typography`, `@tailwindcss/forms`, `@tailwindcss/aspect-ratio`
-- **Animation**: `framer-motion`
-- **Icons & UI Primitives**: `@heroicons/react`, `@headlessui/react`
-- **Data & Content**: Centralized in [`lib/data.ts`](file:///Users/jeffhogg/Documents/GitHub/portfolio/lib/data.ts)
-- **Validation & Forms**: `zod`, `resend`, `react-google-recaptcha-v3`
+- **Architecture**: Turborepo + pnpm workspaces monorepo
+- **Apps**:
+  - `apps/portfolio`: Next.js 15 (App Router), React 19, Tailwind CSS v3, Framer Motion
+  - `apps/kingdom-connect`: Next.js 16 (Turbopack), React 19, Tailwind CSS v4, Clerk, Drizzle, Neon
+- **Shared Packages**:
+  - `packages/typescript-config`: Shared `tsconfig` definitions
+  - `packages/eslint-config`: Shared ESLint rules
+- **Package Manager**: `pnpm` (version `10.21.0`)
+- **Data & Content (Portfolio)**: Centralized in `apps/portfolio/lib/data.ts`
 
 ---
 
 ## 2. Development Commands & Workflow
 
-Package manager is flexible (default to `pnpm`, but adapt based on project architecture decision):
+This project uses **Turborepo** to orchestrate tasks across the monorepo. Run these from the root directory:
 
 ```bash
-# Start local dev server
+# Start all local dev servers in parallel
 pnpm dev
 
-# Typecheck and build production bundle
+# Start a specific app's dev server
+npx turbo dev --filter=portfolio
+
+# Typecheck and build all apps (utilizes remote caching)
 pnpm build
 
-# Linting
-pnpm lint
+# Install dependencies (ALWAYS run from the root workspace)
+pnpm install
+
+# Add a dependency to a specific app
+pnpm add <package> --filter <app-name>
 ```
 
 ---
@@ -85,6 +92,8 @@ pnpm lint
 
 ### Known Gotchas & Solutions
 - **Next.js HMR Image Imports**: Avoid relative imports from `public/` (e.g. `import img from '../../public/...'`) inside client components, as Webpack's image loader can cause chunk module ID mismatches during HMR (`TypeError: __webpack_modules__[moduleId] is not a function`). Use standard string paths (`src='/images/...'`).
+- **Turborepo Strict Environment Variables**: Turborepo scrubs environment variables during the `build` task. If a build fails claiming a database URL or API key is missing, you must explicitly declare that variable in `turbo.json` under `tasks.build.env`.
+- **Vercel Monorepo Deployment**: The "Ignored Build Step" on Vercel should be left on "Automatic". Vercel auto-detects Turborepo and intelligently skips builds for apps whose source files (or shared `packages/` dependencies) haven't changed using `turbo-ignore`.
 
 ---
 

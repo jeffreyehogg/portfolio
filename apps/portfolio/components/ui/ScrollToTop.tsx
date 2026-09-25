@@ -1,10 +1,11 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { ArrowUpIcon } from '@heroicons/react/24/solid'
 
 export default function ScrollToTop() {
+	const shouldReduce = useReducedMotion()
 	const [show, setShow] = useState(false)
 
 	useEffect(() => {
@@ -17,10 +18,15 @@ export default function ScrollToTop() {
 		<AnimatePresence>
 			{show && (
 				<motion.button
-					initial={{ opacity: 0, scale: 0.8 }}
-					animate={{ opacity: 1, scale: 1 }}
-					exit={{ opacity: 0, scale: 0.8 }}
-					onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+					initial={shouldReduce ? false : { opacity: 0, scale: 0.8 }}
+					animate={shouldReduce ? undefined : { opacity: 1, scale: 1 }}
+					exit={shouldReduce ? undefined : { opacity: 0, scale: 0.8 }}
+					onClick={() =>
+						window.scrollTo({
+							top: 0,
+							behavior: shouldReduce ? 'auto' : 'smooth',
+						})
+					}
 					className='fixed bottom-8 right-8 z-50 p-3 rounded-full bg-slate-800/80 backdrop-blur-md border border-slate-700 text-slate-400 hover:text-white hover:border-indigo-500/50 hover:bg-slate-700/80 transition-colors shadow-xl cursor-pointer'
 					aria-label='Scroll to top'
 				>

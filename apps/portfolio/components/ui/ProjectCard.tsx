@@ -1,10 +1,11 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowTopRightOnSquareIcon, CommandLineIcon } from '@heroicons/react/24/outline'
 import type { Project } from '../../lib/data'
+import { cn } from '../../lib/utils'
 
 interface ProjectCardProps {
 	project: Project
@@ -13,16 +14,21 @@ interface ProjectCardProps {
 }
 
 export default function ProjectCard({ project, index = 0, priorityImage = false }: ProjectCardProps) {
+	const shouldReduce = useReducedMotion()
 	// Keep up to 4 tags to preserve clean alignment and prevent erratic height wrapping
 	const displayTags = project.tags.slice(0, 4)
 
 	return (
 		<motion.div
-			initial={{ opacity: 0, y: 25 }}
-			whileInView={{ opacity: 1, y: 0 }}
+			initial={shouldReduce ? false : { opacity: 0, y: 25 }}
+			whileInView={shouldReduce ? undefined : { opacity: 1, y: 0 }}
 			viewport={{ once: true }}
 			transition={{ type: 'spring', bounce: 0.2, duration: 0.5, delay: index * 0.08 }}
-			className='group relative flex flex-col rounded-2xl bg-slate-900/70 border border-slate-800/80 shadow-xl hover:shadow-2xl hover:border-indigo-500/40 hover:bg-slate-900/95 hover:-translate-y-1 transition-all duration-300 overflow-hidden'
+			className={cn(
+				'group relative flex flex-col rounded-2xl bg-slate-900/70 border border-slate-800/80 shadow-xl overflow-hidden',
+				!shouldReduce &&
+					'hover:shadow-2xl hover:border-indigo-500/40 hover:bg-slate-900/95 hover:-translate-y-1 transition-all duration-300'
+			)}
 		>
 			{/* Project Image Header with Hover Reveal */}
 			<Link
@@ -37,7 +43,11 @@ export default function ProjectCard({ project, index = 0, priorityImage = false 
 					alt={project.title}
 					fill
 					priority={priorityImage}
-					className='object-cover transform transition-transform duration-700 ease-out group-hover:scale-105'
+					className={cn(
+						'object-cover',
+						!shouldReduce &&
+							'transform transition-transform duration-700 ease-out group-hover:scale-105'
+					)}
 					sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
 				/>
 
@@ -56,7 +66,12 @@ export default function ProjectCard({ project, index = 0, priorityImage = false 
 					{/* Telemetry Metric Pill (cleanly positioned above title without image overflow) */}
 					{project.metrics && (
 						<div className='flex items-center gap-1.5 text-xs font-mono text-emerald-400 font-medium mb-2.5'>
-							<span className='h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0' />
+							<span
+								className={cn(
+									'h-1.5 w-1.5 rounded-full bg-emerald-400 shrink-0',
+									!shouldReduce && 'animate-pulse'
+								)}
+							/>
 							<span className='truncate'>{project.metrics}</span>
 						</div>
 					)}

@@ -1,6 +1,6 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import {
 	ServerStackIcon,
 	CommandLineIcon,
@@ -19,6 +19,8 @@ const iconMap = {
 }
 
 export default function EngineeringPillars() {
+	const shouldReduce = useReducedMotion()
+
 	return (
 		<section className='relative py-24 bg-slate-950 overflow-hidden'>
 			{/* Background ambient lighting */}
@@ -28,16 +30,16 @@ export default function EngineeringPillars() {
 			<div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
 				<div className='text-center max-w-3xl mx-auto mb-16'>
 					<motion.div
-						initial={{ opacity: 0, y: 15 }}
-						whileInView={{ opacity: 1, y: 0 }}
+						initial={shouldReduce ? false : { opacity: 0, y: 15 }}
+						whileInView={shouldReduce ? undefined : { opacity: 1, y: 0 }}
 						viewport={{ once: true }}
 						className='inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-mono uppercase tracking-wider mb-4'
 					>
 						Core Technical Focus
 					</motion.div>
 					<motion.h2
-						initial={{ opacity: 0, y: 15 }}
-						whileInView={{ opacity: 1, y: 0 }}
+						initial={shouldReduce ? false : { opacity: 0, y: 15 }}
+						whileInView={shouldReduce ? undefined : { opacity: 1, y: 0 }}
 						viewport={{ once: true }}
 						transition={{ delay: 0.1 }}
 						className='text-3xl sm:text-4xl font-extrabold text-white tracking-tight'
@@ -45,8 +47,8 @@ export default function EngineeringPillars() {
 						Architecting Resilient Systems & Modern Automation
 					</motion.h2>
 					<motion.p
-						initial={{ opacity: 0, y: 15 }}
-						whileInView={{ opacity: 1, y: 0 }}
+						initial={shouldReduce ? false : { opacity: 0, y: 15 }}
+						whileInView={shouldReduce ? undefined : { opacity: 1, y: 0 }}
 						viewport={{ once: true }}
 						transition={{ delay: 0.2 }}
 						className='mt-4 text-base sm:text-lg text-slate-400 leading-relaxed'
@@ -64,8 +66,8 @@ export default function EngineeringPillars() {
 						return (
 							<motion.div
 								key={pillar.id}
-								initial={{ opacity: 0, y: 25 }}
-								whileInView={{ opacity: 1, y: 0 }}
+								initial={shouldReduce ? false : { opacity: 0, y: 25 }}
+								whileInView={shouldReduce ? undefined : { opacity: 1, y: 0 }}
 								viewport={{ once: true }}
 								transition={{ type: 'spring', bounce: 0.2, duration: 0.6, delay: idx * 0.1 }}
 								className='group relative rounded-2xl bg-slate-900/60 border border-slate-800/80 p-7 sm:p-8 backdrop-blur-xl hover:border-indigo-500/40 hover:bg-slate-900/90 hover:shadow-2xl hover:shadow-indigo-500/10 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between'

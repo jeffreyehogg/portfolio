@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState, useActionState, Suspense } from 'react'
+import { useEffect, useRef, useActionState, Suspense } from 'react'
 import { useFormStatus } from 'react-dom'
 import { useSearchParams } from 'next/navigation'
 import { sendEmail, type FormState } from '../../app/actions/contact-action'
@@ -58,21 +58,33 @@ function ContactFormInner() {
 	const serviceParam = searchParams.get('service')
 	const defaultSubject = serviceParam ? `Inquiry: ${serviceParam}` : ''
 
-	const [state, formAction] = useActionState(sendEmail, initialState)
-	const [recaptchaToken, setRecaptchaToken] = useState<string>('')
 	const { executeRecaptcha } = useGoogleReCaptcha()
 	const formRef = useRef<HTMLFormElement>(null)
 
-	useEffect(() => {
-		if (!executeRecaptcha) {
-			return
-		}
-		const getToken = async () => {
-			const token = await executeRecaptcha('contactForm')
-			setRecaptchaToken(token)
-		}
-		getToken()
-	}, [executeRecaptcha])
+	const [state, formAction] = useActionState(
+		async (prevState: FormState, formData: FormData): Promise<FormState> => {
+			if (!executeRecaptcha) {
+				return {
+					status: 'error',
+					message: 'Security verification is not ready. Please try again.',
+				}
+			}
+
+			try {
+				const token = await executeRecaptcha('contactForm')
+				formData.set('recaptchaToken', token)
+			} catch (error) {
+				console.error('reCAPTCHA execution error:', error)
+				return {
+					status: 'error',
+					message: 'reCAPTCHA verification failed. Please try again.',
+				}
+			}
+
+			return sendEmail(prevState, formData)
+		},
+		initialState
+	)
 
 	useEffect(() => {
 		if (state.status === 'success') {
@@ -233,8 +245,6 @@ function ContactFormInner() {
 						</p>
 					)}
 				</div>
-
-				<input type='hidden' name='recaptchaToken' value={recaptchaToken} />
 
 				<div className='col-span-1 sm:col-span-2'>
 					<AnimatePresence>

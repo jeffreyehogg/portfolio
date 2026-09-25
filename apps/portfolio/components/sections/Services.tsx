@@ -2,7 +2,7 @@
 
 import { CheckIcon } from '@heroicons/react/24/solid'
 import Link from 'next/link'
-import { motion, Variants } from 'framer-motion'
+import { motion, useReducedMotion, Variants } from 'framer-motion'
 import { servicesData } from '../../lib/data'
 import { cn } from '../../lib/utils'
 
@@ -20,6 +20,8 @@ const itemVariants: Variants = {
 }
 
 export default function Services() {
+	const shouldReduce = useReducedMotion()
+
 	return (
 		<section className='py-24 bg-slate-950 relative overflow-hidden'>
 			{/* Subtle gradient background */}
@@ -27,8 +29,8 @@ export default function Services() {
 
 			<div className='relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
 				<motion.div
-					initial={{ opacity: 0, y: 20 }}
-					whileInView={{ opacity: 1, y: 0 }}
+					initial={shouldReduce ? false : { opacity: 0, y: 20 }}
+					whileInView={shouldReduce ? undefined : { opacity: 1, y: 0 }}
 					viewport={{ once: true }}
 					className='text-center max-w-3xl mx-auto mb-16'
 				>
@@ -45,15 +47,15 @@ export default function Services() {
 
 				<motion.div
 					className='grid gap-8 lg:grid-cols-3 lg:gap-10'
-					variants={containerVariants}
-					initial='hidden'
-					whileInView='visible'
+					variants={shouldReduce ? undefined : containerVariants}
+					initial={shouldReduce ? false : 'hidden'}
+					whileInView={shouldReduce ? undefined : 'visible'}
 					viewport={{ once: true, amount: 0.1 }}
 				>
 					{servicesData.map((tier) => (
 						<motion.div
 							key={tier.title}
-							variants={itemVariants}
+							variants={shouldReduce ? undefined : itemVariants}
 							className={cn(
 								'group relative flex flex-col rounded-3xl p-8 transition-all duration-500 backdrop-blur-sm',
 								tier.mostPopular

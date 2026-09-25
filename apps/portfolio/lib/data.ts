@@ -256,7 +256,7 @@ export const projectsData: Project[] = [
 		href: 'https://vision-texas.com/',
 		description:
 			'Official corporate platform for Vision Integrated Systems, a leading provider of enterprise structured cabling, security solutions, and commercial AV.',
-		imageUrl: '/images/projects/vision.png',
+		imageUrl: '/images/projects/vision.webp',
 		tags: ['Next.js', 'React 19', 'Tailwind CSS', 'Framer Motion'],
 		learnings:
 			'Focused on component modularity, SEO optimization, and sub-second load times to deliver an accessible corporate web presence.',
@@ -299,6 +299,12 @@ export const skillsData: SkillCategory[] = [
 
 export const trustedCompaniesData: CompanyLogo[] = [
 	{
+		name: 'LGI Homes',
+		imageUrl: '/images/logos/lgi-homes.svg',
+		width: 160,
+		height: 80,
+	},
+	{
 		name: 'Cisco',
 		imageUrl: '/images/logos/cisco.webp',
 		width: 160,
@@ -308,42 +314,6 @@ export const trustedCompaniesData: CompanyLogo[] = [
 		name: 'Vision Integrated Systems',
 		imageUrl: '/images/logos/vision.webp',
 		width: 180,
-		height: 80,
-	},
-	{
-		name: 'San Francisco 49ers',
-		imageUrl: '/images/logos/49ers.webp',
-		width: 160,
-		height: 80,
-	},
-	{
-		name: 'Golden State Warriors',
-		imageUrl: '/images/logos/warriors.webp',
-		width: 160,
-		height: 80,
-	},
-	{
-		name: 'San Francisco Giants',
-		imageUrl: '/images/logos/giants.webp',
-		width: 160,
-		height: 80,
-	},
-	{
-		name: 'ESPN',
-		imageUrl: '/images/logos/ESPN.webp',
-		width: 160,
-		height: 80,
-	},
-	{
-		name: 'FOX Sports',
-		imageUrl: '/images/logos/FOX.webp',
-		width: 160,
-		height: 80,
-	},
-	{
-		name: 'NBC Sports Bay Area',
-		imageUrl: '/images/logos/NBC.webp',
-		width: 160,
 		height: 80,
 	},
 ]

@@ -6,7 +6,7 @@ import Socials from './Socials'
 import Experience from './Experience'
 import { skillsData } from '../../lib/data'
 import BackgroundBlobs from '../ui/BackgroundBlobs'
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { CheckCircleIcon } from '@heroicons/react/24/solid'
 import { ArrowDownTrayIcon, EnvelopeIcon } from '@heroicons/react/24/outline'
 
@@ -20,6 +20,8 @@ const coreCapabilities = [
 ]
 
 export default function AboutMe() {
+	const shouldReduce = useReducedMotion()
+
 	return (
 		<div className='min-h-screen bg-slate-950 relative overflow-hidden'>
 			<div className='absolute inset-0 pointer-events-none opacity-20'>
@@ -32,8 +34,8 @@ export default function AboutMe() {
 					<div className='lg:col-span-5 space-y-10 lg:sticky lg:top-36 self-start'>
 						{/* Profile Image with Glow */}
 						<motion.div
-							initial={{ opacity: 0, scale: 0.95 }}
-							animate={{ opacity: 1, scale: 1 }}
+							initial={shouldReduce ? false : { opacity: 0, scale: 0.95 }}
+							animate={shouldReduce ? undefined : { opacity: 1, scale: 1 }}
 							transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
 							className='relative w-64 h-64 mx-auto lg:mx-0'
 						>
@@ -49,8 +51,8 @@ export default function AboutMe() {
 						</motion.div>
 
 						<motion.div
-							initial={{ opacity: 0, y: 20 }}
-							animate={{ opacity: 1, y: 0 }}
+							initial={shouldReduce ? false : { opacity: 0, y: 20 }}
+							animate={shouldReduce ? undefined : { opacity: 1, y: 0 }}
 							transition={{ type: 'spring', bounce: 0.2, duration: 0.6, delay: 0.15 }}
 						>
 							<p className='text-indigo-400 font-semibold tracking-wide uppercase text-xs font-mono mb-2'>
@@ -65,28 +67,16 @@ export default function AboutMe() {
 
 							<div className='space-y-5 text-base sm:text-lg text-slate-300 leading-relaxed font-light'>
 								<p>
-									As a <strong className='text-white font-medium'>Full-Stack Developer</strong>,
-									I specialize in modernizing legacy architectures, building robust API
-									layers, and driving end-to-end system automation.
+									I joined <strong className='text-white font-medium'>LGI Homes</strong> to solve a pivotal engineering challenge: migrating a sprawl of manually deployed, version-control-free codebases on on-premise servers into a disciplined, automated environment. Within months, I containerized the application stack using Docker and Nginx, stood up automated CI/CD pipelines with self-hosted GitHub Runners, and transitioned the engineering workflow to Git for the first time.
 								</p>
 								<p>
-									Currently, I work as a <strong className='text-white font-medium'>Full-Stack Developer at LGI Homes</strong>,
-									bridging the gap between web development, database administration,
-									and DevOps. In this role, I manage a wide spectrum of systems: from containerizing
-									environments with Docker/Nginx and writing custom Node.js/TypeScript
-									middleware to managing distributed on-premise Microsoft SQL Server and
-									MySQL databases.
+									At the data and middleware layer, I architected custom Node.js and TypeScript integration services to bridge distributed Microsoft SQL Server and MySQL databases with 3rd-party enterprise APIs. By designing dedicated sanitization layers and optimizing high-load stored procedures, I turned fragile, manual synchronization routines into resilient, sub-second pipelines running unattended in production.
 								</p>
 								<p>
-									My foundation includes over a decade in high-pressure technical roles,
-									including engineering enterprise features for Webex Calling at <strong className='text-white font-medium'>Cisco</strong>,
-									building automated Cypress E2E pipelines in Jenkins, and managing platform
-									reliability through Kibana and PagerDuty.
+									Prior to LGI Homes, I engineered enterprise administration features for Webex Calling at <strong className='text-white font-medium'>Cisco</strong> within the Cisco Control Hub ecosystem. There, I delivered complex frontend capabilities in TypeScript and Angular, built end-to-end Cypress regression suites in Jenkins, and audited telemetry with Kibana and PagerDuty to safeguard platform uptime across millions of worldwide users.
 								</p>
 								<p>
-									I actively leverage <strong className='text-indigo-300 font-medium'>agentic IDE workflows</strong> to
-									accelerate stored procedure optimization, complex query debugging, and code
-									refactoring—delivering clarity, reliability, and modern technical excellence.
+									My engineering philosophy is anchored in reducing technical friction. I view technical debt not as an inevitable reality, but as an operational bottleneck to eliminate through containerization, type safety, and automated verification. In my day-to-day work, I leverage <strong className='text-indigo-300 font-medium'>agentic IDE workflows</strong> as collaborative pair programmers—accelerating query profiling, de-risking deep refactors, and maintaining high development velocity.
 								</p>
 							</div>
 
@@ -143,8 +133,8 @@ export default function AboutMe() {
 								{skillsData.map((skill, index) => (
 									<motion.div
 										key={skill.category}
-										initial={{ opacity: 0, x: 20 }}
-										whileInView={{ opacity: 1, x: 0 }}
+										initial={shouldReduce ? false : { opacity: 0, x: 20 }}
+										whileInView={shouldReduce ? undefined : { opacity: 1, x: 0 }}
 										transition={{ delay: index * 0.1 }}
 										viewport={{ once: true }}
 										className='group bg-slate-900/60 p-6 rounded-xl border border-slate-800 hover:border-indigo-500/40 transition-all duration-300 backdrop-blur-sm hover:bg-slate-900/90'

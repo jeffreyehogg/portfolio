@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import {
 	ChevronDownIcon,
 	CommandLineIcon,
@@ -21,6 +21,8 @@ const metrics = [
 ]
 
 export default function Hero() {
+	const shouldReduce = useReducedMotion()
+
 	return (
 		<div className='relative min-h-screen flex items-center justify-center overflow-hidden bg-slate-950 pt-20 pb-16'>
 			{/* Grid Background Pattern */}
@@ -39,14 +41,14 @@ export default function Hero() {
 			{/* Main Content */}
 			<div className='relative z-10 px-4 sm:px-6 lg:px-8 text-center max-w-5xl mx-auto'>
 				<motion.div
-					initial={{ opacity: 0, y: 30 }}
-					animate={{ opacity: 1, y: 0 }}
+					initial={shouldReduce ? false : { opacity: 0, y: 30 }}
+					animate={shouldReduce ? undefined : { opacity: 1, y: 0 }}
 					transition={{ type: 'spring', bounce: 0.15, duration: 0.7 }}
 				>
 					{/* Status Badge */}
 					<motion.div
-						initial={{ opacity: 0, scale: 0.9 }}
-						animate={{ opacity: 1, scale: 1 }}
+						initial={shouldReduce ? false : { opacity: 0, scale: 0.9 }}
+						animate={shouldReduce ? undefined : { opacity: 1, scale: 1 }}
 						transition={{ type: 'spring', bounce: 0.2, duration: 0.5, delay: 0.15 }}
 						className='inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-slate-900/80 border border-slate-800 text-slate-300 text-xs sm:text-sm font-medium mb-8 backdrop-blur-md shadow-lg shadow-black/20'
 					>
@@ -98,8 +100,8 @@ export default function Hero() {
 				{/* Action Buttons */}
 				<motion.div
 					className='mt-10 flex flex-wrap gap-3.5 justify-center items-center'
-					initial={{ opacity: 0, y: 20 }}
-					animate={{ opacity: 1, y: 0 }}
+					initial={shouldReduce ? false : { opacity: 0, y: 20 }}
+					animate={shouldReduce ? undefined : { opacity: 1, y: 0 }}
 					transition={{ type: 'spring', bounce: 0.2, duration: 0.6, delay: 0.35 }}
 				>
 					<Link
@@ -130,8 +132,8 @@ export default function Hero() {
 				{/* Metrics Grid */}
 				<motion.div
 					className='mt-16 grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 max-w-4xl mx-auto'
-					initial={{ opacity: 0, y: 20 }}
-					animate={{ opacity: 1, y: 0 }}
+					initial={shouldReduce ? false : { opacity: 0, y: 20 }}
+					animate={shouldReduce ? undefined : { opacity: 1, y: 0 }}
 					transition={{ type: 'spring', bounce: 0.2, duration: 0.7, delay: 0.5 }}
 				>
 					{metrics.map((item) => (
@@ -154,13 +156,13 @@ export default function Hero() {
 			{/* Subtle Bottom Arrow */}
 			<motion.div
 				className='absolute bottom-6 left-1/2 -translate-x-1/2 z-10'
-				initial={{ opacity: 0 }}
-				animate={{ opacity: 1 }}
-				transition={{ delay: 1 }}
+				initial={shouldReduce ? false : { opacity: 0 }}
+				animate={shouldReduce ? undefined : { opacity: 1 }}
+				transition={shouldReduce ? undefined : { delay: 1 }}
 			>
 				<motion.div
-					animate={{ y: [0, 6, 0] }}
-					transition={{ repeat: Infinity, duration: 2.2 }}
+					animate={shouldReduce ? undefined : { y: [0, 6, 0] }}
+					transition={shouldReduce ? undefined : { repeat: Infinity, duration: 2.2 }}
 				>
 					<ChevronDownIcon className='w-5 h-5 text-slate-500' />
 				</motion.div>

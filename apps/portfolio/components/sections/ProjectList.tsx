@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useMemo, useTransition } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { projectsData, Project } from '../../lib/data'
 import ProjectCard from '../ui/ProjectCard'
 import BackgroundBlobs from '../ui/BackgroundBlobs'
@@ -16,6 +16,7 @@ const categories: { id: CategoryFilter; label: string }[] = [
 ]
 
 export default function ProjectList() {
+	const shouldReduce = useReducedMotion()
 	const [activeCategory, setActiveCategory] = useState<CategoryFilter>('all')
 	const [, startTransition] = useTransition()
 
@@ -58,23 +59,23 @@ export default function ProjectList() {
 				{/* Clean Header */}
 				<div className='text-center max-w-3xl mx-auto mb-12 sm:mb-16'>
 					<motion.div
-						initial={{ opacity: 0, y: 15 }}
-						animate={{ opacity: 1, y: 0 }}
+						initial={shouldReduce ? false : { opacity: 0, y: 15 }}
+						animate={shouldReduce ? undefined : { opacity: 1, y: 0 }}
 						className='inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-mono uppercase tracking-wider mb-4'
 					>
 						Systems & Applications
 					</motion.div>
 					<motion.h1
-						initial={{ opacity: 0, y: 15 }}
-						animate={{ opacity: 1, y: 0 }}
+						initial={shouldReduce ? false : { opacity: 0, y: 15 }}
+						animate={shouldReduce ? undefined : { opacity: 1, y: 0 }}
 						transition={{ delay: 0.1 }}
 						className='text-3xl sm:text-5xl font-extrabold text-white tracking-tight'
 					>
 						Selected Engineering Work
 					</motion.h1>
 					<motion.p
-						initial={{ opacity: 0, y: 15 }}
-						animate={{ opacity: 1, y: 0 }}
+						initial={shouldReduce ? false : { opacity: 0, y: 15 }}
+						animate={shouldReduce ? undefined : { opacity: 1, y: 0 }}
 						transition={{ delay: 0.2 }}
 						className='mt-4 text-base sm:text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed'
 					>
@@ -103,7 +104,11 @@ export default function ProjectList() {
 										<motion.span
 											layoutId='active-category-pill'
 											className='absolute inset-0 bg-indigo-600 rounded-full shadow-md'
-											transition={{ type: 'spring', bounce: 0.2, duration: 0.5 }}
+											transition={
+												shouldReduce
+													? { duration: 0 }
+													: { type: 'spring', bounce: 0.2, duration: 0.5 }
+											}
 										/>
 									)}
 									<span className='relative z-10'>{cat.label}</span>
@@ -117,9 +122,9 @@ export default function ProjectList() {
 				<AnimatePresence mode='wait'>
 					<motion.div
 						key={activeCategory}
-						initial={{ opacity: 0, y: 20 }}
-						animate={{ opacity: 1, y: 0 }}
-						exit={{ opacity: 0, y: -15 }}
+						initial={shouldReduce ? false : { opacity: 0, y: 20 }}
+						animate={shouldReduce ? undefined : { opacity: 1, y: 0 }}
+						exit={shouldReduce ? undefined : { opacity: 0, y: -15 }}
 						transition={{ duration: 0.4 }}
 						className='grid gap-8 md:grid-cols-2 lg:grid-cols-3'
 					>

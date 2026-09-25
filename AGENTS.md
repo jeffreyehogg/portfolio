@@ -105,3 +105,4 @@ The following modular skills are checked into the repository and loaded on deman
 - **`high-craft-ui`**: Expert guidelines and design patterns for building high-craft, modern, visually stunning web user interfaces (layered surfaces, ambient radial glows, Framer Motion springs, and developer telemetry).
 - **`nextjs-app-router-craft`**: Architecture patterns and conventions for Next.js 15/16 App Router, React 19, RSC boundaries, Server Actions with Zod validation, Clerk auth, and Drizzle/Neon database workflows.
 - **`turbo-monorepo-ops`**: Standard operating procedures for Turborepo and pnpm workspaces monorepo management, Vercel CI/CD, lockfile integrity, and multi-app builds.
+- **`seo-cwv-performance`**: Technical guidelines for Core Web Vitals optimization (LCP, CLS, INP), metadata, dynamic OpenGraph images, and JSON-LD structured data schemas for search engines.

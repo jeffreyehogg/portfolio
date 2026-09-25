@@ -9,7 +9,9 @@ This file is automatically loaded by Antigravity as the primary context and oper
 - **Architecture**: Turborepo + pnpm workspaces monorepo
 - **Apps**:
   - `apps/portfolio`: Next.js 15 (App Router), React 19, Tailwind CSS v3, Framer Motion
-  - `apps/kingdom-connect`: Next.js 16 (Turbopack), React 19, Tailwind CSS v4, Clerk, Drizzle, Neon
+  - `apps/kingdom-connect`: Next.js 16 (Turbopack), React 19, Tailwind CSS v4, Clerk, Drizzle, Neon (Unified faith platform with Volunteer Board, Kingdom Fund, Community Prayer Wall, and Personal Prayer Journal)
+  - `apps/legacy-link`: Next.js 16, TypeScript, Clerk (Security data migration utility)
+  - `apps/forexflow-dashboard`: Nuxt 3, Vue, Chart.js (Forex telemetry dashboard)
 - **Shared Packages**:
   - `packages/typescript-config`: Shared `tsconfig` definitions
   - `packages/eslint-config`: Shared ESLint rules

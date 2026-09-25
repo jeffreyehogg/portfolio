@@ -45,6 +45,12 @@ export function Navbar() {
               Prayer Wall
             </Link>
             <Link
+              href="/journal"
+              className="text-gray-600 hover:text-indigo-600 font-medium transition-colors"
+            >
+              Journal
+            </Link>
+            <Link
               href="/dashboard"
               className="text-gray-600 hover:text-indigo-600 font-medium transition-colors"
             >
@@ -109,6 +115,13 @@ export function Navbar() {
               onClick={() => setIsOpen(false)}
             >
               Prayer Wall
+            </Link>
+            <Link
+              href="/journal"
+              className="block px-4 py-2 rounded-lg text-sm font-medium text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 transition-colors"
+              onClick={() => setIsOpen(false)}
+            >
+              Prayer Journal
             </Link>
             <Link
               href="/dashboard"

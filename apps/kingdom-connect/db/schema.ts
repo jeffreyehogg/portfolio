@@ -57,3 +57,23 @@ export const prayerInteractions = pgTable('prayer_interactions', {
   userId: text('user_id').notNull(), 
   prayedAt: timestamp('prayed_at').defaultNow(),
 });
+
+// --- Personal Prayers (Prayer Journal) ---
+export const personalPrayers = pgTable('personal_prayers', {
+  id: serial('id').primaryKey(),
+  userId: text('user_id').notNull(),
+  title: text('title').notNull(),
+  status: text('status').notNull().default('Pending'), // 'Pending' | 'Praying' | 'Answered'
+  category: text('category'),
+  sortOrder: integer('sort_order').default(0),
+  createdAt: timestamp('created_at').defaultNow(),
+});
+
+// --- Prayer Notes ---
+export const prayerNotes = pgTable('prayer_notes', {
+  id: serial('id').primaryKey(),
+  prayerId: integer('prayer_id').references(() => personalPrayers.id, { onDelete: 'cascade' }),
+  userId: text('user_id').notNull(),
+  content: text('content').notNull(),
+  createdAt: timestamp('created_at').defaultNow(),
+});

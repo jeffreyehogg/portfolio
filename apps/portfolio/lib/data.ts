@@ -210,13 +210,13 @@ export const projectsData: Project[] = [
 		title: 'Kingdom Connect',
 		href: 'https://kingdom.jeffhogg.com',
 		description:
-			'A full-stack digital platform bridging community needs with volunteer service and fundraising. Features a multi-tenant dashboard, real-time service opportunity postings, and an intuitive volunteer management flow.',
+			'A full-stack digital faith platform uniting community volunteer service, kingdom fundraising, a public prayer wall, and an interactive personal prayer journal with drag-and-drop prioritization.',
 		imageUrl: '/images/projects/kingdom-connect.png',
-		tags: ['Next.js', 'Clerk', 'Neon Postgres', 'Drizzle ORM', 'Tailwind CSS'],
+		tags: ['Next.js', 'Clerk', 'Neon Postgres', 'Drizzle ORM', 'Tailwind CSS', 'dnd-kit'],
 		learnings:
-			'Mastered modern serverless PostgreSQL architectures with Neon, type-safe database interactions via Drizzle ORM, and secure multi-tenant authentication with Clerk.',
+			'Mastered modern serverless PostgreSQL architectures with Neon, type-safe database interactions via Drizzle ORM, secure multi-tenant authentication with Clerk, and interactive drag-and-drop state machines.',
 		featured: true,
-		metrics: 'Full-stack serverless architecture',
+		metrics: 'Unified serverless faith platform',
 	},
 	{
 		title: 'Webex Control Hub',
@@ -244,13 +244,13 @@ export const projectsData: Project[] = [
 	},
 	{
 		title: 'Prayer Journal',
-		href: 'https://pray.jeffhogg.com',
+		href: 'https://kingdom.jeffhogg.com/journal',
 		description:
-			'A full-stack personal prayer journal built with the Next.js App Router and Supabase. Features auth, full CRUD persistence, category filtering, and smooth drag-and-drop prioritization.',
+			'A dedicated personal prayer and devotional tracking journal integrated into Kingdom Connect. Features Clerk auth, Neon Postgres with Drizzle ORM, category filtering, timeline notes, and drag-and-drop prioritization.',
 		imageUrl: '/images/projects/pray.png',
-		tags: ['Next.js', 'Supabase', 'shadcn/ui', 'dnd-kit', 'Server Actions'],
+		tags: ['Next.js', 'Clerk', 'Neon Postgres', 'Drizzle ORM', 'dnd-kit', 'Server Actions'],
 		learnings:
-			'Explored Next.js App Router Server Actions combined with dnd-kit for complex, optimistic drag-and-drop state updates backed by Supabase.',
+			'Consolidated standalone Supabase architecture into a unified Neon PostgreSQL + Drizzle ORM schema, leveraging Clerk authentication and optimistic drag-and-drop updates.',
 		featured: false,
 		metrics: 'Optimistic UI + Server Actions',
 	},

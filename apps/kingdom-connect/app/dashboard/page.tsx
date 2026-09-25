@@ -1,7 +1,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { db } from "@/lib/db";
-import { signups, events, funds } from "@/db/schema";
-import { eq, desc, sql } from "drizzle-orm";
+import { signups, events, funds, personalPrayers } from "@/db/schema";
+import { eq, desc, sql, and, inArray } from "drizzle-orm";
 import { Navbar } from "@/app/components/Navbar";
 import {
   Calendar,
@@ -10,6 +10,7 @@ import {
   ArrowRight,
   HeartHandshake,
   Zap,
+  BookOpen,
 } from "lucide-react";
 import { redirect } from "next/navigation";
 import Link from "next/link";
@@ -75,7 +76,19 @@ export default async function DashboardPage() {
   const globalImpact = await db
     .select({ totalRaised: sql<number>`sum(${funds.raised})` })
     .from(funds);
-  const communityRaised = globalImpact[0].totalRaised || 0;
+  const communityRaised = globalImpact[0]?.totalRaised || 0;
+
+  // Personal Prayer Journal Stats
+  const activePrayers = await db
+    .select({ count: sql<number>`count(*)` })
+    .from(personalPrayers)
+    .where(
+      and(
+        eq(personalPrayers.userId, userId),
+        inArray(personalPrayers.status, ["Pending", "Praying"])
+      )
+    );
+  const activePrayersCount = Number(activePrayers[0]?.count || 0);
 
   return (
     <div className="min-h-screen bg-gray-50 font-sans">
@@ -87,12 +100,12 @@ export default async function DashboardPage() {
             My Dashboard
           </h1>
           <p className="text-gray-600 mt-2">
-            Welcome back! Here is your upcoming service schedule.
+            Welcome back! Here is your upcoming service schedule and personal devotions.
           </p>
         </div>
 
         {/* Stats Row */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           {/* Card 1: Upcoming Events (Gradient) */}
           <div className="bg-linear-to-br from-indigo-600 to-indigo-800 text-white rounded-2xl p-6 shadow-xl relative overflow-hidden group hover:scale-[1.02] transition-transform duration-300">
             <div className="relative z-10">
@@ -137,6 +150,23 @@ export default async function DashboardPage() {
               Raised by Kingdom Connect
             </p>
           </div>
+
+          {/* Card 4: Personal Prayer Journal */}
+          <Link
+            href="/journal"
+            className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md hover:border-indigo-100 transition-all relative overflow-hidden group"
+          >
+            <h3 className="text-gray-500 font-medium flex items-center gap-2">
+              <BookOpen className="h-4 w-4 text-indigo-500" /> Prayer Journal
+            </h3>
+            <p className="text-4xl font-extrabold mt-3 text-gray-900 group-hover:text-indigo-600 transition-colors">
+              {activePrayersCount}
+            </p>
+            <p className="text-sm text-gray-400 mt-1 flex items-center gap-1">
+              Active requests · Open journal{" "}
+              <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+            </p>
+          </Link>
         </div>
 
         {/* Content Grid: Chart + List */}

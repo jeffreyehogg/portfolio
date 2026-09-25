@@ -40,7 +40,7 @@ export default function Navbar() {
             
             {/* Clerk User Button */}
             <UserButton 
-              afterSignOutUrl="/" 
+               
               appearance={{
                 elements: {
                   avatarBox: "h-8 w-8 ring-2 ring-gray-100"

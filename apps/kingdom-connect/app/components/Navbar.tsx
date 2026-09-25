@@ -53,7 +53,7 @@ export function Navbar() {
 
             <div className="ml-4">
               <SignedIn>
-                <UserButton afterSignOutUrl="/" />
+                <UserButton  />
               </SignedIn>
               <SignedOut>
                 <SignInButton mode="modal">
@@ -122,7 +122,7 @@ export function Navbar() {
           <div className="border-t border-gray-100 p-2 bg-gray-50 rounded-b-xl">
             <SignedIn>
               <div className="flex items-center gap-3 px-3 py-2">
-                <UserButton afterSignOutUrl="/" />
+                <UserButton  />
                 <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
                   Account
                 </span>

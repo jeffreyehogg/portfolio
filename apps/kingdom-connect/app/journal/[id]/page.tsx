@@ -16,9 +16,7 @@ export default async function PrayerDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { userId } = await auth();
-  if (!userId) {
-    redirect("/sign-in");
-  }
+  const effectiveUserId = userId || "guest_user";
 
   const { id } = await params;
   const prayerId = parseInt(id, 10);
@@ -30,7 +28,7 @@ export default async function PrayerDetailPage({
   const rawPrayer = await db
     .select()
     .from(personalPrayers)
-    .where(and(eq(personalPrayers.id, prayerId), eq(personalPrayers.userId, userId)))
+    .where(and(eq(personalPrayers.id, prayerId), eq(personalPrayers.userId, effectiveUserId)))
     .limit(1);
 
   if (rawPrayer.length === 0) {
@@ -51,7 +49,7 @@ export default async function PrayerDetailPage({
   const rawNotes = await db
     .select()
     .from(prayerNotes)
-    .where(and(eq(prayerNotes.prayerId, prayerId), eq(prayerNotes.userId, userId)))
+    .where(and(eq(prayerNotes.prayerId, prayerId), eq(prayerNotes.userId, effectiveUserId)))
     .orderBy(desc(prayerNotes.createdAt));
 
   const notes: PrayerNote[] = rawNotes.map((n) => ({

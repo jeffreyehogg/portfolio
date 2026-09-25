@@ -9,7 +9,7 @@ import type { PrayerStatus } from "./types";
 
 export async function addPrayer(title: string, category: string | null) {
   const { userId } = await auth();
-  if (!userId) return { error: "You must be signed in." };
+  const effectiveUserId = userId || "guest_user";
 
   if (!title || !title.trim()) {
     return { error: "Title is required." };
@@ -19,7 +19,7 @@ export async function addPrayer(title: string, category: string | null) {
     const maxOrderPrayer = await db
       .select({ sortOrder: personalPrayers.sortOrder })
       .from(personalPrayers)
-      .where(eq(personalPrayers.userId, userId))
+      .where(eq(personalPrayers.userId, effectiveUserId))
       .orderBy(desc(personalPrayers.sortOrder))
       .limit(1);
 
@@ -29,7 +29,7 @@ export async function addPrayer(title: string, category: string | null) {
       title: title.trim(),
       category: category?.trim() || null,
       status: "Pending",
-      userId,
+      userId: effectiveUserId,
       sortOrder: newSortOrder,
     });
 
@@ -43,7 +43,7 @@ export async function addPrayer(title: string, category: string | null) {
 
 export async function updatePrayerOrder(orderedIds: number[]) {
   const { userId } = await auth();
-  if (!userId) return { error: "You must be signed in." };
+  const effectiveUserId = userId || "guest_user";
 
   try {
     await Promise.all(
@@ -51,7 +51,7 @@ export async function updatePrayerOrder(orderedIds: number[]) {
         db
           .update(personalPrayers)
           .set({ sortOrder: index + 1 })
-          .where(and(eq(personalPrayers.id, id), eq(personalPrayers.userId, userId)))
+          .where(and(eq(personalPrayers.id, id), eq(personalPrayers.userId, effectiveUserId)))
       )
     );
 
@@ -66,13 +66,13 @@ export async function updatePrayerOrder(orderedIds: number[]) {
 
 export async function updatePrayerStatus(id: number, status: PrayerStatus) {
   const { userId } = await auth();
-  if (!userId) return { error: "You must be signed in." };
+  const effectiveUserId = userId || "guest_user";
 
   try {
     await db
       .update(personalPrayers)
       .set({ status })
-      .where(and(eq(personalPrayers.id, id), eq(personalPrayers.userId, userId)));
+      .where(and(eq(personalPrayers.id, id), eq(personalPrayers.userId, effectiveUserId)));
 
     revalidatePath("/journal");
     revalidatePath("/journal/answered");
@@ -90,7 +90,7 @@ export async function updatePrayer(
   category: string | null
 ) {
   const { userId } = await auth();
-  if (!userId) return { error: "You must be signed in." };
+  const effectiveUserId = userId || "guest_user";
 
   if (!title || !title.trim()) {
     return { error: "Title is required." };
@@ -103,7 +103,7 @@ export async function updatePrayer(
         title: title.trim(),
         category: category?.trim() || null,
       })
-      .where(and(eq(personalPrayers.id, id), eq(personalPrayers.userId, userId)));
+      .where(and(eq(personalPrayers.id, id), eq(personalPrayers.userId, effectiveUserId)));
 
     revalidatePath("/journal");
     revalidatePath("/journal/answered");
@@ -117,12 +117,12 @@ export async function updatePrayer(
 
 export async function deletePrayer(id: number) {
   const { userId } = await auth();
-  if (!userId) return { error: "You must be signed in." };
+  const effectiveUserId = userId || "guest_user";
 
   try {
     await db
       .delete(personalPrayers)
-      .where(and(eq(personalPrayers.id, id), eq(personalPrayers.userId, userId)));
+      .where(and(eq(personalPrayers.id, id), eq(personalPrayers.userId, effectiveUserId)));
 
     revalidatePath("/journal");
     revalidatePath("/journal/answered");
@@ -135,7 +135,7 @@ export async function deletePrayer(id: number) {
 
 export async function addNote(prayerId: number, content: string) {
   const { userId } = await auth();
-  if (!userId) return { error: "You must be signed in." };
+  const effectiveUserId = userId || "guest_user";
 
   if (!content || !content.trim()) {
     return { error: "Note content cannot be empty." };
@@ -146,7 +146,7 @@ export async function addNote(prayerId: number, content: string) {
     const prayer = await db
       .select({ id: personalPrayers.id })
       .from(personalPrayers)
-      .where(and(eq(personalPrayers.id, prayerId), eq(personalPrayers.userId, userId)))
+      .where(and(eq(personalPrayers.id, prayerId), eq(personalPrayers.userId, effectiveUserId)))
       .limit(1);
 
     if (prayer.length === 0) {
@@ -155,7 +155,7 @@ export async function addNote(prayerId: number, content: string) {
 
     await db.insert(prayerNotes).values({
       prayerId,
-      userId,
+      userId: effectiveUserId,
       content: content.trim(),
     });
 
@@ -169,7 +169,7 @@ export async function addNote(prayerId: number, content: string) {
 
 export async function updateNote(noteId: number, content: string) {
   const { userId } = await auth();
-  if (!userId) return { error: "You must be signed in." };
+  const effectiveUserId = userId || "guest_user";
 
   if (!content || !content.trim()) {
     return { error: "Note content cannot be empty." };
@@ -179,7 +179,7 @@ export async function updateNote(noteId: number, content: string) {
     await db
       .update(prayerNotes)
       .set({ content: content.trim() })
-      .where(and(eq(prayerNotes.id, noteId), eq(prayerNotes.userId, userId)));
+      .where(and(eq(prayerNotes.id, noteId), eq(prayerNotes.userId, effectiveUserId)));
 
     return { success: true };
   } catch (err: any) {
@@ -190,12 +190,12 @@ export async function updateNote(noteId: number, content: string) {
 
 export async function deleteNote(noteId: number, prayerId: number) {
   const { userId } = await auth();
-  if (!userId) return { error: "You must be signed in." };
+  const effectiveUserId = userId || "guest_user";
 
   try {
     await db
       .delete(prayerNotes)
-      .where(and(eq(prayerNotes.id, noteId), eq(prayerNotes.userId, userId)));
+      .where(and(eq(prayerNotes.id, noteId), eq(prayerNotes.userId, effectiveUserId)));
 
     revalidatePath(`/journal/${prayerId}`);
     return { success: true };

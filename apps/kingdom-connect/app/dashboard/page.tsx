@@ -11,6 +11,7 @@ import {
   HeartHandshake,
   Zap,
   BookOpen,
+  Sparkles,
 } from "lucide-react";
 import { redirect } from "next/navigation";
 import Link from "next/link";
@@ -20,10 +21,7 @@ import { ImpactChart } from "./impact-chart"; // New Import
 
 export default async function DashboardPage() {
   const { userId } = await auth();
-
-  if (!userId) {
-    redirect("/");
-  }
+  const effectiveUserId = userId || "guest_user";
 
   // Fetch user's signups
   const userSignups = await db
@@ -34,7 +32,7 @@ export default async function DashboardPage() {
     })
     .from(signups)
     .leftJoin(events, eq(signups.eventId, events.id))
-    .where(eq(signups.userId, userId))
+    .where(eq(signups.userId, effectiveUserId))
     .orderBy(desc(events.date));
 
   // --- Calculate Stats ---
@@ -84,7 +82,7 @@ export default async function DashboardPage() {
     .from(personalPrayers)
     .where(
       and(
-        eq(personalPrayers.userId, userId),
+        eq(personalPrayers.userId, effectiveUserId),
         inArray(personalPrayers.status, ["Pending", "Praying"])
       )
     );
@@ -95,6 +93,30 @@ export default async function DashboardPage() {
       <Navbar />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {!userId && (
+          <div className="mb-8 p-4 rounded-2xl bg-indigo-50/90 border border-indigo-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-indigo-950 shadow-xs">
+            <div className="flex items-center gap-3">
+              <span className="p-2 rounded-xl bg-indigo-600 text-white shadow-xs">
+                <Sparkles className="w-4 h-4" />
+              </span>
+              <div>
+                <p className="text-sm font-semibold text-indigo-900">
+                  Interactive Demo Dashboard
+                </p>
+                <p className="text-xs text-indigo-700/80">
+                  Displaying simulated community impact telemetry. Sign in to view and manage your real service commitments.
+                </p>
+              </div>
+            </div>
+            <Link
+              href="/sign-in"
+              className="text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 px-3.5 py-1.5 rounded-xl transition-all shadow-xs self-start sm:self-auto"
+            >
+              Sign In
+            </Link>
+          </div>
+        )}
+
         <div className="mb-10">
           <h1 className="text-3xl font-bold text-gray-900 tracking-tight">
             My Dashboard

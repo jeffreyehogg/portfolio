@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { projectsData, Project } from '../../lib/data'
-import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline'
+import { ArrowTopRightOnSquareIcon, CommandLineIcon } from '@heroicons/react/24/outline'
 import BackgroundBlobs from '../ui/BackgroundBlobs'
 import { cn } from '../../lib/utils'
 
@@ -13,7 +13,7 @@ type CategoryFilter = 'all' | 'systems' | 'fullstack'
 
 const categories: { id: CategoryFilter; label: string }[] = [
 	{ id: 'all', label: 'All Projects' },
-	{ id: 'systems', label: 'Systems & Middleware' },
+	{ id: 'systems', label: 'Systems & DevOps' },
 	{ id: 'fullstack', label: 'Full-Stack SaaS' },
 ]
 
@@ -25,14 +25,23 @@ export default function ProjectList() {
 		if (activeCategory === 'systems') {
 			return projectsData.filter((p) =>
 				p.tags.some((t) =>
-					['Enterprise SaaS', 'PostgreSQL JSONB', 'Cypress', 'Jenkins', 'PapaParse', 'Angular'].includes(t)
+					[
+						'Enterprise SaaS',
+						'PostgreSQL JSONB',
+						'Cypress',
+						'Jenkins',
+						'PapaParse',
+						'Angular',
+						'Turborepo',
+						'pnpm Workspaces',
+					].includes(t)
 				)
 			)
 		}
 		if (activeCategory === 'fullstack') {
 			return projectsData.filter((p) =>
 				p.tags.some((t) =>
-					['Next.js', 'Nuxt', 'Supabase', 'Neon Postgres', 'Drizzle ORM'].includes(t)
+					['Next.js', 'Nuxt', 'Neon Postgres', 'Drizzle ORM', 'React 19'].includes(t)
 				)
 			)
 		}
@@ -204,9 +213,21 @@ export default function ProjectList() {
 												</div>
 											</div>
 
-											<p className='text-sm text-slate-400 leading-relaxed font-light line-clamp-3 mb-6'>
+											<p className='text-sm text-slate-400 leading-relaxed font-light line-clamp-3 mb-4'>
 												{project.description}
 											</p>
+
+											{project.learnings && (
+												<div className='mb-5 p-3 rounded-xl bg-slate-950/70 border border-slate-800/80 text-xs text-slate-300 leading-relaxed'>
+													<div className='flex items-center gap-1.5 text-[11px] font-mono text-indigo-400 font-semibold mb-1 uppercase tracking-wider'>
+														<CommandLineIcon className='w-3.5 h-3.5' />
+														<span>Architecture Insight</span>
+													</div>
+													<p className='text-slate-400 font-light text-xs leading-relaxed'>
+														{project.learnings}
+													</p>
+												</div>
+											)}
 										</div>
 
 										{/* Curated Technology Badges */}

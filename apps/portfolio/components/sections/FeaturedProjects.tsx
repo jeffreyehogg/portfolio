@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowTopRightOnSquareIcon, ArrowRightIcon } from '@heroicons/react/24/outline'
+import { ArrowTopRightOnSquareIcon, ArrowRightIcon, CommandLineIcon } from '@heroicons/react/24/outline'
 import { projectsData } from '../../lib/data'
 
 export default function FeaturedProjects() {
@@ -108,9 +108,21 @@ export default function FeaturedProjects() {
 										</div>
 									</div>
 
-									<p className='text-slate-400 text-sm leading-relaxed mb-6'>
+									<p className='text-slate-400 text-sm leading-relaxed mb-4'>
 										{project.description}
 									</p>
+
+									{project.learnings && (
+										<div className='mb-6 p-3.5 rounded-xl bg-slate-950/70 border border-slate-800 text-xs text-slate-300 leading-relaxed'>
+											<div className='flex items-center gap-1.5 text-[11px] font-mono text-indigo-400 font-semibold mb-1 uppercase tracking-wider'>
+												<CommandLineIcon className='w-3.5 h-3.5' />
+												<span>Architecture Insight</span>
+											</div>
+											<p className='text-slate-400 font-light text-xs leading-relaxed'>
+												{project.learnings}
+											</p>
+										</div>
+									)}
 								</div>
 
 								<div>

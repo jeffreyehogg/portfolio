@@ -197,6 +197,7 @@ export const projectsData: Project[] = [
 	{
 		title: 'Legacy Link',
 		href: 'https://legacy-link.jeffhogg.com',
+		githubUrl: 'https://github.com/jeffreyehogg/portfolio/tree/main/apps/legacy-link',
 		description:
 			'A specialized middleware utility designed to modernize physical security data migration. Ingests raw exports from legacy systems (Lenel, DNA Fusion) and provides an interactive visual interface to map, sanitize, and transform data for import into Genetec, reducing days of manual work to minutes.',
 		imageUrl: '/images/projects/legacy-link.png',
@@ -209,12 +210,13 @@ export const projectsData: Project[] = [
 	{
 		title: 'Kingdom Connect',
 		href: 'https://kingdom.jeffhogg.com',
+		githubUrl: 'https://github.com/jeffreyehogg/portfolio/tree/main/apps/kingdom-connect',
 		description:
-			'A full-stack digital faith platform uniting community volunteer service, kingdom fundraising, a public prayer wall, and an interactive personal prayer journal with drag-and-drop prioritization.',
+			'A unified digital faith platform combining community volunteer coordination, kingdom fundraising, a public prayer wall, and an interactive personal prayer journal with drag-and-drop prioritization.',
 		imageUrl: '/images/projects/kingdom-connect.png',
-		tags: ['Next.js', 'Clerk', 'Neon Postgres', 'Drizzle ORM', 'Tailwind CSS', 'dnd-kit'],
+		tags: ['Next.js', 'Clerk', 'Neon Postgres', 'Drizzle ORM', 'Tailwind CSS', 'dnd-kit', 'Server Actions'],
 		learnings:
-			'Mastered modern serverless PostgreSQL architectures with Neon, type-safe database interactions via Drizzle ORM, secure multi-tenant authentication with Clerk, and interactive drag-and-drop state machines.',
+			'Unified community volunteering and devotional journaling into a single serverless PostgreSQL architecture with Neon, type-safe Drizzle ORM mutations, Clerk multi-tenancy, and optimistic drag-and-drop state machines.',
 		featured: true,
 		metrics: 'Unified serverless faith platform',
 	},
@@ -233,6 +235,7 @@ export const projectsData: Project[] = [
 	{
 		title: 'ForexFlow Dashboard',
 		href: 'https://forexflow-dashboard.vercel.app/',
+		githubUrl: 'https://github.com/jeffreyehogg/portfolio/tree/main/apps/forexflow-dashboard',
 		description:
 			'A real-time currency exchange analytics dashboard tracking institutional exchange rates with live updates, 24-hour high/low telemetry, and interactive visual trends.',
 		imageUrl: '/images/projects/forexflow.png',
@@ -241,18 +244,6 @@ export const projectsData: Project[] = [
 			'Implemented secure server-side API proxying in Nuxt and integrated Chart.js with client-only hydration for real-time streaming data visualization.',
 		featured: false,
 		metrics: 'Live streaming telemetry & analytics',
-	},
-	{
-		title: 'Prayer Journal',
-		href: 'https://kingdom.jeffhogg.com/journal',
-		description:
-			'A dedicated personal prayer and devotional tracking journal integrated into Kingdom Connect. Features Clerk auth, Neon Postgres with Drizzle ORM, category filtering, timeline notes, and drag-and-drop prioritization.',
-		imageUrl: '/images/projects/pray.png',
-		tags: ['Next.js', 'Clerk', 'Neon Postgres', 'Drizzle ORM', 'dnd-kit', 'Server Actions'],
-		learnings:
-			'Consolidated standalone Supabase architecture into a unified Neon PostgreSQL + Drizzle ORM schema, leveraging Clerk authentication and optimistic drag-and-drop updates.',
-		featured: false,
-		metrics: 'Optimistic UI + Server Actions',
 	},
 	{
 		title: 'Vision Integrated Systems',
@@ -264,18 +255,20 @@ export const projectsData: Project[] = [
 		learnings:
 			'Focused on component modularity, SEO optimization, and sub-second load times to deliver an accessible corporate web presence.',
 		featured: false,
+		metrics: 'Enterprise corporate web presence',
 	},
 	{
-		title: 'Personal Portfolio & Design System',
+		title: 'Engineering Monorepo & Portfolio Platform',
 		href: 'https://jeffhogg.com',
 		githubUrl: 'https://github.com/jeffreyehogg/portfolio',
 		description:
-			'Modern portfolio engineering platform built with Next.js App Router, React 19, and Tailwind CSS. Features dark/light themes, agentic workflow memory, and native server action forms.',
+			'An enterprise-grade Turborepo monorepo orchestrating 4 production applications (Next.js 16, Nuxt 3, React 19) with pnpm workspaces, remote build caching, shared configurations, and automated Vercel CI/CD.',
 		imageUrl: '/images/projects/portfolio.png',
-		tags: ['Next.js', 'React 19', 'TypeScript', 'Tailwind CSS', 'Server Actions'],
+		tags: ['Turborepo', 'pnpm Workspaces', 'Next.js', 'Nuxt', 'TypeScript'],
 		learnings:
-			'Iteratively designed with agentic development protocols, modular architecture, and 100% focus on full-stack systems engineering.',
+			'Architected a multi-app monorepo with Turborepo task pipeline caching, independent Vercel deployment detection, shared ESLint/TS configs, and automated agentic protocols.',
 		featured: false,
+		metrics: 'Turborepo 4-App Architecture',
 	},
 ]
 
@@ -286,11 +279,11 @@ export const skillsData: SkillCategory[] = [
 	},
 	{
 		category: 'DevOps & Infrastructure',
-		list: 'Docker, Nginx, GitHub Actions, Self-Hosted Runners, Linux, CI/CD Pipelines, DNS & SSL Management, Vercel, Jenkins',
+		list: 'Docker, Nginx, GitHub Actions, Self-Hosted Runners, Linux, CI/CD Pipelines, Turborepo, Monorepo Architecture, DNS & SSL Management, Vercel, Jenkins',
 	},
 	{
 		category: 'Databases & ORMs',
-		list: 'Microsoft SQL Server, MySQL, PostgreSQL, Neon, Supabase, Drizzle ORM, Prisma, Stored Procedures, JSONB Ingestion',
+		list: 'Microsoft SQL Server, MySQL, PostgreSQL, Neon, Drizzle ORM, Supabase, Prisma, Stored Procedures, JSONB Ingestion',
 	},
 	{
 		category: 'Testing & Platform Operations',

@@ -9,6 +9,7 @@ This file is automatically loaded by Antigravity as the primary context and oper
 - **Architecture**: Turborepo + pnpm workspaces monorepo
 - **Apps**:
   - `apps/portfolio`: Next.js 15 (App Router), React 19, Tailwind CSS v3, Framer Motion
+  - `apps/hogg-homes`: Next.js 16 (App Router), React 19, Tailwind CSS v3, Framer Motion, Zod Server Actions (High-craft residential community and floor plan platform)
   - `apps/kingdom-connect`: Next.js 16 (Turbopack), React 19, Tailwind CSS v4, Clerk, Drizzle, Neon (Unified faith platform with Volunteer Board, Kingdom Fund, Community Prayer Wall, and Personal Prayer Journal)
   - `apps/legacy-link`: Next.js 16, TypeScript, Clerk (Security data migration utility)
   - `apps/forexflow-dashboard`: Nuxt 3, Vue, Chart.js (Forex telemetry dashboard)
@@ -96,7 +97,7 @@ pnpm add <package> --filter <app-name>
 - **Next.js HMR Image Imports**: Avoid relative imports from `public/` (e.g. `import img from '../../public/...'`) inside client components, as Webpack's image loader can cause chunk module ID mismatches during HMR (`TypeError: __webpack_modules__[moduleId] is not a function`). Use standard string paths (`src='/images/...'`).
 - **Turborepo Strict Environment Variables**: Turborepo scrubs environment variables during the `build` task. If a build fails claiming a database URL or API key is missing, you must explicitly declare that variable in `turbo.json` under `tasks.build.env`.
 - **Vercel Monorepo Deployment**: The "Ignored Build Step" on Vercel should be left on "Automatic". Vercel auto-detects Turborepo and intelligently skips builds for apps whose source files (or shared `packages/` dependencies) haven't changed using `turbo-ignore`.
-- **Vercel CLI Monorepo Linking**: In this monorepo, each app is connected to its own Vercel project (`portfolio`, `kingdom-connect`, `legacy-link`, `forexflow-dashboard`) under team `team_ISNx0N17TdbxTMLDp3JbB8fa`. Each app has a `.vercel/project.json` linking its `projectId`. Always run Vercel CLI commands with `Cwd: apps/<app>` (e.g., `apps/portfolio`) or pass `--cwd apps/<app>` so commands run non-interactively without prompting to link.
+- **Vercel CLI Monorepo Linking**: In this monorepo, each app is connected to its own Vercel project (`portfolio`, `hogg-homes`, `kingdom-connect`, `legacy-link`, `forexflow-dashboard`) under team `team_ISNx0N17TdbxTMLDp3JbB8fa`. Each app has a `.vercel/project.json` linking its `projectId`. Always run Vercel CLI commands with `Cwd: apps/<app>` (e.g., `apps/portfolio`) or pass `--cwd apps/<app>` so commands run non-interactively without prompting to link.
 
 ---
 

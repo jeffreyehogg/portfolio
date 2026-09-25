@@ -13,6 +13,11 @@ module.exports = {
 				hostname: 'uew8wzjetllsk5wf.public.blob.vercel-storage.com',
 				pathname: '/**',
 			},
+			{
+				protocol: 'https',
+				hostname: 'images.unsplash.com',
+				pathname: '/**',
+			},
 		],
 	},
 	// Enable React strict mode for better development experience

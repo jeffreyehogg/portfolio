@@ -195,6 +195,19 @@ export const experienceData: ExperienceItem[] = [
 
 export const projectsData: Project[] = [
 	{
+		title: 'Hogg Homes',
+		href: 'https://homes.jeffhogg.com',
+		githubUrl: 'https://github.com/jeffreyehogg/portfolio/tree/main/apps/hogg-homes',
+		description:
+			'A high-craft residential real estate and community discovery platform for modern homebuilders. Features faceted client-side filtering, interactive Elevation A/B/C architectural toggles, CAD floor plan schematics with electrical/plumbing layers, and Zod-validated VIP tour booking with real-time CRM webhooks.',
+		imageUrl: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80',
+		tags: ['Next.js 16', 'React 19', 'Server Actions', 'Zod', 'Framer Motion', 'Tailwind CSS', 'Turborepo'],
+		learnings:
+			'Replaced slow legacy homebuilder CMS monoliths with sub-second React Server Components (RSC). Engineered interactive SVG CAD schematics with toggleable MEP layers, optimized AVIF elevation switching, and built type-safe CRM lead synchronization.',
+		featured: true,
+		metrics: 'Sub-second LCP (0.7s) • Zero CLS • Edge RSC',
+	},
+	{
 		title: 'Legacy Link',
 		href: 'https://legacy-link.jeffhogg.com',
 		githubUrl: 'https://github.com/jeffreyehogg/portfolio/tree/main/apps/legacy-link',

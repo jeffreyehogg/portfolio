@@ -96,6 +96,7 @@ pnpm add <package> --filter <app-name>
 - **Next.js HMR Image Imports**: Avoid relative imports from `public/` (e.g. `import img from '../../public/...'`) inside client components, as Webpack's image loader can cause chunk module ID mismatches during HMR (`TypeError: __webpack_modules__[moduleId] is not a function`). Use standard string paths (`src='/images/...'`).
 - **Turborepo Strict Environment Variables**: Turborepo scrubs environment variables during the `build` task. If a build fails claiming a database URL or API key is missing, you must explicitly declare that variable in `turbo.json` under `tasks.build.env`.
 - **Vercel Monorepo Deployment**: The "Ignored Build Step" on Vercel should be left on "Automatic". Vercel auto-detects Turborepo and intelligently skips builds for apps whose source files (or shared `packages/` dependencies) haven't changed using `turbo-ignore`.
+- **Vercel CLI Monorepo Linking**: In this monorepo, each app is connected to its own Vercel project (`portfolio`, `kingdom-connect`, `legacy-link`, `forexflow-dashboard`) under team `team_ISNx0N17TdbxTMLDp3JbB8fa`. Each app has a `.vercel/project.json` linking its `projectId`. Always run Vercel CLI commands with `Cwd: apps/<app>` (e.g., `apps/portfolio`) or pass `--cwd apps/<app>` so commands run non-interactively without prompting to link.
 
 ---
 

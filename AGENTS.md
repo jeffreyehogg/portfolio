@@ -99,9 +99,9 @@ pnpm add <package> --filter <app-name>
 
 ---
 
-## 6. Skills & Extension Roadmap
+## 6. Active Workspace Skills (`.agents/skills/`)
 
-When procedures become repetitive or specialized, define custom skills in `.agents/skills/<skill-name>/SKILL.md`:
-- `portfolio-section-builder`: Step-by-step generator for responsive, animated portfolio sections.
-- `content-sync`: Validating and updating data models in `lib/data.ts`.
-- `build-audit`: Automated checklist for bundle size, image optimizations, and SEO tags.
+The following modular skills are checked into the repository and loaded on demand by Antigravity:
+- **`high-craft-ui`**: Expert guidelines and design patterns for building high-craft, modern, visually stunning web user interfaces (layered surfaces, ambient radial glows, Framer Motion springs, and developer telemetry).
+- **`nextjs-app-router-craft`**: Architecture patterns and conventions for Next.js 15/16 App Router, React 19, RSC boundaries, Server Actions with Zod validation, Clerk auth, and Drizzle/Neon database workflows.
+- **`turbo-monorepo-ops`**: Standard operating procedures for Turborepo and pnpm workspaces monorepo management, Vercel CI/CD, lockfile integrity, and multi-app builds.

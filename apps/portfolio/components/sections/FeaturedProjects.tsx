@@ -49,28 +49,37 @@ export default function FeaturedProjects() {
 								href={project.href}
 								target='_blank'
 								rel='noopener noreferrer'
-								className='relative h-56 w-full overflow-hidden block bg-slate-950'
+								className='relative aspect-[16/10] w-full overflow-hidden block bg-slate-950 border-b border-slate-800/60'
 							>
-								<div className='absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/0 transition-colors z-10' />
+								<div className='absolute inset-0 bg-slate-950/20 group-hover:bg-transparent transition-colors z-10' />
 								<Image
 									src={project.imageUrl}
 									alt={project.title}
 									fill
-									className='object-cover transform transition-transform duration-700 group-hover:scale-105'
+									className='object-cover transform transition-transform duration-700 ease-out group-hover:scale-105'
 									sizes='(max-width: 1024px) 100vw, 33vw'
 								/>
-								{project.metrics && (
-									<div className='absolute top-4 left-4 z-20'>
-										<span className='px-3 py-1 rounded-full text-xs font-mono font-medium bg-slate-950/80 text-emerald-400 border border-emerald-500/30 backdrop-blur-md shadow-md'>
-											{project.metrics}
-										</span>
-									</div>
-								)}
+
+								{/* Subtle Hover Reveal */}
+								<div className='absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 bg-slate-950/40 backdrop-blur-[2px]'>
+									<span className='px-4 py-1.5 rounded-full text-xs font-semibold text-white bg-slate-900/90 border border-slate-700 flex items-center gap-1.5 shadow-lg'>
+										View Live System
+										<ArrowTopRightOnSquareIcon className='w-3.5 h-3.5 text-indigo-400' />
+									</span>
+								</div>
 							</a>
 
 							{/* Content */}
 							<div className='p-6 sm:p-8 flex-1 flex flex-col justify-between'>
 								<div>
+									{/* Metric Telemetry Pill */}
+									{project.metrics && (
+										<div className='flex items-center gap-1.5 text-xs font-mono text-emerald-400 font-medium mb-2.5'>
+											<span className='h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse' />
+											<span>{project.metrics}</span>
+										</div>
+									)}
+
 									<div className='flex items-center justify-between mb-3'>
 										<h3 className='text-xl font-bold text-white group-hover:text-indigo-400 transition-colors'>
 											<a href={project.href} target='_blank' rel='noopener noreferrer'>

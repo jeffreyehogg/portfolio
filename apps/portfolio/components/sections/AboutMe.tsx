@@ -34,7 +34,7 @@ export default function AboutMe() {
 						<motion.div
 							initial={{ opacity: 0, scale: 0.95 }}
 							animate={{ opacity: 1, scale: 1 }}
-							transition={{ duration: 0.6 }}
+							transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
 							className='relative w-64 h-64 mx-auto lg:mx-0'
 						>
 							<div className='absolute -inset-4 bg-gradient-to-r from-indigo-500 to-cyan-500 rounded-full blur-2xl opacity-25' />
@@ -51,7 +51,7 @@ export default function AboutMe() {
 						<motion.div
 							initial={{ opacity: 0, y: 20 }}
 							animate={{ opacity: 1, y: 0 }}
-							transition={{ delay: 0.2 }}
+							transition={{ type: 'spring', bounce: 0.2, duration: 0.6, delay: 0.15 }}
 						>
 							<h2 className='text-indigo-400 font-semibold tracking-wide uppercase text-xs font-mono mb-2'>
 								Engineering Profile
@@ -70,9 +70,9 @@ export default function AboutMe() {
 									layers, and driving end-to-end system automation.
 								</p>
 								<p>
-									Currently, I operate as the <strong className='text-white font-medium'>solo technical lead at LGI Homes</strong>,
-									bridging the gap between full-stack development, database administration,
-									and DevOps. In this role, I wear multiple hats: from containerizing
+									Currently, I work as a <strong className='text-white font-medium'>Full-Stack Developer at LGI Homes</strong>,
+									bridging the gap between web development, database administration,
+									and DevOps. In this role, I manage a wide spectrum of systems: from containerizing
 									environments with Docker/Nginx and writing custom Node.js/TypeScript
 									middleware to managing distributed on-premise Microsoft SQL Server and
 									MySQL databases.

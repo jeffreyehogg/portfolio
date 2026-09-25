@@ -14,7 +14,7 @@ import {
 import { profileData } from '../../lib/data'
 
 const metrics = [
-	{ label: 'Technical Leadership', value: '10+ Years', icon: BriefcaseIcon },
+	{ label: 'Technical Experience', value: '10+ Years', icon: BriefcaseIcon },
 	{ label: 'Automated CI/CD', value: 'Self-Hosted Runners', icon: ServerStackIcon },
 	{ label: 'Database Tuning', value: 'Distributed SQL', icon: CircleStackIcon },
 	{ label: 'Engineering Velocity', value: 'Agentic Workflows', icon: CpuChipIcon },
@@ -41,13 +41,13 @@ export default function Hero() {
 				<motion.div
 					initial={{ opacity: 0, y: 30 }}
 					animate={{ opacity: 1, y: 0 }}
-					transition={{ duration: 0.8, ease: 'easeOut' }}
+					transition={{ type: 'spring', bounce: 0.15, duration: 0.7 }}
 				>
 					{/* Status Badge */}
 					<motion.div
 						initial={{ opacity: 0, scale: 0.9 }}
 						animate={{ opacity: 1, scale: 1 }}
-						transition={{ delay: 0.2 }}
+						transition={{ type: 'spring', bounce: 0.2, duration: 0.5, delay: 0.15 }}
 						className='inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-slate-900/80 border border-slate-800 text-slate-300 text-xs sm:text-sm font-medium mb-8 backdrop-blur-md shadow-lg shadow-black/20'
 					>
 						<span className='relative flex h-2 w-2'>
@@ -72,6 +72,27 @@ export default function Hero() {
 					<p className='mt-6 text-lg sm:text-xl text-slate-300 sm:max-w-3xl mx-auto leading-relaxed font-normal text-balance'>
 						{profileData.headline}
 					</p>
+
+					{/* Architecture & Stack Telemetry */}
+					<div className='mt-8 inline-flex flex-col sm:flex-row items-center gap-3 px-4 py-2.5 rounded-2xl bg-slate-900/80 border border-slate-800/90 backdrop-blur-xl shadow-xl shadow-black/30'>
+						<div className='flex items-center gap-1.5'>
+							<span className='w-2.5 h-2.5 rounded-full bg-rose-500/80' />
+							<span className='w-2.5 h-2.5 rounded-full bg-amber-500/80' />
+							<span className='w-2.5 h-2.5 rounded-full bg-emerald-500/80' />
+							<span className='text-[11px] font-mono text-slate-400 ml-2'>stack.telemetry</span>
+						</div>
+						<div className='hidden sm:block h-3.5 w-px bg-slate-800' />
+						<div className='flex items-center gap-3 text-xs font-mono text-slate-300 flex-wrap justify-center'>
+							<span className='flex items-center gap-1.5'>
+								<span className='h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse' />
+								<span>CI/CD: GitHub Runners</span>
+							</span>
+							<span className='text-slate-600'>•</span>
+							<span className='text-indigo-300'>Docker & Nginx</span>
+							<span className='text-slate-600'>•</span>
+							<span className='text-cyan-300'>Distributed MS SQL</span>
+						</div>
+					</div>
 				</motion.div>
 
 				{/* Action Buttons */}
@@ -79,7 +100,7 @@ export default function Hero() {
 					className='mt-10 flex flex-wrap gap-3.5 justify-center items-center'
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}
-					transition={{ delay: 0.4, duration: 0.6 }}
+					transition={{ type: 'spring', bounce: 0.2, duration: 0.6, delay: 0.35 }}
 				>
 					<Link
 						href='/portfolio'
@@ -111,15 +132,15 @@ export default function Hero() {
 					className='mt-16 grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 max-w-4xl mx-auto'
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}
-					transition={{ delay: 0.6, duration: 0.7 }}
+					transition={{ type: 'spring', bounce: 0.2, duration: 0.7, delay: 0.5 }}
 				>
 					{metrics.map((item) => (
 						<div
 							key={item.label}
-							className='p-4 rounded-xl bg-slate-900/40 border border-slate-800/60 backdrop-blur-sm text-center'
+							className='p-4 sm:p-5 rounded-2xl bg-slate-900/60 border border-slate-800/80 hover:border-indigo-500/40 hover:bg-slate-900/90 hover:shadow-xl hover:shadow-indigo-500/10 hover:-translate-y-1 backdrop-blur-md text-center transition-all duration-300 group cursor-default'
 						>
-							<div className='flex items-center justify-center gap-1.5 text-white font-bold text-base sm:text-lg'>
-								<item.icon className='w-4 h-4 text-indigo-400' />
+							<div className='flex items-center justify-center gap-1.5 text-white font-bold text-base sm:text-lg group-hover:text-indigo-200 transition-colors'>
+								<item.icon className='w-4 h-4 text-indigo-400 group-hover:scale-110 transition-transform' />
 								{item.value}
 							</div>
 							<div className='text-xs font-mono text-slate-400 mt-1 uppercase tracking-wider'>

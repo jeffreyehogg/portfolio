@@ -3,8 +3,8 @@ import ContactForm from "../../components/forms/ContactForm";
 import BackgroundBlobs from "../../components/ui/BackgroundBlobs";
 
 export const metadata: Metadata = {
-  title: "Contact - Jeff Hogg",
-  description: "Get in touch with Jeff Hogg for software development projects.",
+  title: "Contact",
+  description: "Get in touch with Jeff Hogg for full-stack engineering, DevOps pipelines, and systems architecture consultations.",
 };
 
 export default function Contact() {

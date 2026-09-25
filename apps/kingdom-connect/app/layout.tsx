@@ -7,6 +7,7 @@ import { Metadata } from "next";
 import { Toaster } from "sonner"; //
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://kingdom.jeffhogg.com"),
   title: "Kingdom Connect",
   description:
     "Connect Your Gifts to Kingdom Needs. Find where you fit in the body of Christ through volunteering and giving.",

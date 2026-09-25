@@ -6,7 +6,7 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**"],
+      "outputs": [".next/**", "!.next/cache/**", ".output/**", ".nuxt/**"],
       "env": [
         "DATABASE_URL",
         "POSTGRES_URL",
@@ -26,6 +26,15 @@
         "NEON_PROJECT_ID",
         "ADMIN_USER_ID",
         "CLERK_SECRET_KEY",
+        "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY",
+        "NEXT_PUBLIC_CLERK_SIGN_IN_URL",
+        "NEXT_PUBLIC_CLERK_SIGN_UP_URL",
+        "NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL",
+        "NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL",
+        "NEXT_PUBLIC_RECAPTCHA_SITE_KEY",
+        "RECAPTCHA_SECRET_KEY",
+        "RESEND_API_KEY",
+        "RESEND_EMAIL_TO",
         "UPLOADTHING_TOKEN",
         "VERCEL_URL"
       ]

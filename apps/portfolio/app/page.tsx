@@ -7,13 +7,13 @@ import Trusted from '../components/sections/Trusted'
 
 export default function Home() {
 	return (
-		<main className='flex flex-col min-h-screen'>
+		<div className='flex flex-col'>
 			<Hero />
 			<EngineeringPillars />
 			<FeaturedProjects />
 			<Trusted />
 			<Services />
 			<Testimonials />
-		</main>
+		</div>
 	)
 }

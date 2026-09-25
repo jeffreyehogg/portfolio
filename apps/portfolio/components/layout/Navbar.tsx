@@ -46,7 +46,7 @@ export default function Navbar() {
 						)}
 						initial={{ y: -80, opacity: 0 }}
 						animate={{ y: 0, opacity: 1 }}
-						transition={{ duration: 0.5 }}
+						transition={{ type: 'spring', bounce: 0.15, duration: 0.6 }}
 					>
 						<div className='flex items-center justify-between h-10 sm:h-11'>
 							{/* Left: Brand Identity */}

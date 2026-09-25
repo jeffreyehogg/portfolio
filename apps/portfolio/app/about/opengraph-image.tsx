@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og'
 
 export const runtime = 'nodejs'
-export const alt = 'Jeff Hogg | Full-Stack Developer & Systems Architect'
+export const alt = 'Jeff Hogg | Career Experience & Technical Depth'
 export const size = {
 	width: 1200,
 	height: 630,
@@ -65,7 +65,6 @@ export default async function Image() {
 							fontFamily: 'monospace',
 						}}
 					>
-						{/* macOS Terminal Dots */}
 						<div style={{ display: 'flex', gap: '6px', alignItems: 'center', marginRight: '6px' }}>
 							<div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#ef4444' }} />
 							<div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#f59e0b' }} />
@@ -73,7 +72,7 @@ export default async function Image() {
 						</div>
 						<span>jeffhogg.com</span>
 						<span style={{ color: '#475569' }}>/</span>
-						<span style={{ color: '#94a3b8' }}>systems-architect</span>
+						<span style={{ color: '#94a3b8' }}>about</span>
 					</div>
 
 					<div
@@ -102,11 +101,11 @@ export default async function Image() {
 					</div>
 				</div>
 
-				{/* Center Headline */}
+				{/* Center Content */}
 				<div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
 					<h1
 						style={{
-							fontSize: '76px',
+							fontSize: '70px',
 							fontWeight: 900,
 							color: '#ffffff',
 							margin: 0,
@@ -114,18 +113,18 @@ export default async function Image() {
 							lineHeight: 1.05,
 						}}
 					>
-						Jeff Hogg
+						Career Experience & Background
 					</h1>
 					<p
 						style={{
-							fontSize: '32px',
+							fontSize: '30px',
 							fontWeight: 600,
 							color: '#a5b4fc',
 							margin: 0,
 							letterSpacing: '-0.01em',
 						}}
 					>
-						Full-Stack Developer & Systems Architect
+						From Enterprise Systems at Cisco to Full-Stack Operations at LGI Homes
 					</p>
 					<p
 						style={{
@@ -133,24 +132,24 @@ export default async function Image() {
 							color: '#94a3b8',
 							margin: '6px 0 0 0',
 							lineHeight: 1.4,
-							maxWidth: '920px',
+							maxWidth: '960px',
 						}}
 					>
-						DevOps automation, custom API middleware, distributed MS SQL & MySQL tuning, and enterprise systems engineering.
+						Modernizing legacy architectures, building high-throughput API middleware, and running automated CI/CD infrastructure with self-hosted runners.
 					</p>
 				</div>
 
-				{/* Bottom Tags */}
+				{/* Bottom Highlight Pills */}
 				<div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap' }}>
 					{[
-						'DevOps & CI/CD',
-						'Node.js & TypeScript Middleware',
-						'Distributed Databases',
-						'Agentic Workflows',
-						'Enterprise SaaS',
-					].map((tag) => (
+						'LGI Homes (Web & Data)',
+						'Cisco (Webex Calling SaaS)',
+						'Freelance Engineering (5+ Apps)',
+						'Distributed MS SQL & MySQL',
+						'Docker & Nginx Containerization',
+					].map((item) => (
 						<div
-							key={tag}
+							key={item}
 							style={{
 								padding: '8px 18px',
 								borderRadius: '10px',
@@ -161,7 +160,7 @@ export default async function Image() {
 								fontFamily: 'monospace',
 							}}
 						>
-							{tag}
+							{item}
 						</div>
 					))}
 				</div>

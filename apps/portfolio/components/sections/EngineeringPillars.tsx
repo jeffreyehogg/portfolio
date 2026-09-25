@@ -51,8 +51,8 @@ export default function EngineeringPillars() {
 						transition={{ delay: 0.2 }}
 						className='mt-4 text-base sm:text-lg text-slate-400 leading-relaxed'
 					>
-						Operating as the Solo Technical Lead at LGI Homes, bridging full-stack
-						development, database administration, and containerized DevOps.
+						Full-Stack Developer at LGI Homes, bridging web applications,
+						distributed database administration, and automated CI/CD DevOps.
 					</motion.p>
 				</div>
 
@@ -67,33 +67,43 @@ export default function EngineeringPillars() {
 								initial={{ opacity: 0, y: 25 }}
 								whileInView={{ opacity: 1, y: 0 }}
 								viewport={{ once: true }}
-								transition={{ delay: idx * 0.1, duration: 0.5 }}
-								className='group relative rounded-2xl bg-slate-900/60 border border-slate-800 p-8 backdrop-blur-xl hover:border-indigo-500/40 hover:bg-slate-900/80 transition-all duration-300 flex flex-col justify-between'
+								transition={{ type: 'spring', bounce: 0.2, duration: 0.6, delay: idx * 0.1 }}
+								className='group relative rounded-2xl bg-slate-900/60 border border-slate-800/80 p-7 sm:p-8 backdrop-blur-xl hover:border-indigo-500/40 hover:bg-slate-900/90 hover:shadow-2xl hover:shadow-indigo-500/10 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between'
 							>
 								{/* Subtle hover gradient glow */}
 								<div className='absolute inset-0 rounded-2xl bg-gradient-to-br from-indigo-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none' />
 
 								<div>
-									<div className='flex items-center justify-between mb-6'>
-										<div className='p-3 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 group-hover:bg-indigo-500 group-hover:text-white transition-all duration-300'>
-											<Icon className='w-6 h-6' />
+									{/* Terminal Header */}
+									<div className='flex items-center justify-between pb-4 mb-6 border-b border-slate-800/80'>
+										<div className='flex items-center gap-1.5'>
+											<span className='w-2.5 h-2.5 rounded-full bg-rose-500/70' />
+											<span className='w-2.5 h-2.5 rounded-full bg-amber-500/70' />
+											<span className='w-2.5 h-2.5 rounded-full bg-emerald-500/70' />
+											<span className='text-[11px] font-mono text-slate-500 ml-2'>spec/{pillar.id}</span>
 										</div>
-										<span className='text-xs font-mono text-slate-400 bg-slate-800/80 px-3 py-1 rounded-full border border-slate-700/50'>
+										<span className='text-xs font-mono text-indigo-300 bg-indigo-500/10 px-2.5 py-0.5 rounded-full border border-indigo-500/20'>
 											{pillar.badge}
 										</span>
 									</div>
 
-									<h3 className='text-xl font-bold text-white mb-3 group-hover:text-indigo-300 transition-colors'>
-										{pillar.title}
-									</h3>
-									<p className='text-slate-400 text-sm sm:text-base leading-relaxed mb-6'>
+									<div className='flex items-center gap-4 mb-4'>
+										<div className='p-3 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 group-hover:bg-indigo-600 group-hover:text-white group-hover:scale-105 transition-all duration-300'>
+											<Icon className='w-6 h-6' />
+										</div>
+										<h3 className='text-xl font-bold text-white group-hover:text-indigo-200 transition-colors'>
+											{pillar.title}
+										</h3>
+									</div>
+
+									<p className='text-slate-400 text-sm sm:text-base leading-relaxed mb-6 font-light'>
 										{pillar.description}
 									</p>
 								</div>
 
 								<div>
 									{pillar.stats && (
-										<div className='text-xs font-mono text-indigo-400 font-semibold mb-4 flex items-center gap-1.5'>
+										<div className='text-xs font-mono text-emerald-400 font-semibold mb-4 flex items-center gap-1.5'>
 											<span className='h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse' />
 											{pillar.stats}
 										</div>
@@ -102,7 +112,7 @@ export default function EngineeringPillars() {
 										{pillar.technologies.map((tech) => (
 											<span
 												key={tech}
-												className='text-xs font-mono text-slate-300 bg-slate-800/50 px-2.5 py-1 rounded-md border border-slate-700/40'
+												className='text-xs font-mono text-slate-300 bg-slate-800/60 px-2.5 py-1 rounded-md border border-slate-700/40 group-hover:border-slate-700 transition-colors'
 											>
 												{tech}
 											</span>

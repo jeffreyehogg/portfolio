@@ -67,11 +67,11 @@ export const profileData = {
 	role: 'Full-Stack Developer',
 	specialization: 'DevOps, System Architecture & API Integration',
 	location: 'Greater Houston, TX',
-	status: 'Solo Technical Lead @ LGI Homes',
+	status: 'Full-Stack Developer @ LGI Homes',
 	headline:
 		'Modernizing legacy architectures, building resilient API layers, and driving end-to-end system automation.',
 	bio:
-		'As a Full-Stack Developer and Solo Technical Lead at LGI Homes, I specialize in modernizing legacy architectures, building robust API layers, and driving end-to-end DevOps automation. From containerizing environments (Docker/Nginx) and developing custom Node.js/TypeScript middleware to managing distributed Microsoft SQL Server and MySQL databases, I bridge full-stack engineering with operational reliability. I actively leverage agentic IDE workflows to accelerate optimization, query debugging, and code refactoring.',
+		'As a Full-Stack Developer at LGI Homes, I specialize in modernizing legacy architectures, building robust API layers, and driving end-to-end DevOps automation. From containerizing environments (Docker/Nginx) and developing custom Node.js/TypeScript middleware to managing distributed Microsoft SQL Server and MySQL databases, I bridge full-stack engineering with operational reliability. I actively leverage agentic IDE workflows to accelerate optimization, query debugging, and code refactoring.',
 }
 
 export const engineeringPillars: EngineeringPillar[] = [
@@ -121,13 +121,13 @@ export const experienceData: ExperienceItem[] = [
 		location: 'The Woodlands, TX',
 		current: true,
 		summary:
-			'Operating as the solo technical lead, bridging the gap between full-stack development, database administration, and DevOps infrastructure.',
+			'Bridging the gap between full-stack development, database administration, and DevOps infrastructure.',
 		highlights: [
 			'DevOps & CI/CD: Modernized legacy infrastructure by transitioning manual, server-direct codebases to Git-based version control; designed and implemented automated CI/CD pipelines with self-hosted GitHub Runners and GitHub Actions to dramatically accelerate developer workflows.',
 			'Full-Stack Feature Development: Architected and deployed feature releases for internal web applications, seamlessly integrating complex leasing operation data while modernizing the user interface.',
 			'API & Middleware Engineering: Designed a dedicated API layer and developed a custom Node.js and TypeScript middleware integration to securely query 3rd-party APIs, extracting and syncing organizational data into a distributed Microsoft SQL Server environment.',
 			'Database Administration & Optimization: Manage, maintain, and optimize on-premise Microsoft SQL Server and MySQL databases. Actively leverage agentic IDE workflows for stored procedure optimization, complex query debugging, and code refactoring.',
-			'System Architecture & Operations: Serve as the sole technical lead managing containerized services (Docker/Nginx), external DNS, and SSL renewals, scaling infrastructure capabilities and advocating for modern engineering practices.',
+			'System Architecture & Operations: Oversee containerized services (Docker/Nginx), external DNS, and SSL renewals, scaling infrastructure capabilities and advocating for modern engineering practices.',
 		],
 		technologies: [
 			'TypeScript',

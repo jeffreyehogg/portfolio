@@ -41,8 +41,8 @@ export default function FeaturedProjects() {
 							initial={{ opacity: 0, y: 30 }}
 							whileInView={{ opacity: 1, y: 0 }}
 							viewport={{ once: true }}
-							transition={{ delay: idx * 0.15, duration: 0.5 }}
-							className='group relative flex flex-col rounded-2xl bg-slate-900 border border-slate-800 overflow-hidden hover:border-indigo-500/40 hover:shadow-2xl hover:shadow-indigo-500/10 transition-all duration-300'
+							transition={{ type: 'spring', bounce: 0.2, duration: 0.6, delay: idx * 0.15 }}
+							className='group relative flex flex-col rounded-2xl bg-slate-900 border border-slate-800 overflow-hidden hover:border-indigo-500/40 hover:shadow-2xl hover:shadow-indigo-500/10 hover:-translate-y-1 transition-all duration-300'
 						>
 							{/* Project Image */}
 							<a
@@ -108,17 +108,25 @@ export default function FeaturedProjects() {
 										</div>
 									</div>
 
-									<p className='text-slate-400 text-sm leading-relaxed mb-4'>
+									<p className='text-slate-400 text-sm leading-relaxed mb-4 font-light'>
 										{project.description}
 									</p>
 
 									{project.learnings && (
-										<div className='mb-6 p-3.5 rounded-xl bg-slate-950/70 border border-slate-800 text-xs text-slate-300 leading-relaxed'>
-											<div className='flex items-center gap-1.5 text-[11px] font-mono text-indigo-400 font-semibold mb-1 uppercase tracking-wider'>
-												<CommandLineIcon className='w-3.5 h-3.5' />
-												<span>Architecture Insight</span>
+										<div className='mb-6 rounded-xl bg-slate-950/80 border border-slate-800/90 overflow-hidden text-xs text-slate-300'>
+											<div className='flex items-center justify-between px-3.5 py-1.5 bg-slate-900/90 border-b border-slate-800/80'>
+												<div className='flex items-center gap-1.5'>
+													<span className='w-2 h-2 rounded-full bg-rose-500/70' />
+													<span className='w-2 h-2 rounded-full bg-amber-500/70' />
+													<span className='w-2 h-2 rounded-full bg-emerald-500/70' />
+													<span className='text-[10px] font-mono text-slate-500 ml-1.5'>arch.telemetry</span>
+												</div>
+												<span className='text-[10px] font-mono text-indigo-400 flex items-center gap-1 uppercase tracking-wider'>
+													<CommandLineIcon className='w-3 h-3' />
+													Insight
+												</span>
 											</div>
-											<p className='text-slate-400 font-light text-xs leading-relaxed'>
+											<p className='p-3.5 text-slate-400 font-light text-xs leading-relaxed'>
 												{project.learnings}
 											</p>
 										</div>

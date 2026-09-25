@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og'
 
 export const runtime = 'nodejs'
-export const alt = 'Jeff Hogg | Full-Stack Developer & Systems Architect'
+export const alt = 'Jeff Hogg | Systems Architecture & Production Projects'
 export const size = {
 	width: 1200,
 	height: 630,
@@ -65,7 +65,6 @@ export default async function Image() {
 							fontFamily: 'monospace',
 						}}
 					>
-						{/* macOS Terminal Dots */}
 						<div style={{ display: 'flex', gap: '6px', alignItems: 'center', marginRight: '6px' }}>
 							<div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#ef4444' }} />
 							<div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#f59e0b' }} />
@@ -73,7 +72,7 @@ export default async function Image() {
 						</div>
 						<span>jeffhogg.com</span>
 						<span style={{ color: '#475569' }}>/</span>
-						<span style={{ color: '#94a3b8' }}>systems-architect</span>
+						<span style={{ color: '#94a3b8' }}>portfolio</span>
 					</div>
 
 					<div
@@ -83,30 +82,22 @@ export default async function Image() {
 							gap: '10px',
 							padding: '10px 20px',
 							borderRadius: '9999px',
-							background: 'rgba(16, 185, 129, 0.12)',
-							border: '1px solid rgba(16, 185, 129, 0.3)',
-							color: '#34d399',
+							background: 'rgba(99, 102, 241, 0.15)',
+							border: '1px solid rgba(99, 102, 241, 0.35)',
+							color: '#c7d2fe',
 							fontSize: '18px',
 							fontWeight: 600,
 						}}
 					>
-						<div
-							style={{
-								width: '10px',
-								height: '10px',
-								borderRadius: '50%',
-								background: '#10b981',
-							}}
-						/>
-						<span>Full-Stack Developer @ LGI Homes</span>
+						<span>Production Systems & Architecture</span>
 					</div>
 				</div>
 
-				{/* Center Headline */}
+				{/* Center Content */}
 				<div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
 					<h1
 						style={{
-							fontSize: '76px',
+							fontSize: '70px',
 							fontWeight: 900,
 							color: '#ffffff',
 							margin: 0,
@@ -114,18 +105,18 @@ export default async function Image() {
 							lineHeight: 1.05,
 						}}
 					>
-						Jeff Hogg
+						Selected Engineering Work
 					</h1>
 					<p
 						style={{
-							fontSize: '32px',
+							fontSize: '30px',
 							fontWeight: 600,
 							color: '#a5b4fc',
 							margin: 0,
 							letterSpacing: '-0.01em',
 						}}
 					>
-						Full-Stack Developer & Systems Architect
+						Enterprise Middleware, Full-Stack SaaS & DevOps Pipelines
 					</p>
 					<p
 						style={{
@@ -133,24 +124,24 @@ export default async function Image() {
 							color: '#94a3b8',
 							margin: '6px 0 0 0',
 							lineHeight: 1.4,
-							maxWidth: '920px',
+							maxWidth: '960px',
 						}}
 					>
-						DevOps automation, custom API middleware, distributed MS SQL & MySQL tuning, and enterprise systems engineering.
+						Real-world software engineered for high scale, reliable data migration, and zero-downtime continuous deployment.
 					</p>
 				</div>
 
-				{/* Bottom Tags */}
+				{/* Bottom Highlight Pills */}
 				<div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap' }}>
 					{[
-						'DevOps & CI/CD',
-						'Node.js & TypeScript Middleware',
-						'Distributed Databases',
-						'Agentic Workflows',
-						'Enterprise SaaS',
-					].map((tag) => (
+						'Legacy Link (Data Migration)',
+						'Kingdom Connect (Postgres)',
+						'Webex Control Hub (Cisco)',
+						'ForexFlow (Streaming Nuxt)',
+						'Turborepo 4-App Monorepo',
+					].map((proj) => (
 						<div
-							key={tag}
+							key={proj}
 							style={{
 								padding: '8px 18px',
 								borderRadius: '10px',
@@ -161,7 +152,7 @@ export default async function Image() {
 								fontFamily: 'monospace',
 							}}
 						>
-							{tag}
+							{proj}
 						</div>
 					))}
 				</div>

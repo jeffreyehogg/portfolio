@@ -56,7 +56,7 @@ const commandItems: CommandItem[] = [
 	},
 	{
 		id: 'exp-lgi',
-		title: 'LGI Homes — Solo Technical Lead',
+		title: 'LGI Homes — Full-Stack Developer',
 		category: 'Experience',
 		href: '/about#experience',
 		icon: ServerStackIcon,

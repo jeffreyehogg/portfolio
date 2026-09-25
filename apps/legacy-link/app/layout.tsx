@@ -21,7 +21,13 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      publishableKey={
+        process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY ||
+        process.env.CLERK_PUBLISHABLE_KEY ||
+        'pk_test_cHJvcGVyLWJ1Zy02LmNsZXJrLmFjY291bnRzLmRldiQ'
+      }
+    >
       <html lang="en">
         <body className={inter.variable}>{children}</body>
       </html>

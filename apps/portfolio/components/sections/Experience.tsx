@@ -20,7 +20,7 @@ export default function Experience() {
 						key={job.company + job.period}
 						initial={{ opacity: 0, x: -20 }}
 						whileInView={{ opacity: 1, x: 0 }}
-						transition={{ delay: index * 0.15, duration: 0.5 }}
+						transition={{ type: 'spring', bounce: 0.2, duration: 0.6, delay: index * 0.12 }}
 						viewport={{ once: true }}
 						className='group relative pl-8 sm:pl-10 border-l-2 border-indigo-500/20 hover:border-indigo-500/50 transition-colors duration-300'
 					>

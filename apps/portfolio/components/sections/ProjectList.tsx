@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useTransition } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -19,6 +19,7 @@ const categories: { id: CategoryFilter; label: string }[] = [
 
 export default function ProjectList() {
 	const [activeCategory, setActiveCategory] = useState<CategoryFilter>('all')
+	const [, startTransition] = useTransition()
 
 	const filteredProjects = useMemo(() => {
 		if (activeCategory === 'all') return projectsData
@@ -92,7 +93,7 @@ export default function ProjectList() {
 							return (
 								<button
 									key={cat.id}
-									onClick={() => setActiveCategory(cat.id)}
+									onClick={() => startTransition(() => setActiveCategory(cat.id))}
 									className={cn(
 										'relative px-5 py-2 text-xs sm:text-sm font-medium rounded-full transition-all duration-300 cursor-pointer',
 										isActive
@@ -133,8 +134,8 @@ export default function ProjectList() {
 									key={project.title}
 									initial={{ opacity: 0, y: 20 }}
 									animate={{ opacity: 1, y: 0 }}
-									transition={{ delay: idx * 0.08, duration: 0.4 }}
-									className='group relative flex flex-col rounded-2xl bg-slate-900/70 border border-slate-800/80 shadow-xl hover:shadow-2xl hover:border-indigo-500/40 hover:bg-slate-900/95 transition-all duration-300 overflow-hidden'
+									transition={{ type: 'spring', bounce: 0.2, duration: 0.5, delay: idx * 0.08 }}
+									className='group relative flex flex-col rounded-2xl bg-slate-900/70 border border-slate-800/80 shadow-xl hover:shadow-2xl hover:border-indigo-500/40 hover:bg-slate-900/95 hover:-translate-y-1 transition-all duration-300 overflow-hidden'
 								>
 									{/* Clean Image Header (No awkward overlay badges) */}
 									<Link
@@ -218,12 +219,20 @@ export default function ProjectList() {
 											</p>
 
 											{project.learnings && (
-												<div className='mb-5 p-3 rounded-xl bg-slate-950/70 border border-slate-800/80 text-xs text-slate-300 leading-relaxed'>
-													<div className='flex items-center gap-1.5 text-[11px] font-mono text-indigo-400 font-semibold mb-1 uppercase tracking-wider'>
-														<CommandLineIcon className='w-3.5 h-3.5' />
-														<span>Architecture Insight</span>
+												<div className='mb-5 rounded-xl bg-slate-950/80 border border-slate-800/90 overflow-hidden text-xs text-slate-300'>
+													<div className='flex items-center justify-between px-3.5 py-1.5 bg-slate-900/90 border-b border-slate-800/80'>
+														<div className='flex items-center gap-1.5'>
+															<span className='w-2 h-2 rounded-full bg-rose-500/70' />
+															<span className='w-2 h-2 rounded-full bg-amber-500/70' />
+															<span className='w-2 h-2 rounded-full bg-emerald-500/70' />
+															<span className='text-[10px] font-mono text-slate-500 ml-1.5'>arch.telemetry</span>
+														</div>
+														<span className='text-[10px] font-mono text-indigo-400 flex items-center gap-1 uppercase tracking-wider'>
+															<CommandLineIcon className='w-3 h-3' />
+															Insight
+														</span>
 													</div>
-													<p className='text-slate-400 font-light text-xs leading-relaxed'>
+													<p className='p-3.5 text-slate-400 font-light text-xs leading-relaxed'>
 														{project.learnings}
 													</p>
 												</div>

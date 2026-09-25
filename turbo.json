@@ -26,7 +26,10 @@
         "NEON_PROJECT_ID",
         "ADMIN_USER_ID",
         "CLERK_SECRET_KEY",
-        "UPLOADTHING_TOKEN"
+        "UPLOADTHING_TOKEN",
+        "NEXT_PUBLIC_SUPABASE_URL",
+        "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY",
+        "VERCEL_URL"
       ]
     },
     "lint": {

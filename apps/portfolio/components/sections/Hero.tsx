@@ -15,9 +15,9 @@ import { profileData } from '../../lib/data'
 
 const metrics = [
 	{ label: 'Technical Experience', value: '10+ Years', icon: BriefcaseIcon },
-	{ label: 'Automated CI/CD', value: 'Self-Hosted Runners', icon: ServerStackIcon },
-	{ label: 'Database Tuning', value: 'Distributed SQL', icon: CircleStackIcon },
-	{ label: 'Engineering Velocity', value: 'Agentic Workflows', icon: CpuChipIcon },
+	{ label: 'CI/CD Pipeline SLA', value: 'Zero-Downtime', icon: ServerStackIcon },
+	{ label: 'Distributed Databases', value: 'MS SQL + MySQL', icon: CircleStackIcon },
+	{ label: 'Shipped & Maintained', value: '5+ Production Apps', icon: CpuChipIcon },
 ]
 
 export default function Hero() {

@@ -5,6 +5,7 @@ import BackgroundBlobs from "../../components/ui/BackgroundBlobs";
 export const metadata: Metadata = {
   title: "Contact",
   description: "Get in touch with Jeff Hogg for full-stack engineering, DevOps pipelines, and systems architecture consultations.",
+  alternates: { canonical: '/contact' },
 };
 
 export default function Contact() {
@@ -17,9 +18,9 @@ export default function Contact() {
 
       <div className="max-w-3xl mx-auto relative z-10">
         <div className="text-center mb-12">
-          <h2 className="text-indigo-400 font-semibold tracking-wide uppercase text-sm">
+          <p className="text-indigo-400 font-semibold tracking-wide uppercase text-sm">
             Contact
-          </h2>
+          </p>
           <h1 className="mt-2 text-3xl font-extrabold text-white sm:text-4xl">
             Let&apos;s Build Something Amazing
           </h1>

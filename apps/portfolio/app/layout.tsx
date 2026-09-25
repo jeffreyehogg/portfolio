@@ -20,7 +20,7 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-	metadataBase: new URL('https://jeffhogg.com'),
+	metadataBase: new URL('https://www.jeffhogg.com'),
 	title: {
 		default: 'Jeff Hogg | Full-Stack Developer & Systems Architect',
 		template: '%s | Jeff Hogg',
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
 		title: 'Jeff Hogg | Full-Stack Developer & Systems Architect',
 		description:
 			'Full-Stack Developer at LGI Homes specializing in DevOps automation, system architecture, API middleware, and modern database tuning.',
-		url: 'https://jeffhogg.com/',
+		url: 'https://www.jeffhogg.com/',
 		siteName: 'Jeff Hogg',
 		type: 'website',
 		locale: 'en_US',
@@ -67,11 +67,17 @@ export default function RootLayout({
 	return (
 		<html lang='en' className={`${inter.variable}`}>
 			<body className='bg-slate-950 font-sans antialiased text-slate-100'>
+				<a
+					href='#main-content'
+					className='sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-indigo-600 focus:text-white focus:rounded-lg focus:shadow-lg focus:outline-none'
+				>
+					Skip to main content
+				</a>
 				<StructuredData />
 				<ScrollProgress />
 				<div className='flex flex-col min-h-screen'>
 					<Navbar />
-					<main className='flex-1 flex flex-col'>{children}</main>
+					<main id='main-content' className='flex-1 flex flex-col'>{children}</main>
 					<Footer />
 				</div>
 				<ScrollToTop />

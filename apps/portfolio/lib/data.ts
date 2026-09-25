@@ -38,13 +38,6 @@ export interface ServiceTier {
 	mostPopular: boolean
 }
 
-export interface Testimonial {
-	name: string
-	company: string
-	testimonial: string
-	image: string
-}
-
 export interface CompanyLogo {
 	name: string
 	imageUrl: string
@@ -69,7 +62,7 @@ export const profileData = {
 	location: 'Greater Houston, TX',
 	status: 'Full-Stack Developer @ LGI Homes',
 	headline:
-		'Modernizing legacy architectures, building resilient API layers, and driving end-to-end system automation.',
+		'I modernize legacy enterprise systems into automated, containerized platforms — designing API middleware, tuning distributed SQL databases, and shipping zero-downtime CI/CD pipelines as a solo technical lead.',
 	bio:
 		'As a Full-Stack Developer at LGI Homes, I specialize in modernizing legacy architectures, building robust API layers, and driving end-to-end DevOps automation. From containerizing environments (Docker/Nginx) and developing custom Node.js/TypeScript middleware to managing distributed Microsoft SQL Server and MySQL databases, I bridge full-stack engineering with operational reliability. I actively leverage agentic IDE workflows to accelerate optimization, query debugging, and code refactoring.',
 }
@@ -242,7 +235,7 @@ export const projectsData: Project[] = [
 		tags: ['Angular', 'TypeScript', 'Cypress', 'Jenkins', 'Enterprise SaaS'],
 		learnings:
 			'Delivered mission-critical features with strict enterprise scalability, accessibility, and high test coverage via Cypress E2E automation in Jenkins.',
-		featured: true,
+		featured: false,
 		metrics: 'Powers administration for millions of users worldwide',
 	},
 	{
@@ -272,7 +265,7 @@ export const projectsData: Project[] = [
 	},
 	{
 		title: 'Engineering Monorepo & Portfolio Platform',
-		href: 'https://jeffhogg.com',
+		href: 'https://www.jeffhogg.com',
 		githubUrl: 'https://github.com/jeffreyehogg/portfolio',
 		description:
 			'An enterprise-grade Turborepo monorepo orchestrating 4 production applications (Next.js 16, Nuxt 3, React 19) with pnpm workspaces, remote build caching, shared configurations, and automated Vercel CI/CD.',
@@ -394,28 +387,5 @@ export const servicesData: ServiceTier[] = [
 		],
 		cta: 'Start a Project',
 		mostPopular: false,
-	},
-]
-
-export const testimonialsData: Testimonial[] = [
-	{
-		name: 'Elon Musk',
-		company: 'SpaceX',
-		testimonial:
-			'Jeff is a great guy, I would hire him in a heartbeat if he would return my calls.',
-		image: '/images/headshots/elonmusk.jpeg',
-	},
-	{
-		name: 'Tim Cook',
-		company: 'Apple',
-		testimonial: "Wow, he is amazing! I'm surprised he's not my boss yet!",
-		image: '/images/headshots/timcook.png',
-	},
-	{
-		name: 'Chuck Robbins',
-		company: 'Cisco',
-		testimonial:
-			"Jeff is probably the best developer I have ever met. He's definitely my best hire.",
-		image: '/images/headshots/chuckrobbins.jpeg',
 	},
 ]

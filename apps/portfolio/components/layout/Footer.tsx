@@ -1,5 +1,3 @@
-'use client'
-
 import Link from 'next/link'
 import { githubUrl, linkedInUrl, twitterUrl } from '../../lib/data'
 
@@ -76,6 +74,7 @@ export default function Footer() {
 						<a
 							key={item.name}
 							href={item.href}
+							aria-label={item.name}
 							target='_blank'
 							rel='noreferrer'
 							className='group relative p-3 rounded-full bg-slate-900 border border-slate-800 hover:border-indigo-500/50 hover:bg-slate-800 transition-all duration-300'

@@ -11,8 +11,8 @@ export default function StructuredData() {
 			name: 'LGI Homes',
 			url: 'https://www.lgihomes.com',
 		},
-		url: 'https://jeffhogg.com',
-		image: 'https://jeffhogg.com/images/headshots/me.jpg',
+		url: 'https://www.jeffhogg.com',
+		image: 'https://www.jeffhogg.com/images/headshots/me.jpg',
 		sameAs: [githubUrl, linkedInUrl, twitterUrl],
 		knowsAbout: [
 			'Full-Stack Development',
@@ -40,7 +40,7 @@ export default function StructuredData() {
 		'@context': 'https://schema.org',
 		'@type': 'WebSite',
 		name: 'Jeff Hogg Portfolio',
-		url: 'https://jeffhogg.com',
+		url: 'https://www.jeffhogg.com',
 		description:
 			'Full-Stack Developer specializing in DevOps automation, system architecture, API middleware, and distributed databases.',
 		publisher: {

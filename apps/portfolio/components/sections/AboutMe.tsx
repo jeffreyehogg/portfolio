@@ -53,9 +53,9 @@ export default function AboutMe() {
 							animate={{ opacity: 1, y: 0 }}
 							transition={{ type: 'spring', bounce: 0.2, duration: 0.6, delay: 0.15 }}
 						>
-							<h2 className='text-indigo-400 font-semibold tracking-wide uppercase text-xs font-mono mb-2'>
+							<p className='text-indigo-400 font-semibold tracking-wide uppercase text-xs font-mono mb-2'>
 								Engineering Profile
-							</h2>
+							</p>
 							<h1 className='text-4xl font-extrabold tracking-tight text-white sm:text-5xl mb-6 text-balance'>
 								Built for{' '}
 								<span className='text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 via-cyan-300 to-indigo-300'>

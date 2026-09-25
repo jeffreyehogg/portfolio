@@ -33,13 +33,13 @@ export default function Services() {
 					className='text-center max-w-3xl mx-auto mb-16'
 				>
 					<h2 className='text-indigo-400 font-semibold tracking-wide uppercase text-sm'>
-						Services
+						Engineering Services
 					</h2>
 					<p className='mt-2 text-3xl font-extrabold text-white sm:text-4xl text-balance'>
-						Tailored Solutions for Your Growth
+						Enterprise Engineering & Modernization
 					</p>
 					<p className='mt-4 text-xl text-slate-400'>
-						Choose a website package that fits your business needs perfectly.
+						Custom infrastructure modernization, API architecture, and full-stack application development for enterprise teams.
 					</p>
 				</motion.div>
 

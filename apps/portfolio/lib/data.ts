@@ -67,7 +67,7 @@ export const profileData = {
 	location: 'The Woodlands, TX',
 	status: 'Full-Stack Developer @ LGI Homes',
 	headline:
-		'I build and modernize full-stack enterprise platforms — engineering scalable React & Node.js applications, architecting dedicated API middleware, and tuning distributed SQL databases with automated CI/CD and AI-assisted tooling.',
+		'Engineering scalable React and Node.js applications, dedicated API middleware, and automated CI/CD pipelines — modernizing enterprise systems from the ground up.',
 	bio:
 		'Full-Stack Developer with enterprise engineering experience across modern React/Node.js applications, legacy system migrations, and relational databases. Extensive background leading end-to-end delivery: building dedicated API middleware, automating CI/CD pipelines, and leveraging AI-assisted developer tooling to optimize SQL stored procedures.',
 }

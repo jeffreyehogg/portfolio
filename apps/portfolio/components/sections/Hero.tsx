@@ -15,9 +15,9 @@ import { profileData } from '../../lib/data'
 
 const metrics = [
 	{ label: 'Technical Experience', value: '10+ Years', icon: BriefcaseIcon },
-	{ label: 'CI/CD Pipeline SLA', value: 'Zero-Downtime', icon: ServerStackIcon },
-	{ label: 'Distributed Databases', value: 'MS SQL + MySQL', icon: CircleStackIcon },
-	{ label: 'Shipped & Maintained', value: '5+ Production Apps', icon: CpuChipIcon },
+	{ label: 'CI/CD Automation', value: 'Zero-Downtime', icon: ServerStackIcon },
+	{ label: 'Database Administration', value: 'MS SQL & MySQL', icon: CircleStackIcon },
+	{ label: 'Production Apps', value: '5+ Shipped', icon: CpuChipIcon },
 ]
 
 export default function Hero() {
@@ -84,15 +84,17 @@ export default function Hero() {
 							<span className='text-[11px] font-mono text-slate-400 ml-2'>stack.telemetry</span>
 						</div>
 						<div className='hidden sm:block h-3.5 w-px bg-slate-800' />
-						<div className='flex items-center gap-3 text-xs font-mono text-slate-300 flex-wrap justify-center'>
+						<div className='flex items-center gap-2.5 text-xs font-mono text-slate-300 flex-wrap justify-center'>
 							<span className='flex items-center gap-1.5'>
 								<span className='h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse' />
-								<span>CI/CD: GitHub Runners</span>
+								<span className='text-slate-200'>TypeScript & React</span>
 							</span>
 							<span className='text-slate-600'>•</span>
-							<span className='text-indigo-300'>Docker & Nginx</span>
+							<span className='text-indigo-300'>Node.js Middleware</span>
 							<span className='text-slate-600'>•</span>
-							<span className='text-cyan-300'>Distributed MS SQL</span>
+							<span className='text-cyan-300'>Docker & CI/CD</span>
+							<span className='text-slate-600'>•</span>
+							<span className='text-amber-300'>MS SQL (MCP Tuning)</span>
 						</div>
 					</div>
 				</motion.div>
@@ -109,7 +111,7 @@ export default function Hero() {
 						className='group inline-flex items-center gap-2 px-6 py-3 text-sm sm:text-base font-semibold rounded-xl text-white bg-indigo-600 hover:bg-indigo-500 transition-all duration-300 shadow-[0_0_25px_rgba(79,70,229,0.35)] hover:shadow-[0_0_35px_rgba(79,70,229,0.6)] hover:-translate-y-0.5'
 					>
 						<CommandLineIcon className='w-5 h-5' />
-						Explore Systems
+						Explore Projects
 					</Link>
 					<Link
 						href='/about'
@@ -139,13 +141,13 @@ export default function Hero() {
 					{metrics.map((item) => (
 						<div
 							key={item.label}
-							className='p-4 sm:p-5 rounded-2xl bg-slate-900/60 border border-slate-800/80 hover:border-indigo-500/40 hover:bg-slate-900/90 hover:shadow-xl hover:shadow-indigo-500/10 hover:-translate-y-1 backdrop-blur-md text-center transition-all duration-300 group cursor-default'
+							className='flex flex-col items-center justify-center p-4 sm:p-5 rounded-2xl bg-slate-900/60 border border-slate-800/80 hover:border-indigo-500/40 hover:bg-slate-900/90 hover:shadow-xl hover:shadow-indigo-500/10 hover:-translate-y-1 backdrop-blur-md text-center transition-all duration-300 group cursor-default min-h-[112px]'
 						>
-							<div className='flex items-center justify-center gap-1.5 text-white font-bold text-base sm:text-lg group-hover:text-indigo-200 transition-colors'>
-								<item.icon className='w-4 h-4 text-indigo-400 group-hover:scale-110 transition-transform' />
+							<item.icon className='w-5 h-5 text-indigo-400 mb-2 group-hover:scale-110 group-hover:text-cyan-300 transition-all duration-200' />
+							<div className='text-white font-bold text-base sm:text-lg leading-tight group-hover:text-indigo-200 transition-colors'>
 								{item.value}
 							</div>
-							<div className='text-xs font-mono text-slate-400 mt-1 uppercase tracking-wider'>
+							<div className='text-[11px] sm:text-xs font-mono text-slate-400 mt-1 uppercase tracking-wider'>
 								{item.label}
 							</div>
 						</div>

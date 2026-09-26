@@ -137,7 +137,7 @@ export function PersonJsonLd() {
     sameAs: [
       'https://github.com/jeffreyehogg',
       'https://www.linkedin.com/in/jeffhogg/',
-      'https://twitter.com/jeffehogg',
+      'https://x.com/jeffehogg',
     ],
     knowsAbout: [
       'DevOps',

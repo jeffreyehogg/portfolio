@@ -57,7 +57,8 @@ export interface EducationItem {
 
 export const linkedInUrl = 'https://www.linkedin.com/in/jeffhogg/'
 export const githubUrl = 'https://github.com/jeffreyehogg'
-export const twitterUrl = 'https://twitter.com/jeffehogg'
+export const twitterUrl = 'https://x.com/jeffehogg'
+export const xUrl = twitterUrl
 
 export const profileData = {
 	name: 'Jeff Hogg',

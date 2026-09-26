@@ -50,21 +50,25 @@ export interface SkillCategory {
 	list: string
 }
 
-export const linkedInUrl = 'https://www.linkedin.com/in/jeffreyehogg/'
+export interface EducationItem {
+	school: string
+	degree: string
+}
+
+export const linkedInUrl = 'https://www.linkedin.com/in/jeffhogg/'
 export const githubUrl = 'https://github.com/jeffreyehogg'
-export const twitterUrl = 'https://twitter.com/jeffreyehogg'
-export const emailAddress = 'jeffhogg86@gmail.com'
+export const twitterUrl = 'https://twitter.com/jeffehogg'
 
 export const profileData = {
 	name: 'Jeff Hogg',
 	role: 'Full-Stack Developer',
 	specialization: 'DevOps, System Architecture & API Integration',
-	location: 'Greater Houston, TX',
+	location: 'The Woodlands, TX',
 	status: 'Full-Stack Developer @ LGI Homes',
 	headline:
 		'I modernize legacy enterprise systems into automated, containerized platforms — designing API middleware, tuning distributed SQL databases, and shipping zero-downtime CI/CD pipelines as a solo technical lead.',
 	bio:
-		'As a Full-Stack Developer at LGI Homes, I specialize in modernizing legacy architectures, building robust API layers, and driving end-to-end DevOps automation. From containerizing environments (Docker/Nginx) and developing custom Node.js/TypeScript middleware to managing distributed Microsoft SQL Server and MySQL databases, I bridge full-stack engineering with operational reliability. I actively leverage agentic IDE workflows to accelerate optimization, query debugging, and code refactoring.',
+		'Full-Stack Developer with enterprise engineering experience across modern React/Node.js applications, legacy system migrations, and relational databases. Extensive background leading end-to-end delivery: building dedicated API middleware, automating CI/CD pipelines, and leveraging AI-assisted developer tooling to optimize SQL stored procedures.',
 }
 
 export const engineeringPillars: EngineeringPillar[] = [
@@ -91,18 +95,18 @@ export const engineeringPillars: EngineeringPillar[] = [
 		title: 'Database Administration & Tuning',
 		badge: 'Data Layer',
 		description:
-			'Managing, maintaining, and tuning distributed Microsoft SQL Server and MySQL databases, with automated query profiling and stored procedure optimization.',
+			'Managing, maintaining, and tuning distributed Microsoft SQL Server and MySQL databases, leveraging MCP tooling to profile queries and refactor stored procedures.',
 		stats: 'Sub-second Query Speeds',
-		technologies: ['MS SQL Server', 'MySQL', 'PostgreSQL', 'Drizzle ORM', 'Stored Procedures'],
+		technologies: ['MS SQL Server', 'MySQL', 'MCP Tooling', 'Stored Procedures', 'PostgreSQL'],
 	},
 	{
 		id: 'agentic-engineering',
-		title: 'Agentic IDE Workflows',
-		badge: 'Productivity',
+		title: 'AI Tooling & MCP Protocols',
+		badge: 'Velocity',
 		description:
-			'Pioneering modern AI-assisted engineering methodologies to accelerate stored procedure optimization, complex query debugging, refactoring, and test generation.',
+			'Pioneering Model Context Protocol (MCP) tooling and AI-assisted developer methodologies to accelerate stored procedure optimization, complex query debugging, refactoring, and QA.',
 		stats: '10x Engineering Velocity',
-		technologies: ['Agentic Workflows', 'Prompt Architecture', 'Code Refactoring', 'Automated QA'],
+		technologies: ['Model Context Protocol (MCP)', 'Prompt Architecture', 'Code Refactoring', 'Automated QA'],
 	},
 ]
 
@@ -114,39 +118,39 @@ export const experienceData: ExperienceItem[] = [
 		location: 'The Woodlands, TX',
 		current: true,
 		summary:
-			'Bridging the gap between full-stack development, database administration, and DevOps infrastructure.',
+			'Leading legacy infrastructure modernization, API middleware engineering, and distributed database administration.',
 		highlights: [
-			'DevOps & CI/CD: Modernized legacy infrastructure by transitioning manual, server-direct codebases to Git-based version control; designed and implemented automated CI/CD pipelines with self-hosted GitHub Runners and GitHub Actions to dramatically accelerate developer workflows.',
-			'Full-Stack Feature Development: Architected and deployed feature releases for internal web applications, seamlessly integrating complex leasing operation data while modernizing the user interface.',
-			'API & Middleware Engineering: Designed a dedicated API layer and developed a custom Node.js and TypeScript middleware integration to securely query 3rd-party APIs, extracting and syncing organizational data into a distributed Microsoft SQL Server environment.',
-			'Database Administration & Optimization: Manage, maintain, and optimize on-premise Microsoft SQL Server and MySQL databases. Actively leverage agentic IDE workflows for stored procedure optimization, complex query debugging, and code refactoring.',
-			'System Architecture & Operations: Oversee containerized services (Docker/Nginx), external DNS, and SSL renewals, scaling infrastructure capabilities and advocating for modern engineering practices.',
+			'DevOps & CI/CD: Modernized legacy infrastructure via Git and GitHub Actions CI/CD; architected Docker/Nginx container environments with automated SSL and external DNS management.',
+			'Full-Stack Feature Development: Engineered full-stack feature releases for internal business applications with modernized frontends.',
+			'API & Middleware Engineering: Developed custom Node.js and TypeScript middleware to integrate third-party APIs with on-premise Microsoft SQL Server databases.',
+			'Database Administration & Tuning: Administered Microsoft SQL Server and MySQL databases, leveraging MCP tooling to profile queries and refactor stored procedures.',
 		],
 		technologies: [
 			'TypeScript',
+			'JavaScript',
 			'Node.js',
 			'Docker',
 			'Nginx',
 			'GitHub Actions',
+			'CI/CD',
 			'MS SQL Server',
 			'MySQL',
-			'CI/CD',
-			'Agentic Workflows',
+			'REST APIs',
+			'MCP Tooling',
 		],
 	},
 	{
-		company: 'Self-Employed',
-		role: 'Freelance Software Developer',
+		company: 'Freelance',
+		role: 'Software Developer',
 		period: 'July 2024 - February 2026',
 		location: 'The Woodlands, TX',
 		current: false,
 		summary:
-			'Partnered directly with enterprise clients and businesses to architect custom web applications, execute data migrations, and build modern e-commerce solutions.',
+			'Partnered directly with enterprise clients to architect custom web applications, launch e-commerce solutions, and execute legacy data migrations.',
 		highlights: [
-			'Full-Stack Web Development: Architected and deployed 5+ custom web applications utilizing Next.js, leveraging Vercel for seamless CI/CD, serverless infrastructure, and high-performance hosting.',
-			'E-Commerce Engineering: Designed and launched a complete e-commerce platform using Shopify, customizing storefront architecture to optimize user experience and streamline digital sales.',
-			'Data Migration & Integration: Executed complex data migrations for enterprise clients, writing custom Python and SQL scripts to extract, format, and reliably import legacy datasets into modern systems.',
-			'Technical Consulting: Partnered directly with business stakeholders to translate complex requirements into actionable Scopes of Work (SOW), managing end-to-end project lifecycles to ensure on-time delivery.',
+			'Full-Stack Web Development: Architected and deployed custom web apps using Next.js and Vercel for serverless CI/CD and production hosting.',
+			'E-Commerce Engineering: Built and launched a Shopify store, customizing frontend architecture to improve user checkout workflows.',
+			'Data Migration & ETL: Engineered custom Python and SQL data migration scripts to extract, format, and load legacy data into modern systems.',
 		],
 		technologies: [
 			'Next.js',
@@ -161,17 +165,16 @@ export const experienceData: ExperienceItem[] = [
 	},
 	{
 		company: 'Cisco',
-		role: 'Software Engineer (Webex Calling)',
+		role: 'Software Engineer',
 		period: 'December 2021 - June 2024',
 		location: 'Spring, TX',
 		current: false,
 		summary:
 			'Engineered scalable enterprise administration features within Cisco Control Hub for the Webex Calling product ecosystem.',
 		highlights: [
-			'Front-End Development: Engineered scalable features for Cisco Control Hub within the Webex Calling team, utilizing Angular and TypeScript to deliver seamless administration tools for enterprise customers.',
-			'Quality Assurance & CI/CD: Implemented comprehensive end-to-end testing suites using Cypress and maintained build pipelines in Jenkins to prevent regressions and ensure high-confidence deployments.',
-			'Production Operations: Monitored system health and troubleshooting logs via Kibana, while managing incident response and alerts through PagerDuty to maintain platform reliability.',
-			'Agile Collaboration: Actively contributed to daily standups, sprint planning, and rigorous code reviews in a high-scale enterprise environment.',
+			'Enterprise Frontend: Developed scalable enterprise administration features for Cisco Control Hub using Angular and TypeScript.',
+			'Quality Assurance & CI/CD: Engineered Cypress end-to-end testing suites and monitored Jenkins CI/CD deployment pipelines.',
+			'Platform Reliability & Agile: Maintained platform uptime using Kibana and PagerDuty; partnered across cross-functional Agile teams delivering features via Jira and Confluence.',
 		],
 		technologies: [
 			'Angular',
@@ -180,8 +183,27 @@ export const experienceData: ExperienceItem[] = [
 			'Jenkins',
 			'Kibana',
 			'PagerDuty',
+			'Agile/Scrum',
 			'Jira',
-			'Enterprise SaaS',
+			'Confluence',
+		],
+	},
+	{
+		company: 'Cisco',
+		role: 'Technical Director / Camera Op',
+		period: 'June 2013 - December 2021',
+		location: 'Spring, TX',
+		current: false,
+		summary:
+			'Directed technical broadcast operations for live multi-camera studio productions, executive communications, and enterprise-scale audiences.',
+		highlights: [
+			'Broadcast Operations: Operated cameras and directed technical broadcast operations for live multi-camera studio productions, executive communications, and enterprise-scale audiences.',
+		],
+		technologies: [
+			'Studio Production',
+			'Live Broadcasting',
+			'Executive Communications',
+			'Multi-Camera Systems',
 		],
 	},
 ]
@@ -281,19 +303,22 @@ export const projectsData: Project[] = [
 export const skillsData: SkillCategory[] = [
 	{
 		category: 'Languages & Frameworks',
-		list: 'TypeScript, JavaScript, React, Next.js, Node.js, Angular, Python, Express, SQL, HTML5/CSS3',
+		list: 'TypeScript, JavaScript, Node.js, React, Next.js, Angular, Python, Tailwind CSS',
 	},
 	{
-		category: 'DevOps & Infrastructure',
-		list: 'Docker, Nginx, GitHub Actions, Self-Hosted Runners, Linux, CI/CD Pipelines, Turborepo, Monorepo Architecture, DNS & SSL Management, Vercel, Jenkins',
+		category: 'Databases & DevOps',
+		list: 'Microsoft SQL Server, MySQL, Docker, Nginx, GitHub Actions, CI/CD, Git, Vercel',
 	},
 	{
-		category: 'Databases & ORMs',
-		list: 'Microsoft SQL Server, MySQL, PostgreSQL, Neon, Drizzle ORM, Supabase, Prisma, Stored Procedures, JSONB Ingestion',
+		category: 'Tools & Practices',
+		list: 'REST APIs, Model Context Protocol (MCP), Cypress, Kibana, Jenkins, PagerDuty, Agile/Scrum',
 	},
+]
+
+export const educationData: EducationItem[] = [
 	{
-		category: 'Testing & Platform Operations',
-		list: 'Cypress E2E, Kibana, PagerDuty, Git, REST APIs, Jira, Confluence, Agentic IDE Workflows',
+		school: 'San Francisco State University',
+		degree: 'B.A. in Broadcast & Electronic Communication Arts',
 	},
 ]
 

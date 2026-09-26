@@ -7,6 +7,7 @@ export default function robots(): MetadataRoute.Robots {
 		rules: {
 			userAgent: '*',
 			allow: '/',
+			disallow: ['/Jeff_Hogg_Resume.pdf'],
 		},
 		sitemap: `${baseUrl}/sitemap.xml`,
 	}

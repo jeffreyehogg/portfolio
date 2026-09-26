@@ -4,19 +4,19 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Socials from './Socials'
 import Experience from './Experience'
-import { skillsData } from '../../lib/data'
+import { skillsData, educationData } from '../../lib/data'
 import BackgroundBlobs from '../ui/BackgroundBlobs'
 import { motion, useReducedMotion } from 'framer-motion'
 import { CheckCircleIcon } from '@heroicons/react/24/solid'
-import { ArrowDownTrayIcon, EnvelopeIcon } from '@heroicons/react/24/outline'
+import { ArrowDownTrayIcon, EnvelopeIcon, AcademicCapIcon } from '@heroicons/react/24/outline'
 
 const coreCapabilities = [
 	'Modernizing legacy infrastructure to Git & automated CI/CD',
 	'Custom Node.js/TypeScript API & middleware engineering',
-	'Distributed Microsoft SQL Server & MySQL database tuning',
-	'Docker containerization, Nginx, and cloud operations',
+	'Distributed Microsoft SQL Server & MySQL database tuning (MCP tooling)',
+	'Docker containerization, Nginx, and automated SSL/DNS operations',
 	'Enterprise frontend architectures (React, Next.js, Angular)',
-	'High-velocity delivery using agentic IDE workflows',
+	'High-velocity delivery using agentic IDE workflows & MCP',
 ]
 
 export default function AboutMe() {
@@ -144,6 +144,33 @@ export default function AboutMe() {
 										</h4>
 										<p className='text-slate-300 leading-relaxed font-mono text-sm'>
 											{skill.list}
+										</p>
+									</motion.div>
+								))}
+							</div>
+						</div>
+
+						{/* Education */}
+						<div>
+							<h3 className='text-2xl font-bold text-white mb-6 flex items-center gap-3'>
+								<AcademicCapIcon className='w-6 h-6 text-indigo-400' />
+								Education
+							</h3>
+							<div className='grid gap-4'>
+								{educationData.map((edu, index) => (
+									<motion.div
+										key={edu.school}
+										initial={shouldReduce ? false : { opacity: 0, x: 20 }}
+										whileInView={shouldReduce ? undefined : { opacity: 1, x: 0 }}
+										transition={{ delay: index * 0.1 }}
+										viewport={{ once: true }}
+										className='group bg-slate-900/60 p-6 rounded-xl border border-slate-800 hover:border-indigo-500/40 transition-all duration-300 backdrop-blur-sm hover:bg-slate-900/90'
+									>
+										<h4 className='font-bold text-white text-lg mb-1'>
+											{edu.school}
+										</h4>
+										<p className='text-indigo-300 font-mono text-sm'>
+											{edu.degree}
 										</p>
 									</motion.div>
 								))}

@@ -105,7 +105,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Jeff Hogg | Full-Stack Developer & Systems Architect',
     description: 'DevOps automation, modern API layers, and distributed database tuning.',
-    creator: '@jeffreyehogg',
+    creator: '@jeffehogg',
   },
 }
 ```
@@ -136,8 +136,8 @@ export function PersonJsonLd() {
     url: 'https://jeffhogg.com',
     sameAs: [
       'https://github.com/jeffreyehogg',
-      'https://www.linkedin.com/in/jeffreyehogg/',
-      'https://twitter.com/jeffreyehogg',
+      'https://www.linkedin.com/in/jeffhogg/',
+      'https://twitter.com/jeffehogg',
     ],
     knowsAbout: [
       'DevOps',

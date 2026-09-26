@@ -44,7 +44,7 @@ export const metadata: Metadata = {
 		title: 'Jeff Hogg | Full-Stack Developer & Systems Architect',
 		description:
 			'Full-Stack Developer at LGI Homes specializing in DevOps automation, system architecture, API middleware, and modern database tuning.',
-		creator: '@jeffreyehogg',
+		creator: '@jeffehogg',
 	},
 	robots: {
 		index: true,

@@ -62,8 +62,15 @@ const commandItems: CommandItem[] = [
 		icon: ServerStackIcon,
 	},
 	{
+		id: 'exp-freelance',
+		title: 'Freelance — Software Developer',
+		category: 'Experience',
+		href: '/about#experience',
+		icon: ServerStackIcon,
+	},
+	{
 		id: 'exp-cisco',
-		title: 'Cisco Webex Calling — Software Engineer',
+		title: 'Cisco — Software Engineer',
 		category: 'Experience',
 		href: '/about#experience',
 		icon: ServerStackIcon,

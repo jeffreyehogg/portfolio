@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 	openGraph: {
 		title: 'About & Career Experience | Jeff Hogg',
 		description:
-			'Full-Stack Developer at LGI Homes — 10+ years modernizing enterprise systems, managing distributed databases, and automating CI/CD pipelines.',
+			'Full-Stack Developer at LGI Homes — modernizing enterprise systems, managing distributed databases, and automating CI/CD pipelines.',
 		url: '/about',
 	},
 	twitter: {

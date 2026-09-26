@@ -14,7 +14,7 @@ import {
 import { profileData } from '../../lib/data'
 
 const metrics = [
-	{ label: 'Professional Experience', value: '10+ Years', icon: BriefcaseIcon },
+	{ label: 'Software Engineering', value: '5+ Years', icon: BriefcaseIcon },
 	{ label: 'Automated Infrastructure', value: 'Docker & CI/CD', icon: ServerStackIcon },
 	{ label: 'Database Administration', value: 'MS SQL & MySQL', icon: CircleStackIcon },
 	{ label: 'Node.js & TypeScript', value: 'API Middleware', icon: CodeBracketIcon },

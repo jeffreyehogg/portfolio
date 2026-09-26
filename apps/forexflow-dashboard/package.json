@@ -12,7 +12,7 @@
   "devDependencies": {
     "@iconify-json/heroicons": "^1.1.21",
     "@nuxt/devtools": "4.0.0-beta.2",
-    "@nuxt/ui": "^2.15.0",
+    "@nuxt/ui": "^4.8.1",
     "@nuxtjs/google-fonts": "^3.2.0",
     "nuxt": "^3.8.2",
     "tailwindcss": "^3.4.19",

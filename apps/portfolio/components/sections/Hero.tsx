@@ -8,16 +8,16 @@ import {
 	BriefcaseIcon,
 	ServerStackIcon,
 	CircleStackIcon,
-	CpuChipIcon,
+	CodeBracketIcon,
 	ArrowDownTrayIcon,
 } from '@heroicons/react/24/outline'
 import { profileData } from '../../lib/data'
 
 const metrics = [
-	{ label: 'Technical Experience', value: '10+ Years', icon: BriefcaseIcon },
-	{ label: 'CI/CD Automation', value: 'Zero-Downtime', icon: ServerStackIcon },
+	{ label: 'Professional Experience', value: '10+ Years', icon: BriefcaseIcon },
+	{ label: 'Automated Infrastructure', value: 'Docker & CI/CD', icon: ServerStackIcon },
 	{ label: 'Database Administration', value: 'MS SQL & MySQL', icon: CircleStackIcon },
-	{ label: 'Production Apps', value: '5+ Shipped', icon: CpuChipIcon },
+	{ label: 'Node.js & TypeScript', value: 'API Middleware', icon: CodeBracketIcon },
 ]
 
 export default function Hero() {

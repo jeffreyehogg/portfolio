@@ -211,6 +211,31 @@ export const experienceData: ExperienceItem[] = [
 
 export const projectsData: Project[] = [
 	{
+		title: 'Texas Tint Plus',
+		href: 'https://texastint.com',
+		githubUrl: 'https://github.com/jeffreyehogg/texas-tint',
+		description:
+			'A high-performance commercial and automotive window film platform serving the Greater Houston area. Features an interactive commercial bid estimator, segmented service portals (commercial, residential, automotive), and localized SEO architecture with structured JSON-LD schemas.',
+		imageUrl: '/images/projects/texas-tint.png',
+		tags: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Headless UI', 'JSON-LD'],
+		learnings:
+			'Engineered an interactive quote request workflow with custom property type filtering, integrated Schema.org LocalBusiness structured data for Houston metro search ranking, and optimized high-resolution architectural imagery.',
+		featured: true,
+		metrics: 'Houston Commercial & Automotive Film Authority',
+	},
+	{
+		title: 'Vision Integrated Systems',
+		href: 'https://vision-texas.com/',
+		description:
+			'Official corporate platform for Vision Integrated Systems, a leading provider of enterprise structured cabling, security solutions, and commercial AV.',
+		imageUrl: '/images/projects/vision.png',
+		tags: ['Next.js', 'React 19', 'Tailwind CSS', 'Framer Motion'],
+		learnings:
+			'Focused on component modularity, SEO optimization, and sub-second load times to deliver an accessible corporate web presence.',
+		featured: true,
+		metrics: 'Enterprise corporate web presence',
+	},
+	{
 		title: 'Hogg Homes',
 		href: 'https://homes.jeffhogg.com',
 		githubUrl: 'https://github.com/jeffreyehogg/portfolio/tree/main/apps/hogg-homes',
@@ -233,7 +258,7 @@ export const projectsData: Project[] = [
 		tags: ['Next.js', 'TypeScript', 'PostgreSQL JSONB', 'Clerk', 'PapaParse'],
 		learnings:
 			'Architected a flexible data schema using PostgreSQL JSONB to ingest unpredictable legacy datasets without schema migrations. Built a stateful wizard interface for complex data mapping and implemented secure, signed file handling for sensitive records.',
-		featured: true,
+		featured: false,
 		metrics: 'Reduces data migration from days to minutes',
 	},
 	{
@@ -246,20 +271,8 @@ export const projectsData: Project[] = [
 		tags: ['Next.js', 'Clerk', 'Neon Postgres', 'Drizzle ORM', 'Tailwind CSS', 'dnd-kit', 'Server Actions'],
 		learnings:
 			'Unified community volunteering and devotional journaling into a single serverless PostgreSQL architecture with Neon, type-safe Drizzle ORM mutations, Clerk multi-tenancy, and optimistic drag-and-drop state machines.',
-		featured: true,
-		metrics: 'Unified serverless faith platform',
-	},
-	{
-		title: 'Webex Control Hub',
-		href: 'https://www.webex.com/control-hub.html',
-		description:
-			'An enterprise-grade platform for global IT administrators to manage users, devices, calling routes, and security services across the Webex enterprise ecosystem.',
-		imageUrl: '/images/projects/controlhub.png',
-		tags: ['Angular', 'TypeScript', 'Cypress', 'Jenkins', 'Enterprise SaaS'],
-		learnings:
-			'Delivered mission-critical features with strict enterprise scalability, accessibility, and high test coverage via Cypress E2E automation in Jenkins.',
 		featured: false,
-		metrics: 'Powers administration for millions of users worldwide',
+		metrics: 'Unified serverless faith platform',
 	},
 	{
 		title: 'ForexFlow Dashboard',
@@ -275,31 +288,6 @@ export const projectsData: Project[] = [
 		metrics: 'Live streaming telemetry & analytics',
 	},
 	{
-		title: 'Vision Integrated Systems',
-		href: 'https://vision-texas.com/',
-		description:
-			'Official corporate platform for Vision Integrated Systems, a leading provider of enterprise structured cabling, security solutions, and commercial AV.',
-		imageUrl: '/images/projects/vision.png',
-		tags: ['Next.js', 'React 19', 'Tailwind CSS', 'Framer Motion'],
-		learnings:
-			'Focused on component modularity, SEO optimization, and sub-second load times to deliver an accessible corporate web presence.',
-		featured: false,
-		metrics: 'Enterprise corporate web presence',
-	},
-	{
-		title: 'Texas Tint Plus',
-		href: 'https://texastint.com',
-		githubUrl: 'https://github.com/jeffreyehogg/texas-tint',
-		description:
-			'A high-performance commercial and automotive window film platform serving the Greater Houston area. Features an interactive commercial bid estimator, segmented service portals (commercial, residential, automotive), and localized SEO architecture with structured JSON-LD schemas.',
-		imageUrl: '/images/projects/texas-tint.png',
-		tags: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Headless UI', 'JSON-LD'],
-		learnings:
-			'Engineered an interactive quote request workflow with custom property type filtering, integrated Schema.org LocalBusiness structured data for Houston metro search ranking, and optimized high-resolution architectural imagery.',
-		featured: false,
-		metrics: 'Houston Commercial & Automotive Film Authority',
-	},
-	{
 		title: 'Engineering Monorepo & Portfolio Platform',
 		href: 'https://www.jeffhogg.com',
 		githubUrl: 'https://github.com/jeffreyehogg/portfolio',
@@ -311,6 +299,18 @@ export const projectsData: Project[] = [
 			'Architected a multi-app monorepo with Turborepo task pipeline caching, independent Vercel deployment detection, shared ESLint/TS configs, and automated agentic protocols.',
 		featured: false,
 		metrics: 'Turborepo 4-App Architecture',
+	},
+	{
+		title: 'Webex Control Hub',
+		href: 'https://www.webex.com/control-hub.html',
+		description:
+			'An enterprise-grade platform for global IT administrators to manage users, devices, calling routes, and security services across the Webex enterprise ecosystem.',
+		imageUrl: '/images/projects/controlhub.png',
+		tags: ['Angular', 'TypeScript', 'Cypress', 'Jenkins', 'Enterprise SaaS'],
+		learnings:
+			'Delivered mission-critical features with strict enterprise scalability, accessibility, and high test coverage via Cypress E2E automation in Jenkins.',
+		featured: false,
+		metrics: 'Powers administration for millions of users worldwide',
 	},
 ]
 

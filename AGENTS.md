@@ -98,6 +98,9 @@ pnpm add <package> --filter <app-name>
 - **Turborepo Strict Environment Variables**: Turborepo scrubs environment variables during the `build` task. If a build fails claiming a database URL or API key is missing, you must explicitly declare that variable in `turbo.json` under `tasks.build.env`.
 - **Vercel Monorepo Deployment**: The "Ignored Build Step" on Vercel should be left on "Automatic". Vercel auto-detects Turborepo and intelligently skips builds for apps whose source files (or shared `packages/` dependencies) haven't changed using `turbo-ignore`.
 - **Vercel CLI Monorepo Linking**: In this monorepo, each app is connected to its own Vercel project (`portfolio`, `hogg-homes`, `kingdom-connect`, `legacy-link`, `forexflow-dashboard`) under team `team_ISNx0N17TdbxTMLDp3JbB8fa`. Each app has a `.vercel/project.json` linking its `projectId`. Always run Vercel CLI commands with `Cwd: apps/<app>` (e.g., `apps/portfolio`) or pass `--cwd apps/<app>` so commands run non-interactively without prompting to link.
+- **Next.js 16 CLI Linting**: In Next.js 16 (Turbopack), `next lint` is no longer a Next CLI command (`next [dir] [cmd]` parses `lint` as a directory name). Always configure `"lint": "eslint ."` in `package.json`.
+- **Serverless Postgres Connection Pooling**: In Next.js App Router API routes and Server Components using `postgres.js`, cache the connection on `globalThis._postgresSql` with a defensive fallback for build time/offline execution to prevent serverless connection exhaustion (`too many clients already`).
+- **PACS Data Normalization**: In physical security migrations, credentials and facility codes must remain immutable strings throughout ingestion and transformation to avoid Excel's automatic coercion of 37-bit IDs into scientific notation or stripping of leading zeros.
 
 ---
 

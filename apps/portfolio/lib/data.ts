@@ -279,12 +279,25 @@ export const projectsData: Project[] = [
 		href: 'https://vision-texas.com/',
 		description:
 			'Official corporate platform for Vision Integrated Systems, a leading provider of enterprise structured cabling, security solutions, and commercial AV.',
-		imageUrl: '/images/projects/vision.webp',
+		imageUrl: '/images/projects/vision.png',
 		tags: ['Next.js', 'React 19', 'Tailwind CSS', 'Framer Motion'],
 		learnings:
 			'Focused on component modularity, SEO optimization, and sub-second load times to deliver an accessible corporate web presence.',
 		featured: false,
 		metrics: 'Enterprise corporate web presence',
+	},
+	{
+		title: 'Texas Tint Plus',
+		href: 'https://texastint.com',
+		githubUrl: 'https://github.com/jeffreyehogg/texas-tint',
+		description:
+			'A high-performance commercial and automotive window film platform serving the Greater Houston area. Features an interactive commercial bid estimator, segmented service portals (commercial, residential, automotive), and localized SEO architecture with structured JSON-LD schemas.',
+		imageUrl: '/images/projects/texas-tint.png',
+		tags: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Headless UI', 'JSON-LD'],
+		learnings:
+			'Engineered an interactive quote request workflow with custom property type filtering, integrated Schema.org LocalBusiness structured data for Houston metro search ranking, and optimized high-resolution architectural imagery.',
+		featured: false,
+		metrics: 'Houston Commercial & Automotive Film Authority',
 	},
 	{
 		title: 'Engineering Monorepo & Portfolio Platform',

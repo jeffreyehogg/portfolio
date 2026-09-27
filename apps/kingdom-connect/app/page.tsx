@@ -100,17 +100,17 @@ export default async function Home() {
                 to intercede in prayer—there is a place prepared just for you.
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-4 mb-6">
+              <div className="flex flex-wrap items-center gap-3.5 mb-8">
                 <Link
                   href="/serve"
-                  className="bg-indigo-600 hover:bg-indigo-500 text-white px-8 py-3.5 rounded-xl font-bold text-base shadow-lg shadow-indigo-600/25 transition-all transform hover:-translate-y-0.5 active:scale-95 flex items-center justify-center gap-2"
+                  className="inline-flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2.5 rounded-xl font-bold text-sm shadow-md shadow-indigo-600/20 transition-all hover:-translate-y-0.5 active:scale-[0.98] w-fit"
                 >
                   <span>Find a Place to Serve</span>
                   <ArrowRight className="w-4 h-4" />
                 </Link>
                 <Link
                   href="/prayer"
-                  className="bg-slate-900/80 hover:bg-slate-800 text-slate-200 hover:text-white border border-slate-700/80 px-8 py-3.5 rounded-xl font-bold text-base transition-all backdrop-blur-md flex items-center justify-center gap-2"
+                  className="inline-flex items-center justify-center gap-2 bg-slate-900/80 hover:bg-slate-800 text-slate-200 hover:text-white border border-slate-700/80 px-5 py-2.5 rounded-xl font-bold text-sm transition-all backdrop-blur-md hover:-translate-y-0.5 active:scale-[0.98] w-fit"
                 >
                   <Heart className="w-4 h-4 text-rose-400" />
                   <span>Join Community Prayer Wall</span>
@@ -278,7 +278,7 @@ export default async function Home() {
               <div className="relative z-10 shrink-0">
                 <Link
                   href="/journal"
-                  className="bg-white hover:bg-slate-100 text-slate-950 font-extrabold px-8 py-3.5 rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5 active:scale-95 flex items-center justify-center gap-2 text-sm"
+                  className="bg-white hover:bg-slate-100 text-slate-950 font-extrabold px-6 py-3 rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5 active:scale-[0.98] inline-flex items-center justify-center gap-2 text-sm w-fit"
                 >
                   <span>Open Your Sanctuary</span>
                   <ArrowRight className="w-4 h-4" />

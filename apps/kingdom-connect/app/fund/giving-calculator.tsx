@@ -159,7 +159,7 @@ export function GivingCalculator({ primaryFundId = 1 }: GivingCalculatorProps) {
           <button
             onClick={handleDonate}
             disabled={isSubmitting}
-            className="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-400 active:scale-95 text-slate-950 font-extrabold px-8 py-3.5 rounded-xl shadow-lg shadow-emerald-500/20 transition-all flex items-center justify-center gap-2 text-sm"
+            className="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-400 active:scale-[0.98] text-slate-950 font-extrabold px-6 py-2.5 rounded-xl shadow-lg shadow-emerald-500/20 transition-all flex items-center justify-center gap-2 text-sm"
           >
             <Heart className="w-4 h-4 fill-current" />
             <span>{isSubmitting ? "Recording Gift..." : `Simulate Partner Gift of $${amount}`}</span>

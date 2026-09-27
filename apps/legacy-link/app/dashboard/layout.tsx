@@ -6,14 +6,9 @@ export default function DashboardLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Persistent Navbar */}
+    <div className="min-h-screen bg-slate-950 text-slate-100 selection:bg-indigo-500/30 selection:text-indigo-200">
       <Navbar />
-      
-      {/* Page Content */}
-      <main>
-        {children}
-      </main>
+      <main>{children}</main>
     </div>
   )
 }

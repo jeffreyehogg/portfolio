@@ -1,8 +1,6 @@
 import { auth } from '@clerk/nextjs/server'
 import { NextResponse } from 'next/server'
-import postgres from 'postgres'
-
-const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' })
+import { sql } from '@/lib/db'
 
 export async function POST(
   request: Request,
@@ -19,7 +17,7 @@ export async function POST(
     const { data } = await request.json()
 
     if (!data || !Array.isArray(data) || data.length === 0) {
-      return NextResponse.json({ error: 'Invalid or empty data' }, { status: 400 })
+      return NextResponse.json({ error: 'Invalid or empty dataset' }, { status: 400 })
     }
 
     // 1. Verify migration ownership
@@ -33,9 +31,8 @@ export async function POST(
     }
 
     // 2. Prepare records
-    // Ensure migration_id is an integer if your DB expects it
     const recordsToInsert = data.map((row) => ({
-      migration_id: parseInt(id), 
+      migration_id: parseInt(id),
       raw_data: row,
     }))
 
@@ -55,13 +52,14 @@ export async function POST(
     `
 
     return NextResponse.json({ success: true, count: result.length })
-
   } catch (error: any) {
     console.error('Upload error details:', error)
-    // Return the actual error message to the client for debugging
-    return NextResponse.json({ 
-      error: 'Database Error', 
-      details: error.message || String(error) 
-    }, { status: 500 })
+    return NextResponse.json(
+      {
+        error: 'Database Error',
+        details: error.message || String(error),
+      },
+      { status: 500 }
+    )
   }
 }

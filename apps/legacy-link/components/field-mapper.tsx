@@ -1,28 +1,31 @@
-"use client";
+'use client'
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import ConcatenationBuilder from "./concatenation-builder";
+import { useState, useTransition } from 'react'
+import { useRouter } from 'next/navigation'
+import ConcatenationBuilder from './concatenation-builder'
 
 const TARGET_FIELDS = [
-  { key: "FirstName", label: "First Name", required: true },
-  { key: "LastName", label: "Last Name", required: true },
-  { key: "BadgeID", label: "Badge / Card Number", required: true },
-  { key: "Email", label: "Email Address", required: false },
-  { key: "AccessGroup", label: "Access Level", required: false },
-  { key: "Status", label: "Status (Active/Inactive)", required: false },
-];
+  { key: 'FirstName', label: 'First Name', required: true, desc: 'Given Name' },
+  { key: 'LastName', label: 'Last Name', required: true, desc: 'Family Surname' },
+  { key: 'BadgeID', label: 'Badge / Card Number', required: true, desc: 'Wiegand Credential ID' },
+  { key: 'FacilityCode', label: 'Facility Code', required: false, desc: 'Site Code (0-255)' },
+  { key: 'Email', label: 'Email Address', required: false, desc: 'Mobile Credential Email' },
+  { key: 'AccessGroup', label: 'Access Level Group', required: false, desc: 'Assigned Clearances' },
+  { key: 'Status', label: 'Cardholder Status', required: true, desc: 'Active / Inactive' },
+]
 
 interface MappingRule {
-  type: "concatenate" | "static" | "uppercase";
-  sources?: string[];
-  separator?: string;
+  type: 'concatenate' | 'static' | 'uppercase' | 'access-flatten' | 'status-normalize'
+  sources?: string[]
+  source?: string
+  separator?: string
+  value?: string
 }
 
 interface FieldMapperProps {
-  migrationId: number;
-  sourceColumns: string[];
-  initialMappings?: Record<string, string | MappingRule>;
+  migrationId: number
+  sourceColumns: string[]
+  initialMappings?: Record<string, string | MappingRule>
 }
 
 export default function FieldMapper({
@@ -30,238 +33,182 @@ export default function FieldMapper({
   sourceColumns,
   initialMappings,
 }: FieldMapperProps) {
-  const [mappings, setMappings] = useState<Record<string, any>>(
-    initialMappings || {}
-  );
-  const [activeModal, setActiveModal] = useState<string | null>(null);
-  const [isSaving, setIsSaving] = useState(false);
-  const router = useRouter();
+  const [mappings, setMappings] = useState<Record<string, any>>(initialMappings || {})
+  const [activeModal, setActiveModal] = useState<string | null>(null)
+  const [isSaving, setIsSaving] = useState(false)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const [successMessage, setSuccessMessage] = useState<string | null>(null)
+  const [, startTransition] = useTransition()
+  const router = useRouter()
 
   const handleMapChange = (targetKey: string, value: any) => {
-    setMappings((prev) => ({ ...prev, [targetKey]: value }));
-  };
+    setMappings((prev) => ({ ...prev, [targetKey]: value }))
+  }
 
   const handleSave = async () => {
-    setIsSaving(true);
+    setIsSaving(true)
+    setErrorMessage(null)
+    setSuccessMessage(null)
+
     try {
       const res = await fetch(`/api/migrations/${migrationId}/map`, {
-        method: "POST",
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ mappings }),
-      });
-      if (!res.ok) throw new Error("Failed to save");
-      router.refresh();
-    } catch (error) {
-      alert("Error saving mappings");
-    } finally {
-      setIsSaving(false);
-    }
-  };
+      })
 
-  const isComplete = TARGET_FIELDS.filter((f) => f.required).every(
-    (f) => mappings[f.key]
-  );
+      if (!res.ok) {
+        const err = await res.json()
+        throw new Error(err.error || 'Failed to persist mappings.')
+      }
+
+      setSuccessMessage('Schema mappings synchronized and locked.')
+      startTransition(() => {
+        router.refresh()
+      })
+    } catch (error: any) {
+      setErrorMessage(error.message || 'Error saving schema mappings.')
+    } finally {
+      setIsSaving(false)
+    }
+  }
+
+  const isComplete = TARGET_FIELDS.filter((f) => f.required).every((f) => mappings[f.key])
 
   return (
-    <div className="overflow-hidden bg-white rounded-2xl shadow-xl ring-1 ring-gray-200">
-      {/* Top Header Section */}
-      <div className="bg-gray-50/50 px-8 py-6 border-b border-gray-100 flex justify-between items-center">
+    <div className="surface-glass rounded-2xl overflow-hidden shadow-glass-card">
+      {/* Top Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/[0.08] bg-slate-950/60 p-6">
         <div>
-          <h2 className="text-xl font-bold text-gray-900 tracking-tight">
-            Data Schema Mapping
+          <span className="font-mono text-[10px] uppercase tracking-wider text-cyan-400 font-semibold">
+            Genetec Synergis Schema Synchronizer
+          </span>
+          <h2 className="text-lg font-bold text-white tracking-tight mt-0.5">
+            Physical Security Attribute Mapping
           </h2>
-          <p className="text-sm text-gray-500 mt-1">
-            Connect your legacy attributes to the Genetec Security Center
-            schema.
+          <p className="text-xs text-slate-400 mt-1">
+            Map legacy database columns into verified Genetec Security Center import targets.
           </p>
         </div>
+
         <button
+          type="button"
           onClick={handleSave}
           disabled={isSaving || !isComplete}
-          className={`px-6 py-2.5 rounded-full text-sm font-bold text-white transition-all shadow-lg ${
+          className={`inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-xs font-bold text-white transition-all shadow-glow-indigo active:scale-[0.98] ${
             isComplete
-              ? "bg-indigo-600 hover:bg-indigo-700 hover:scale-105 active:scale-95"
-              : "bg-gray-300 cursor-not-allowed"
+              ? 'bg-gradient-to-r from-indigo-500 to-cyan-500 hover:opacity-90'
+              : 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700/60 shadow-none'
           }`}
         >
-          {isSaving ? "Synchronizing..." : "Finalize Mappings"}
+          {isSaving ? 'Synchronizing...' : 'Finalize & Lock Mappings'}
         </button>
       </div>
 
-      <div className="p-8">
-        {/* Visual Column Labels */}
-        <div className="grid grid-cols-12 gap-6 mb-4 px-4">
-          <div className="col-span-5">
-            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-600/60">
-              Destination: Genetec System
-            </span>
-          </div>
-          <div className="col-span-1"></div>
-          <div className="col-span-6">
-            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">
-              Source: Legacy Database
-            </span>
-          </div>
+      {errorMessage && (
+        <div className="m-6 rounded-xl border border-rose-500/40 bg-rose-950/40 p-3 text-xs font-mono text-rose-300">
+          ⚠️ {errorMessage}
         </div>
+      )}
 
-        <div className="space-y-3">
-          {TARGET_FIELDS.map((field) => {
-            const currentMap = mappings[field.key];
-            const isAdvanced = typeof currentMap === "object";
+      {successMessage && (
+        <div className="m-6 rounded-xl border border-emerald-500/40 bg-emerald-950/40 p-3 text-xs font-mono text-emerald-300">
+          ✓ {successMessage}
+        </div>
+      )}
 
-            return (
-              <div
-                key={field.key}
-                className={`grid grid-cols-12 gap-6 items-center p-4 rounded-xl border transition-all duration-200 group ${
-                  currentMap
-                    ? "bg-white border-indigo-100 shadow-sm"
-                    : "bg-gray-50/30 border-gray-100"
-                }`}
-              >
-                {/* TARGET FIELD (Genetec) */}
-                <div className="col-span-5">
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm font-bold text-gray-900">
-                      {field.label}
+      {/* Field Mapping Rows */}
+      <div className="p-6 space-y-3">
+        {TARGET_FIELDS.map((field) => {
+          const currentMap = mappings[field.key]
+          const isAdvanced = typeof currentMap === 'object' && currentMap !== null
+
+          return (
+            <div
+              key={field.key}
+              className={`flex flex-col lg:flex-row lg:items-center justify-between gap-4 rounded-xl border p-4 transition-all ${
+                currentMap
+                  ? 'border-indigo-500/30 bg-slate-900/80 shadow-sm'
+                  : 'border-slate-800/80 bg-slate-950/40'
+              }`}
+            >
+              {/* TARGET SPECIFICATION */}
+              <div className="lg:w-1/3">
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-bold text-white">{field.label}</span>
+                  {field.required ? (
+                    <span className="rounded bg-rose-500/10 px-1.5 py-0.5 font-mono text-[10px] text-rose-400 border border-rose-500/20 font-semibold">
+                      Required
                     </span>
-                    {field.required && (
-                      <span
-                        className="h-1.5 w-1.5 rounded-full bg-rose-500"
-                        title="Required Field"
-                      ></span>
-                    )}
-                  </div>
-                  <div className="mt-0.5 flex items-center gap-1.5">
-                    <span className="text-[10px] font-mono text-indigo-400 bg-indigo-50 px-1.5 py-0.5 rounded leading-none">
-                      {field.key}
-                    </span>
-                  </div>
-                </div>
-
-                {/* VISUAL DIVIDER */}
-                <div className="col-span-1 flex justify-center">
-                  <div
-                    className={`h-px w-8 transition-colors ${
-                      currentMap ? "bg-indigo-200" : "bg-gray-200"
-                    }`}
-                  ></div>
-                </div>
-
-                {/* SOURCE DATA (Legacy) */}
-                <div className="col-span-6 flex items-center gap-3">
-                  {isAdvanced ? (
-                    <div className="flex-1 flex items-center justify-between bg-indigo-600 text-white px-4 py-2.5 rounded-lg text-sm font-medium shadow-md shadow-indigo-100">
-                      <div className="flex items-center gap-2">
-                        <svg
-                          className="w-4 h-4 text-indigo-200"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.826a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
-                          />
-                        </svg>
-                        <span>
-                          {currentMap.sources.join(
-                            ` ${currentMap.separator || "+"} `
-                          )}
-                        </span>
-                      </div>
-                      <button
-                        onClick={() => handleMapChange(field.key, "")}
-                        className="p-1 hover:bg-indigo-500 rounded transition-colors"
-                      >
-                        <svg
-                          className="w-4 h-4"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                      </button>
-                    </div>
                   ) : (
-                    <div className="relative flex-1">
-                      <select
-                        value={currentMap || ""}
-                        onChange={(e) =>
-                          handleMapChange(field.key, e.target.value)
-                        }
-                        className={`w-full appearance-none rounded-lg border px-4 py-2.5 text-sm font-medium transition-all outline-none focus:ring-2 focus:ring-indigo-500/20 ${
-                          currentMap
-                            ? "border-indigo-200 bg-indigo-50/30 text-indigo-900"
-                            : "border-gray-200 bg-white text-gray-500 hover:border-gray-300"
-                        }`}
-                      >
-                        <option value="">Choose legacy column...</option>
-                        {sourceColumns.map((col) => (
-                          <option key={col} value={col}>
-                            {col}
-                          </option>
-                        ))}
-                      </select>
-                      <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none text-gray-400">
-                        <svg
-                          className="h-4 w-4"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                      </div>
-                    </div>
+                    <span className="rounded bg-slate-800 px-1.5 py-0.5 font-mono text-[10px] text-slate-400">
+                      Optional
+                    </span>
                   )}
-
-                  <button
-                    onClick={() => setActiveModal(field.key)}
-                    className="flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs font-bold text-gray-600 border border-gray-200 hover:bg-gray-50 hover:text-black transition-all active:scale-95"
-                  >
-                    <svg
-                      className="w-3.5 h-3.5"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M12 6v6m0 0v6m0-0h6m-6 0H6"
-                      />
-                    </svg>
-                    Merge
-                  </button>
+                </div>
+                <div className="mt-1 flex items-center gap-2 font-mono text-[11px] text-slate-400">
+                  <span className="text-indigo-400">Genetec: {field.key}</span>
+                  <span className="text-slate-500">• {field.desc}</span>
                 </div>
               </div>
-            );
-          })}
-        </div>
+
+              {/* CONNECTOR & SOURCE COLUMN CONTROL */}
+              <div className="flex flex-1 items-center gap-2">
+                {isAdvanced ? (
+                  <div className="flex flex-1 items-center justify-between rounded-xl border border-cyan-500/30 bg-cyan-950/40 px-3.5 py-2 text-xs font-mono text-cyan-300">
+                    <span className="truncate">
+                      ★ {currentMap.sources ? currentMap.sources.join(` ${currentMap.separator || '+'} `) : field.key}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => handleMapChange(field.key, '')}
+                      className="ml-2 text-cyan-400 hover:text-white"
+                      aria-label={`Clear custom rule for ${field.label}`}
+                    >
+                      ×
+                    </button>
+                  </div>
+                ) : (
+                  <div className="relative flex-1">
+                    <select
+                      value={currentMap || ''}
+                      onChange={(e) => handleMapChange(field.key, e.target.value)}
+                      className="w-full appearance-none rounded-xl border border-slate-700/60 bg-slate-950 px-3.5 py-2 font-mono text-xs text-slate-200 outline-none focus:border-indigo-500"
+                    >
+                      <option value="">Select legacy column...</option>
+                      {sourceColumns.map((col) => (
+                        <option key={col} value={col}>
+                          {col}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
+
+                <button
+                  type="button"
+                  onClick={() => setActiveModal(field.key)}
+                  className="rounded-xl border border-slate-700/60 bg-slate-800/80 px-3 py-2 text-xs font-semibold text-slate-200 transition-all hover:bg-slate-700 hover:text-white active:scale-[0.98]"
+                >
+                  Merge Rule
+                </button>
+              </div>
+            </div>
+          )
+        })}
       </div>
 
       {activeModal && (
         <ConcatenationBuilder
-          targetLabel={
-            TARGET_FIELDS.find((f) => f.key === activeModal)?.label || ""
-          }
+          targetLabel={TARGET_FIELDS.find((f) => f.key === activeModal)?.label || ''}
           sourceColumns={sourceColumns}
           onClose={() => setActiveModal(null)}
           onSave={(rule) => {
-            handleMapChange(activeModal, rule);
-            setActiveModal(null);
+            handleMapChange(activeModal, rule)
+            setActiveModal(null)
           }}
         />
       )}
     </div>
-  );
+  )
 }

@@ -1,8 +1,6 @@
 import { auth } from '@clerk/nextjs/server'
 import { NextResponse } from 'next/server'
-import postgres from 'postgres'
-
-const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' })
+import { sql } from '@/lib/db'
 
 export async function POST(
   request: Request,
@@ -17,6 +15,10 @@ export async function POST(
 
   try {
     const { mappings } = await request.json()
+
+    if (!mappings || typeof mappings !== 'object') {
+      return NextResponse.json({ error: 'Invalid mappings payload' }, { status: 400 })
+    }
 
     // Update the migration with the new mappings and change status
     await sql`

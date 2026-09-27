@@ -1,6 +1,4 @@
-import postgres from 'postgres'
-
-const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' })
+import { sql } from '@/lib/db'
 
 export async function seed() {
   // 1. Create the Migrations Table (Projects)
@@ -13,6 +11,7 @@ export async function seed() {
       status VARCHAR(50) DEFAULT 'draft',
       source_system VARCHAR(100),
       target_system VARCHAR(100) DEFAULT 'Genetec',
+      mappings JSONB,
       "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );
   `

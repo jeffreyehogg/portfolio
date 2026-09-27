@@ -36,7 +36,9 @@
         "RESEND_API_KEY",
         "RESEND_EMAIL_TO",
         "UPLOADTHING_TOKEN",
-        "VERCEL_URL"
+        "VERCEL_URL",
+        "NUXT_CURRENCY_API_KEY",
+        "CURRENCY_API_KEY"
       ]
     },
     "lint": {

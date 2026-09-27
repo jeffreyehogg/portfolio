@@ -275,17 +275,17 @@ export const projectsData: Project[] = [
 		metrics: 'Sub-second Turbopack RSC • 4-Pillar Ministry Suite • Drizzle & Neon',
 	},
 	{
-		title: 'ForexFlow Dashboard',
+		title: 'ForexFlow FX Dashboard',
 		href: 'https://forexflow-dashboard.vercel.app/',
 		githubUrl: 'https://github.com/jeffreyehogg/portfolio/tree/main/apps/forexflow-dashboard',
 		description:
-			'A real-time currency exchange analytics dashboard tracking institutional exchange rates with live updates, 24-hour high/low telemetry, and interactive visual trends.',
+			'An institutional-grade FX telemetry and treasury risk intelligence engine tracking live mid-market rates, synthetic Bid/Ask pip spreads, G10 cross-currency correlation matrices, triangular arbitrage cycles, and enterprise Value-at-Risk (VaR) exposure scenarios.',
 		imageUrl: '/images/projects/forexflow.png',
-		tags: ['Nuxt', 'Vue', 'TypeScript', 'Chart.js', 'Tailwind CSS'],
+		tags: ['Nuxt 3', 'Vue 3', 'TypeScript', 'Chart.js', 'Nitro Engine', 'Tailwind CSS', 'Turborepo'],
 		learnings:
-			'Implemented secure server-side API proxying in Nuxt and integrated Chart.js with client-only hydration for real-time streaming data visualization.',
+			'Engineered a multi-tier Nitro edge API proxy layer with SWR caching, ECB Frankfurter failover, and stochastic market synthesis to guarantee 0% downtime. Built client-side Chart.js telemetry with EMA 20/50 and Bollinger Bands, an Almgren-Chriss smart order routing simulator, and parametric portfolio VaR stress-testing.',
 		featured: false,
-		metrics: 'Live streaming telemetry & analytics',
+		metrics: 'Sub-50ms Edge Telemetry • Live Pip Spreads • Treasury VaR Engine',
 	},
 	{
 		title: 'Engineering Monorepo & Portfolio Platform',

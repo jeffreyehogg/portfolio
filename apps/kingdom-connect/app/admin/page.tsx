@@ -6,7 +6,18 @@ import { FundForm } from "./fund-form";
 import { db } from "@/lib/db";
 import { events, funds } from "@/db/schema";
 import { desc } from "drizzle-orm";
-import { Calendar } from "lucide-react";
+import { Calendar, ShieldAlert } from "lucide-react";
+import Link from "next/link";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Ministry Leadership Portal",
+  description: "Equipping the saints for the work of ministry.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default async function AdminPage() {
   const { userId } = await auth();
@@ -16,21 +27,24 @@ export default async function AdminPage() {
     redirect("/");
   }
 
-  // If you haven't set the env var yet, you can temporarily comment this out to keep testing.
+  // Admin access gate
   if (process.env.ADMIN_USER_ID && userId !== process.env.ADMIN_USER_ID) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900">Access Denied</h1>
-          <p className="text-gray-500 mt-2">
-            You do not have permission to view this page.
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4">
+        <div className="text-center bg-white p-8 rounded-3xl border border-slate-200/80 shadow-md max-w-md">
+          <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 mx-auto flex items-center justify-center mb-4">
+            <ShieldAlert className="w-6 h-6" />
+          </div>
+          <h1 className="text-2xl font-bold text-slate-900">Access Restricted</h1>
+          <p className="text-slate-500 text-xs sm:text-sm mt-2 leading-relaxed">
+            This area is reserved for verified Ministry Directors and Church Administrators.
           </p>
-          <a
+          <Link
             href="/"
-            className="mt-4 inline-block text-indigo-600 hover:underline"
+            className="mt-6 inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs px-5 py-2.5 rounded-xl shadow-xs transition-all"
           >
-            Return Home
-          </a>
+            Return to Homepage
+          </Link>
         </div>
       </div>
     );
@@ -51,13 +65,22 @@ export default async function AdminPage() {
     .limit(5);
 
   return (
-    <div className="min-h-screen bg-gray-50 font-sans">
+    <div className="min-h-screen bg-slate-50 font-sans flex flex-col">
       <Navbar />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">
-          Admin Dashboard
-        </h1>
+      <main id="main-content" className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+        <div className="mb-8">
+          <span className="text-xs font-mono uppercase tracking-wider text-indigo-600 font-bold bg-indigo-50 px-3 py-1 rounded-full border border-indigo-200">
+            Administrative Oversight
+          </span>
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mt-2">
+            Ministry Leadership Portal
+          </h1>
+          <p className="text-slate-600 mt-1 text-sm">
+            &ldquo;To equip the saints for the work of ministry, for building up the body of Christ.&rdquo;{" "}
+            <span className="font-serif italic text-indigo-900 font-semibold">— Ephesians 4:12</span>
+          </p>
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left Column: Creation Tools */}
@@ -69,91 +92,89 @@ export default async function AdminPage() {
           {/* Right Column: Overview */}
           <div className="lg:col-span-2 space-y-8">
             {/* Events List */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-              <div className="px-6 py-4 border-b border-gray-100 bg-gray-50">
-                <h3 className="font-bold text-gray-900">
-                  Recent Opportunities
-                </h3>
+            <div className="bg-white rounded-3xl shadow-xs border border-slate-200/80 overflow-hidden">
+              <div className="px-6 py-4 border-b border-slate-100 bg-slate-50/70">
+                <h2 className="font-bold text-slate-900 text-sm">
+                  Recent Published Opportunities
+                </h2>
               </div>
-              <table className="min-w-full divide-y divide-gray-200">
-                <tbody className="divide-y divide-gray-200">
-                  {recentEvents.map((event) => (
-                    <tr key={event.id}>
-                      <td className="px-6 py-4">
-                        <div className="text-sm font-medium text-gray-900">
-                          {event.title}
-                        </div>
-                        <div className="text-xs text-gray-500 flex items-center mt-1">
-                          <Calendar className="h-3 w-3 mr-1" />
-                          {new Date(event.date).toLocaleDateString()}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 text-right">
-                        <span className="px-2 py-1 text-xs font-semibold rounded-full bg-indigo-50 text-indigo-700 capitalize">
-                          {event.category}
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                  {recentEvents.length === 0 && (
-                    <tr>
-                      <td colSpan={2} className="p-6 text-center text-gray-500">
-                        No events found.
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
+              <div className="divide-y divide-slate-100">
+                {recentEvents.map((event) => (
+                  <div key={event.id} className="px-6 py-4 flex items-center justify-between">
+                    <div>
+                      <div className="text-sm font-bold text-slate-900">
+                        {event.title}
+                      </div>
+                      <div className="text-xs text-slate-500 flex items-center mt-1">
+                        <Calendar className="h-3.5 w-3.5 mr-1.5 text-indigo-500" />
+                        <span>{new Date(event.date).toLocaleDateString()}</span>
+                        <span className="mx-2">·</span>
+                        <span className="text-slate-400">{event.location}</span>
+                      </div>
+                    </div>
+                    <span className="px-3 py-1 text-xs font-mono uppercase font-bold rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200/60">
+                      {event.category}
+                    </span>
+                  </div>
+                ))}
+                {recentEvents.length === 0 && (
+                  <div className="p-8 text-center text-slate-400 text-sm">
+                    No active service opportunities found.
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Funds List */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-              <div className="px-6 py-4 border-b border-gray-100 bg-gray-50 flex justify-between items-center">
-                <h3 className="font-bold text-gray-900">Active Funds</h3>
+            <div className="bg-white rounded-3xl shadow-xs border border-slate-200/80 overflow-hidden">
+              <div className="px-6 py-4 border-b border-slate-100 bg-slate-50/70">
+                <h2 className="font-bold text-slate-900 text-sm">Active Kingdom Funds</h2>
               </div>
-              <table className="min-w-full divide-y divide-gray-200">
-                <tbody className="divide-y divide-gray-200">
-                  {activeFunds.map((fund) => (
-                    <tr key={fund.id}>
-                      <td className="px-6 py-4">
-                        <div className="text-sm font-medium text-gray-900">
+              <div className="divide-y divide-slate-100">
+                {activeFunds.map((fund) => {
+                  const pct = Math.min(100, Math.round(((fund.raised || 0) / fund.goal) * 100));
+
+                  return (
+                    <div key={fund.id} className="px-6 py-4 flex items-center justify-between gap-4">
+                      <div className="flex-1">
+                        <div className="text-sm font-bold text-slate-900">
                           {fund.title}
                         </div>
-                        <div className="w-full bg-gray-100 rounded-full h-1.5 mt-2 max-w-xs">
+                        <div
+                          className="w-full bg-slate-100 rounded-full h-2 mt-2 max-w-xs overflow-hidden"
+                          role="progressbar"
+                          aria-valuenow={pct}
+                          aria-valuemin={0}
+                          aria-valuemax={100}
+                          aria-label={`Funding progress for ${fund.title}`}
+                        >
                           <div
-                            className="bg-emerald-500 h-1.5 rounded-full"
-                            style={{
-                              width: `${Math.min(
-                                100,
-                                ((fund.raised || 0) / fund.goal) * 100
-                              )}%`,
-                            }}
-                          ></div>
+                            className="bg-emerald-500 h-2 rounded-full"
+                            style={{ width: `${pct}%` }}
+                          />
                         </div>
-                      </td>
-                      <td className="px-6 py-4 text-right">
-                        <div className="text-sm font-bold text-emerald-700">
+                      </div>
+                      <div className="text-right shrink-0">
+                        <div className="text-sm font-bold font-mono text-emerald-700">
                           ${((fund.raised || 0) / 100).toLocaleString()}
                         </div>
-                        <div className="text-xs text-gray-400">
-                          of ${(fund.goal / 100).toLocaleString()}
+                        <div className="text-xs text-slate-400 font-mono">
+                          of ${(fund.goal / 100).toLocaleString()} ({pct}%)
                         </div>
-                      </td>
-                    </tr>
-                  ))}
-                  {activeFunds.length === 0 && (
-                    <tr>
-                      <td colSpan={2} className="p-6 text-center text-gray-500">
-                        No funds active.
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
+                      </div>
+                    </div>
+                  );
+                })}
+                {activeFunds.length === 0 && (
+                  <div className="p-8 text-center text-slate-400 text-sm">
+                    No active Kingdom funds found.
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

@@ -2,13 +2,23 @@ import { Navbar } from "@/app/components/Navbar";
 import { db } from "@/lib/db";
 import { personalPrayers, prayerNotes } from "@/db/schema";
 import { auth } from "@clerk/nextjs/server";
-import { redirect, notFound } from "next/navigation";
+import { notFound } from "next/navigation";
 import { eq, and, desc } from "drizzle-orm";
 import Link from "next/link";
 import { ArrowLeft, Clock, Flame, CheckCircle2, Tag } from "lucide-react";
 import { AddNoteForm } from "../components/AddNoteForm";
 import { NoteList } from "../components/NoteList";
 import type { PersonalPrayer, PrayerNote, PrayerStatus } from "../types";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Petition Details | Personal Prayer Sanctuary",
+  description: "View and update reflection notes on this personal prayer request.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default async function PrayerDetailPage({
   params,
@@ -71,59 +81,61 @@ export default async function PrayerDetailPage({
       case "Praying":
         return (
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-700 border border-amber-200">
-            <Flame className="w-3.5 h-3.5" /> Praying
+            <Flame className="w-3.5 h-3.5" /> Daily Focus
           </span>
         );
       default:
         return (
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-indigo-50 text-indigo-700 border border-indigo-200">
-            <Clock className="w-3.5 h-3.5" /> Pending
+            <Clock className="w-3.5 h-3.5" /> In Intercession
           </span>
         );
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 font-sans">
+    <div className="min-h-screen bg-slate-50 font-sans flex flex-col">
       <Navbar />
 
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <main id="main-content" className="flex-1 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
         {/* Back Link */}
         <Link
           href="/journal"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-gray-500 hover:text-indigo-600 transition-colors mb-6"
+          className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-indigo-600 transition-colors mb-6"
         >
           <ArrowLeft className="w-4 h-4" />
-          Back to Journal
+          Back to Prayer Sanctuary
         </Link>
 
         {/* Prayer Header Card */}
-        <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-xs mb-8">
+        <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200/80 shadow-xs mb-8">
           <div className="flex flex-wrap items-center gap-2 mb-3">
             {getStatusBadge(prayer.status)}
             {prayer.category && (
-              <span className="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-md bg-gray-100 text-gray-600 font-medium">
-                <Tag className="w-3 h-3 text-gray-400" />
+              <span className="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 font-medium">
+                <Tag className="w-3 h-3 text-slate-400" />
                 {prayer.category}
               </span>
             )}
           </div>
 
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 leading-snug">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 leading-snug">
             {prayer.title}
           </h1>
 
-          <p className="text-xs text-gray-400 mt-3">
-            Created on {prayer.createdAt ? new Date(prayer.createdAt).toLocaleDateString(undefined, { dateStyle: "long" }) : "recently"}
+          <p className="text-xs text-slate-400 mt-3 font-mono">
+            Committed to prayer on {prayer.createdAt ? new Date(prayer.createdAt).toLocaleDateString(undefined, { dateStyle: "long" }) : "recently"}
           </p>
         </div>
 
         {/* Scripture Quote */}
-        <div className="bg-indigo-50/70 border-l-4 border-indigo-500 p-4 rounded-r-2xl mb-8">
-          <p className="text-sm italic text-indigo-900">
-            &quot;Write down the revelation and make it plain on tablets so that a herald may run with it.&quot;
+        <div className="bg-linear-to-r from-purple-50/80 to-indigo-50/50 border-l-4 border-purple-500 p-4 rounded-r-2xl mb-8">
+          <p className="text-xs sm:text-sm italic text-purple-950 font-serif">
+            &ldquo;Write down the revelation and make it plain on tablets so that a herald may run with it.&rdquo;
           </p>
-          <p className="text-xs font-semibold text-indigo-600 mt-1">Habakkuk 2:2</p>
+          <p className="text-xs font-bold font-mono text-purple-600 mt-1 uppercase tracking-wider">
+            Habakkuk 2:2
+          </p>
         </div>
 
         {/* Add Note Form */}
@@ -133,7 +145,7 @@ export default async function PrayerDetailPage({
 
         {/* Notes Timeline */}
         <NoteList notes={notes} prayerId={prayer.id} />
-      </div>
+      </main>
     </div>
   );
 }

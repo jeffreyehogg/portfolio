@@ -2,33 +2,37 @@
 
 import { useState } from "react";
 import { createEvent } from "@/app/actions";
-import { Loader2, PlusCircle, Image as ImageIcon } from "lucide-react";
-import { FileUpload } from "@/app/components/file-upload"; // New import
+import { Loader2, PlusCircle } from "lucide-react";
+import { FileUpload } from "@/app/components/file-upload";
 import { toast } from "sonner";
 
 export function EventForm() {
   const [loading, setLoading] = useState(false);
-  const [imageUrl, setImageUrl] = useState(""); // Track image URL
+  const [imageUrl, setImageUrl] = useState("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
 
-    const formData = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
 
-    // Append the image URL from our state to the form data
     if (imageUrl) {
-      formData.append("imageUrl", imageUrl);
+      formData.set("imageUrl", imageUrl);
     }
 
     try {
-      await createEvent(formData);
-      toast.success("Event created successfully!");
-      (e.target as HTMLFormElement).reset();
-      setImageUrl("");
+      const res = await createEvent(formData);
+      if (res.success) {
+        toast.success(res.message);
+        form.reset();
+        setImageUrl("");
+      } else {
+        toast.error(res.message || "Failed to create opportunity.");
+      }
     } catch (error) {
       console.error(error);
-      toast.error("Error creating event");
+      toast.error("Error creating opportunity. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -37,98 +41,116 @@ export function EventForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 space-y-4"
+      className="bg-white p-7 rounded-3xl shadow-xs border border-slate-200/80 space-y-5"
     >
-      <h3 className="text-lg font-bold text-gray-900 mb-4">
-        Create New Opportunity
-      </h3>
+      <div>
+        <h3 className="text-xl font-extrabold text-slate-900 tracking-tight">
+          Publish Service Opportunity
+        </h3>
+        <p className="text-xs text-slate-500 mt-0.5">
+          Equip church members and neighbors with a clear, welcoming invitation to serve.
+        </p>
+      </div>
 
       {/* Image Upload Field */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Event Image
+        <label htmlFor="event-image-upload" className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-700 mb-2">
+          Initiative Header Photo
         </label>
-        <FileUpload
-          endpoint="eventImage"
-          value={imageUrl}
-          onChange={(url) => setImageUrl(url || "")}
-        />
+        <div id="event-image-upload">
+          <FileUpload
+            endpoint="eventImage"
+            value={imageUrl}
+            onChange={(url) => setImageUrl(url || "")}
+          />
+        </div>
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Event Title
+        <label htmlFor="event-title" className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+          Opportunity Title
         </label>
         <input
+          id="event-title"
           name="title"
           required
-          placeholder="e.g. Community Cleanup"
-          className="w-full p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
+          placeholder="e.g. Breakfast &amp; Dignity at Centennial Park"
+          className="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none text-sm text-slate-900 placeholder-slate-400 bg-slate-50 focus:bg-white transition-all"
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Description
-        </label>
+        <div className="flex justify-between items-center mb-1.5">
+          <label htmlFor="event-description" className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-700">
+            Impact Description &amp; What to Expect
+          </label>
+          <span className="text-[11px] text-slate-400 italic">Focus on people &amp; grace</span>
+        </div>
         <textarea
+          id="event-description"
           name="description"
           required
           rows={3}
-          className="w-full p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
+          placeholder="Explain who will be blessed, what volunteers will do, and reassurance that no prior experience is needed..."
+          className="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none text-sm text-slate-900 placeholder-slate-400 bg-slate-50 focus:bg-white transition-all resize-none"
         />
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Date
+          <label htmlFor="event-date" className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+            Date &amp; Time
           </label>
           <input
+            id="event-date"
             type="datetime-local"
             name="date"
             required
-            className="w-full p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
+            className="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none text-sm text-slate-900 bg-slate-50 focus:bg-white transition-all"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Category
+          <label htmlFor="event-category" className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+            Ministry Gifting Category
           </label>
           <select
+            id="event-category"
             name="category"
-            className="w-full p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
+            className="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none text-sm text-slate-900 bg-slate-50 focus:bg-white transition-all"
           >
-            <option value="food">Food Service</option>
-            <option value="labor">Labor & Help</option>
-            <option value="supplies">Supplies & Logistics</option>
-            <option value="general">General</option>
+            <option value="food">Meals &amp; Hospitality (food)</option>
+            <option value="labor">Hands &amp; Trades (labor)</option>
+            <option value="supplies">Relief &amp; Community Logistics (supplies)</option>
           </select>
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Location
+          <label htmlFor="event-location" className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+            Meeting Location &amp; Room
           </label>
           <input
+            id="event-location"
             name="location"
             required
-            placeholder="e.g. Main Hall"
-            className="w-full p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
+            placeholder="e.g. Centennial Park Pavilion, Austin, TX"
+            className="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none text-sm text-slate-900 placeholder-slate-400 bg-slate-50 focus:bg-white transition-all"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Max Volunteers
+          <label htmlFor="event-max-volunteers" className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+            Target Team Size
           </label>
           <input
+            id="event-max-volunteers"
             type="number"
             name="maxVolunteers"
-            defaultValue={10}
+            defaultValue={12}
+            min={1}
+            max={500}
             required
-            className="w-full p-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
+            className="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none text-sm text-slate-900 bg-slate-50 focus:bg-white transition-all"
           />
         </div>
       </div>
@@ -136,15 +158,14 @@ export function EventForm() {
       <button
         type="submit"
         disabled={loading}
-        className="w-full bg-indigo-600 text-white py-2.5 rounded-lg font-bold hover:bg-indigo-700 transition-colors flex items-center justify-center"
+        className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3.5 rounded-xl font-bold transition-all shadow-md shadow-indigo-600/20 active:scale-98 flex items-center justify-center cursor-pointer text-sm"
       >
         {loading ? (
-          <Loader2 className="h-5 w-5 animate-spin" />
+          <Loader2 className="h-5 w-5 animate-spin mr-2" />
         ) : (
-          <>
-            <PlusCircle className="h-5 w-5 mr-2" /> Publish Event
-          </>
+          <PlusCircle className="h-5 w-5 mr-2" />
         )}
+        <span>{loading ? "Publishing Opportunity..." : "Publish Opportunity to Board"}</span>
       </button>
     </form>
   );

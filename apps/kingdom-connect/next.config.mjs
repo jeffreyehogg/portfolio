@@ -5,7 +5,17 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'ajn4zwso5l.ufs.sh',
-        pathname: '/**', // Allows any path under this domain
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'utfs.io',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        pathname: '/**',
       },
     ],
   },

@@ -266,13 +266,13 @@ export const projectsData: Project[] = [
 		href: 'https://kingdom.jeffhogg.com',
 		githubUrl: 'https://github.com/jeffreyehogg/portfolio/tree/main/apps/kingdom-connect',
 		description:
-			'A unified digital faith platform combining community volunteer coordination, kingdom fundraising, a public prayer wall, and an interactive personal prayer journal with drag-and-drop prioritization.',
+			'A modern full-stack faith platform unifying hands-on volunteer mobilization, transparent mission crowdfunding with tangible unit economics, community intercessory prayer with scripture promise anchors, and a private devotional sanctuary with drag-and-drop prioritization.',
 		imageUrl: '/images/projects/kingdom-connect.png',
-		tags: ['Next.js', 'Clerk', 'Neon Postgres', 'Drizzle ORM', 'Tailwind CSS', 'dnd-kit', 'Server Actions'],
+		tags: ['Next.js 16', 'Next.js', 'React 19', 'Neon Postgres', 'Drizzle ORM', 'Tailwind CSS v4', 'Clerk', 'Zod Server Actions', 'dnd-kit'],
 		learnings:
-			'Unified community volunteering and devotional journaling into a single serverless PostgreSQL architecture with Neon, type-safe Drizzle ORM mutations, Clerk multi-tenancy, and optimistic drag-and-drop state machines.',
+			'Architected on Next.js 16 (Turbopack) and React 19 Server Components with Neon Serverless Postgres and Drizzle ORM. Engineered an interactive 60-second Spiritual Gifts & Ministry Matcher, a dynamic mission impact unit calculator, a Scripture Promise Anchor engine with 1-click journal persistence, and optimistic drag-and-drop state machines with Clerk authentication.',
 		featured: false,
-		metrics: 'Unified serverless faith platform',
+		metrics: 'Sub-second Turbopack RSC • 4-Pillar Ministry Suite • Drizzle & Neon',
 	},
 	{
 		title: 'ForexFlow Dashboard',

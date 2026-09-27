@@ -4,8 +4,16 @@ import { prayerRequests, prayerInteractions } from "@/db/schema";
 import { auth } from "@clerk/nextjs/server";
 import { desc, eq } from "drizzle-orm";
 import { PrayerCard } from "./prayer-card";
-import { submitPrayerRequest } from "@/app/actions";
-import { PlusCircle, Send } from "lucide-react";
+import { PrayerForm } from "./prayer-form";
+import { Heart, Sparkles } from "lucide-react";
+import { ScriptureAnchor } from "./scripture-anchor";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Community Prayer Wall | Holy Intercession",
+  description:
+    "Bear one another's burdens in faith. Share your prayer petitions and stand in holy intercession for brothers and sisters across our community.",
+};
 
 export default async function PrayerWallPage() {
   const { userId } = await auth();
@@ -26,66 +34,68 @@ export default async function PrayerWallPage() {
     userPrayedIds = interactions.map((i) => i.requestId || 0);
   }
 
-  async function handlePostPrayer(formData: FormData) {
-    "use server";
-    await submitPrayerRequest(formData);
-  }
-
   return (
-    <div className="min-h-screen bg-gray-50 font-sans">
+    <div className="min-h-screen bg-slate-50 font-sans flex flex-col">
       <Navbar />
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <main id="main-content" className="flex-1 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+        {/* Header */}
         <div className="text-center mb-10">
-          <h1 className="text-3xl font-bold text-gray-900">Prayer Wall</h1>
-          <p className="text-gray-600 mt-2 max-w-xl mx-auto">
-            "Bear one another's burdens, and so fulfill the law of Christ."
-            Share your needs and lift others up.
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-50 border border-rose-200 text-rose-700 text-xs font-mono uppercase tracking-wider mb-3 font-bold">
+            <Heart className="w-3.5 h-3.5 fill-rose-500 text-rose-500" /> Holy Intercession
+          </div>
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+            Community Prayer Wall
+          </h1>
+          <p className="text-slate-600 mt-2 max-w-xl mx-auto text-sm sm:text-base leading-relaxed">
+            &ldquo;Bear one another&apos;s burdens, and so fulfill the law of Christ.&rdquo;{" "}
+            <span className="font-serif italic font-semibold text-rose-900">— Galatians 6:2</span>
+          </p>
+          <p className="text-xs text-slate-500 mt-1 max-w-lg mx-auto font-light">
+            Whether you are walking through deep waters or carrying a silent petition—our church family is honored to stand with you before the throne of grace.
           </p>
         </div>
 
-        {/* Input Form */}
-        <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mb-10">
-          <h3 className="text-sm font-bold text-gray-700 mb-3 flex items-center">
-            <PlusCircle className="w-4 h-4 mr-2 text-indigo-600" />
-            Share a Request
-          </h3>
-          <form action={handlePostPrayer} className="relative">
-            <textarea
-              name="content"
-              required
-              rows={3}
-              placeholder="How can we pray for you today?"
-              className="w-full p-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none resize-none text-sm transition-all"
-            />
-            <div className="mt-3 flex justify-end">
-              <button
-                type="submit"
-                className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-indigo-700 transition-colors flex items-center shadow-sm"
-              >
-                <Send className="w-3.5 h-3.5 mr-2" /> Post Request
-              </button>
-            </div>
-          </form>
-        </div>
+        {/* Interactive Feature: Scripture Promise Anchor Engine */}
+        <ScriptureAnchor />
 
-        {/* Masonry Grid of Requests */}
-        {requests.length === 0 ? (
-          <div className="text-center py-20 text-gray-400">
-            No prayer requests yet. Be the first to share.
+        {/* Prayer Input Form */}
+        <PrayerForm />
+
+        {/* Wall of Requests */}
+        <div className="mb-8">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-xl font-extrabold text-slate-900">
+              Community Petitions ({requests.length})
+            </h2>
+            <span className="text-xs text-slate-500 font-mono">
+              Tap &ldquo;I&apos;ll Pray&rdquo; to encourage a brother or sister
+            </span>
           </div>
-        ) : (
-          <div className="grid md:grid-cols-2 gap-6">
-            {requests.map((req) => (
-              <PrayerCard
-                key={req.id}
-                request={req}
-                hasPrayed={userPrayedIds.includes(req.id)}
-              />
-            ))}
-          </div>
-        )}
-      </div>
+
+          {requests.length === 0 ? (
+            <div className="text-center py-20 bg-white rounded-3xl border border-dashed border-slate-200 p-8">
+              <div className="w-16 h-16 rounded-2xl bg-rose-50 text-rose-500 mx-auto flex items-center justify-center mb-4">
+                <Sparkles className="w-8 h-8" />
+              </div>
+              <h3 className="text-lg font-bold text-slate-900">The altar is quiet</h3>
+              <p className="text-slate-500 text-xs sm:text-sm mt-1 max-w-md mx-auto">
+                Be the first to share what is on your heart—whether for healing, peace, guidance, or thanksgiving.
+              </p>
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 gap-6">
+              {requests.map((req) => (
+                <PrayerCard
+                  key={req.id}
+                  request={req}
+                  hasPrayed={userPrayedIds.includes(req.id)}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      </main>
     </div>
   );
 }

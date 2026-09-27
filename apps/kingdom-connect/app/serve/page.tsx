@@ -1,29 +1,36 @@
 import { Navbar } from "@/app/components/Navbar";
 import { db } from "@/lib/db";
 import { events, signups } from "@/db/schema";
-import { Calendar, MapPin, ChefHat, Hammer, Heart } from "lucide-react";
+import { Calendar, MapPin, ChefHat, Hammer, Heart, Users, Sparkles, Package } from "lucide-react";
 import { SignupButton } from "./signup-button";
 import { auth } from "@clerk/nextjs/server";
 import { eq, and, ilike, or, desc } from "drizzle-orm";
 import { FilterBar } from "./filter-bar";
+import { SpiritualGiftsModal } from "./matcher/spiritual-gifts-modal";
+import Link from "next/link";
+import Image from "next/image";
+import { Metadata } from "next";
 
-// Props interface for search params
+export const metadata: Metadata = {
+  title: "Service Board & Volunteer Opportunities",
+  description:
+    "Find where your gifts fit in the Body of Christ. Discover local outreach, meals ministry, skilled repairs, and community care teams.",
+};
+
 interface ServePageProps {
-  searchParams: {
+  searchParams: Promise<{
     q?: string;
     category?: string;
-  };
+  }>;
 }
 
 export default async function ServePage({ searchParams }: ServePageProps) {
   const { userId } = await auth();
-
-  // Await searchParams (Next.js 15+ requirement, good practice for future)
   const params = await searchParams;
   const query = params.q || "";
   const category = params.category || "";
 
-  // --- Dynamic Filtering Logic ---
+  // Dynamic filtering logic
   const conditions = [];
 
   if (category && category !== "all") {
@@ -40,14 +47,13 @@ export default async function ServePage({ searchParams }: ServePageProps) {
     );
   }
 
-  // Execute Query with filters
   const eventList = await db
     .select()
     .from(events)
     .where(and(...conditions))
     .orderBy(desc(events.date));
 
-  // Fetch user's existing signups
+  // User's existing signups
   let userSignupIds: number[] = [];
   if (userId) {
     const userSignups = await db
@@ -60,80 +66,135 @@ export default async function ServePage({ searchParams }: ServePageProps) {
   const getCategoryIcon = (cat: string) => {
     switch (cat) {
       case "food":
-        return <ChefHat className="h-5 w-5 text-orange-500" />;
+        return <ChefHat className="h-4 w-4 text-amber-500" />;
       case "labor":
-        return <Hammer className="h-5 w-5 text-blue-500" />;
+        return <Hammer className="h-4 w-4 text-blue-500" />;
+      case "supplies":
+        return <Package className="h-4 w-4 text-emerald-500" />;
       default:
-        return <Heart className="h-5 w-5 text-red-500" />;
+        return <Heart className="h-4 w-4 text-rose-500" />;
+    }
+  };
+
+  const getCategoryLabel = (cat: string) => {
+    switch (cat) {
+      case "food":
+        return "Meals & Hospitality";
+      case "labor":
+        return "Hands & Trades";
+      case "supplies":
+        return "Relief Logistics";
+      default:
+        return cat;
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-slate-50 font-sans flex flex-col">
       <Navbar />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">Service Board</h1>
-            <p className="text-gray-600 mt-2">
-              Find a place to use your gifts.
-            </p>
+      <main id="main-content" className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+        {/* Page Header */}
+        <div className="mb-8">
+          <div className="flex items-center gap-2 text-indigo-600 text-xs font-mono uppercase tracking-wider mb-2 font-bold">
+            <Heart className="w-4 h-4 fill-current" /> Hands &amp; Feet of Jesus
           </div>
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+            Serve Our City
+          </h1>
+          <p className="text-slate-600 mt-2 max-w-2xl leading-relaxed text-sm sm:text-base">
+            &ldquo;Each of you should use whatever gift you have received to serve others, as faithful stewards of God&apos;s grace in its various forms.&rdquo;{" "}
+            <span className="font-serif italic font-semibold text-indigo-900">— 1 Peter 4:10</span>
+          </p>
         </div>
 
-        {/* Add the Filter Bar here */}
+        {/* First-Time Volunteer Hospitality Card */}
+        <div className="bg-linear-to-r from-indigo-50/80 via-white to-indigo-50/40 border border-indigo-100 rounded-3xl p-6 mb-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-2xs">
+          <div className="flex items-start gap-4">
+            <div className="p-3 bg-indigo-600 text-white rounded-2xl shadow-xs shrink-0 mt-0.5">
+              <Users className="w-5 h-5" />
+            </div>
+            <div>
+              <h2 className="text-sm font-bold text-slate-900">
+                Serving for the First Time?
+              </h2>
+              <p className="text-xs text-slate-600 leading-relaxed mt-1 max-w-xl">
+                We know stepping onto a new team can feel intimidating. Every opportunity includes on-site orientation, all needed tools, and a friendly team lead who will guide you every step.
+              </p>
+            </div>
+          </div>
+          <span className="text-xs font-mono font-semibold px-3 py-1.5 bg-indigo-100 text-indigo-800 rounded-xl shrink-0 self-start md:self-auto">
+            All Skill Levels Welcome
+          </span>
+        </div>
+
+        {/* Interactive Feature: 60-Second Spiritual Gifts Matcher */}
+        <SpiritualGiftsModal />
+
+        {/* Filter and Search Bar */}
         <FilterBar />
 
+        {/* Results Grid */}
         {eventList.length === 0 ? (
-          <div className="text-center py-20 bg-white rounded-xl border border-dashed border-gray-300">
-            <p className="text-gray-500 text-lg">
-              No opportunities found matching your criteria.
+          <div className="text-center py-20 bg-white rounded-3xl border border-dashed border-slate-200 p-8">
+            <div className="w-16 h-16 rounded-2xl bg-indigo-50 text-indigo-500 mx-auto flex items-center justify-center mb-4">
+              <Sparkles className="w-8 h-8" />
+            </div>
+            <h3 className="text-lg font-bold text-slate-900">
+              No opportunities found matching your criteria
+            </h3>
+            <p className="text-slate-500 text-xs sm:text-sm mt-1 max-w-md mx-auto">
+              Try adjusting your search terms or view all active volunteer needs across the city.
             </p>
-            <a
+            <Link
               href="/serve"
-              className="text-indigo-600 font-medium mt-2 inline-block hover:underline"
+              className="mt-4 inline-flex items-center text-xs font-bold text-indigo-600 hover:text-indigo-800 bg-indigo-50 hover:bg-indigo-100 px-4 py-2 rounded-xl transition-colors"
             >
-              Clear filters
-            </a>
+              Reset All Filters
+            </Link>
           </div>
         ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {eventList.map((event) => (
               <div
                 key={event.id}
-                className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col h-full hover:shadow-md transition-all duration-300 group"
+                className="bg-white rounded-3xl shadow-sm border border-slate-200/80 overflow-hidden flex flex-col h-full hover:shadow-xl hover:border-indigo-200 card-hover-glow transition-all duration-300 group"
               >
-                <div className="h-40 bg-gray-100 relative overflow-hidden">
+                <div className="h-48 bg-slate-100 relative overflow-hidden">
                   {event.imageUrl ? (
-                    <img
+                    <Image
                       src={event.imageUrl}
                       alt={event.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   ) : (
-                    <div className="w-full h-full bg-indigo-100" />
+                    <div className="w-full h-full bg-linear-to-br from-indigo-100 to-indigo-50 flex items-center justify-center text-indigo-400">
+                      <Users className="w-10 h-10 opacity-40" />
+                    </div>
                   )}
 
-                  <div className="absolute top-3 right-3 bg-white/95 backdrop-blur-sm px-2 py-1 rounded-md text-xs font-bold text-gray-700 shadow-sm flex items-center gap-1 border border-gray-100">
+                  <div className="absolute top-3 right-3 bg-white/95 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-slate-800 shadow-xs flex items-center gap-1.5 border border-slate-100">
                     {getCategoryIcon(event.category)}
-                    <span className="capitalize">{event.category}</span>
+                    <span>{getCategoryLabel(event.category)}</span>
                   </div>
                 </div>
 
-                <div className="p-5 grow flex flex-col">
-                  <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors">
+                <div className="p-6 grow flex flex-col">
+                  <h3 className="text-lg font-bold text-slate-900 mb-2 group-hover:text-indigo-600 transition-colors">
                     {event.title}
                   </h3>
-                  <p className="text-sm text-gray-500 mb-4 line-clamp-2 leading-relaxed">
+                  <p className="text-xs text-slate-600 mb-6 line-clamp-3 leading-relaxed">
                     {event.description}
                   </p>
 
-                  <div className="space-y-2.5 text-sm text-gray-600 mt-auto">
+                  <div className="space-y-2.5 text-xs text-slate-600 mt-auto pt-4 border-t border-slate-100">
                     <div className="flex items-center">
-                      <Calendar className="h-4 w-4 mr-2.5 text-indigo-500" />
+                      <Calendar className="h-4 w-4 mr-2.5 text-indigo-500 shrink-0" />
                       <span>
                         {new Date(event.date).toLocaleDateString(undefined, {
+                          weekday: "short",
                           month: "short",
                           day: "numeric",
                           year: "numeric",
@@ -141,18 +202,18 @@ export default async function ServePage({ searchParams }: ServePageProps) {
                       </span>
                     </div>
                     <div className="flex items-center">
-                      <MapPin className="h-4 w-4 mr-2.5 text-indigo-500" />
+                      <MapPin className="h-4 w-4 mr-2.5 text-indigo-500 shrink-0" />
                       <span className="truncate">{event.location}</span>
                     </div>
                   </div>
 
-                  <div className="mt-6 pt-4 border-t border-gray-50">
+                  <div className="mt-6 pt-4 border-t border-slate-100">
                     {userSignupIds.includes(event.id) ? (
                       <button
                         disabled
-                        className="w-full bg-green-50 text-green-700 border border-green-200 py-2 rounded-lg font-medium cursor-default flex justify-center items-center gap-2"
+                        className="w-full bg-emerald-50 text-emerald-700 border border-emerald-200 py-2.5 rounded-xl font-bold text-xs cursor-default flex justify-center items-center gap-2 shadow-2xs"
                       >
-                        <Heart className="h-4 w-4 fill-current" /> Registered
+                        <Heart className="h-3.5 w-3.5 fill-current" /> Registered
                       </button>
                     ) : (
                       <SignupButton eventId={event.id} />
@@ -163,7 +224,7 @@ export default async function ServePage({ searchParams }: ServePageProps) {
             ))}
           </div>
         )}
-      </div>
+      </main>
     </div>
   );
 }

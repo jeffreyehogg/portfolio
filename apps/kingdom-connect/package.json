@@ -6,7 +6,7 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "tsc --noEmit"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.34.0",
@@ -35,7 +35,8 @@
     "tailwind-merge": "^3.4.0",
     "tailwindcss": "^4.1.16",
     "typescript": "^5.9.3",
-    "uploadthing": "^7.7.4"
+    "uploadthing": "^7.7.4",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
     "@clerk/types": "^4.101.20",

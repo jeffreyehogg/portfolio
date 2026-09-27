@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { volunteerForEvent } from "@/app/actions";
-import { CheckCircle, Loader2 } from "lucide-react";
-import { toast } from "sonner"; //
+import { CheckCircle2, Loader2, Heart } from "lucide-react";
+import { toast } from "sonner";
 
 export function SignupButton({ eventId }: { eventId: number }) {
   const [loading, setLoading] = useState(false);
@@ -16,7 +16,7 @@ export function SignupButton({ eventId }: { eventId: number }) {
 
       if (result.success) {
         setSignedUp(true);
-        toast.success("Success! You are signed up to serve.");
+        toast.success(result.message || "You are registered! Thank you for blessing our community.");
       } else {
         toast.error(result.message);
       }
@@ -32,10 +32,10 @@ export function SignupButton({ eventId }: { eventId: number }) {
     return (
       <button
         disabled
-        className="w-full bg-green-100 text-green-700 border border-green-200 py-2 rounded-lg font-medium flex items-center justify-center cursor-default"
+        className="w-full bg-emerald-50 text-emerald-700 border border-emerald-200 py-2.5 rounded-xl font-bold text-xs flex items-center justify-center cursor-default shadow-xs"
       >
-        <CheckCircle className="h-4 w-4 mr-2" />
-        Registered
+        <CheckCircle2 className="h-4 w-4 mr-1.5 text-emerald-600" />
+        Confirmed · See You There!
       </button>
     );
   }
@@ -44,15 +44,18 @@ export function SignupButton({ eventId }: { eventId: number }) {
     <button
       onClick={handleSignup}
       disabled={loading}
-      className="w-full bg-indigo-600 text-white py-2 rounded-lg font-medium hover:bg-indigo-700 transition-colors flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed"
+      className="w-full bg-indigo-600 text-white py-2.5 rounded-xl font-bold text-xs hover:bg-indigo-700 transition-all shadow-md shadow-indigo-600/20 active:scale-98 flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer"
     >
       {loading ? (
         <>
           <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-          Signing up...
+          Reserving Your Spot...
         </>
       ) : (
-        "Sign Up to Serve"
+        <>
+          <Heart className="h-3.5 w-3.5 mr-1.5 fill-current" />
+          I&apos;ll Be There to Serve
+        </>
       )}
     </button>
   );

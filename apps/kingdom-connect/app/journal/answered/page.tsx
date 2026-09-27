@@ -6,8 +6,18 @@ import { eq, and, desc, ilike } from "drizzle-orm";
 import { PrayerList } from "../components/PrayerList";
 import { SearchInput } from "../components/SearchInput";
 import Link from "next/link";
-import { BookOpen, CheckCircle2, Clock } from "lucide-react";
+import { CheckCircle2, Clock } from "lucide-react";
 import type { PersonalPrayer, PrayerStatus } from "../types";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Stones of Remembrance | Answered Prayers",
+  description: "A lasting memorial of God's faithfulness and answered petitions.",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default async function AnsweredPage({
   searchParams,
@@ -46,33 +56,33 @@ export default async function AnsweredPage({
   }));
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans">
+    <div className="min-h-screen bg-slate-50 font-sans flex flex-col">
       <Navbar />
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <main id="main-content" className="flex-1 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
             <div className="flex items-center gap-2.5 mb-1">
-              <span className="p-2 rounded-xl bg-emerald-100 text-emerald-700 shadow-xs">
+              <span className="p-2 rounded-2xl bg-emerald-100 text-emerald-700 shadow-2xs">
                 <CheckCircle2 className="w-5 h-5" />
               </span>
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
-                Answered Prayers
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                Stones of Remembrance
               </h1>
             </div>
-            <p className="text-sm text-gray-500">
-              A stone of remembrance for God&apos;s faithfulness and answered petitions.
+            <p className="text-xs sm:text-sm text-slate-500">
+              A lasting memorial of God&apos;s faithfulness and answered petitions.
             </p>
           </div>
         </div>
 
         {/* Navigation Tabs & Search Bar */}
-        <div className="bg-white p-3 rounded-2xl border border-gray-100 shadow-xs mb-8 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="flex items-center gap-1 bg-gray-100 p-1 rounded-xl w-full sm:w-auto">
+        <div className="bg-white p-3 rounded-2xl border border-slate-200/80 shadow-xs mb-8 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl w-full sm:w-auto">
             <Link
               href="/journal"
-              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold transition-all text-gray-600 hover:text-gray-900"
+              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold transition-all text-slate-600 hover:text-slate-900"
             >
               <Clock className="w-3.5 h-3.5" />
               Active Prayers
@@ -90,9 +100,9 @@ export default async function AnsweredPage({
         </div>
 
         {/* Scripture Quote */}
-        <div className="bg-emerald-50/70 border-l-4 border-emerald-500 p-4 rounded-r-2xl mb-8">
-          <p className="text-sm italic text-emerald-950 font-serif">
-            &quot;I sought the LORD, and He answered me; He delivered me from all my fears.&quot;
+        <div className="bg-linear-to-r from-emerald-50/80 to-slate-50 border-l-4 border-emerald-500 p-4 rounded-r-2xl mb-8">
+          <p className="text-xs sm:text-sm italic text-emerald-950 font-serif">
+            &ldquo;I sought the LORD, and He answered me; He delivered me from all my fears.&rdquo;
           </p>
           <p className="text-xs font-bold font-mono text-emerald-600 mt-1 uppercase tracking-wider">
             Psalm 34:4
@@ -105,10 +115,10 @@ export default async function AnsweredPage({
           emptyMessage={
             search
               ? `No answered prayers matched "${search}".`
-              : "No prayers marked as answered yet. As God moves, move your prayers here to celebrate!"
+              : "Your memorial wall is waiting for its first stone. When God answers your prayers—whether with a sudden breakthrough or gentle peace—mark them as answered to build a lasting testimony of His faithfulness."
           }
         />
-      </div>
+      </main>
     </div>
   );
 }

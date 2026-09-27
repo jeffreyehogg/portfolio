@@ -101,6 +101,8 @@ pnpm add <package> --filter <app-name>
 - **Next.js 16 CLI Linting**: In Next.js 16 (Turbopack), `next lint` is no longer a Next CLI command (`next [dir] [cmd]` parses `lint` as a directory name). Always configure `"lint": "eslint ."` in `package.json`.
 - **Serverless Postgres Connection Pooling**: In Next.js App Router API routes and Server Components using `postgres.js`, cache the connection on `globalThis._postgresSql` with a defensive fallback for build time/offline execution to prevent serverless connection exhaustion (`too many clients already`).
 - **PACS Data Normalization**: In physical security migrations, credentials and facility codes must remain immutable strings throughout ingestion and transformation to avoid Excel's automatic coercion of 37-bit IDs into scientific notation or stripping of leading zeros.
+- **Nitro Edge Caching & Multi-Tier Fallback**: In edge-rendered API endpoints consuming rate-limited third-party APIs, pair Nitro's `defineCachedEventHandler` (SWR caching) with a multi-tier fallback architecture (Primary API -> High-availability open public API -> Synthetic stochastic micro-drift simulator) to guarantee 0% downtime and prevent 500 error cascades when API keys are absent or rate limits are exceeded during CI/CD prerendering.
+- **Accessible HTML5 Canvas Telemetry (WCAG 2.1 AA)**: HTML5 `<canvas>` elements cannot be read by screen readers. Wrap the canvas with `role="img"` and a dynamic `aria-label`, and supply an accessible, hidden `table.sr-only` summarizing recent time-series data points so assistive technologies can parse financial charts.
 
 ---
 

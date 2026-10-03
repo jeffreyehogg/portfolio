@@ -241,12 +241,25 @@ export const projectsData: Project[] = [
 		githubUrl: 'https://github.com/jeffreyehogg/portfolio/tree/main/apps/hogg-homes',
 		description:
 			'A high-craft residential real estate and community discovery platform for modern homebuilders. Features faceted client-side filtering, interactive Elevation A/B/C architectural toggles, CAD floor plan schematics with electrical/plumbing layers, and Zod-validated VIP tour booking with real-time CRM webhooks.',
-		imageUrl: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80',
+		imageUrl: '/images/projects/hogg-homes.png',
 		tags: ['Next.js 16', 'React 19', 'Server Actions', 'Zod', 'Framer Motion', 'Tailwind CSS', 'Turborepo'],
 		learnings:
 			'Replaced slow legacy homebuilder CMS monoliths with sub-second React Server Components (RSC). Engineered interactive SVG CAD schematics with toggleable MEP layers, optimized AVIF elevation switching, and built type-safe CRM lead synchronization.',
 		featured: true,
 		metrics: 'Sub-second LCP (0.7s) • Zero CLS • Edge RSC',
+	},
+	{
+		title: 'AutoDBA',
+		href: 'https://autodba.jeffhogg.com',
+		githubUrl: 'https://github.com/jeffreyehogg/portfolio/tree/main/apps/autodba',
+		description:
+			'Agentic SQL diagnostic & query optimization platform. sqlglot AST analysis across T-SQL, PostgreSQL and MySQL detects non-SARGable predicates, Cartesian joins and cursor loops; an AST-verified Gemini Flash rewrite loop synthesizes optimized SQL and zero-downtime CREATE INDEX DDL. Ships with an MCP server for Claude Desktop and Cursor.',
+		imageUrl: '/images/projects/autodba.png',
+		tags: ['Python 3.12', 'FastAPI', 'sqlglot', 'Agentic AI', 'Next.js 16', 'MS SQL Server', 'PostgreSQL'],
+		learnings:
+			"Built a cyclic analyze → rewrite → verify → critique agent loop where every LLM rewrite is checked against the original sqlglot AST (table preservation, statement-type locking, critical anti-pattern regression), guarding against semantic drift and prompt injection. Shipped a polyglot Next.js 16 + FastAPI app on Vercel's free tier with deterministic fallbacks, IP quotas, and zero-token enterprise presets.",
+		featured: true,
+		metrics: 'AST Query Profiler • Zero-Downtime Index Synthesis • Free Tier Vercel Serverless',
 	},
 	{
 		title: 'Legacy Link',

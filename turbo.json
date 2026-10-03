@@ -38,7 +38,9 @@
         "UPLOADTHING_TOKEN",
         "VERCEL_URL",
         "NUXT_CURRENCY_API_KEY",
-        "CURRENCY_API_KEY"
+        "CURRENCY_API_KEY",
+        "GEMINI_API_KEY",
+        "GEMINI_MODEL"
       ]
     },
     "lint": {

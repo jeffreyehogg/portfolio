@@ -6,6 +6,7 @@ import ScrollProgress from '../components/ui/ScrollProgress'
 import ScrollToTop from '../components/ui/ScrollToTop'
 import StructuredData from '../components/seo/StructuredData'
 import { Analytics } from '@vercel/analytics/next'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import '../styles/globals.css'
 
 const inter = Inter({
@@ -87,6 +88,7 @@ export default function RootLayout({
 				</div>
 				<ScrollToTop />
 				<Analytics />
+				<SpeedInsights />
 			</body>
 		</html>
 	)

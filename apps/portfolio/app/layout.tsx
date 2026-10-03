@@ -5,6 +5,7 @@ import Footer from '../components/layout/Footer'
 import ScrollProgress from '../components/ui/ScrollProgress'
 import ScrollToTop from '../components/ui/ScrollToTop'
 import StructuredData from '../components/seo/StructuredData'
+import { Analytics } from '@vercel/analytics/next'
 import '../styles/globals.css'
 
 const inter = Inter({
@@ -85,6 +86,7 @@ export default function RootLayout({
 					<Footer />
 				</div>
 				<ScrollToTop />
+				<Analytics />
 			</body>
 		</html>
 	)

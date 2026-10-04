@@ -1,0 +1,8 @@
+node_modules
+.next
+.turbo
+.output
+.nuxt
+dist
+.venv
+.DS_Store

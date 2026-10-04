@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Check, Columns2, Copy, FileCode, Split } from "lucide-react";
+import { Check, Columns2, Copy, FileCode, ScrollText, Split } from "lucide-react";
 import { diffLines, Change } from "diff";
 import { tokenizeSql } from "@/lib/sql-highlight";
 import type { VerificationReport } from "@/lib/types";
@@ -11,6 +11,7 @@ interface DiffViewerProps {
   optimizedSql: string;
   verification?: VerificationReport | null;
   explanation?: string;
+  onOpenStoredProc?: () => void;
 }
 
 export function DiffViewer({
@@ -18,6 +19,7 @@ export function DiffViewer({
   optimizedSql,
   verification,
   explanation,
+  onOpenStoredProc,
 }: DiffViewerProps) {
   const [copied, setCopied] = useState(false);
   const [viewMode, setViewMode] = useState<"clean" | "split" | "unified">("clean");
@@ -93,6 +95,18 @@ export function DiffViewer({
                 <span className="text-rose-400">-{editCounts.remove}</span>
               ) : null}
             </div>
+          )}
+
+          {onOpenStoredProc && (
+            <button
+              type="button"
+              onClick={onOpenStoredProc}
+              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium border border-white/[0.08] transition-all active:scale-[0.98]"
+              title="Generate stored procedure from optimized query"
+            >
+              <ScrollText className="h-3.5 w-3.5 text-indigo-400" />
+              <span className="hidden sm:inline">Stored Proc</span>
+            </button>
           )}
 
           <button

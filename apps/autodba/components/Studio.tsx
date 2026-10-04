@@ -40,6 +40,7 @@ import { McpModal } from "./McpModal";
 import { PlanTelemetry } from "./PlanTelemetry";
 import { PresetsBar } from "./PresetsBar";
 import { SqlEditor } from "./SqlEditor";
+import { StoredProcModal } from "./StoredProcModal";
 
 export function Studio() {
   const [sql, setSql] = useState("");
@@ -79,6 +80,18 @@ export function Studio() {
   // Modals
   const [isMcpOpen, setIsMcpOpen] = useState(false);
   const [isByokOpen, setIsByokOpen] = useState(false);
+  const [isStoredProcOpen, setIsStoredProcOpen] = useState(false);
+  const [storedProcSource, setStoredProcSource] = useState<"optimized" | "original">("optimized");
+
+  const handleOpenStoredProcFromEditor = () => {
+    setStoredProcSource("original");
+    setIsStoredProcOpen(true);
+  };
+
+  const handleOpenStoredProcFromResults = () => {
+    setStoredProcSource("optimized");
+    setIsStoredProcOpen(true);
+  };
 
   // Initial load
   useEffect(() => {
@@ -262,6 +275,7 @@ export function Studio() {
               onClear={handleClear}
               onFormat={handleFormat}
               isFormatting={isFormatting}
+              onOpenStoredProc={handleOpenStoredProcFromEditor}
               onAnalyze={handleAnalyze}
               onOptimize={handleOptimize}
               isAnalyzing={isAnalyzing}
@@ -388,6 +402,7 @@ export function Studio() {
                     optimizedSql={optResult.optimized_sql}
                     verification={optResult.verification}
                     explanation={optResult.explanation}
+                    onOpenStoredProc={handleOpenStoredProcFromResults}
                   />
                 ) : (
                   <div className="h-full flex flex-col items-center justify-center text-center p-8 text-slate-400">
@@ -469,6 +484,14 @@ export function Studio() {
         onSaveKey={handleSaveByok}
         onClearKey={handleClearByok}
         quota={quota}
+      />
+      <StoredProcModal
+        isOpen={isStoredProcOpen}
+        onClose={() => setIsStoredProcOpen(false)}
+        originalSql={sql}
+        optimizedSql={optResult?.optimized_sql}
+        initialSource={storedProcSource}
+        dialect={dialect}
       />
     </div>
   );

@@ -6,6 +6,7 @@ import {
   FileCode,
   FileText,
   Play,
+  ScrollText,
   Sparkles,
   Trash2,
   Upload,
@@ -25,6 +26,7 @@ interface SqlEditorProps {
   onClear?: () => void;
   onFormat?: () => void;
   isFormatting?: boolean;
+  onOpenStoredProc?: () => void;
   onAnalyze: () => void;
   onOptimize: () => void;
   isAnalyzing: boolean;
@@ -43,6 +45,7 @@ export function SqlEditor({
   onClear,
   onFormat,
   isFormatting,
+  onOpenStoredProc,
   onAnalyze,
   onOptimize,
   isAnalyzing,
@@ -174,6 +177,19 @@ export function SqlEditor({
                 <Wand2 className="h-3.5 w-3.5 text-indigo-400" />
               )}
               <span className="hidden sm:inline">Format</span>
+            </button>
+          )}
+
+          {/* Stored Proc button */}
+          {hasContent && activeTab === "sql" && onOpenStoredProc && (
+            <button
+              type="button"
+              onClick={onOpenStoredProc}
+              className="flex items-center gap-1 px-2 py-1 rounded-lg bg-slate-900/60 hover:bg-slate-800 text-slate-400 hover:text-indigo-300 text-xs font-medium border border-white/[0.06] transition-all active:scale-[0.98]"
+              title="Convert query into a stored procedure script"
+            >
+              <ScrollText className="h-3.5 w-3.5 text-indigo-400" />
+              <span className="hidden sm:inline">Proc</span>
             </button>
           )}
 

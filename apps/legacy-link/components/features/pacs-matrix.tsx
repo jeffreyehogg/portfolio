@@ -25,25 +25,25 @@ export default function PacsMatrix() {
 
   return (
     <div className="space-y-6">
-      {/* Filter Control Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-white/[0.08] bg-slate-900/60 p-4 backdrop-blur-xl">
+      {/* Streamlined Filter & Vendor Bar */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-2xl border border-white/[0.08] bg-slate-900/60 p-3.5 backdrop-blur-xl">
         {/* Category Pills */}
         <div className="flex flex-wrap items-center gap-1.5">
-          <span className="font-mono text-xs uppercase tracking-wider text-slate-400 mr-2">
+          <span className="text-xs font-medium text-slate-400 mr-1 hidden md:inline">
             Domain:
           </span>
           {[
-            { id: 'all', label: 'All Domains' },
-            { id: 'identity', label: 'Identity & Person' },
-            { id: 'credential', label: 'Wiegand & Cards' },
-            { id: 'access', label: 'Access Groups' },
-            { id: 'temporal', label: 'Status & Lifecycle' },
+            { id: 'all', label: 'All domains' },
+            { id: 'identity', label: 'Identity & person' },
+            { id: 'credential', label: 'Cards & Wiegand' },
+            { id: 'access', label: 'Access groups' },
+            { id: 'temporal', label: 'Status & lifecycle' },
           ].map((cat) => (
             <button
               key={cat.id}
               type="button"
               onClick={() => setSelectedCategory(cat.id)}
-              className={`rounded-xl px-3 py-1.5 text-xs font-semibold transition-all active:scale-[0.98] ${
+              className={`rounded-xl px-3 py-1.5 text-xs font-medium transition-all active:scale-[0.98] ${
                 selectedCategory === cat.id
                   ? 'border border-cyan-500/40 bg-cyan-950/50 text-cyan-300'
                   : 'border border-slate-800 bg-slate-950/50 text-slate-400 hover:text-white'
@@ -55,9 +55,9 @@ export default function PacsMatrix() {
         </div>
 
         {/* Vendor Selector */}
-        <div className="flex items-center gap-1.5">
-          <span className="font-mono text-xs uppercase tracking-wider text-slate-400 mr-1">
-            Compare Source:
+        <div className="flex items-center gap-1.5 self-start sm:self-auto">
+          <span className="text-xs text-slate-400 mr-1 hidden sm:inline">
+            Compare source:
           </span>
           <select
             value={selectedVendor}
@@ -77,14 +77,14 @@ export default function PacsMatrix() {
       <div className="surface-glass rounded-2xl overflow-hidden shadow-glass-card">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="border-b border-white/[0.08] bg-slate-950/80 font-mono text-slate-400 uppercase tracking-wider">
+            <thead className="border-b border-white/[0.08] bg-slate-950/80 text-slate-400">
               <tr>
-                <th className="py-4 px-6 w-1/4">Architecture Dimension</th>
-                <th className="py-4 px-6 w-3/8 text-amber-300">
-                  Legacy Source: {activeVendorInfo.label}
+                <th className="py-3.5 px-6 w-1/4 font-medium">Architecture dimension</th>
+                <th className="py-3.5 px-6 w-3/8 text-amber-300/90 font-medium">
+                  Legacy source ({activeVendorInfo.label})
                 </th>
-                <th className="py-4 px-6 w-3/8 text-cyan-300">
-                  Target: Genetec Synergis Standard
+                <th className="py-3.5 px-6 w-3/8 text-cyan-300 font-medium">
+                  Genetec Synergis target
                 </th>
               </tr>
             </thead>
@@ -99,32 +99,32 @@ export default function PacsMatrix() {
                     onClick={() => setInspectedRow(row)}
                     className="hover:bg-slate-800/40 transition-colors cursor-pointer group"
                   >
-                    <td className="py-4 px-6">
-                      <div className="font-bold text-white group-hover:text-cyan-300 transition-colors">
+                    <td className="py-3.5 px-6">
+                      <div className="font-semibold text-white group-hover:text-cyan-300 transition-colors">
                         {row.label}
                       </div>
-                      <span className="font-mono text-[10px] uppercase text-indigo-400">
+                      <span className="text-[10px] text-indigo-400 capitalize">
                         {row.category}
                       </span>
                     </td>
 
-                    <td className="py-4 px-6">
-                      <div className="font-mono text-xs font-semibold text-slate-200">
+                    <td className="py-3.5 px-6">
+                      <div className="font-mono text-xs text-slate-200">
                         {sourceData.value}
                       </div>
                       {sourceData.gotcha && (
-                        <div className="mt-1.5 flex items-start gap-1.5 text-[11px] text-amber-300/90 leading-tight">
-                          <span className="text-amber-400 font-bold">⚠️ Gotcha:</span>
+                        <div className="mt-1 flex items-start gap-1 text-[11px] text-amber-300/80">
+                          <span className="text-amber-400 font-medium">Gotcha:</span>
                           <span>{sourceData.gotcha}</span>
                         </div>
                       )}
                     </td>
 
-                    <td className="py-4 px-6">
+                    <td className="py-3.5 px-6">
                       <div className="font-mono text-xs font-semibold text-cyan-300">
                         {genetecData.value}
                       </div>
-                      <p className="mt-1 text-[11px] text-slate-400">
+                      <p className="mt-0.5 text-[11px] text-slate-400">
                         {genetecData.notes}
                       </p>
                     </td>
@@ -147,8 +147,8 @@ export default function PacsMatrix() {
           <div className="surface-glass max-w-2xl w-full rounded-2xl p-6 shadow-2xl border border-white/[0.1] text-slate-200">
             <div className="flex items-center justify-between border-b border-white/[0.08] pb-3 mb-4">
               <div>
-                <span className="font-mono text-[10px] uppercase tracking-wider text-cyan-400">
-                  PACS Architecture Inspector
+                <span className="text-xs text-cyan-400">
+                  PACS architecture inspector
                 </span>
                 <h4 id="matrix-inspector-title" className="text-lg font-bold text-white">
                   {inspectedRow.label}
@@ -157,49 +157,49 @@ export default function PacsMatrix() {
               <button
                 type="button"
                 onClick={() => setInspectedRow(null)}
-                className="text-slate-400 hover:text-white text-lg font-bold"
+                className="text-slate-400 hover:text-white text-base font-bold"
                 aria-label="Close inspector"
               >
                 ✕
               </button>
             </div>
 
-            <div className="space-y-4 font-mono text-xs">
+            <div className="space-y-4 text-xs">
               <div>
-                <span className="text-slate-400 block text-[11px] uppercase tracking-wider mb-1">
-                  Source Implementation ({activeVendorInfo.label}):
+                <span className="text-slate-400 block text-xs mb-1">
+                  Source implementation ({activeVendorInfo.label}):
                 </span>
-                <pre className="rounded-xl border border-slate-800 bg-slate-950 p-3 text-amber-300 overflow-x-auto">
+                <pre className="rounded-xl border border-slate-800 bg-slate-950 p-3 text-amber-300 font-mono text-[11px] overflow-x-auto">
                   {inspectedRow.systems[selectedVendor].transformRegex ||
                     inspectedRow.systems[selectedVendor].value}
                 </pre>
               </div>
 
               <div>
-                <span className="text-slate-400 block text-[11px] uppercase tracking-wider mb-1">
-                  Genetec Target Format:
+                <span className="text-slate-400 block text-xs mb-1">
+                  Genetec target format:
                 </span>
-                <pre className="rounded-xl border border-slate-800 bg-slate-950 p-3 text-cyan-300 overflow-x-auto">
+                <pre className="rounded-xl border border-slate-800 bg-slate-950 p-3 text-cyan-300 font-mono text-[11px] overflow-x-auto">
                   {inspectedRow.systems.genetec.transformRegex ||
                     inspectedRow.systems.genetec.value}
                 </pre>
               </div>
 
               {inspectedRow.systems[selectedVendor].gotcha && (
-                <div className="rounded-xl border border-amber-500/30 bg-amber-950/30 p-3.5 text-amber-200 font-sans text-xs">
-                  <strong className="font-bold text-amber-400">Cutover Vulnerability Warning: </strong>
+                <div className="rounded-xl border border-amber-500/30 bg-amber-950/30 p-3.5 text-amber-200 text-xs">
+                  <strong className="font-semibold text-amber-400">Cutover vulnerability warning: </strong>
                   {inspectedRow.systems[selectedVendor].gotcha}
                 </div>
               )}
             </div>
 
-            <div className="mt-6 flex justify-end">
+            <div className="mt-5 flex justify-end">
               <button
                 type="button"
                 onClick={() => setInspectedRow(null)}
                 className="rounded-xl bg-indigo-600 px-4 py-2 text-xs font-semibold text-white hover:bg-indigo-500"
               >
-                Close Inspector
+                Close inspector
               </button>
             </div>
           </div>

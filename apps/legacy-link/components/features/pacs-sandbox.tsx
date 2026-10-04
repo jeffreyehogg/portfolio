@@ -7,15 +7,19 @@ import { MappingRule, PacsPreset } from '@/lib/pacs-types'
 import { transformAllRecords, exportToGenetecCsv } from '@/lib/pacs-transformer'
 import ConcatenationBuilder from '@/components/concatenation-builder'
 
+type OutputViewMode = 'genetec' | 'raw'
+
 export default function PacsSandbox() {
   const [selectedPreset, setSelectedPreset] = useState<PacsPreset>(PACS_PRESETS[0])
   const [records, setRecords] = useState<Record<string, string>[]>(PACS_PRESETS[0].sampleRecords)
   const [sourceColumns, setSourceColumns] = useState<string[]>(PACS_PRESETS[0].sourceColumns)
   const [mappings, setMappings] = useState<Record<string, MappingRule>>(PACS_PRESETS[0].defaultMappings)
   const [activeModal, setActiveModal] = useState<string | null>(null)
-  const [isPending, startTransition] = useTransition()
+  const [, startTransition] = useTransition()
   const [activeDiffIndex, setActiveDiffIndex] = useState(0)
   const [uploadFeedback, setUploadFeedback] = useState<string | null>(null)
+  const [outputView, setOutputView] = useState<OutputViewMode>('genetec')
+  const [copiedCsv, setCopiedCsv] = useState(false)
 
   // Handle Preset Switching
   const handleSelectPreset = (preset: PacsPreset) => {
@@ -33,6 +37,31 @@ export default function PacsSandbox() {
   const handleMapChange = (targetKey: string, rule: MappingRule) => {
     startTransition(() => {
       setMappings((prev) => ({ ...prev, [targetKey]: rule }))
+    })
+  }
+
+  // Auto-map heuristic
+  const handleAutoMap = () => {
+    const autoMap: Record<string, MappingRule> = {}
+    sourceColumns.forEach((col) => {
+      const lower = col.toLowerCase()
+      if (lower.includes('first') || lower === 'fname' || lower === 'forename') autoMap.FirstName = col
+      if (lower.includes('last') || lower === 'lname' || lower === 'surname') autoMap.LastName = col
+      if (lower.includes('card') || lower.includes('badge') || lower === 'id') autoMap.BadgeID = col
+      if (lower.includes('fac') || lower === 'fc' || lower.includes('facility')) autoMap.FacilityCode = col
+      if (lower.includes('mail')) autoMap.Email = col
+      if (lower.includes('access') || lower.includes('clearance') || lower.includes('level')) autoMap.AccessGroup = col
+      if (lower.includes('status') || lower.includes('active')) autoMap.Status = col
+    })
+    startTransition(() => {
+      setMappings(autoMap)
+    })
+  }
+
+  // Reset to current preset defaults
+  const handleResetToPreset = () => {
+    startTransition(() => {
+      setMappings(selectedPreset.defaultMappings)
     })
   }
 
@@ -63,8 +92,8 @@ export default function PacsSandbox() {
           setRecords(cleanSample)
           setSourceColumns(cols)
           setActiveDiffIndex(0)
-          setUploadFeedback(`Successfully ingested ${results.data.length} rows (${cols.length} detected columns).`)
-          
+          setUploadFeedback(`Ingested ${results.data.length} rows (${cols.length} detected columns).`)
+
           // Smart heuristic mapping
           const autoMap: Record<string, MappingRule> = {}
           cols.forEach((col) => {
@@ -95,85 +124,130 @@ export default function PacsSandbox() {
   const activeRecord = records[activeDiffIndex] || records[0] || {}
   const activeResult = results[activeDiffIndex] || results[0]
 
+  // Copy CSV to Clipboard
+  const handleCopyCsv = () => {
+    if (!results || results.length === 0) return
+    const cleanRows = results.map((r) => r.data)
+    const csv = Papa.unparse(cleanRows, { quotes: true, header: true })
+    navigator.clipboard.writeText(csv).then(() => {
+      setCopiedCsv(true)
+      setTimeout(() => setCopiedCsv(false), 2000)
+    })
+  }
+
   return (
     <div className="space-y-6">
-      {/* Preset Selector Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-white/[0.08] bg-slate-900/60 p-4 backdrop-blur-xl">
+      {/* Streamlined Single-Row Control Bar */}
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 rounded-2xl border border-white/[0.08] bg-slate-900/60 p-3.5 backdrop-blur-xl">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="font-mono text-xs uppercase tracking-wider text-slate-400 mr-2">
-            Load Preset Dump:
+          <span className="text-xs font-medium text-slate-400 mr-1 hidden sm:inline">
+            Sample dataset:
           </span>
-          {PACS_PRESETS.map((preset) => {
-            const isSelected = selectedPreset.id === preset.id
-            return (
-              <button
-                key={preset.id}
-                type="button"
-                onClick={() => handleSelectPreset(preset)}
-                className={`flex items-center gap-2 rounded-xl px-3.5 py-2 text-xs font-semibold transition-all active:scale-[0.98] ${
-                  isSelected
-                    ? 'border border-indigo-500/40 bg-indigo-600 text-white shadow-glow-indigo'
-                    : 'border border-slate-700/50 bg-slate-800/60 text-slate-300 hover:border-slate-600 hover:bg-slate-800 hover:text-white'
-                }`}
-              >
-                <span>{preset.name}</span>
-                <span className="rounded bg-black/30 px-1.5 py-0.5 font-mono text-[10px] text-cyan-300">
-                  {preset.vendorBadge}
-                </span>
-              </button>
-            )
-          })}
+          <div className="flex flex-wrap items-center gap-1.5">
+            {PACS_PRESETS.map((preset) => {
+              const isSelected = selectedPreset.id === preset.id
+              return (
+                <button
+                  key={preset.id}
+                  type="button"
+                  onClick={() => handleSelectPreset(preset)}
+                  className={`flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-medium transition-all active:scale-[0.98] ${
+                    isSelected
+                      ? 'border border-indigo-500/40 bg-indigo-600 text-white shadow-glow-indigo'
+                      : 'border border-slate-800 bg-slate-950/60 text-slate-300 hover:border-slate-700 hover:bg-slate-800 hover:text-white'
+                  }`}
+                >
+                  <span>{preset.name.split(' ')[0]}</span>
+                  <span className="rounded bg-black/30 px-1 py-0.2 font-mono text-[10px] text-cyan-300">
+                    {preset.vendorBadge.split(' ')[0]}
+                  </span>
+                </button>
+              )
+            })}
+          </div>
         </div>
 
-        {/* Local File Upload Button */}
-        <label className="relative inline-flex cursor-pointer items-center gap-2 rounded-xl border border-slate-700/60 bg-slate-800/80 px-4 py-2 text-xs font-semibold text-slate-200 transition-all hover:bg-slate-700 hover:text-white active:scale-[0.98]">
-          <svg className="h-4 w-4 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-          </svg>
-          <span>Drop Custom CSV</span>
-          <input
-            type="file"
-            accept=".csv"
-            onChange={handleCustomFileUpload}
-            className="absolute inset-0 opacity-0 cursor-pointer"
-            aria-label="Upload custom CSV for testing"
-          />
-        </label>
+        {/* Right Action: CSV Upload & Status */}
+        <div className="flex items-center gap-2 self-start lg:self-auto">
+          <label className="relative inline-flex cursor-pointer items-center gap-1.5 rounded-xl border border-slate-700/60 bg-slate-800/80 px-3 py-1.5 text-xs font-medium text-slate-200 transition-all hover:bg-slate-700 hover:text-white active:scale-[0.98]">
+            <svg className="h-3.5 w-3.5 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+            </svg>
+            <span>Upload custom CSV</span>
+            <input
+              type="file"
+              accept=".csv"
+              onChange={handleCustomFileUpload}
+              className="absolute inset-0 opacity-0 cursor-pointer"
+              aria-label="Upload custom CSV for testing"
+            />
+          </label>
+        </div>
       </div>
 
       {uploadFeedback && (
-        <div className="flex items-center gap-2 rounded-xl border border-cyan-500/30 bg-cyan-950/30 px-4 py-2 text-xs font-mono text-cyan-300">
-          <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse" />
-          <span>{uploadFeedback}</span>
+        <div className="flex items-center justify-between gap-2 rounded-xl border border-cyan-500/30 bg-cyan-950/30 px-4 py-2 text-xs text-cyan-300">
+          <div className="flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-pulse" />
+            <span>{uploadFeedback}</span>
+          </div>
+          <button
+            type="button"
+            onClick={() => setUploadFeedback(null)}
+            className="text-cyan-400 hover:text-white text-xs"
+          >
+            ×
+          </button>
         </div>
       )}
 
-      {/* Main 2-Column Workspace: Left = Mapping Canvas, Right = Live Reactive Diff Viewer */}
+      {/* Main 2-Column Workspace: Left = Mapping Canvas, Right = Live Diff Output */}
       <div className="grid grid-cols-12 gap-6">
         {/* LEFT COLUMN: Visual Mapping Canvas (7 Cols) */}
         <div className="col-span-12 lg:col-span-7 space-y-4">
-          <div className="surface-glass rounded-2xl p-6 shadow-glass-card">
-            <div className="flex items-center justify-between border-b border-white/[0.08] pb-4 mb-4">
+          <div className="surface-glass rounded-2xl p-5 shadow-glass-card">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/[0.08] pb-4 mb-4">
               <div>
-                <h3 className="text-base font-bold text-white tracking-tight">
-                  Schema Mapping Rules
+                <h3 className="text-sm font-semibold text-white">
+                  Schema mapping rules
                 </h3>
                 <p className="text-xs text-slate-400 mt-0.5">
-                  Link legacy attributes from <span className="font-semibold text-slate-200">{selectedPreset.name}</span> to Genetec Synergis.
+                  Direct {selectedPreset.name} legacy columns to verified Genetec Synergis targets.
                 </p>
               </div>
 
-              {/* Parity Status Badge */}
-              <div className="flex items-center gap-2 rounded-full border border-white/[0.08] bg-slate-950/60 px-3 py-1 text-xs font-mono">
-                <span className="text-slate-400">Parity:</span>
-                <span className={`font-bold ${validCount === totalRecords ? 'text-emerald-400' : 'text-amber-400'}`}>
-                  {validCount}/{totalRecords} Valid
+              {/* Status & Quick Actions */}
+              <div className="flex items-center gap-2">
+                <span className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium ${
+                  validCount === totalRecords
+                    ? 'border-emerald-500/30 bg-emerald-950/40 text-emerald-300'
+                    : 'border-amber-500/30 bg-amber-950/40 text-amber-300'
+                }`}>
+                  <span className={`h-1.5 w-1.5 rounded-full ${validCount === totalRecords ? 'bg-emerald-400' : 'bg-amber-400'}`} />
+                  <span>{validCount}/{totalRecords} valid</span>
                 </span>
+
+                <button
+                  type="button"
+                  onClick={handleAutoMap}
+                  title="Auto-map matching fields"
+                  className="rounded-lg border border-slate-700/60 bg-slate-800/80 px-2 py-1 text-[11px] font-medium text-slate-300 transition-colors hover:bg-slate-700 hover:text-white"
+                >
+                  Auto-map
+                </button>
+                <button
+                  type="button"
+                  onClick={handleResetToPreset}
+                  title="Reset to preset defaults"
+                  className="rounded-lg border border-slate-700/60 bg-slate-800/80 px-2 py-1 text-[11px] font-medium text-slate-400 transition-colors hover:bg-slate-700 hover:text-white"
+                >
+                  Reset
+                </button>
               </div>
             </div>
 
             {/* Field Rows */}
-            <div className="space-y-3">
+            <div className="space-y-2.5">
               {TARGET_GENETEC_FIELDS.map((field) => {
                 const currentMap = mappings[field.key]
                 const isAdvanced = typeof currentMap === 'object' && currentMap !== null
@@ -198,38 +272,38 @@ export default function PacsSandbox() {
                 return (
                   <div
                     key={field.key}
-                    className={`flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-xl border p-3.5 transition-all ${
+                    className={`flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 rounded-xl border p-3 transition-all ${
                       currentMap
-                        ? 'border-indigo-500/20 bg-slate-900/80 shadow-sm'
-                        : 'border-slate-800/80 bg-slate-950/40'
+                        ? 'border-indigo-500/20 bg-slate-900/70'
+                        : 'border-slate-800/70 bg-slate-950/40'
                     }`}
                   >
                     {/* Target Specification */}
-                    <div className="min-w-[160px]">
+                    <div className="sm:w-44 flex-shrink-0">
                       <div className="flex items-center gap-1.5">
-                        <span className="text-xs font-bold text-white">{field.label}</span>
+                        <span className="text-xs font-semibold text-white">{field.label}</span>
                         {field.required && (
-                          <span className="h-1.5 w-1.5 rounded-full bg-rose-500" title="Required Field" />
+                          <span className="h-1.5 w-1.5 rounded-full bg-rose-500" title="Required field" />
                         )}
                       </div>
-                      <div className="mt-1 flex items-center gap-1.5 font-mono text-[10px] text-slate-400">
-                        <span className="rounded bg-indigo-500/10 px-1.5 py-0.5 text-indigo-400 border border-indigo-500/20">
+                      <div className="mt-0.5 flex items-center gap-1.5 text-[11px] text-slate-400">
+                        <span className="font-mono text-[10px] text-indigo-300">
                           {field.key}
                         </span>
-                        <span className="text-slate-500">{field.schemaType}</span>
+                        <span className="text-slate-500 text-[10px]">({field.schemaType})</span>
                       </div>
                     </div>
 
                     {/* Mapping Control */}
                     <div className="flex flex-1 items-center gap-2">
                       {isAdvanced ? (
-                        <div className="flex flex-1 items-center justify-between rounded-lg border border-cyan-500/30 bg-cyan-950/30 px-3 py-1.5 text-xs font-mono text-cyan-300">
-                          <span className="truncate">★ {displayLabel}</span>
+                        <div className="flex flex-1 items-center justify-between rounded-lg border border-cyan-500/30 bg-cyan-950/30 px-3 py-1.5 text-xs text-cyan-300">
+                          <span className="font-mono truncate text-[11px]">✦ {displayLabel}</span>
                           <button
                             type="button"
                             onClick={() => handleMapChange(field.key, '')}
                             className="ml-2 text-cyan-400 hover:text-white"
-                            aria-label={`Clear custom rule for ${field.label}`}
+                            aria-label={`Clear rule for ${field.label}`}
                           >
                             ×
                           </button>
@@ -252,7 +326,7 @@ export default function PacsSandbox() {
                       <button
                         type="button"
                         onClick={() => setActiveModal(field.key)}
-                        className="rounded-lg border border-slate-700/60 bg-slate-800/80 px-2.5 py-1.5 text-[11px] font-semibold text-slate-300 transition-all hover:bg-slate-700 hover:text-white active:scale-[0.98]"
+                        className="rounded-lg border border-slate-700/60 bg-slate-800/80 px-2.5 py-1.5 text-xs font-medium text-slate-300 transition-all hover:bg-slate-700 hover:text-white active:scale-[0.98]"
                       >
                         Merge
                       </button>
@@ -264,109 +338,154 @@ export default function PacsSandbox() {
           </div>
         </div>
 
-        {/* RIGHT COLUMN: Live Side-by-Side Reactive Diff Viewer (5 Cols) */}
+        {/* RIGHT COLUMN: Live Reactive Diff Viewer (5 Cols) */}
         <div className="col-span-12 lg:col-span-5 space-y-4">
-          <div className="surface-glass rounded-2xl p-6 shadow-glass-card">
-            <div className="flex items-center justify-between border-b border-white/[0.08] pb-4 mb-4">
-              <div>
-                <h3 className="text-base font-bold text-white tracking-tight">
-                  Reactive Record Diff
-                </h3>
-                <p className="text-xs text-slate-400 mt-0.5">
-                  Inspect live transformed Genetec output.
-                </p>
-              </div>
-
-              {/* Record Selector Pager */}
-              <div className="flex items-center gap-1 font-mono text-xs">
-                <button
-                  type="button"
-                  onClick={() => setActiveDiffIndex((prev) => Math.max(0, prev - 1))}
-                  disabled={activeDiffIndex === 0}
-                  className="rounded bg-slate-800 px-2 py-1 text-slate-300 hover:bg-slate-700 disabled:opacity-30"
-                >
-                  ◀
-                </button>
-                <span className="px-2 text-slate-400">
-                  {activeDiffIndex + 1}/{records.length}
-                </span>
-                <button
-                  type="button"
-                  onClick={() => setActiveDiffIndex((prev) => Math.min(records.length - 1, prev + 1))}
-                  disabled={activeDiffIndex === records.length - 1}
-                  className="rounded bg-slate-800 px-2 py-1 text-slate-300 hover:bg-slate-700 disabled:opacity-30"
-                >
-                  ▶
-                </button>
-              </div>
-            </div>
-
-            {/* Validation Pill */}
-            {activeResult && (
-              <div className="mb-4">
-                {activeResult.isValid ? (
-                  <div className="flex items-center gap-2 rounded-xl border border-emerald-500/30 bg-emerald-950/30 px-3 py-2 text-xs font-mono text-emerald-400">
-                    <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-                    <span>Genetec PascalCase Conformance: PASSED</span>
-                  </div>
-                ) : (
-                  <div className="rounded-xl border border-rose-500/30 bg-rose-950/30 p-3 text-xs font-mono text-rose-300 space-y-1">
-                    <div className="flex items-center gap-2 font-bold text-rose-400">
-                      <span className="h-2 w-2 rounded-full bg-rose-500" />
-                      <span>Validation Errors ({activeResult.errors.length}):</span>
-                    </div>
-                    {activeResult.errors.map((err, i) => (
-                      <div key={i} className="pl-4">• {err}</div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* Duplicate Collision Warnings */}
-            {duplicateBadgeCollisions.length > 0 && (
-              <div className="mb-4 rounded-xl border border-amber-500/30 bg-amber-950/30 p-3 text-xs font-mono text-amber-300">
-                <span className="font-bold text-amber-400">⚠️ Collision Warning:</span> Multiple cardholders share Badge #{duplicateBadgeCollisions.join(', #')}
-              </div>
-            )}
-
-            {/* Transformed Target Output Display */}
-            <div className="space-y-2 rounded-xl border border-slate-800 bg-slate-950/80 p-4 font-mono text-xs">
-              <div className="flex items-center justify-between border-b border-slate-800 pb-2 text-[11px] text-slate-400 uppercase tracking-wider">
-                <span>Genetec Target</span>
-                <span>Output Value</span>
-              </div>
-              {TARGET_GENETEC_FIELDS.map((f) => (
-                <div key={f.key} className="flex items-center justify-between py-1 border-b border-slate-900/60 last:border-0">
-                  <span className="text-slate-400">{f.key}:</span>
-                  <span className={`font-semibold ${activeResult?.data[f.key] ? 'text-cyan-300' : 'text-slate-600'}`}>
-                    {activeResult?.data[f.key] || '—'}
-                  </span>
+          <div className="surface-glass rounded-2xl p-5 shadow-glass-card flex flex-col justify-between">
+            <div>
+              {/* Header with Record Pager */}
+              <div className="flex items-center justify-between border-b border-white/[0.08] pb-4 mb-4">
+                <div>
+                  <h3 className="text-sm font-semibold text-white">
+                    Live record transformation
+                  </h3>
+                  <p className="text-xs text-slate-400 mt-0.5">
+                    Real-time schema conformance diff.
+                  </p>
                 </div>
-              ))}
+
+                {/* Record Pager */}
+                <div className="flex items-center gap-1 text-xs">
+                  <button
+                    type="button"
+                    onClick={() => setActiveDiffIndex((prev) => Math.max(0, prev - 1))}
+                    disabled={activeDiffIndex === 0}
+                    aria-label="Previous record"
+                    className="rounded-md border border-slate-700/60 bg-slate-800/80 px-2 py-1 text-slate-300 hover:bg-slate-700 disabled:opacity-30 active:scale-[0.98]"
+                  >
+                    ‹
+                  </button>
+                  <span className="px-2 font-mono text-[11px] text-slate-400">
+                    {activeDiffIndex + 1}/{records.length}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => setActiveDiffIndex((prev) => Math.min(records.length - 1, prev + 1))}
+                    disabled={activeDiffIndex === records.length - 1}
+                    aria-label="Next record"
+                    className="rounded-md border border-slate-700/60 bg-slate-800/80 px-2 py-1 text-slate-300 hover:bg-slate-700 disabled:opacity-30 active:scale-[0.98]"
+                  >
+                    ›
+                  </button>
+                </div>
+              </div>
+
+              {/* Conformance Status Pill */}
+              {activeResult && (
+                <div className="mb-3">
+                  {activeResult.isValid ? (
+                    <div className="flex items-center gap-2 rounded-xl border border-emerald-500/30 bg-emerald-950/30 px-3 py-2 text-xs text-emerald-400">
+                      <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+                      <span>Conforms to Genetec PascalCase standard</span>
+                    </div>
+                  ) : (
+                    <div className="rounded-xl border border-rose-500/30 bg-rose-950/30 p-3 text-xs text-rose-300 space-y-1">
+                      <div className="flex items-center gap-2 font-semibold text-rose-400">
+                        <span className="h-2 w-2 rounded-full bg-rose-500" />
+                        <span>Validation errors ({activeResult.errors.length}):</span>
+                      </div>
+                      {activeResult.errors.map((err, i) => (
+                        <div key={i} className="pl-4 text-[11px]">• {err}</div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Duplicate Collision Alert */}
+              {duplicateBadgeCollisions.length > 0 && (
+                <div className="mb-3 rounded-xl border border-amber-500/30 bg-amber-950/30 p-2.5 text-xs text-amber-300">
+                  <span className="font-semibold text-amber-400">Warning:</span> Duplicate badge #{duplicateBadgeCollisions.join(', #')} detected.
+                </div>
+              )}
+
+              {/* View Switcher: Genetec Output vs Raw Record */}
+              <div className="flex items-center gap-1 border-b border-slate-800 pb-2 mb-3">
+                <button
+                  type="button"
+                  onClick={() => setOutputView('genetec')}
+                  className={`rounded-lg px-2.5 py-1 text-xs font-medium transition-colors ${
+                    outputView === 'genetec'
+                      ? 'bg-indigo-600/30 text-indigo-200 border border-indigo-500/30'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  Genetec output
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setOutputView('raw')}
+                  className={`rounded-lg px-2.5 py-1 text-xs font-medium transition-colors ${
+                    outputView === 'raw'
+                      ? 'bg-indigo-600/30 text-indigo-200 border border-indigo-500/30'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  Source record
+                </button>
+              </div>
+
+              {/* Content Panel */}
+              {outputView === 'genetec' ? (
+                <div className="space-y-1.5 rounded-xl border border-slate-800/80 bg-slate-950/80 p-3.5 text-xs">
+                  {TARGET_GENETEC_FIELDS.map((f) => (
+                    <div key={f.key} className="flex items-center justify-between py-1 border-b border-slate-900/80 last:border-0">
+                      <span className="text-slate-400 font-mono text-[11px]">{f.key}:</span>
+                      <span className={`font-mono text-[11px] ${activeResult?.data[f.key] ? 'text-cyan-300 font-medium' : 'text-slate-600'}`}>
+                        {activeResult?.data[f.key] || '—'}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="rounded-xl border border-slate-800/80 bg-slate-950/80 p-3 font-mono text-[11px]">
+                  <pre className="max-h-64 overflow-auto text-slate-300">
+                    {JSON.stringify(activeRecord, null, 2)}
+                  </pre>
+                </div>
+              )}
             </div>
 
-            {/* Raw Legacy Payload Well */}
-            <div className="mt-4">
-              <span className="font-mono text-[10px] uppercase tracking-wider text-slate-500 mb-1 block">
-                Raw Legacy Record ({selectedPreset.name})
-              </span>
-              <pre className="max-h-36 overflow-auto rounded-xl border border-slate-800/80 bg-slate-950 p-3 font-mono text-[11px] text-slate-400">
-                {JSON.stringify(activeRecord, null, 2)}
-              </pre>
-            </div>
-
-            {/* Export Action */}
-            <div className="mt-6 pt-4 border-t border-white/[0.08] flex items-center justify-between">
+            {/* Actions: Download CSV + Copy CSV */}
+            <div className="mt-5 pt-4 border-t border-white/[0.08] flex flex-col sm:flex-row items-center gap-2.5">
               <button
                 type="button"
                 onClick={() => exportToGenetecCsv(results, `genetec_${selectedPreset.id}_export`)}
-                className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 to-cyan-500 py-3 text-xs font-bold text-white shadow-glow-indigo transition-all hover:opacity-95 active:scale-[0.98]"
+                className="w-full sm:flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 to-cyan-500 py-2.5 px-4 text-xs font-semibold text-white shadow-glow-indigo transition-all hover:opacity-95 active:scale-[0.98]"
               >
                 <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                 </svg>
-                <span>Download Verified Genetec CSV</span>
+                <span>Download verified CSV</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={handleCopyCsv}
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 rounded-xl border border-slate-700/60 bg-slate-800/80 px-3.5 py-2.5 text-xs font-medium text-slate-200 transition-all hover:bg-slate-700 hover:text-white active:scale-[0.98]"
+              >
+                {copiedCsv ? (
+                  <>
+                    <span className="text-emerald-400">✓</span>
+                    <span>Copied!</span>
+                  </>
+                ) : (
+                  <>
+                    <svg className="h-3.5 w-3.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                    </svg>
+                    <span>Copy CSV</span>
+                  </>
+                )}
               </button>
             </div>
           </div>

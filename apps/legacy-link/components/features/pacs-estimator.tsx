@@ -26,12 +26,12 @@ export default function PacsEstimator() {
         {/* LEFT COLUMN: Telemetry Inputs (6 Cols) */}
         <div className="col-span-12 lg:col-span-6 space-y-4">
           <div className="surface-glass rounded-2xl p-6 shadow-glass-card">
-            <div className="border-b border-white/[0.08] pb-4 mb-6">
-              <h3 className="text-base font-bold text-white tracking-tight">
-                Cutover Telemetry Inputs
+            <div className="border-b border-white/[0.08] pb-4 mb-5">
+              <h3 className="text-sm font-semibold text-white">
+                Cutover telemetry inputs
               </h3>
               <p className="text-xs text-slate-400 mt-0.5">
-                Model your enterprise physical access migration variables.
+                Model your enterprise physical access migration parameters.
               </p>
             </div>
 
@@ -39,8 +39,8 @@ export default function PacsEstimator() {
               {/* Cardholders Slider */}
               <div>
                 <div className="flex justify-between items-center text-xs mb-2">
-                  <label htmlFor="cardholder-count" className="font-semibold text-slate-300">
-                    Total Active Cardholders
+                  <label htmlFor="cardholder-count" className="font-medium text-slate-300">
+                    Active cardholders
                   </label>
                   <span className="font-mono font-bold text-cyan-400 text-sm">
                     {inputs.cardholderCount.toLocaleString()}
@@ -58,21 +58,21 @@ export default function PacsEstimator() {
                   }
                   className="w-full accent-indigo-500 h-1.5 bg-slate-800 rounded-lg cursor-pointer"
                 />
-                <div className="flex justify-between text-[10px] text-slate-500 font-mono mt-1">
+                <div className="flex justify-between text-[11px] text-slate-400 mt-1">
                   <span>500 (Branch)</span>
                   <span>50,000 (Campus)</span>
-                  <span>100,000+ (Global)</span>
+                  <span>100,000+ (Enterprise)</span>
                 </div>
               </div>
 
               {/* Number of Legacy Systems */}
               <div>
                 <div className="flex justify-between items-center text-xs mb-2">
-                  <label htmlFor="system-count" className="font-semibold text-slate-300">
-                    Disparate Legacy Systems (M&A / Multi-Site)
+                  <label className="font-medium text-slate-300">
+                    Disparate legacy systems
                   </label>
                   <span className="font-mono font-bold text-indigo-400 text-sm">
-                    {inputs.legacySystemCount} Platform{inputs.legacySystemCount > 1 ? 's' : ''}
+                    {inputs.legacySystemCount} platform{inputs.legacySystemCount > 1 ? 's' : ''}
                   </span>
                 </div>
                 <div className="grid grid-cols-4 gap-2">
@@ -81,13 +81,13 @@ export default function PacsEstimator() {
                       key={count}
                       type="button"
                       onClick={() => setInputs((prev) => ({ ...prev, legacySystemCount: count }))}
-                      className={`py-2 rounded-xl text-xs font-mono font-bold border transition-all active:scale-[0.98] ${
+                      className={`py-2 rounded-xl text-xs font-medium border transition-all active:scale-[0.98] ${
                         inputs.legacySystemCount === count
                           ? 'border-indigo-500/50 bg-indigo-600 text-white shadow-glow-indigo'
-                          : 'border-slate-800 bg-slate-900 text-slate-400 hover:text-white'
+                          : 'border-slate-800 bg-slate-950/60 text-slate-400 hover:text-white'
                       }`}
                     >
-                      {count} {count === 1 ? 'System' : 'Systems'}
+                      {count} {count === 1 ? 'system' : 'systems'}
                     </button>
                   ))}
                 </div>
@@ -95,8 +95,8 @@ export default function PacsEstimator() {
 
               {/* Credential Format Selector */}
               <div>
-                <label htmlFor="credential-format" className="block text-xs font-semibold text-slate-300 mb-2">
-                  Primary Credential Bit Structure
+                <label htmlFor="credential-format" className="block text-xs font-medium text-slate-300 mb-2">
+                  Primary credential format
                 </label>
                 <select
                   id="credential-format"
@@ -107,21 +107,21 @@ export default function PacsEstimator() {
                       credentialFormat: e.target.value as EstimatorInputs['credentialFormat'],
                     }))
                   }
-                  className="w-full rounded-xl border border-slate-700/60 bg-slate-950 px-3.5 py-2.5 font-mono text-xs text-slate-200 outline-none focus:border-indigo-500"
+                  className="w-full rounded-xl border border-slate-700/60 bg-slate-950 px-3.5 py-2 font-mono text-xs text-slate-200 outline-none focus:border-indigo-500"
                 >
-                  <option value="26-bit">Standard 26-bit Wiegand (H10301) — 16-bit Card ID</option>
-                  <option value="37-bit">37-bit HID (H10302 / H10304) — Large Card ID</option>
+                  <option value="26-bit">Standard 26-bit Wiegand (H10301) — 16-bit card ID</option>
+                  <option value="37-bit">37-bit HID (H10302 / H10304) — Large card ID</option>
                   <option value="35-bit-corp">35-bit HID Corporate 1000 — 12-bit FC / 20-bit ID</option>
-                  <option value="desfire">MIFARE DESFire EV2/EV3 (14-char Hex CSN)</option>
-                  <option value="mixed">Mixed Legacy Multi-Format (High Collision Risk)</option>
+                  <option value="desfire">MIFARE DESFire EV2/EV3 (14-char hex CSN)</option>
+                  <option value="mixed">Mixed legacy multi-format (High collision risk)</option>
                 </select>
               </div>
 
               {/* Facility Codes & Rate in Grid */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="facility-codes" className="block text-xs font-semibold text-slate-300 mb-1.5">
-                    Facility Codes in Circulation
+                  <label htmlFor="facility-codes" className="block text-xs font-medium text-slate-300 mb-1.5">
+                    Facility codes
                   </label>
                   <input
                     id="facility-codes"
@@ -137,8 +137,8 @@ export default function PacsEstimator() {
                 </div>
 
                 <div>
-                  <label htmlFor="hourly-rate" className="block text-xs font-semibold text-slate-300 mb-1.5">
-                    Integrator Rate ($/hr)
+                  <label htmlFor="hourly-rate" className="block text-xs font-medium text-slate-300 mb-1.5">
+                    Billing rate ($/hr)
                   </label>
                   <input
                     id="hourly-rate"
@@ -157,22 +157,22 @@ export default function PacsEstimator() {
           </div>
         </div>
 
-        {/* RIGHT COLUMN: Quantitative Results & Visual Telemetry (6 Cols) */}
+        {/* RIGHT COLUMN: Quantitative Results & Telemetry (6 Cols) */}
         <div className="col-span-12 lg:col-span-6 space-y-4">
-          <div className="surface-glass rounded-2xl p-6 shadow-glass-card space-y-6">
+          <div className="surface-glass rounded-2xl p-6 shadow-glass-card space-y-5">
             <div className="flex items-center justify-between border-b border-white/[0.08] pb-4">
               <div>
-                <h3 className="text-base font-bold text-white tracking-tight">
-                  Quantitative Migration Assessment
+                <h3 className="text-sm font-semibold text-white">
+                  Quantitative cutover assessment
                 </h3>
                 <p className="text-xs text-slate-400 mt-0.5">
-                  Automated ETL vs. Manual Spreadsheet Cutover
+                  Automated ETL vs. manual spreadsheet reconciliation.
                 </p>
               </div>
 
               {/* Risk Tier Pill */}
               <div
-                className={`rounded-full px-3 py-1 font-mono text-xs font-bold border ${
+                className={`rounded-full px-3 py-1 text-xs font-medium border ${
                   results.riskTier === 'CRITICAL'
                     ? 'border-rose-500/40 bg-rose-950/40 text-rose-400'
                     : results.riskTier === 'MODERATE'
@@ -180,53 +180,53 @@ export default function PacsEstimator() {
                     : 'border-emerald-500/40 bg-emerald-950/40 text-emerald-400'
                 }`}
               >
-                {results.riskTier} RISK PROFILE
+                {results.riskTier === 'CRITICAL' ? 'Critical risk' : results.riskTier === 'MODERATE' ? 'Moderate risk' : 'Low risk'}
               </div>
             </div>
 
             {/* Big Metrics Grid */}
             <div className="grid grid-cols-2 gap-4">
               <div className="rounded-xl border border-white/[0.08] bg-slate-950/80 p-4">
-                <span className="font-mono text-[10px] uppercase tracking-wider text-slate-400">
-                  Labor Hours Saved
+                <span className="text-xs text-slate-400">
+                  Labor hours saved
                 </span>
-                <div className="mt-1 font-mono text-3xl font-extrabold text-cyan-400 tracking-tight">
+                <div className="mt-1 font-mono text-3xl font-bold text-cyan-400 tracking-tight">
                   {results.hoursSaved.toLocaleString()}
                   <span className="text-sm font-normal text-slate-500 ml-1">hrs</span>
                 </div>
                 <p className="text-[11px] text-slate-400 mt-1">
-                  From {results.manualCutoverHours.toLocaleString()}h manual to {results.legacyLinkCutoverHours}h automated
+                  {results.legacyLinkCutoverHours}h automated vs. {results.manualCutoverHours.toLocaleString()}h manual
                 </p>
               </div>
 
               <div className="rounded-xl border border-white/[0.08] bg-slate-950/80 p-4">
-                <span className="font-mono text-[10px] uppercase tracking-wider text-slate-400">
-                  Financial Labor Savings
+                <span className="text-xs text-slate-400">
+                  Estimated labor savings
                 </span>
-                <div className="mt-1 font-mono text-3xl font-extrabold text-emerald-400 tracking-tight">
+                <div className="mt-1 font-mono text-3xl font-bold text-emerald-400 tracking-tight">
                   ${results.dollarSavings.toLocaleString()}
                 </div>
                 <p className="text-[11px] text-slate-400 mt-1">
-                  At ${inputs.hourlyRate}/hr integrator billing
+                  At ${inputs.hourlyRate}/hr billing rate
                 </p>
               </div>
             </div>
 
-            {/* Wiegand Collision Paradox Box */}
+            {/* Credential Collision Box */}
             <div className="rounded-xl border border-slate-800 bg-slate-950/90 p-4 space-y-2">
               <div className="flex items-center justify-between text-xs">
-                <span className="font-bold text-slate-200">
-                  Wiegand 26-bit Birthday Paradox Collision Hazard
+                <span className="font-medium text-slate-200">
+                  Wiegand 26-bit collision probability
                 </span>
                 <span
-                  className={`font-mono font-bold ${
+                  className={`font-mono font-semibold ${
                     collisionPct > 50 ? 'text-rose-400' : collisionPct > 20 ? 'text-amber-400' : 'text-emerald-400'
                   }`}
                 >
-                  {collisionPct}% Probability
+                  {collisionPct}% risk
                 </span>
               </div>
-              <div className="h-2 w-full rounded-full bg-slate-800 overflow-hidden">
+              <div className="h-1.5 w-full rounded-full bg-slate-800 overflow-hidden">
                 <div
                   className={`h-full transition-all duration-500 ${
                     collisionPct > 50 ? 'bg-rose-500' : collisionPct > 20 ? 'bg-amber-500' : 'bg-emerald-500'
@@ -234,29 +234,29 @@ export default function PacsEstimator() {
                   style={{ width: `${Math.max(5, collisionPct)}%` }}
                 />
               </div>
-              <p className="text-[11px] text-slate-400 leading-relaxed font-light">
+              <p className="text-xs text-slate-400 leading-relaxed">
                 {results.estimatedCollisions > 0 ? (
                   <>
-                    <strong className="text-amber-300 font-semibold">
+                    <strong className="text-amber-300 font-medium">
                       ~{results.estimatedCollisions} duplicate credentials predicted.
                     </strong>{' '}
-                    Merging {inputs.legacySystemCount} legacy databases with standard 26-bit cards will produce duplicate badge IDs that cause Monday morning turnstile lockouts. Legacy Link applies automated Facility Code prefixing to prevent collisions.
+                    Legacy Link prevents Monday turnstile lockouts via automatic Facility Code prefixing.
                   </>
                 ) : (
-                  'Low credential collision hazard. Credential space is sufficient for active personnel count.'
+                  'Low collision risk. Credential space is ample for cardholder count.'
                 )}
               </p>
             </div>
 
             {/* Complexity & Downtime Strip */}
-            <div className="grid grid-cols-2 gap-3 pt-2 text-xs">
+            <div className="grid grid-cols-2 gap-3 text-xs">
               <div className="flex items-center justify-between rounded-lg border border-slate-800/80 bg-slate-950/50 p-2.5">
-                <span className="text-slate-400 font-mono text-[11px]">Complexity Index</span>
-                <span className="font-mono font-bold text-white">{results.complexityScore} / 100</span>
+                <span className="text-slate-400 text-xs">Complexity index</span>
+                <span className="font-mono font-semibold text-white">{results.complexityScore} / 100</span>
               </div>
               <div className="flex items-center justify-between rounded-lg border border-slate-800/80 bg-slate-950/50 p-2.5">
-                <span className="text-slate-400 font-mono text-[11px]">Overtime Avoided</span>
-                <span className="font-mono font-bold text-cyan-400">~{results.weekendOvertimeHoursAvoided} hrs</span>
+                <span className="text-slate-400 text-xs">Overtime avoided</span>
+                <span className="font-mono font-semibold text-cyan-400">~{results.weekendOvertimeHoursAvoided} hrs</span>
               </div>
             </div>
 
@@ -264,12 +264,12 @@ export default function PacsEstimator() {
             <button
               type="button"
               onClick={() => setShowExportModal(true)}
-              className="w-full inline-flex items-center justify-center gap-2 rounded-xl border border-indigo-500/40 bg-indigo-600/20 py-2.5 text-xs font-bold text-indigo-300 transition-all hover:bg-indigo-600 hover:text-white active:scale-[0.98]"
+              className="w-full inline-flex items-center justify-center gap-2 rounded-xl border border-indigo-500/40 bg-indigo-600/20 py-2.5 text-xs font-semibold text-indigo-300 transition-all hover:bg-indigo-600 hover:text-white active:scale-[0.98]"
             >
               <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
-              <span>View Executive Cutover Briefing</span>
+              <span>View executive cutover briefing</span>
             </button>
           </div>
         </div>
@@ -281,43 +281,64 @@ export default function PacsEstimator() {
           role="dialog"
           aria-modal="true"
           aria-labelledby="briefing-title"
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-md p-4"
         >
           <div className="surface-glass max-w-xl w-full rounded-2xl p-6 shadow-2xl border border-white/[0.1] text-slate-200">
             <div className="flex items-center justify-between border-b border-white/[0.08] pb-3 mb-4">
-              <h4 id="briefing-title" className="text-base font-bold text-white">
-                Executive PACS Cutover Assessment Briefing
+              <h4 id="briefing-title" className="text-base font-semibold text-white">
+                Executive cutover assessment briefing
               </h4>
               <button
                 type="button"
                 onClick={() => setShowExportModal(false)}
-                className="text-slate-400 hover:text-white text-lg font-bold"
+                className="text-slate-400 hover:text-white text-base font-medium"
                 aria-label="Close briefing dialog"
               >
                 ✕
               </button>
             </div>
 
-            <div className="space-y-4 font-mono text-xs">
-              <div className="rounded-xl border border-slate-800 bg-slate-950 p-4 space-y-2">
-                <div>PROJECT SCOPE: {inputs.cardholderCount.toLocaleString()} Cardholders across {inputs.legacySystemCount} Legacy System(s)</div>
-                <div>CREDENTIAL FORMAT: {inputs.credentialFormat.toUpperCase()}</div>
-                <div>PREDICTED COLLISION HAZARD: {collisionPct}% (~{results.estimatedCollisions} duplicate IDs)</div>
-                <div>TOTAL MANUAL HOURS REQUIRED: {results.manualCutoverHours} hours</div>
-                <div>LEGACY LINK AUTOMATED HOURS: {results.legacyLinkCutoverHours} hours</div>
-                <div className="text-emerald-400 font-bold">NET HOURS SAVED: {results.hoursSaved} hours</div>
-                <div className="text-emerald-400 font-bold">TOTAL ESTIMATED DOLLAR SAVINGS: ${results.dollarSavings.toLocaleString()}</div>
+            <div className="space-y-4 text-xs">
+              <div className="rounded-xl border border-slate-800 bg-slate-950 p-4 space-y-2 font-mono text-[11px]">
+                <div className="flex justify-between">
+                  <span className="text-slate-400">Project scope:</span>
+                  <span className="text-white font-medium">{inputs.cardholderCount.toLocaleString()} cardholders ({inputs.legacySystemCount} systems)</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-400">Credential format:</span>
+                  <span className="text-white font-medium">{inputs.credentialFormat}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-400">Predicted collision risk:</span>
+                  <span className="text-amber-400 font-medium">{collisionPct}% (~{results.estimatedCollisions} duplicate IDs)</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-400">Manual hours required:</span>
+                  <span className="text-slate-300">{results.manualCutoverHours} hours</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-400">Legacy Link automated:</span>
+                  <span className="text-cyan-400 font-medium">{results.legacyLinkCutoverHours} hours</span>
+                </div>
+                <div className="flex justify-between pt-2 border-t border-slate-800 text-emerald-400 font-semibold">
+                  <span>Net hours saved:</span>
+                  <span>{results.hoursSaved} hours</span>
+                </div>
+                <div className="flex justify-between text-emerald-400 font-semibold">
+                  <span>Total labor savings:</span>
+                  <span>${results.dollarSavings.toLocaleString()}</span>
+                </div>
               </div>
-              <p className="text-slate-400 font-sans text-xs">
-                Recommendation: Deploy Legacy Link automated middleware ETL to eliminate duplicate badge collisions and reduce weekend cutover window by 95%.
+              <p className="text-slate-400 text-xs">
+                Recommendation: Deploy Legacy Link automated ETL middleware to eliminate credential collisions and reduce cutover window by 95%.
               </p>
             </div>
 
-            <div className="mt-6 flex justify-end gap-3">
+            <div className="mt-5 flex justify-end">
               <button
                 type="button"
                 onClick={() => setShowExportModal(false)}
-                className="rounded-xl border border-slate-700 bg-slate-800 px-4 py-2 text-xs font-semibold text-slate-300 hover:bg-slate-700 hover:text-white"
+                className="rounded-xl border border-slate-700 bg-slate-800 px-4 py-2 text-xs font-medium text-slate-300 hover:bg-slate-700 hover:text-white"
               >
                 Close
               </button>

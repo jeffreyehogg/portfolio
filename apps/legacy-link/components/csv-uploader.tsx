@@ -24,7 +24,7 @@ export default function CsvUploader({ migrationId }: { migrationId: number }) {
     }
 
     setUploading(true)
-    setUploadStage('Parsing legacy CSV stream via Web Worker...')
+    setUploadStage('Parsing legacy CSV stream via worker...')
 
     Papa.parse<Record<string, string>>(file, {
       header: true,
@@ -38,7 +38,7 @@ export default function CsvUploader({ migrationId }: { migrationId: number }) {
         const firstRow = results.data[0] ? JSON.stringify(results.data[0]) : ''
         if (firstRow.includes('\u0000') || firstRow.includes('PK')) {
           setErrorMessage(
-            'Corrupt format: This file contains binary/zip headers. Please export strictly as "CSV (Comma delimited)".'
+            'Corrupt format: File contains binary headers. Please export strictly as comma-delimited CSV.'
           )
           setUploading(false)
           setUploadStage(null)
@@ -46,7 +46,7 @@ export default function CsvUploader({ migrationId }: { migrationId: number }) {
         }
 
         try {
-          setUploadStage(`Streaming ${results.data.length} records to Neon PostgreSQL...`)
+          setUploadStage(`Streaming ${results.data.length} records to PostgreSQL...`)
           const res = await fetch(`/api/migrations/${migrationId}/upload`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -58,7 +58,7 @@ export default function CsvUploader({ migrationId }: { migrationId: number }) {
             throw new Error(errorData.details || errorData.error || 'Upload failed')
           }
 
-          setUploadStage('Ingestion verified! Revalidating cache...')
+          setUploadStage('Ingestion verified! Updating project...')
           router.refresh()
         } catch (error: any) {
           console.error('Ingestion error:', error)
@@ -98,35 +98,35 @@ export default function CsvUploader({ migrationId }: { migrationId: number }) {
           const file = e.dataTransfer.files?.[0]
           if (file) processFile(file)
         }}
-        className={`relative rounded-2xl border-2 border-dashed p-10 text-center transition-all focus-within:ring-2 focus-within:ring-cyan-500 focus-within:ring-offset-2 focus-within:ring-offset-slate-950 ${
+        className={`relative rounded-2xl border-2 border-dashed p-8 text-center transition-all focus-within:ring-2 focus-within:ring-cyan-500 focus-within:ring-offset-2 focus-within:ring-offset-slate-950 ${
           isDragOver
             ? 'border-cyan-400 bg-cyan-950/20 shadow-glow-cyan scale-[1.01]'
             : 'border-slate-800 bg-slate-950/60 hover:border-slate-700'
         }`}
       >
         <div className="space-y-2">
-          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl border border-white/[0.08] bg-slate-900 text-cyan-400">
-            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-xl border border-white/[0.08] bg-slate-900 text-cyan-400">
+            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
             </svg>
           </div>
 
-          <div className="text-sm">
+          <div className="text-xs">
             {uploading ? (
               <div className="flex flex-col items-center gap-1 font-mono text-cyan-400">
-                <span className="animate-pulse font-semibold">{uploadStage}</span>
-                <span className="text-[11px] text-slate-500">Processing background worker thread</span>
+                <span className="animate-pulse font-medium">{uploadStage}</span>
+                <span className="text-[10px] text-slate-500">Processing background worker thread</span>
               </div>
             ) : (
               <>
-                <span className="font-bold text-white">Click to upload raw CSV</span>{' '}
+                <span className="font-semibold text-white">Click to upload raw CSV</span>{' '}
                 <span className="text-slate-400">or drag and drop</span>
               </>
             )}
           </div>
 
-          <p className="text-xs text-slate-400 font-mono">
-            Supported exports: Lenel OnGuard, DNA Fusion, AMAG Symmetry, C•CURE 9000.
+          <p className="text-[11px] text-slate-500">
+            Supported exports: Lenel OnGuard, DNA Fusion, AMAG Symmetry, C•CURE 9000
           </p>
         </div>
 
@@ -141,7 +141,7 @@ export default function CsvUploader({ migrationId }: { migrationId: number }) {
       </div>
 
       {errorMessage && (
-        <div className="flex items-center gap-2 rounded-xl border border-rose-500/40 bg-rose-950/40 p-3 text-xs font-mono text-rose-300">
+        <div className="flex items-center gap-2 rounded-xl border border-rose-500/40 bg-rose-950/40 p-3 text-xs text-rose-300">
           <span className="h-2 w-2 rounded-full bg-rose-500" />
           <span>{errorMessage}</span>
         </div>

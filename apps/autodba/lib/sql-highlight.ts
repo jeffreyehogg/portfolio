@@ -95,7 +95,7 @@ const FUNCTIONS = new Set([
 ]);
 
 const TOKEN_REGEX =
-  /(--[^\n]*|\/\*[\s\S]*?\*\/|'(?:''|[^'])*'|"(?:""|[^"])*"|\[[^\]]+\]|@[A-Za-z0-9_]+|#[A-Za-z0-9_]+|\b\d+(?:\.\d+)?\b|[A-Za-z_][A-Za-z0-9_]*|::[A-Za-z0-9_]+|[(),;.]|[!=<>+\-*/%]+|\s+)/g;
+  /(--[^\n]*|\/\*[\s\S]*?(?:\*\/|$)|'(?:''|[^'])*'|'(?:''|[^'\r\n])*(?:(?=[\r\n]|$))|"(?:""|[^"])*"|"(?:""|[^"\r\n])*(?:(?=[\r\n]|$))|\[[^\]\r\n]*(?:\]|(?=[\r\n]|$))|@[A-Za-z0-9_]+|#[A-Za-z0-9_]+|\b\d+(?:\.\d+)?\b|[A-Za-z_][A-Za-z0-9_]*|::[A-Za-z0-9_]+|[(),;.]|[!=<>+\-*/%]+|\s+|[\s\S])/g;
 
 export interface TokenSpan {
   text: string;
@@ -114,7 +114,7 @@ export function tokenizeSql(sql: string): TokenSpan[] {
       spans.push({ text: m, className: "text-slate-500 italic" });
     } else if (m.startsWith("'") || m.startsWith('"')) {
       spans.push({ text: m, className: "text-emerald-400" });
-    } else if (m.startsWith("[") && m.endsWith("]")) {
+    } else if (m.startsWith("[")) {
       spans.push({ text: m, className: "text-cyan-300 font-medium" });
     } else if (m.startsWith("@") || m.startsWith("#")) {
       spans.push({ text: m, className: "text-amber-300 font-medium" });

@@ -102,10 +102,12 @@ export function DiffViewer({
               type="button"
               onClick={onOpenStoredProc}
               className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium border border-white/[0.08] transition-all active:scale-[0.98]"
-              title="Generate stored procedure from optimized query"
+              title="Convert optimized query to stored procedure"
             >
               <ScrollText className="h-3.5 w-3.5 text-indigo-400" />
-              <span className="hidden sm:inline">Stored Proc</span>
+              <span>
+                <span className="hidden sm:inline">Convert to </span>Stored Procedure
+              </span>
             </button>
           )}
 

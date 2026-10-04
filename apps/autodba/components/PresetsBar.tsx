@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Sparkles, Database } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import type { PresetSummary } from "@/lib/types";
 
 interface PresetsBarProps {
@@ -11,10 +11,10 @@ interface PresetsBarProps {
   isLoading: boolean;
 }
 
-const DIALECT_COLORS: Record<string, string> = {
-  tsql: "text-blue-400 bg-blue-500/10 border-blue-500/30",
-  postgres: "text-emerald-400 bg-emerald-500/10 border-emerald-500/30",
-  mysql: "text-amber-400 bg-amber-500/10 border-amber-500/30",
+const DIALECT_LABELS: Record<string, string> = {
+  tsql: "T-SQL",
+  postgres: "PostgreSQL",
+  mysql: "MySQL",
 };
 
 export function PresetsBar({
@@ -25,76 +25,48 @@ export function PresetsBar({
 }: PresetsBarProps) {
   if (isLoading && presets.length === 0) {
     return (
-      <div className="flex gap-2.5 overflow-x-auto pb-2 scrollbar-none animate-pulse">
+      <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none animate-pulse">
+        <div className="h-7 w-20 rounded-lg bg-slate-900/60" />
         {[1, 2, 3, 4].map((i) => (
-          <div
-            key={i}
-            className="h-16 w-64 shrink-0 rounded-2xl bg-slate-900/60 border border-white/[0.08]"
-          />
+          <div key={i} className="h-7 w-32 rounded-lg bg-slate-900/60" />
         ))}
       </div>
     );
   }
 
   return (
-    <div className="w-full">
-      <div className="flex items-center justify-between mb-3">
-        <div className="flex items-center gap-2">
-          <Sparkles className="h-4 w-4 text-indigo-400" />
-          <span className="font-mono text-xs uppercase tracking-wider text-slate-300 font-semibold">
-            Enterprise Scenarios (Zero-Cost Pre-Computed AST Benchmarks)
-          </span>
-        </div>
-        <span className="text-[11px] font-mono text-slate-400 hidden sm:inline">
-          1-Click Load • Instant Telemetry
-        </span>
+    <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none text-xs">
+      <div className="flex items-center gap-1.5 text-slate-400 font-medium shrink-0 mr-1">
+        <Sparkles className="h-3.5 w-3.5 text-indigo-400" />
+        <span>Try an example:</span>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+      <div className="flex items-center gap-1.5 shrink-0">
         {presets.map((preset) => {
           const isSelected = selectedId === preset.id;
-          const dialectBadgeColor =
-            DIALECT_COLORS[preset.dialect] || "text-slate-400 bg-slate-500/10 border-slate-500/30";
+          const dialectLabel = DIALECT_LABELS[preset.dialect] || preset.dialect;
 
           return (
             <button
               key={preset.id}
               onClick={() => onSelect(preset)}
-              className={`group text-left relative flex flex-col justify-between p-3.5 rounded-2xl transition-all duration-200 border cursor-pointer active:scale-[0.98] ${
+              className={`flex items-center gap-2 px-3 py-1.5 rounded-lg font-medium transition-all duration-150 cursor-pointer active:scale-[0.98] ${
                 isSelected
-                  ? "bg-slate-800/90 border-indigo-500/50 shadow-lg shadow-indigo-500/10 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.15)] ring-1 ring-indigo-500/40"
-                  : "bg-slate-900/60 hover:bg-slate-850/80 border-white/[0.08] hover:border-white/[0.15] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)]"
+                  ? "bg-indigo-600/15 text-indigo-200 border border-indigo-500/40 shadow-sm shadow-indigo-500/10"
+                  : "bg-slate-900/50 hover:bg-slate-800/80 text-slate-400 hover:text-slate-200 border border-white/[0.06]"
               }`}
+              title={preset.description}
             >
-              <div>
-                <div className="flex items-center justify-between gap-2 mb-2">
-                  <span
-                    className={`font-mono text-[10px] font-bold px-2 py-0.5 rounded-md uppercase border ${dialectBadgeColor}`}
-                  >
-                    {preset.dialect === "tsql"
-                      ? "SQL Server"
-                      : preset.dialect === "postgres"
-                      ? "PostgreSQL"
-                      : "MySQL"}
-                  </span>
-                  <span className="font-mono text-[11px] font-semibold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-md">
-                    {preset.headline_metric}
-                  </span>
-                </div>
-                <h4 className="text-xs font-bold text-white tracking-tight line-clamp-1 group-hover:text-indigo-300 transition-colors">
-                  {preset.title}
-                </h4>
-                <p className="text-[11px] text-slate-400 mt-1 line-clamp-2 leading-relaxed">
-                  {preset.description}
-                </p>
-              </div>
-
-              <div className="mt-3 pt-2.5 border-t border-white/[0.06] flex items-center justify-between text-[10px] font-mono text-slate-400">
-                <span className="text-slate-300 font-medium">{preset.domain}</span>
-                <span className="text-indigo-400 group-hover:translate-x-0.5 transition-transform">
-                  Load Preset →
-                </span>
-              </div>
+              <span>{preset.domain}</span>
+              <span
+                className={`font-mono text-[10px] px-1.5 py-0.2 rounded ${
+                  isSelected
+                    ? "bg-indigo-500/20 text-indigo-300"
+                    : "bg-slate-800 text-slate-500"
+                }`}
+              >
+                {dialectLabel}
+              </span>
             </button>
           );
         })}
@@ -102,3 +74,4 @@ export function PresetsBar({
     </div>
   );
 }
+

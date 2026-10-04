@@ -209,10 +209,10 @@ export function Studio() {
         hasByokKey={Boolean(byokKey)}
       />
 
-      <main className="flex-1 mx-auto max-w-7xl w-full px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+      <main className="flex-1 mx-auto max-w-7xl w-full px-4 sm:px-6 lg:px-8 py-5 space-y-4">
         {/* Error Alert */}
         {errorMessage && (
-          <div className="flex items-center justify-between p-4 rounded-2xl bg-rose-950/40 border border-rose-500/30 text-rose-300 text-xs">
+          <div className="flex items-center justify-between p-3.5 rounded-xl bg-rose-950/40 border border-rose-500/30 text-rose-300 text-xs">
             <div className="flex items-center gap-2">
               <AlertCircle className="h-4 w-4 shrink-0 text-rose-400" />
               <span>{errorMessage}</span>
@@ -235,9 +235,9 @@ export function Studio() {
         />
 
         {/* Split Studio Workspace */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
           {/* Left Column: SQL Editor (5/12 cols) */}
-          <div className="lg:col-span-5 h-[680px]">
+          <div className="lg:col-span-5 h-[660px]">
             <SqlEditor
               sql={sql}
               onChangeSql={handleSqlChange}
@@ -255,92 +255,107 @@ export function Studio() {
           </div>
 
           {/* Right Column: Diagnostic & Rewrite Telemetry Workspace (7/12 cols) */}
-          <div className="lg:col-span-7 flex flex-col h-[680px] rounded-2xl bg-slate-900/60 backdrop-blur-xl border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] overflow-hidden">
+          <div className="lg:col-span-7 flex flex-col h-[660px] rounded-2xl bg-slate-900/60 backdrop-blur-xl border border-white/[0.06] overflow-hidden">
+            {/* Executive Outcome Ribbon (if results exist) */}
+            {optResult && (
+              <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-2 bg-indigo-500/5 border-b border-white/[0.06] text-xs">
+                <div className="flex items-center gap-2.5">
+                  <span className="font-semibold text-emerald-400 flex items-center gap-1">
+                    <Sparkles className="h-3.5 w-3.5" />
+                    ~{optResult.estimated_improvement_pct}% Estimated Reduction
+                  </span>
+                  {optResult.antipatterns_fixed.length > 0 && (
+                    <span className="text-slate-400 hidden sm:inline">
+                      • {optResult.antipatterns_fixed.length} issue{optResult.antipatterns_fixed.length > 1 ? "s" : ""} resolved
+                    </span>
+                  )}
+                </div>
+                {isStale && (
+                  <span className="text-[10px] font-mono text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
+                    Query modified
+                  </span>
+                )}
+              </div>
+            )}
+
             {/* Results Navigation Bar */}
-            <div className="flex items-center justify-between px-4 py-2.5 bg-slate-900/90 border-b border-white/[0.08]">
+            <div className="flex items-center justify-between px-3.5 py-2 bg-slate-900/80 border-b border-white/[0.06]">
               {/* Tab navigation */}
               <div className="flex items-center gap-1 overflow-x-auto scrollbar-none">
                 <button
                   onClick={() => setActiveTab("diff")}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
                     activeTab === "diff"
-                      ? "bg-indigo-600 text-white shadow-sm"
+                      ? "bg-slate-800 text-white shadow-sm"
                       : "text-slate-400 hover:text-slate-200"
                   }`}
                 >
                   <FileDiff className="h-3.5 w-3.5" />
-                  <span>Rewrite Diff</span>
+                  <span>Rewrite</span>
                 </button>
 
                 <button
                   onClick={() => setActiveTab("diagnostics")}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
                     activeTab === "diagnostics"
-                      ? "bg-indigo-600 text-white shadow-sm"
+                      ? "bg-slate-800 text-white shadow-sm"
                       : "text-slate-400 hover:text-slate-200"
                   }`}
                 >
                   <Code2 className="h-3.5 w-3.5" />
-                  <span>Diagnostics</span>
+                  <span>Issues</span>
                   {currentDiagnostics.length > 0 && (
-                    <span className="font-mono text-[10px] px-1.5 py-0.2 rounded bg-slate-800 text-slate-300">
+                    <span className="font-mono text-[10px] px-1.5 py-0.2 rounded bg-slate-800/80 text-slate-300">
                       {currentDiagnostics.length}
                     </span>
                   )}
                 </button>
 
                 <button
-                  onClick={() => setActiveTab("telemetry")}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
-                    activeTab === "telemetry"
-                      ? "bg-indigo-600 text-white shadow-sm"
-                      : "text-slate-400 hover:text-slate-200"
-                  }`}
-                >
-                  <BarChart3 className="h-3.5 w-3.5" />
-                  <span>Plan Telemetry</span>
-                </button>
-
-                <button
                   onClick={() => setActiveTab("ddl")}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
                     activeTab === "ddl"
-                      ? "bg-indigo-600 text-white shadow-sm"
+                      ? "bg-slate-800 text-white shadow-sm"
                       : "text-slate-400 hover:text-slate-200"
                   }`}
                 >
                   <Layers className="h-3.5 w-3.5" />
-                  <span>Index DDL</span>
+                  <span>Indexes</span>
                   {currentIndexes.length > 0 && (
-                    <span className="font-mono text-[10px] px-1.5 py-0.2 rounded bg-slate-800 text-emerald-400 font-bold">
+                    <span className="font-mono text-[10px] px-1.5 py-0.2 rounded bg-slate-800/80 text-emerald-400 font-bold">
                       {currentIndexes.length}
                     </span>
                   )}
                 </button>
 
                 <button
+                  onClick={() => setActiveTab("telemetry")}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                    activeTab === "telemetry"
+                      ? "bg-slate-800 text-white shadow-sm"
+                      : "text-slate-400 hover:text-slate-200"
+                  }`}
+                >
+                  <BarChart3 className="h-3.5 w-3.5" />
+                  <span>Metrics</span>
+                </button>
+
+                <button
                   onClick={() => setActiveTab("trace")}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
                     activeTab === "trace"
-                      ? "bg-indigo-600 text-white shadow-sm"
+                      ? "bg-slate-800 text-white shadow-sm"
                       : "text-slate-400 hover:text-slate-200"
                   }`}
                 >
                   <Workflow className="h-3.5 w-3.5" />
-                  <span>Agent Trace</span>
+                  <span>Trace</span>
                 </button>
               </div>
-
-              {/* Stale Badge */}
-              {isStale && (
-                <span className="font-mono text-[10px] px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-300 border border-amber-500/20">
-                  SQL Modified (Re-run)
-                </span>
-              )}
             </div>
 
             {/* Results Content Area */}
-            <div className="flex-1 p-4 overflow-y-auto">
+            <div className="flex-1 p-3.5 overflow-y-auto">
               {activeTab === "diff" && (
                 optResult ? (
                   <DiffViewer

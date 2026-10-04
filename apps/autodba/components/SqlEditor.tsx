@@ -106,30 +106,30 @@ export function SqlEditor({
   return (
     <div className="flex flex-col h-full rounded-2xl bg-slate-900/70 backdrop-blur-xl border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] overflow-hidden">
       {/* Editor Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 bg-slate-900/90 border-b border-white/[0.08]">
+      <div className="flex flex-wrap items-center justify-between gap-2 px-3.5 py-2.5 bg-slate-900/80 border-b border-white/[0.06]">
         {/* Tabs */}
-        <div className="flex items-center gap-1.5 p-1 rounded-xl bg-slate-950/60 border border-white/[0.06]">
+        <div className="flex items-center gap-1 p-0.5 rounded-lg bg-slate-950/60 border border-white/[0.06]">
           <button
             onClick={() => setActiveTab("sql")}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] ${
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium transition-all active:scale-[0.98] ${
               activeTab === "sql"
-                ? "bg-indigo-600 text-white shadow-sm"
+                ? "bg-slate-800 text-white shadow-sm"
                 : "text-slate-400 hover:text-slate-200"
             }`}
           >
             <FileCode className="h-3.5 w-3.5" />
-            <span>SQL Query</span>
+            <span>Query</span>
           </button>
           <button
             onClick={() => setActiveTab("plan")}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all active:scale-[0.98] ${
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium transition-all active:scale-[0.98] ${
               activeTab === "plan"
-                ? "bg-indigo-600 text-white shadow-sm"
+                ? "bg-slate-800 text-white shadow-sm"
                 : "text-slate-400 hover:text-slate-200"
             }`}
           >
             <FileText className="h-3.5 w-3.5" />
-            <span>Execution Plan</span>
+            <span>Plan</span>
             {plan.trim().length > 0 && (
               <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
             )}
@@ -139,25 +139,19 @@ export function SqlEditor({
         {/* Dialect selector & File Upload */}
         <div className="flex items-center gap-2">
           {activeTab === "sql" && (
-            <div className="flex items-center gap-1.5">
-              <label htmlFor="dialect-select" className="text-[11px] font-mono text-slate-400 uppercase">
-                Dialect:
-              </label>
-              <select
-                id="dialect-select"
-                value={dialect}
-                onChange={(e) => onChangeDialect(e.target.value as Dialect)}
-                className="bg-slate-950 border border-white/[0.1] rounded-xl px-2.5 py-1 text-xs font-mono text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
-              >
-                <option value="tsql">T-SQL (SQL Server)</option>
-                <option value="postgres">PostgreSQL</option>
-                <option value="mysql">MySQL</option>
-              </select>
-            </div>
+            <select
+              value={dialect}
+              onChange={(e) => onChangeDialect(e.target.value as Dialect)}
+              className="bg-slate-950/80 border border-white/[0.08] rounded-lg px-2.5 py-1 text-xs font-medium text-slate-300 focus:outline-none focus:ring-1 focus:ring-indigo-500/50"
+            >
+              <option value="tsql">SQL Server (T-SQL)</option>
+              <option value="postgres">PostgreSQL</option>
+              <option value="mysql">MySQL</option>
+            </select>
           )}
 
           {/* Upload button */}
-          <label className="flex items-center gap-1 px-2.5 py-1 rounded-xl bg-slate-800/80 hover:bg-slate-800 text-slate-300 text-xs font-medium border border-white/[0.08] cursor-pointer transition-all active:scale-[0.98]">
+          <label className="flex items-center gap-1 px-2 py-1 rounded-lg bg-slate-900/60 hover:bg-slate-800 text-slate-400 hover:text-slate-200 text-xs font-medium border border-white/[0.06] cursor-pointer transition-all active:scale-[0.98]" title="Upload .sql, .sqlplan, or JSON file">
             <Upload className="h-3.5 w-3.5" />
             <span className="hidden sm:inline">Upload</span>
             <input
@@ -175,8 +169,8 @@ export function SqlEditor({
         {/* Line numbers */}
         <div
           ref={lineNumbersRef}
-          className="select-none py-4 px-3 text-right text-slate-600 bg-slate-950/90 border-r border-white/[0.06] overflow-hidden"
-          style={{ width: "48px" }}
+          className="select-none py-4 px-2.5 text-right text-slate-600 bg-slate-950/90 border-r border-white/[0.04] overflow-hidden"
+          style={{ width: "42px" }}
         >
           {lineNumbers.map((num) => (
             <div key={num} className="leading-6">
@@ -210,7 +204,7 @@ export function SqlEditor({
                 onScroll={handleScroll}
                 onKeyDown={handleKeyDown}
                 spellCheck={false}
-                placeholder="-- Paste or write your SQL query here... (e.g. SELECT * FROM Leads WHERE YEAR(CreatedDate) = 2026)"
+                placeholder="-- Paste or write your SQL query here..."
                 className="absolute inset-0 w-full h-full p-4 font-mono text-xs leading-6 bg-transparent text-transparent caret-white resize-none focus:outline-none overflow-auto whitespace-pre-wrap break-words"
               />
             </>
@@ -227,56 +221,49 @@ export function SqlEditor({
       </div>
 
       {/* Editor Footer Actions */}
-      <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 bg-slate-900/90 border-t border-white/[0.08]">
+      <div className="flex flex-wrap items-center justify-between gap-2.5 px-3.5 py-2.5 bg-slate-900/80 border-t border-white/[0.06]">
         {/* Character count & shortcuts hint */}
-        <div className="flex items-center gap-3 text-[11px] font-mono text-slate-400">
-          <span className={charCount > charLimit * 0.9 ? "text-rose-400" : ""}>
-            {charCount.toLocaleString()} / {charLimit.toLocaleString()} chars
-          </span>
-          <span className="hidden sm:inline text-slate-600">|</span>
-          <span className="hidden sm:inline text-slate-400">
-            <kbd className="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-300">⌘</kbd> + <kbd className="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-300">Enter</kbd> to optimize
+        <div className="flex items-center gap-2 text-[11px] text-slate-500">
+          <span className="hidden sm:inline">
+            <kbd className="px-1.5 py-0.5 rounded bg-slate-800/80 border border-white/[0.08] text-slate-400">⌘</kbd> + <kbd className="px-1.5 py-0.5 rounded bg-slate-800/80 border border-white/[0.08] text-slate-400">Enter</kbd>
           </span>
         </div>
 
         {/* Action Triggers */}
         <div className="flex items-center gap-2">
+          {/* Mode toggle */}
+          <button
+            onClick={() => onChangeEngineMode(engineMode === "auto" ? "deterministic" : "auto")}
+            className="flex items-center gap-1 px-2 py-1.5 rounded-lg bg-slate-800/40 hover:bg-slate-800 text-[11px] text-slate-400 hover:text-slate-200 border border-white/[0.06] transition-all"
+            title="Toggle between AI Agent and Fast AST"
+          >
+            <span>{engineMode === "auto" ? "AI Mode" : "Fast AST"}</span>
+          </button>
+
           {/* Analyze Button */}
           <button
             onClick={onAnalyze}
             disabled={isAnalyzing || isOptimizing || !sql.trim()}
-            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-800/90 hover:bg-slate-800 text-slate-200 text-xs font-semibold border border-white/[0.08] transition-all disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98]"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-800 text-slate-300 text-xs font-medium border border-white/[0.08] transition-all disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98]"
           >
             {isAnalyzing ? (
               <div className="w-3.5 h-3.5 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin" />
             ) : (
-              <Code2 className="h-3.5 w-3.5 text-cyan-400" />
+              <Code2 className="h-3.5 w-3.5 text-slate-400" />
             )}
-            <span>Analyze AST</span>
-          </button>
-
-          {/* Mode toggle */}
-          <button
-            onClick={() => onChangeEngineMode(engineMode === "auto" ? "deterministic" : "auto")}
-            className="hidden sm:flex items-center gap-1 px-2.5 py-2 rounded-xl bg-slate-800/50 hover:bg-slate-800 text-[11px] font-mono text-slate-300 border border-white/[0.08] transition-all"
-            title="Toggle between Agentic LLM rewrite and 100% Deterministic AST rewrite"
-          >
-            <span className="text-slate-400">Mode:</span>
-            <span className={engineMode === "auto" ? "text-indigo-400 font-semibold" : "text-amber-400 font-semibold"}>
-              {engineMode === "auto" ? "AI Loop" : "AST Only"}
-            </span>
+            <span>Analyze</span>
           </button>
 
           {/* Optimize CTA Button */}
           <button
             onClick={onOptimize}
             disabled={isAnalyzing || isOptimizing || !sql.trim()}
-            className="flex items-center gap-2 px-5 py-2 rounded-xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-600 hover:from-indigo-500 hover:to-cyan-500 text-white text-xs font-bold shadow-lg shadow-indigo-500/25 transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98]"
+            className="flex items-center gap-1.5 px-4 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold shadow-md shadow-indigo-600/20 transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98]"
           >
             {isOptimizing ? (
               <>
                 <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                <span>Optimizing Query...</span>
+                <span>Optimizing...</span>
               </>
             ) : (
               <>

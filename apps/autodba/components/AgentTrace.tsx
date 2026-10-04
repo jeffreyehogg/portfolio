@@ -43,19 +43,19 @@ export function AgentTrace({
   totalDurationMs,
 }: AgentTraceProps) {
   return (
-    <div className="rounded-2xl bg-slate-900/70 backdrop-blur-xl border border-white/[0.08] p-5 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] space-y-4">
+    <div className="rounded-xl bg-slate-900/50 border border-white/[0.06] p-4 space-y-3.5">
       {/* Header telemetry */}
-      <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-white/[0.06]">
+      <div className="flex flex-wrap items-center justify-between gap-2 pb-2.5 border-b border-white/[0.06]">
         <div className="flex items-center gap-2">
           <Workflow className="h-4 w-4 text-indigo-400" />
-          <span className="font-mono text-xs uppercase tracking-wider text-slate-200 font-semibold">
-            Agent Optimization Lifecycle Trace
+          <span className="text-xs font-semibold text-slate-300">
+            Execution Lifecycle Trace
           </span>
         </div>
 
         <div className="flex items-center gap-2">
           {/* Engine Badge */}
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl font-mono text-[11px] font-bold bg-indigo-500/10 text-indigo-300 border border-indigo-500/30">
+          <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md font-mono text-[11px] font-medium bg-slate-800 text-slate-300 border border-white/[0.06]">
             {engine === "gemini" ? (
               <>
                 <Bot className="h-3 w-3 text-indigo-400" />
@@ -64,19 +64,19 @@ export function AgentTrace({
             ) : engine === "preset" ? (
               <>
                 <ShieldCheck className="h-3 w-3 text-emerald-400" />
-                <span>Enterprise Preset (0 Tokens)</span>
+                <span>Verified Benchmark</span>
               </>
             ) : (
               <>
                 <Cpu className="h-3 w-3 text-cyan-400" />
-                <span>Deterministic AST Engine</span>
+                <span>Deterministic AST</span>
               </>
             )}
           </span>
 
           {totalDurationMs !== undefined && (
-            <span className="font-mono text-[11px] text-slate-400">
-              {totalDurationMs.toFixed(1)}ms total
+            <span className="font-mono text-[11px] text-slate-500">
+              {totalDurationMs.toFixed(0)}ms
             </span>
           )}
         </div>

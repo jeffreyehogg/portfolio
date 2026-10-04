@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { Check, Columns2, Copy, FileText, Split } from "lucide-react";
+import { Check, Columns2, Copy, FileCode, Split } from "lucide-react";
 import { diffLines, Change } from "diff";
+import { tokenizeSql } from "@/lib/sql-highlight";
 import type { VerificationReport } from "@/lib/types";
 
 interface DiffViewerProps {
@@ -19,7 +20,7 @@ export function DiffViewer({
   explanation,
 }: DiffViewerProps) {
   const [copied, setCopied] = useState(false);
-  const [viewMode, setViewMode] = useState<"split" | "unified">("split");
+  const [viewMode, setViewMode] = useState<"clean" | "split" | "unified">("clean");
 
   const handleCopy = () => {
     navigator.clipboard.writeText(optimizedSql);
@@ -28,72 +29,66 @@ export function DiffViewer({
   };
 
   const diffResult: Change[] = diffLines(originalSql, optimizedSql);
-
   const editCounts = verification?.ast_edit_counts || {};
-  const hasEdits = Object.keys(editCounts).length > 0;
+  const tokens = tokenizeSql(optimizedSql);
 
   return (
-    <div className="rounded-2xl bg-slate-900/70 backdrop-blur-xl border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] overflow-hidden">
+    <div className="flex flex-col h-full rounded-2xl bg-slate-900/60 backdrop-blur-xl border border-white/[0.06] overflow-hidden">
       {/* Header toolbar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 bg-slate-900/90 border-b border-white/[0.08]">
+      <div className="flex flex-wrap items-center justify-between gap-2 px-3.5 py-2.5 bg-slate-900/80 border-b border-white/[0.06]">
+        {/* View toggle */}
+        <div className="flex items-center gap-1 p-0.5 rounded-lg bg-slate-950/60 border border-white/[0.06]">
+          <button
+            onClick={() => setViewMode("clean")}
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium transition-all ${
+              viewMode === "clean"
+                ? "bg-slate-800 text-white shadow-sm"
+                : "text-slate-400 hover:text-slate-200"
+            }`}
+          >
+            <FileCode className="h-3.5 w-3.5" />
+            <span>Optimized SQL</span>
+          </button>
+          <button
+            onClick={() => setViewMode("split")}
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium transition-all ${
+              viewMode === "split"
+                ? "bg-slate-800 text-white shadow-sm"
+                : "text-slate-400 hover:text-slate-200"
+            }`}
+          >
+            <Split className="h-3.5 w-3.5" />
+            <span>Side-by-Side</span>
+          </button>
+          <button
+            onClick={() => setViewMode("unified")}
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium transition-all ${
+              viewMode === "unified"
+                ? "bg-slate-800 text-white shadow-sm"
+                : "text-slate-400 hover:text-slate-200"
+            }`}
+          >
+            <Columns2 className="h-3.5 w-3.5" />
+            <span>Diff</span>
+          </button>
+        </div>
+
+        {/* Action button */}
         <div className="flex items-center gap-2">
-          <span className="font-mono text-xs uppercase tracking-wider text-slate-300 font-semibold">
-            AST Query Rewrite Diff
-          </span>
-          {/* Edit counts chips */}
-          {hasEdits && (
-            <div className="hidden sm:flex items-center gap-1.5 ml-2">
+          {viewMode !== "clean" && (editCounts.insert || editCounts.remove) && (
+            <div className="hidden sm:flex items-center gap-1 text-[11px] font-mono text-slate-400 mr-1">
               {editCounts.insert ? (
-                <span className="font-mono text-[10px] px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold">
-                  +{editCounts.insert} Inserts
-                </span>
+                <span className="text-emerald-400">+{editCounts.insert}</span>
               ) : null}
               {editCounts.remove ? (
-                <span className="font-mono text-[10px] px-2 py-0.5 rounded-md bg-rose-500/10 text-rose-400 border border-rose-500/20 font-bold">
-                  -{editCounts.remove} Removals
-                </span>
-              ) : null}
-              {editCounts.update ? (
-                <span className="font-mono text-[10px] px-2 py-0.5 rounded-md bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 font-bold">
-                  ~{editCounts.update} Updates
-                </span>
+                <span className="text-rose-400">-{editCounts.remove}</span>
               ) : null}
             </div>
           )}
-        </div>
 
-        {/* Action buttons */}
-        <div className="flex items-center gap-2">
-          {/* View toggle */}
-          <div className="flex items-center p-1 rounded-xl bg-slate-950/60 border border-white/[0.06]">
-            <button
-              onClick={() => setViewMode("split")}
-              className={`p-1.5 rounded-lg text-xs transition-all ${
-                viewMode === "split"
-                  ? "bg-slate-800 text-white shadow-sm"
-                  : "text-slate-400 hover:text-slate-200"
-              }`}
-              title="Side-by-side view"
-            >
-              <Split className="h-3.5 w-3.5" />
-            </button>
-            <button
-              onClick={() => setViewMode("unified")}
-              className={`p-1.5 rounded-lg text-xs transition-all ${
-                viewMode === "unified"
-                  ? "bg-slate-800 text-white shadow-sm"
-                  : "text-slate-400 hover:text-slate-200"
-              }`}
-              title="Unified view"
-            >
-              <Columns2 className="h-3.5 w-3.5" />
-            </button>
-          </div>
-
-          {/* Copy button */}
           <button
             onClick={handleCopy}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold shadow-sm transition-all active:scale-[0.98]"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold shadow-sm transition-all active:scale-[0.98]"
           >
             {copied ? (
               <>
@@ -110,51 +105,64 @@ export function DiffViewer({
         </div>
       </div>
 
-      {/* Explanation Banner (if available) */}
+      {/* Explanation Banner (Concise & Elegant) */}
       {explanation && (
-        <div className="px-4 py-3 bg-indigo-950/30 border-b border-indigo-500/20 text-xs text-slate-300 leading-relaxed">
-          <strong className="text-indigo-400 font-semibold">Architectural Rationale: </strong>
-          {explanation}
+        <div className="px-4 py-2.5 bg-indigo-500/5 border-b border-indigo-500/10 text-xs text-slate-300 leading-relaxed flex items-start gap-2">
+          <div className="w-1.5 h-1.5 rounded-full bg-indigo-400 mt-1.5 shrink-0" />
+          <p>
+            <strong className="text-indigo-300 font-medium">Why it&apos;s faster: </strong>
+            {explanation}
+          </p>
         </div>
       )}
 
       {/* Code Canvas */}
-      <div className="font-mono text-xs overflow-x-auto max-h-[500px]">
-        {viewMode === "split" ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-white/[0.08]">
+      <div className="flex-1 overflow-auto p-4 font-mono text-xs leading-6 bg-slate-950/70">
+        {viewMode === "clean" ? (
+          <pre className="whitespace-pre-wrap break-words">
+            <code>
+              {tokens.map((tok, idx) => (
+                <span key={idx} className={tok.className}>
+                  {tok.text}
+                </span>
+              ))}
+            </code>
+          </pre>
+        ) : viewMode === "split" ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Left: Original */}
-            <div className="p-4 bg-slate-950/60">
-              <div className="text-[10px] uppercase font-bold text-rose-400 mb-2 flex items-center gap-1">
-                <span className="w-2 h-2 rounded-full bg-rose-500" />
-                Original Query (Anti-Patterns)
+            <div className="rounded-xl bg-slate-950/80 border border-white/[0.04] p-3.5">
+              <div className="text-[11px] font-semibold text-rose-400 mb-2 flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
+                Original Query
               </div>
-              <pre className="text-slate-300 whitespace-pre-wrap leading-6">
+              <pre className="text-slate-400 whitespace-pre-wrap leading-6">
                 <code>{originalSql}</code>
               </pre>
             </div>
 
             {/* Right: Optimized */}
-            <div className="p-4 bg-slate-950/30">
-              <div className="text-[10px] uppercase font-bold text-emerald-400 mb-2 flex items-center gap-1">
-                <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                Optimized Rewrite (SARGable)
+            <div className="rounded-xl bg-slate-950/80 border border-emerald-500/20 p-3.5">
+              <div className="text-[11px] font-semibold text-emerald-400 mb-2 flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                Optimized Rewrite
               </div>
-              <pre className="text-slate-100 whitespace-pre-wrap leading-6">
+              <pre className="text-slate-200 whitespace-pre-wrap leading-6">
                 <code>{optimizedSql}</code>
               </pre>
             </div>
           </div>
         ) : (
-          <div className="p-4 bg-slate-950/60 leading-6 space-y-0.5">
+          <div className="space-y-0.5 leading-6">
             {diffResult.map((part, index) => {
-              const bg = part.added
-                ? "bg-emerald-500/15 text-emerald-300 border-l-2 border-emerald-500 pl-2"
+              const style = part.added
+                ? "bg-emerald-500/10 text-emerald-300 border-l-2 border-emerald-400 pl-2"
                 : part.removed
-                ? "bg-rose-500/15 text-rose-300 border-l-2 border-rose-500 line-through opacity-80 pl-2"
-                : "text-slate-300 pl-2.5";
+                ? "bg-rose-500/10 text-rose-300 border-l-2 border-rose-400 line-through opacity-70 pl-2"
+                : "text-slate-400 pl-2.5";
 
               return (
-                <div key={index} className={`${bg} whitespace-pre-wrap font-mono`}>
+                <div key={index} className={`${style} whitespace-pre-wrap`}>
                   {part.value}
                 </div>
               );
@@ -165,3 +173,4 @@ export function DiffViewer({
     </div>
   );
 }
+

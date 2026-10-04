@@ -7,169 +7,135 @@ export default function TechnicalReference() {
   const [activeTab, setActiveTab] = useState<'pipeline' | 'safeguards'>('pipeline')
 
   return (
-    <div id="architecture" className="scroll-mt-24 space-y-4">
-      {/* Toggle Button */}
+    <div id="architecture" className="scroll-mt-20 space-y-4">
+      {/* Centered Friendly Toggle */}
       <div className="flex justify-center">
         <button
           type="button"
           onClick={() => setIsOpen(!isOpen)}
-          className="inline-flex items-center gap-2 rounded-xl border border-slate-800 bg-slate-900/60 px-4 py-2 text-xs font-medium text-slate-300 backdrop-blur-xl transition-all hover:border-slate-700 hover:bg-slate-850 hover:text-white active:scale-[0.98]"
+          className="inline-flex items-center gap-2 rounded-xl border border-slate-800 bg-slate-900/60 px-4 py-2 text-xs font-medium text-slate-300 backdrop-blur-xl transition-all hover:border-slate-700 hover:text-white active:scale-[0.98]"
         >
-          <span>{isOpen ? 'Hide technical reference' : 'Show technical architecture & cutover safeguards'}</span>
+          <span>{isOpen ? 'Hide technical details' : 'How the conversion pipeline works'}</span>
           <span className={`transform transition-transform text-slate-400 ${isOpen ? 'rotate-180' : ''}`}>
             ▾
           </span>
         </button>
       </div>
 
-      {/* Collapsible Content Container */}
+      {/* Progressive Disclosure Container */}
       {isOpen && (
-        <div className="surface-glass rounded-2xl p-6 shadow-glass-card space-y-6 transition-all duration-300">
-          {/* Header & Sub-Tabs */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/[0.08] pb-4">
+        <div className="surface-glass rounded-2xl p-5 sm:p-6 shadow-glass-card space-y-5 transition-all">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/[0.08] pb-3">
             <div>
-              <h3 className="text-base font-semibold text-white">
-                Technical architecture & cutover safeguards
+              <h3 className="text-sm font-semibold text-white">
+                Technical pipeline & cutover safeguards
               </h3>
               <p className="text-xs text-slate-400 mt-0.5">
-                Deterministic transformation specifications and failure mode mitigation.
+                How Legacy Link safely transforms legacy access control data into verified Genetec schemas.
               </p>
             </div>
 
-            <div className="flex items-center rounded-xl border border-slate-800 bg-slate-950/80 p-1">
+            <div className="flex items-center rounded-lg border border-slate-800 bg-slate-950 p-0.5">
               <button
                 type="button"
                 onClick={() => setActiveTab('pipeline')}
-                className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
+                className={`rounded-md px-3 py-1 text-xs font-medium transition-colors ${
                   activeTab === 'pipeline'
                     ? 'bg-indigo-600 text-white'
                     : 'text-slate-400 hover:text-white'
                 }`}
               >
-                3-stage ETL pipeline
+                3-step pipeline
               </button>
               <button
                 type="button"
                 onClick={() => setActiveTab('safeguards')}
-                className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
+                className={`rounded-md px-3 py-1 text-xs font-medium transition-colors ${
                   activeTab === 'safeguards'
                     ? 'bg-indigo-600 text-white'
                     : 'text-slate-400 hover:text-white'
                 }`}
               >
-                Excel vs. middleware safeguards
+                Excel vs. middleware
               </button>
             </div>
           </div>
 
-          {/* TAB 1: 3-STAGE PIPELINE */}
+          {/* TAB 1: 3-STEP PIPELINE */}
           {activeTab === 'pipeline' && (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="rounded-xl border border-slate-800/80 bg-slate-950/60 p-4 space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="rounded bg-indigo-500/10 border border-indigo-500/20 px-2 py-0.5 font-mono text-[11px] text-indigo-400 font-semibold">
-                    Step 1
-                  </span>
-                  <span className="text-[11px] text-slate-400 font-medium">Worker stream</span>
-                </div>
-                <h4 className="text-sm font-semibold text-white">Universal ingestion</h4>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+              <div className="rounded-xl border border-slate-800 bg-slate-950/60 p-4 space-y-1.5">
+                <span className="text-xs text-indigo-400 font-semibold">1. Safe Ingestion</span>
+                <h4 className="text-sm font-semibold text-white">Parse & sanitize</h4>
                 <p className="text-xs text-slate-400 leading-relaxed">
-                  PapaParse Web Workers parse legacy CSV files in the background without locking browser threads. Binary byte inspection rejects invalid formats.
+                  Web Workers parse CSV files without locking the browser. Corrupt binary bytes and empty rows are filtered automatically.
                 </p>
-                <div className="text-[11px] text-cyan-400 pt-1">
-                  • Zero DDL schema migrations needed
-                </div>
               </div>
 
-              <div className="rounded-xl border border-slate-800/80 bg-slate-950/60 p-4 space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="rounded bg-cyan-500/10 border border-cyan-500/20 px-2 py-0.5 font-mono text-[11px] text-cyan-400 font-semibold">
-                    Step 2
-                  </span>
-                  <span className="text-[11px] text-slate-400 font-medium">Rule AST</span>
-                </div>
-                <h4 className="text-sm font-semibold text-white">Visual schema mapping</h4>
+              <div className="rounded-xl border border-slate-800 bg-slate-950/60 p-4 space-y-1.5">
+                <span className="text-xs text-cyan-400 font-semibold">2. Smart Mapping</span>
+                <h4 className="text-sm font-semibold text-white">Format & validate</h4>
                 <p className="text-xs text-slate-400 leading-relaxed">
-                  Map legacy columns to standard Genetec targets. Merge split name columns, format Wiegand tuples (<code className="text-slate-300">FC:Card</code>), and normalize status flags.
+                  Maps legacy columns to Genetec standard fields. Combines split names, formats Wiegand tuples, and checks for duplicate IDs.
                 </p>
-                <div className="text-[11px] text-cyan-400 pt-1">
-                  • Automated collision detection
-                </div>
               </div>
 
-              <div className="rounded-xl border border-slate-800/80 bg-slate-950/60 p-4 space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="rounded bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 font-mono text-[11px] text-emerald-400 font-semibold">
-                    Step 3
-                  </span>
-                  <span className="text-[11px] text-slate-400 font-medium">RFC 4180</span>
-                </div>
-                <h4 className="text-sm font-semibold text-white">Genetec Config Tool export</h4>
+              <div className="rounded-xl border border-slate-800 bg-slate-950/60 p-4 space-y-1.5">
+                <span className="text-xs text-emerald-400 font-semibold">3. Clean Export</span>
+                <h4 className="text-sm font-semibold text-white">1-Click download</h4>
                 <p className="text-xs text-slate-400 leading-relaxed">
-                  Executes in memory to produce strict PascalCase CSV files with properly quoted text fields, ready for 1-click import into Genetec Config Tool.
+                  Outputs RFC-compliant PascalCase CSV files with properly quoted text fields, ready for instant import in Genetec Config Tool.
                 </p>
-                <div className="text-[11px] text-cyan-400 pt-1">
-                  • Sub-second client blob download
-                </div>
               </div>
             </div>
           )}
 
-          {/* TAB 2: EXCEL VS MIDDLEWARE SAFEGUARDS */}
+          {/* TAB 2: EXCEL VS MIDDLEWARE */}
           {activeTab === 'safeguards' && (
-            <div className="overflow-x-auto rounded-xl border border-slate-800/80 bg-slate-950/60">
+            <div className="overflow-x-auto rounded-xl border border-slate-800 bg-slate-950/60">
               <table className="w-full text-left text-xs">
-                <thead className="border-b border-white/[0.08] bg-slate-950/90 text-slate-400">
+                <thead className="border-b border-white/[0.08] bg-slate-950 text-slate-400">
                   <tr>
-                    <th className="py-3 px-4 font-medium w-1/4">Cutover failure vector</th>
-                    <th className="py-3 px-4 font-medium w-3/8 text-rose-400">Manual Excel cleaning</th>
-                    <th className="py-3 px-4 font-medium w-3/8 text-emerald-400">Legacy Link middleware</th>
+                    <th className="py-2.5 px-4 font-medium">Failure vector</th>
+                    <th className="py-2.5 px-4 font-medium text-rose-400">Manual Excel risk</th>
+                    <th className="py-2.5 px-4 font-medium text-emerald-400">Legacy Link safeguard</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-800/60">
                   <tr className="hover:bg-slate-900/30">
-                    <td className="py-3 px-4 font-semibold text-white">Facility codes</td>
-                    <td className="py-3 px-4 text-slate-300">
+                    <td className="py-2.5 px-4 font-medium text-white">Leading zeros</td>
+                    <td className="py-2.5 px-4 text-slate-300">
                       Excel strips leading zeros (<code className="text-slate-400">0042 ➔ 42</code>), breaking turnstile readers.
                     </td>
-                    <td className="py-3 px-4 text-emerald-300">
-                      Exact string preservation in PostgreSQL JSONB; leading zeros never stripped.
+                    <td className="py-2.5 px-4 text-emerald-300">
+                      Exact string preservation; leading zeros never stripped.
                     </td>
                   </tr>
                   <tr className="hover:bg-slate-900/30">
-                    <td className="py-3 px-4 font-semibold text-white">37-bit high-bit cards</td>
-                    <td className="py-3 px-4 text-slate-300">
-                      Converted to scientific notation (<code className="text-slate-400">4.58E+09</code>), destroying badge IDs.
+                    <td className="py-2.5 px-4 font-medium text-white">37-bit badge numbers</td>
+                    <td className="py-2.5 px-4 text-slate-300">
+                      Excel converts to scientific notation (<code className="text-slate-400">4.58E+09</code>), destroying badge IDs.
                     </td>
-                    <td className="py-3 px-4 text-emerald-300">
+                    <td className="py-2.5 px-4 text-emerald-300">
                       Immutable string typing with uppercase hex normalization.
                     </td>
                   </tr>
                   <tr className="hover:bg-slate-900/30">
-                    <td className="py-3 px-4 font-semibold text-white">Split identity columns</td>
-                    <td className="py-3 px-4 text-slate-300">
-                      Brittle CONCATENATE formulas across 50,000 rows prone to null cell failures.
+                    <td className="py-2.5 px-4 font-medium text-white">Split names</td>
+                    <td className="py-2.5 px-4 text-slate-300">
+                      Fragile CONCAT formulas crash on null cells.
                     </td>
-                    <td className="py-3 px-4 text-emerald-300">
-                      Visual concatenation builder with custom delimiter strings.
-                    </td>
-                  </tr>
-                  <tr className="hover:bg-slate-900/30">
-                    <td className="py-3 px-4 font-semibold text-white">Credential collisions</td>
-                    <td className="py-3 px-4 text-slate-300">
-                      No collision checking; duplicate card IDs deny turnstile access Monday morning.
-                    </td>
-                    <td className="py-3 px-4 text-emerald-300">
-                      Collision engine flags duplicate IDs and adds Facility Code prefixing.
+                    <td className="py-2.5 px-4 text-emerald-300">
+                      Visual column merge builder with custom delimiters.
                     </td>
                   </tr>
                   <tr className="hover:bg-slate-900/30">
-                    <td className="py-3 px-4 font-semibold text-white">Cutover downtime</td>
-                    <td className="py-3 px-4 text-slate-300">
-                      3 to 5 days of manual spreadsheet reconciliation and cutover panic.
+                    <td className="py-2.5 px-4 font-medium text-white">Duplicate badges</td>
+                    <td className="py-2.5 px-4 text-slate-300">
+                      No collision checking; duplicate card IDs lock people out.
                     </td>
-                    <td className="py-3 px-4 text-emerald-300">
-                      Deterministic schema export cuts cutover downtime by ~95%.
+                    <td className="py-2.5 px-4 text-emerald-300">
+                      Automated collision detection alerts on duplicates.
                     </td>
                   </tr>
                 </tbody>

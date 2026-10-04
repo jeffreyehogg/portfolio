@@ -185,6 +185,15 @@ export interface HealthResponse {
   sqlglot_version: string;
 }
 
+export interface FormatRequest {
+  sql: string;
+  dialect?: Dialect;
+}
+
+export interface FormatResponse {
+  formatted_sql: string;
+}
+
 export interface ApiErrorEnvelope {
   error: {
     code: string;

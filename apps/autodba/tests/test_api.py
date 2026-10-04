@@ -80,3 +80,11 @@ def test_empty_sql_validation_error():
     resp = client.post("/api/py/analyze", json={"sql": "", "dialect": "tsql"})
     assert resp.status_code == 422
     assert resp.json()["error"]["code"] == "VALIDATION_ERROR"
+
+
+def test_format_endpoint():
+    resp = client.post("/api/py/format", json={"sql": "select * from users where id=1", "dialect": "tsql"})
+    assert resp.status_code == 200
+    data = resp.json()
+    assert "SELECT" in data["formatted_sql"]
+    assert "WHERE" in data["formatted_sql"]

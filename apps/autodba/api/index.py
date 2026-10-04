@@ -35,6 +35,8 @@ from engine.optimizer.ddl_generator import synthesize_indexes
 from engine.schemas import (
     AnalyzeRequest,
     AnalyzeResponse,
+    FormatRequest,
+    FormatResponse,
     HealthResponse,
     OptimizationResult,
     OptimizeRequest,
@@ -285,6 +287,25 @@ async def optimize_endpoint(
 
     res.quota = quota_info
     return res
+
+
+@app.post("/api/py/format", response_model=FormatResponse)
+async def format_query_endpoint(req: FormatRequest, request: Request):
+    """
+    Format and beautify SQL query with dialect-aware indentation and keyword capitalization.
+    Runs 100% free with deterministic sqlglot AST parsing (zero tokens).
+    """
+    clean = sanitize_sql(req.sql)
+    if not clean.strip():
+        return FormatResponse(formatted_sql="")
+
+    try:
+        expr = sqlglot.parse_one(clean, read=req.dialect)
+        formatted = expr.sql(dialect=req.dialect, pretty=True)
+        return FormatResponse(formatted_sql=formatted)
+    except Exception:
+        # Fallback to returning cleaned original if syntax is incomplete
+        return FormatResponse(formatted_sql=clean)
 
 
 # ---------------------------------------------------------------------------

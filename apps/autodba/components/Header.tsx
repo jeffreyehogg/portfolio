@@ -40,7 +40,7 @@ export function Header({
             </span>
             <span className="text-xs text-slate-500 hidden sm:inline">/</span>
             <span className="text-xs text-slate-400 font-medium hidden sm:inline">
-              SQL Optimizer
+              SQL Optimizer & Formatter
             </span>
           </div>
         </div>

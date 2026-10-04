@@ -228,6 +228,21 @@ async def run_optimization(
     # Heuristic cost model
     cost_model, improvement_pct = estimate_cost(before_report, after_report, plan_summary, indexes)
 
+    # Clarify explanation if query syntax is already optimal
+    if not best_fixes:
+        if indexes:
+            idx_names = ", ".join(f"{i.table}({', '.join(i.key_columns)})" for i in indexes[:2])
+            best_explanation = (
+                f"Query syntax is already optimal and requires no code changes. "
+                f"The ~{improvement_pct}% estimated workload reduction comes from creating the recommended covering index on {idx_names}. "
+                f"SQL output has been formatted with standard keyword capitalization and indentation."
+            )
+        else:
+            best_explanation = (
+                "Query syntax is already optimal and requires no code changes. "
+                "SQL output has been formatted with standard keyword capitalization and indentation."
+            )
+
     trace.append(
         AgentStep(
             iteration=iteration,

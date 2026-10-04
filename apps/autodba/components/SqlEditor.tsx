@@ -9,6 +9,7 @@ import {
   Sparkles,
   Trash2,
   Upload,
+  Wand2,
   Zap,
 } from "lucide-react";
 import { tokenizeSql } from "@/lib/sql-highlight";
@@ -22,6 +23,8 @@ interface SqlEditorProps {
   plan: string;
   onChangePlan: (val: string) => void;
   onClear?: () => void;
+  onFormat?: () => void;
+  isFormatting?: boolean;
   onAnalyze: () => void;
   onOptimize: () => void;
   isAnalyzing: boolean;
@@ -38,6 +41,8 @@ export function SqlEditor({
   plan,
   onChangePlan,
   onClear,
+  onFormat,
+  isFormatting,
   onAnalyze,
   onOptimize,
   isAnalyzing,
@@ -152,6 +157,24 @@ export function SqlEditor({
               <option value="postgres">PostgreSQL</option>
               <option value="mysql">MySQL</option>
             </select>
+          )}
+
+          {/* Format button */}
+          {hasContent && activeTab === "sql" && onFormat && (
+            <button
+              type="button"
+              onClick={onFormat}
+              disabled={isFormatting}
+              className="flex items-center gap-1 px-2 py-1 rounded-lg bg-slate-900/60 hover:bg-slate-800 text-slate-400 hover:text-indigo-300 text-xs font-medium border border-white/[0.06] transition-all active:scale-[0.98] disabled:opacity-50"
+              title="Format & beautify SQL (uppercase keywords and clean indentation)"
+            >
+              {isFormatting ? (
+                <div className="w-3.5 h-3.5 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin" />
+              ) : (
+                <Wand2 className="h-3.5 w-3.5 text-indigo-400" />
+              )}
+              <span className="hidden sm:inline">Format</span>
+            </button>
           )}
 
           {/* Upload button */}

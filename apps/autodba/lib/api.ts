@@ -5,6 +5,8 @@
 import type {
   AnalyzeRequest,
   AnalyzeResponse,
+  FormatRequest,
+  FormatResponse,
   HealthResponse,
   OptimizationResult,
   OptimizeRequest,
@@ -98,4 +100,24 @@ export async function optimizeQuery(
     cache: "no-store",
   });
   return handleResponse<OptimizationResult>(res);
+}
+
+export async function formatQuery(payload: FormatRequest): Promise<string> {
+  try {
+    const res = await fetch("/api/py/format", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+      cache: "no-store",
+    });
+    if (res.ok) {
+      const data: FormatResponse = await res.json();
+      if (data && data.formatted_sql) {
+        return data.formatted_sql;
+      }
+    }
+  } catch {
+    // Graceful fallback to original SQL
+  }
+  return payload.sql;
 }

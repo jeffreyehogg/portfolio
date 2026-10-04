@@ -32,6 +32,10 @@ export function DiffViewer({
   const editCounts = verification?.ast_edit_counts || {};
   const tokens = tokenizeSql(optimizedSql);
 
+  const isSyntaxIdentical =
+    originalSql.replace(/\s+/g, " ").trim().toLowerCase() ===
+    optimizedSql.replace(/\s+/g, " ").trim().toLowerCase();
+
   return (
     <div className="flex flex-col h-full rounded-2xl bg-slate-900/60 backdrop-blur-xl border border-white/[0.06] overflow-hidden">
       {/* Header toolbar */}
@@ -47,7 +51,7 @@ export function DiffViewer({
             }`}
           >
             <FileCode className="h-3.5 w-3.5" />
-            <span>Optimized SQL</span>
+            <span>{isSyntaxIdentical ? "Formatted SQL" : "Optimized SQL"}</span>
           </button>
           <button
             onClick={() => setViewMode("split")}
@@ -71,6 +75,11 @@ export function DiffViewer({
             <Columns2 className="h-3.5 w-3.5" />
             <span>Diff</span>
           </button>
+          {isSyntaxIdentical && (
+            <span className="hidden sm:inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium ml-1">
+              Syntax Optimal
+            </span>
+          )}
         </div>
 
         {/* Action button */}
@@ -107,10 +116,18 @@ export function DiffViewer({
 
       {/* Explanation Banner (Concise & Elegant) */}
       {explanation && (
-        <div className="px-4 py-2.5 bg-indigo-500/5 border-b border-indigo-500/10 text-xs text-slate-300 leading-relaxed flex items-start gap-2">
-          <div className="w-1.5 h-1.5 rounded-full bg-indigo-400 mt-1.5 shrink-0" />
+        <div className={`px-4 py-2.5 border-b text-xs leading-relaxed flex items-start gap-2 ${
+          isSyntaxIdentical
+            ? "bg-emerald-500/5 border-emerald-500/10 text-slate-300"
+            : "bg-indigo-500/5 border-indigo-500/10 text-slate-300"
+        }`}>
+          <div className={`w-1.5 h-1.5 rounded-full mt-1.5 shrink-0 ${
+            isSyntaxIdentical ? "bg-emerald-400" : "bg-indigo-400"
+          }`} />
           <p>
-            <strong className="text-indigo-300 font-medium">Why it&apos;s faster: </strong>
+            <strong className={`font-medium ${isSyntaxIdentical ? "text-emerald-300" : "text-indigo-300"}`}>
+              {isSyntaxIdentical ? "Query Syntax Optimal: " : "Why it's faster: "}
+            </strong>
             {explanation}
           </p>
         </div>

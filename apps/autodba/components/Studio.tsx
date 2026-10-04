@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import {
   analyzeQuery,
+  formatQuery,
   getHealth,
   getPresetDetail,
   getPresets,
@@ -61,6 +62,7 @@ export function Studio() {
 
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [isOptimizing, setIsOptimizing] = useState(false);
+  const [isFormatting, setIsFormatting] = useState(false);
   const [engineMode, setEngineMode] = useState<"auto" | "deterministic">("auto");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isStale, setIsStale] = useState(false);
@@ -131,6 +133,22 @@ export function Studio() {
   const handleSqlChange = (newSql: string) => {
     setSql(newSql);
     setIsStale(true);
+  };
+
+  // Format SQL Handler
+  const handleFormat = async () => {
+    if (!sql.trim()) return;
+    setIsFormatting(true);
+    try {
+      const formatted = await formatQuery({ sql, dialect });
+      if (formatted && formatted.trim()) {
+        setSql(formatted);
+      }
+    } catch (e: any) {
+      console.warn("Formatting failed:", e);
+    } finally {
+      setIsFormatting(false);
+    }
   };
 
   // Select Preset handler
@@ -242,6 +260,8 @@ export function Studio() {
               plan={plan}
               onChangePlan={setPlan}
               onClear={handleClear}
+              onFormat={handleFormat}
+              isFormatting={isFormatting}
               onAnalyze={handleAnalyze}
               onOptimize={handleOptimize}
               isAnalyzing={isAnalyzing}
@@ -261,9 +281,17 @@ export function Studio() {
                     <Sparkles className="h-3.5 w-3.5" />
                     ~{optResult.estimated_improvement_pct}% Estimated Reduction
                   </span>
-                  {optResult.antipatterns_fixed.length > 0 && (
+                  {optResult.antipatterns_fixed.length > 0 ? (
                     <span className="text-slate-400 hidden sm:inline">
                       • {optResult.antipatterns_fixed.length} issue{optResult.antipatterns_fixed.length > 1 ? "s" : ""} resolved
+                    </span>
+                  ) : optResult.ddl_recommendations.length > 0 ? (
+                    <span className="text-slate-400 hidden sm:inline">
+                      • Syntax optimal; workload reduction from index
+                    </span>
+                  ) : (
+                    <span className="text-slate-400 hidden sm:inline">
+                      • Query syntax is already optimal
                     </span>
                   )}
                 </div>

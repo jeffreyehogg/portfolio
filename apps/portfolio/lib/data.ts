@@ -217,7 +217,7 @@ export const projectsData: Project[] = [
 		href: 'https://autodba.jeffhogg.com',
 		githubUrl: 'https://github.com/jeffreyehogg/portfolio/tree/main/apps/autodba',
 		description:
-			'AI-powered database assistant that analyzes SQL queries, identifies performance bottlenecks, and recommends index optimizations.',
+			'AI-powered database assistant that formats SQL, identifies query performance bottlenecks, and recommends index optimizations (modern SSMS alternative).',
 		imageUrl: '/images/projects/autodba.png',
 		tags: ['Next.js', 'Python', 'FastAPI', 'AI'],
 		featured: true,

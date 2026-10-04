@@ -256,3 +256,12 @@ class HealthResponse(_Model):
     llm_configured: bool
     model: str
     sqlglot_version: str
+
+
+class FormatRequest(_Model):
+    sql: str = Field(min_length=1, max_length=MAX_SQL_CHARS)
+    dialect: Dialect = "tsql"
+
+
+class FormatResponse(_Model):
+    formatted_sql: str

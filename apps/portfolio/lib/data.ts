@@ -98,7 +98,7 @@ export const engineeringPillars: EngineeringPillar[] = [
 		badge: 'Data Layer',
 		description:
 			'Managing, maintaining, and tuning distributed Microsoft SQL Server and MySQL databases, leveraging MCP tooling to profile queries and refactor stored procedures.',
-		stats: 'Sub-second Query Speeds',
+		stats: 'Fast Query Response',
 		technologies: ['MS SQL Server', 'MySQL', 'MCP Tooling', 'Stored Procedures', 'PostgreSQL'],
 	},
 	{
@@ -388,7 +388,7 @@ export const servicesData: ServiceTier[] = [
 			'Modern Next.js App Router & Server Actions',
 			'Type-safe database architecture (Drizzle/Neon)',
 			'Secure user authentication',
-			'Sub-second page load times',
+			'Fast page load times',
 		],
 		cta: 'Start a Project',
 		mostPopular: false,

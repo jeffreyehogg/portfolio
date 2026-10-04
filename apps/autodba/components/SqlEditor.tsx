@@ -265,29 +265,31 @@ export function SqlEditor({
 
       {/* Editor Footer Actions */}
       <div className="flex flex-wrap items-center justify-between gap-2.5 px-3.5 py-2.5 bg-slate-900/80 border-t border-white/[0.06]">
-        {/* Character count & shortcuts hint */}
-        <div className="flex items-center gap-2 text-[11px] text-slate-500">
-          <span className="hidden sm:inline">
-            <kbd className="px-1.5 py-0.5 rounded bg-slate-800/80 border border-white/[0.08] text-slate-400">⌘</kbd> + <kbd className="px-1.5 py-0.5 rounded bg-slate-800/80 border border-white/[0.08] text-slate-400">Enter</kbd>
-          </span>
-        </div>
-
-        {/* Action Triggers */}
+        {/* Left: Engine Mode toggle & shortcuts hint */}
         <div className="flex items-center gap-2">
-          {/* Mode toggle */}
           <button
+            type="button"
             onClick={() => onChangeEngineMode(engineMode === "auto" ? "deterministic" : "auto")}
-            className="flex items-center gap-1 px-2 py-1.5 rounded-lg bg-slate-800/40 hover:bg-slate-800 text-[11px] text-slate-400 hover:text-slate-200 border border-white/[0.06] transition-all"
+            className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-800/60 hover:bg-slate-800 text-xs font-medium text-slate-300 hover:text-white border border-white/[0.06] transition-all whitespace-nowrap"
             title="Toggle between AI Agent and Fast Rule Engine"
           >
             <span>{engineMode === "auto" ? "AI Mode" : "Fast Rules"}</span>
           </button>
 
+          <span className="hidden md:inline-flex items-center gap-1 text-[11px] text-slate-500">
+            <kbd className="px-1.5 py-0.5 rounded bg-slate-800/80 border border-white/[0.08] text-slate-400">⌘</kbd> + <kbd className="px-1.5 py-0.5 rounded bg-slate-800/80 border border-white/[0.08] text-slate-400">Enter</kbd>
+          </span>
+        </div>
+
+        {/* Right: Primary Actions (Permanently visible with no layout shift) */}
+        <div className="flex items-center gap-2">
           {/* Analyze Button */}
           <button
+            type="button"
             onClick={onAnalyze}
             disabled={isAnalyzing || isOptimizing || !sql.trim()}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-800 text-slate-300 text-xs font-medium border border-white/[0.08] transition-all disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98]"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-800 text-slate-300 text-xs font-medium border border-white/[0.08] transition-all disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98] whitespace-nowrap"
+            title="Run instant static rule diagnostics"
           >
             {isAnalyzing ? (
               <div className="w-3.5 h-3.5 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin" />
@@ -297,27 +299,26 @@ export function SqlEditor({
             <span>Analyze</span>
           </button>
 
-          {/* Convert to Stored Procedure Button */}
-          {hasContent && activeTab === "sql" && onOpenStoredProc && (
+          {/* Stored Procedure Button */}
+          {activeTab === "sql" && onOpenStoredProc && (
             <button
               type="button"
               onClick={onOpenStoredProc}
-              disabled={isAnalyzing || isOptimizing}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-200 hover:text-white text-xs font-medium border border-white/[0.08] hover:border-indigo-500/40 transition-all disabled:opacity-50 active:scale-[0.98]"
-              title="Convert query into a production-ready stored procedure"
+              disabled={isAnalyzing || isOptimizing || !sql.trim()}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-medium border border-white/[0.08] hover:border-indigo-500/40 transition-all disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98] whitespace-nowrap"
+              title="Convert this query into a production-ready stored procedure"
             >
               <ScrollText className="h-3.5 w-3.5 text-indigo-400" />
-              <span>
-                <span className="hidden sm:inline">Convert to </span>Stored Procedure
-              </span>
+              <span>Stored Procedure</span>
             </button>
           )}
 
           {/* Optimize CTA Button */}
           <button
+            type="button"
             onClick={onOptimize}
             disabled={isAnalyzing || isOptimizing || !sql.trim()}
-            className="flex items-center gap-1.5 px-4 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold shadow-md shadow-indigo-600/20 transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98]"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold shadow-md shadow-indigo-600/20 transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98] whitespace-nowrap"
           >
             {isOptimizing ? (
               <>

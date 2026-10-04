@@ -212,38 +212,6 @@ export const experienceData: ExperienceItem[] = [
 
 export const projectsData: Project[] = [
 	{
-		title: 'Texas Tint Plus',
-		category: 'apps',
-		href: 'https://texastint.com',
-		githubUrl: 'https://github.com/jeffreyehogg/texas-tint',
-		description:
-			'Commercial and residential window film platform for a Houston-area business, featuring an interactive quote estimator and service catalog.',
-		imageUrl: '/images/projects/texas-tint.png',
-		tags: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS'],
-		featured: true,
-	},
-	{
-		title: 'Vision Integrated Systems',
-		category: 'apps',
-		href: 'https://vision-texas.com/',
-		description:
-			'Corporate website for a commercial security and audio-visual provider, designed for fast load times and clean presentation across all devices.',
-		imageUrl: '/images/projects/vision.png',
-		tags: ['Next.js', 'React', 'Tailwind CSS', 'Framer Motion'],
-		featured: true,
-	},
-	{
-		title: 'Hogg Homes',
-		category: 'apps',
-		href: 'https://homes.jeffhogg.com',
-		githubUrl: 'https://github.com/jeffreyehogg/portfolio/tree/main/apps/hogg-homes',
-		description:
-			'Modern real estate platform for homebuilders, featuring searchable communities, interactive architectural elevations, and tour scheduling.',
-		imageUrl: '/images/projects/hogg-homes.png',
-		tags: ['Next.js', 'React', 'Tailwind CSS', 'Framer Motion'],
-		featured: true,
-	},
-	{
 		title: 'AutoDBA',
 		category: 'tools',
 		href: 'https://autodba.jeffhogg.com',
@@ -255,17 +223,6 @@ export const projectsData: Project[] = [
 		featured: true,
 	},
 	{
-		title: 'Legacy Link',
-		category: 'tools',
-		href: 'https://legacy-link.jeffhogg.com',
-		githubUrl: 'https://github.com/jeffreyehogg/portfolio/tree/main/apps/legacy-link',
-		description:
-			'Data migration tool for building security systems, allowing teams to map, clean, and transfer badge and access records in minutes.',
-		imageUrl: '/images/projects/legacy-link.png',
-		tags: ['Next.js', 'TypeScript', 'PostgreSQL', 'Clerk'],
-		featured: false,
-	},
-	{
 		title: 'Kingdom Connect',
 		category: 'apps',
 		href: 'https://kingdom.jeffhogg.com',
@@ -274,7 +231,18 @@ export const projectsData: Project[] = [
 			'Community engagement platform featuring a volunteer signup board, transparent mission funding, and a shared community prayer wall.',
 		imageUrl: '/images/projects/kingdom-connect.png',
 		tags: ['Next.js', 'React', 'PostgreSQL', 'Tailwind CSS'],
-		featured: false,
+		featured: true,
+	},
+	{
+		title: 'Legacy Link',
+		category: 'tools',
+		href: 'https://legacy-link.jeffhogg.com',
+		githubUrl: 'https://github.com/jeffreyehogg/portfolio/tree/main/apps/legacy-link',
+		description:
+			'Data migration tool for building security systems, allowing teams to map, clean, and transfer badge and access records in minutes.',
+		imageUrl: '/images/projects/legacy-link.png',
+		tags: ['Next.js', 'TypeScript', 'PostgreSQL', 'Clerk'],
+		featured: true,
 	},
 	{
 		title: 'ForexFlow FX Dashboard',
@@ -285,6 +253,38 @@ export const projectsData: Project[] = [
 			'Real-time foreign exchange dashboard displaying live currency exchange rates, interactive trend charts, and market depth.',
 		imageUrl: '/images/projects/forexflow.png',
 		tags: ['Nuxt 3', 'Vue 3', 'TypeScript', 'Chart.js'],
+		featured: false,
+	},
+	{
+		title: 'Hogg Homes',
+		category: 'apps',
+		href: 'https://homes.jeffhogg.com',
+		githubUrl: 'https://github.com/jeffreyehogg/portfolio/tree/main/apps/hogg-homes',
+		description:
+			'Modern real estate platform for homebuilders, featuring searchable communities, interactive architectural elevations, and tour scheduling.',
+		imageUrl: '/images/projects/hogg-homes.png',
+		tags: ['Next.js', 'React', 'Tailwind CSS', 'Framer Motion'],
+		featured: false,
+	},
+	{
+		title: 'Texas Tint Plus',
+		category: 'apps',
+		href: 'https://texastint.com',
+		githubUrl: 'https://github.com/jeffreyehogg/texas-tint',
+		description:
+			'Commercial and residential window film platform for a Houston-area business, featuring an interactive quote estimator and service catalog.',
+		imageUrl: '/images/projects/texas-tint.png',
+		tags: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS'],
+		featured: false,
+	},
+	{
+		title: 'Vision Integrated Systems',
+		category: 'apps',
+		href: 'https://vision-texas.com/',
+		description:
+			'Corporate website for a commercial security and audio-visual provider, designed for fast load times and clean presentation across all devices.',
+		imageUrl: '/images/projects/vision.png',
+		tags: ['Next.js', 'React', 'Tailwind CSS', 'Framer Motion'],
 		featured: false,
 	},
 	{

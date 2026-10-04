@@ -105,7 +105,7 @@ export function ByokModal({
             </span>
           </div>
           <p className="text-[11px] text-slate-500 pt-1">
-            *Deterministic AST analysis and all 4 enterprise presets are always 100% free with unlimited runs.
+            *Rule-based analysis and all enterprise examples are always 100% free with unlimited runs.
           </p>
         </div>
 

@@ -83,7 +83,7 @@ export function DiagnosticsList({
           No Diagnostics Run Yet
         </h4>
         <p className="text-xs text-slate-400 max-w-sm mx-auto">
-          Write or paste a query on the left and click Analyze or Optimize Query to inspect AST anti-patterns.
+          Write or paste a query on the left and click Analyze or Optimize Query to inspect performance bottlenecks.
         </p>
       </div>
     );
@@ -96,10 +96,10 @@ export function DiagnosticsList({
           <CheckCircle2 className="w-6 h-6" />
         </div>
         <h4 className="text-sm font-bold text-white mb-1">
-          Zero Anti-Patterns Detected
+          Zero Issues Detected
         </h4>
         <p className="text-xs text-slate-400 max-w-sm mx-auto">
-          The query AST conforms to production SARGability standards with explicit joins and bounded scans.
+          Your query follows best practices with index-friendly search filters, explicit joins, and bounded scans.
         </p>
       </div>
     );

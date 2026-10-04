@@ -69,7 +69,7 @@ export function AgentTrace({
             ) : (
               <>
                 <Cpu className="h-3 w-3 text-cyan-400" />
-                <span>Deterministic AST</span>
+                <span>Rule Engine</span>
               </>
             )}
           </span>
@@ -95,8 +95,8 @@ export function AgentTrace({
             <ShieldCheck className="h-4 w-4 shrink-0" />
             <span className="font-semibold">
               {verification.passed
-                ? "AST Verification Constraints Passed"
-                : "Verification Detected Semantic Drift"}
+                ? "Safety & Syntax Checks Passed"
+                : "Verification Blocked Unsafe Rewrite"}
             </span>
           </div>
           <span className="font-mono text-[11px] opacity-80">

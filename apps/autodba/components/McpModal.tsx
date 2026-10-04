@@ -84,7 +84,7 @@ export function McpModal({ isOpen, onClose }: McpModalProps) {
                 Model Context Protocol (MCP) Server
               </h3>
               <p className="text-xs text-slate-400">
-                Integrate AutoDBA AST query diagnostics directly into your AI IDE.
+                Integrate AutoDBA query diagnostics directly into your AI IDE.
               </p>
             </div>
           </div>

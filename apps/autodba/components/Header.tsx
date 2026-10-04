@@ -59,7 +59,7 @@ export function Header({
               }`}
             />
             <span className="font-mono text-[11px] text-slate-400">
-              {llmReady ? "AI Active" : "Fast AST"}
+              {llmReady ? "AI Active" : "Fast Rules"}
             </span>
           </div>
 

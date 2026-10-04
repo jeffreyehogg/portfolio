@@ -21,7 +21,7 @@ export function ArchitectureBento() {
       >
         <div className="flex items-center gap-2">
           <Cpu className="h-3.5 w-3.5 text-indigo-400" />
-          <span className="font-medium">How AutoDBA Works: AST Diagnostics & Verification Loop</span>
+          <span className="font-medium">How AutoDBA Works: Smart Diagnostics & Safe Rewrite Loop</span>
         </div>
         <div className="flex items-center gap-1 text-[11px] text-slate-500 group-hover:text-slate-400">
           <span>{isOpen ? "Hide details" : "Show details"}</span>
@@ -42,10 +42,10 @@ export function ArchitectureBento() {
               <span className="flex h-5 w-5 items-center justify-center rounded-md bg-indigo-500/10 text-[10px] font-bold text-indigo-400">
                 1
               </span>
-              <span>Deterministic AST Parsing</span>
+              <span>Instant Rule-Based Analysis</span>
             </div>
             <p className="text-[11px] text-slate-400 leading-relaxed">
-              Analyzes SQL structure with <code className="text-slate-300">sqlglot</code> to flag non-SARGable functions, Cartesian joins, and unindexed filter predicates with zero LLM tokens.
+              Analyzes SQL query structure with <code className="text-slate-300">sqlglot</code> to flag index-blocking functions, missing join conditions, and slow table scans with zero AI cost.
             </p>
           </div>
 
@@ -55,7 +55,7 @@ export function ArchitectureBento() {
               <span className="flex h-5 w-5 items-center justify-center rounded-md bg-cyan-500/10 text-[10px] font-bold text-cyan-400">
                 2
               </span>
-              <span>Agentic Rewrite Synthesis</span>
+              <span>AI & Optimization Engine</span>
             </div>
             <p className="text-[11px] text-slate-400 leading-relaxed">
               Transforms queries into index-seekable range predicates, explicit joins, and generates covering <code className="text-slate-300">CREATE INDEX</code> DDL.
@@ -68,10 +68,10 @@ export function ArchitectureBento() {
               <span className="flex h-5 w-5 items-center justify-center rounded-md bg-emerald-500/10 text-[10px] font-bold text-emerald-400">
                 3
               </span>
-              <span>AST Diff Verification</span>
+              <span>Automated Safety Verification</span>
             </div>
             <p className="text-[11px] text-slate-400 leading-relaxed">
-              Validates that every candidate rewrite retains identical table targets and statement types, rejecting hallucinations and guarding against prompt injection.
+              Mathematically verifies that every candidate rewrite retains identical table targets, columns, and logic, rejecting AI hallucinations before showing you the code.
             </p>
           </div>
         </div>

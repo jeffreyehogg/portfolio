@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     template: "%s | AutoDBA",
   },
   description:
-    "Autonomous SQL query profiler, AST antipattern analyzer, and zero-downtime index synthesis platform running on modern Python 3.12, sqlglot, and Google Gemini Flash.",
+    "Autonomous SQL query profiler, performance bottleneck analyzer, and zero-downtime index synthesis platform running on modern Python 3.12, sqlglot, and Google Gemini Flash.",
   keywords: [
     "AutoDBA",
     "SQL Optimization",
@@ -30,14 +30,14 @@ export const metadata: Metadata = {
     url: "https://autodba.jeffhogg.com",
     title: "AutoDBA — Agentic SQL Diagnostics & Query Optimization",
     description:
-      "Autonomous SQL query profiler, AST antipattern analyzer, and zero-downtime index synthesis platform.",
+      "Autonomous SQL query profiler, performance bottleneck analyzer, and zero-downtime index synthesis platform.",
     siteName: "AutoDBA",
   },
   twitter: {
     card: "summary_large_image",
     title: "AutoDBA — Agentic SQL Diagnostics & Query Optimization",
     description:
-      "Autonomous SQL query profiler, AST antipattern analyzer, and zero-downtime index synthesis platform.",
+      "Autonomous SQL query profiler, performance bottleneck analyzer, and zero-downtime index synthesis platform.",
   },
 };
 

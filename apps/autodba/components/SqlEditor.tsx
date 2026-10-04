@@ -252,9 +252,9 @@ export function SqlEditor({
           <button
             onClick={() => onChangeEngineMode(engineMode === "auto" ? "deterministic" : "auto")}
             className="flex items-center gap-1 px-2 py-1.5 rounded-lg bg-slate-800/40 hover:bg-slate-800 text-[11px] text-slate-400 hover:text-slate-200 border border-white/[0.06] transition-all"
-            title="Toggle between AI Agent and Fast AST"
+            title="Toggle between AI Agent and Fast Rule Engine"
           >
-            <span>{engineMode === "auto" ? "AI Mode" : "Fast AST"}</span>
+            <span>{engineMode === "auto" ? "AI Mode" : "Fast Rules"}</span>
           </button>
 
           {/* Analyze Button */}

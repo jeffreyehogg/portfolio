@@ -120,7 +120,7 @@ export function PlanTelemetry({
           </div>
 
           <div className="text-[11px] text-slate-500 pt-2 border-t border-white/[0.04]">
-            Static AST cost model estimation
+            Static query cost estimation
           </div>
         </div>
 

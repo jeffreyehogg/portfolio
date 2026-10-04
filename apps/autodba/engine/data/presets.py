@@ -23,8 +23,8 @@ PRESETS: list[PresetSeed] = [
         title="Homebuyer Lead Attribution Report",
         domain="Real Estate CRM",
         dialect="tsql",
-        description="Analyzes homebuyer lead conversion across communities and marketing campaigns with anti-patterns including implicit Cartesian joins, non-SARGable date functions, and NOLOCK hints.",
-        tags=["T-SQL", "Cartesian Join", "Non-SARGable", "NOLOCK"],
+        description="Analyzes homebuyer lead conversion across communities and marketing campaigns with common issues like missing join conditions, function-wrapped date filters, and NOLOCK hints.",
+        tags=["T-SQL", "Missing Join Condition", "Date Filter", "NOLOCK"],
         headline_metric="184.6 → 9.2 est. cost",
         sql="""SELECT l.*, c.CommunityName, mc.CampaignName, sa.AgentName
 FROM dbo.Leads l WITH (NOLOCK), dbo.Communities c WITH (NOLOCK)
@@ -44,7 +44,7 @@ INNER JOIN dbo.SalesAgents AS sa ON sa.AgentId = l.AssignedAgentId
 WHERE l.CreatedDate >= '2026-07-01'
   AND l.CreatedDate < '2027-01-01'
   AND l.Email LIKE '%@GMAIL.COM'""",
-            explanation="Eliminated the implicit Cartesian join between Leads and MarketingCampaigns by establishing proper foreign key predicate wiring. Replaced non-SARGable YEAR and MONTH functions with a half-open date range enabling index seeks on CreatedDate. Removed unsafe NOLOCK hints and overfetching SELECT * in favor of explicit column projections.",
+            explanation="Eliminated the accidental cross join between Leads and MarketingCampaigns by establishing the missing join condition. Replaced function-wrapped YEAR and MONTH filters with a clean date range so the database can seek the index on CreatedDate. Removed unsafe NOLOCK hints and overfetching SELECT * in favor of explicit column lists.",
             antipatterns_fixed=["CARTESIAN_JOIN", "NON_SARGABLE_FUNCTION", "SELECT_STAR", "NOLOCK_HINT"],
             ddl_recommendations=[
                 "CREATE NONCLUSTERED INDEX [IX_Leads_CommunityId_CreatedDate] ON [dbo].[Leads] ([CommunityId], [CreatedDate]) INCLUDE ([Email], [AssignedAgentId], [CampaignId]) WITH (ONLINE = ON, SORT_IN_TEMPDB = ON, DATA_COMPRESSION = PAGE);"
@@ -55,10 +55,10 @@ WHERE l.CreatedDate >= '2026-07-01'
     PresetSeed(
         id="pacs-badge-telemetry",
         title="Facility Badge-Swipe Telemetry",
-        domain="Physical Security (PACS)",
+        domain="Security Badge Logs",
         dialect="postgres",
-        description="High-frequency access control telemetry query joining massive unpartitioned event logs with badges, doors, and facilities, plagued by implicit casting and expensive offset pagination.",
-        tags=["PostgreSQL", "Implicit Cast", "Seq Scan", "Pagination"],
+        description="High-frequency door badge swipe query joining massive event logs with cardholders and doors, suffering from unindexed date filters and slow pagination.",
+        tags=["PostgreSQL", "Type Mismatch", "Sequential Scan", "Pagination"],
         headline_metric="948.2K → 41.2K est. cost",
         sql="""SELECT e.event_id, e.event_ts, b.cardholder_name, d.door_name, f.facility_name
 FROM access_events e
@@ -87,7 +87,7 @@ WHERE e.event_ts >= '2026-09-30 00:00:00'
   )
 ORDER BY e.event_ts DESC
 LIMIT 100""",
-            explanation="Replaced non-SARGable date_trunc and implicit type casts on badge_number with SARGable date bounds and native numeric comparisons. Converted anti-pattern NOT IN subquery to a safe NOT EXISTS construct. Swapped deep OFFSET 5000 pagination for efficient cursor-based range filtering.",
+            explanation="Replaced index-blocking date_trunc and string type casts on badge_number with clean date range bounds and native numeric comparisons. Converted slow NOT IN subquery to an efficient NOT EXISTS check. Swapped slow deep OFFSET 5000 pagination for fast cursor-based filtering.",
             antipatterns_fixed=["NON_SARGABLE_FUNCTION", "IMPLICIT_CONVERSION", "NOT_IN_SUBQUERY", "DEEP_OFFSET"],
             ddl_recommendations=[
                 "CREATE INDEX CONCURRENTLY IF NOT EXISTS ix_access_events_ts_badge ON access_events (event_ts DESC, badge_id);"
@@ -98,7 +98,7 @@ LIMIT 100""",
     PresetSeed(
         id="erp-ledger-reconciliation",
         title="Month-End GL Ledger Reconciliation",
-        domain="ERP / Financial Ledger",
+        domain="Financial Ledger",
         dialect="tsql",
         description="Month-end general ledger reconciliation query featuring expensive correlated subqueries for running balances, string conversions on date columns, and loose type matching.",
         tags=["T-SQL", "Correlated Subquery", "Financial Ledger", "Date Conversion"],
@@ -126,7 +126,7 @@ WHERE g.PostingDate >= '2026-09-01'
   AND (g.CostCenterId = @CostCenterId OR (@CostCenterId IS NULL AND g.CostCenterId IS NULL))
   AND g.AccountNumber = '40100'
   AND (c.AccountType = 'Revenue' OR g.SourceSystem = 'AP')""",
-            explanation="Replaced O(N^2) correlated subquery running balance with an optimized analytic window function SUM() OVER. Converted non-SARGable CONVERT string truncation on PostingDate into a clean half-open date range. Fixed ISNULL predicate trap and numeric vs string column comparison.",
+            explanation="Replaced slow correlated subquery running balance with an optimized analytic window function SUM() OVER. Converted date string conversion on PostingDate into a clean date range so indexes can be used. Fixed ISNULL predicate trap and numeric vs string comparison.",
             antipatterns_fixed=["CORRELATED_SUBQUERY", "NON_SARGABLE_FUNCTION", "IMPLICIT_CONVERSION"],
             ddl_recommendations=[
                 "CREATE NONCLUSTERED INDEX [IX_GLEntries_Account_Posting] ON [dbo].[GeneralLedgerEntries] ([AccountId], [PostingDate]) INCLUDE ([AccountNumber], [CostCenterId], [Amount]);"
@@ -137,10 +137,10 @@ WHERE g.PostingDate >= '2026-09-01'
     PresetSeed(
         id="ecom-order-history",
         title="Customer Order History & Aggregation",
-        domain="E-Commerce / Inventory",
+        domain="E-Commerce Orders",
         dialect="mysql",
-        description="E-commerce customer order history aggregation featuring costly explicit DISTINCT masking, date functions on columns, random ordering, and temp-table filesort cascades.",
-        tags=["MySQL", "Filesort", "Temporary Table", "DISTINCT Overuse"],
+        description="Customer order history query featuring unnecessary DISTINCT masking, date functions on indexed columns, random ordering, and slow temporary table sorting.",
+        tags=["MySQL", "Temporary Table", "Filesort", "DISTINCT Overuse"],
         headline_metric="412.8 → 38.5 est. cost",
         sql="""SELECT DISTINCT o.order_id, o.customer_id, o.total_amount, o.created_at, c.email
 FROM orders o
@@ -161,7 +161,7 @@ WHERE o.created_at >= '2026-01-01 00:00:00'
   )
 ORDER BY o.created_at DESC
 LIMIT 50""",
-            explanation="Removed costly DISTINCT overuse by converting redundant item joins into an EXISTS predicate and leveraging a proper primary-key relationship. Eliminated non-SARGable DATE() function wrapper on created_at and replaced resource-draining ORDER BY RAND() with deterministic timestamp sorting.",
+            explanation="Removed costly DISTINCT overuse by converting redundant item joins into an EXISTS predicate. Eliminated date function wrapper on created_at so the index can be used, and replaced resource-draining ORDER BY RAND() with deterministic timestamp sorting.",
             antipatterns_fixed=["DISTINCT_OVERUSE", "NON_SARGABLE_FUNCTION", "ORDER_BY_RAND"],
             ddl_recommendations=[
                 "ALTER TABLE orders ADD INDEX ix_orders_created_customer (created_at, customer_id), ALGORITHM=INPLACE, LOCK=NONE;"

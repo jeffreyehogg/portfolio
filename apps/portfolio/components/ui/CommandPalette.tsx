@@ -49,7 +49,7 @@ const commandItems: CommandItem[] = [
 	},
 	{
 		id: 'nav-contact',
-		title: 'Contact Form (Protected by reCAPTCHA)',
+		title: 'Contact & Inquiries',
 		category: 'Navigation',
 		href: '/contact',
 		icon: EnvelopeIcon,
@@ -216,8 +216,8 @@ export default function CommandPalette({ isOpen, setIsOpen }: CommandPaletteProp
 														</div>
 														<div className='flex items-center gap-2'>
 															<span
-																className={`text-[11px] font-mono uppercase tracking-wider ${
-																	active ? 'text-indigo-200' : 'text-slate-500'
+																className={`text-xs font-normal ${
+																	active ? 'text-indigo-200' : 'text-slate-400'
 																}`}
 															>
 																{item.category}

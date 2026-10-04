@@ -62,6 +62,7 @@ export default function HoggHomesPlatform() {
           selectedMetro={selectedMetro}
           onSelectMetro={setSelectedMetro}
           searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
           onClearSearch={() => setSearchQuery('')}
           onOpenSchematic={openSchematic}
           onOpenBrochure={openBrochure}

@@ -105,7 +105,7 @@ export default function Navbar() {
 								<button
 									type='button'
 									onClick={() => setCommandPaletteOpen(true)}
-									className='flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-mono text-slate-400 bg-slate-800/60 hover:text-white hover:bg-slate-800 border border-slate-700/60 hover:border-indigo-500/40 transition-all cursor-pointer'
+									className='flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs text-slate-400 bg-slate-800/60 hover:text-white hover:bg-slate-800 border border-white/[0.08] hover:border-indigo-500/40 active:scale-[0.98] transition-all cursor-pointer'
 									aria-label='Quick Search (Press ⌘K)'
 									title='Quick Search (⌘K)'
 								>

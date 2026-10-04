@@ -50,16 +50,16 @@ export default function VirtualBrochureModal({
           {/* Header Controls (Hidden on print) */}
           <div className="flex items-center justify-between border-b border-slate-800 pb-4 no-print">
             <div className="flex items-center gap-2">
-              <span className="rounded bg-amber-500/10 border border-amber-500/30 px-2.5 py-0.5 text-xs font-mono text-amber-300">
-                OFFICIAL BUILDER SPEC SHEET
+              <span className="rounded bg-amber-500/10 border border-amber-500/30 px-2.5 py-0.5 text-xs text-amber-300">
+                Floor Plan Brochure
               </span>
-              <span className="text-xs font-mono text-slate-400">SERIES: {floorPlan.series}</span>
+              <span className="text-xs text-slate-400">{floorPlan.series}</span>
             </div>
 
             <div className="flex items-center gap-2">
               <button
                 onClick={handlePrint}
-                className="flex items-center gap-1.5 rounded-xl bg-amber-500 px-3.5 py-2 text-xs font-bold text-slate-950 hover:bg-amber-400 transition"
+                className="flex items-center gap-1.5 rounded-xl bg-amber-500 px-3.5 py-2 text-xs font-semibold text-slate-950 hover:bg-amber-400 transition"
               >
                 <Printer className="h-4 w-4" />
                 <span>Print / Save PDF</span>
@@ -84,8 +84,8 @@ export default function VirtualBrochureModal({
                     HOGG HOMES
                   </span>
                 </div>
-                <p className="text-xs font-mono uppercase tracking-wider text-slate-400 print:text-gray-600 mt-1">
-                  Texas Residential Homebuilding & Land Development
+                <p className="text-xs text-slate-400 print:text-gray-600 mt-1">
+                  Modern Homes in Texas & Arizona
                 </p>
               </div>
 

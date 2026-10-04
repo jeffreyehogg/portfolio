@@ -53,14 +53,14 @@ export default function Footer() {
 			<div className='max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8'>
 				{/* Navigation Links */}
 				<nav
-					className='-mx-5 -my-2 flex flex-wrap justify-center mb-8'
+					className='-mx-4 -my-2 flex flex-wrap justify-center mb-8'
 					aria-label='Footer'
 				>
 					{navigation.main.map((item) => (
-						<div key={item.name} className='px-5 py-2'>
+						<div key={item.name} className='px-4 py-2'>
 							<Link
 								href={item.href}
-								className='text-sm text-slate-400 hover:text-indigo-400 transition-colors duration-200 uppercase tracking-wide font-medium'
+								className='text-sm text-slate-400 hover:text-indigo-400 transition-colors duration-200 font-medium'
 							>
 								{item.name}
 							</Link>

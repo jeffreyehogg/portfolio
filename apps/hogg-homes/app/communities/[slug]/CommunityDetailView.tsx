@@ -120,10 +120,10 @@ export default function CommunityDetailView({
 
             <button
               onClick={() => openTourDrawer({ communityId: community.id })}
-              className="flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 px-6 py-4 text-sm font-bold text-slate-950 shadow-xl shadow-amber-500/20 hover:from-amber-400 hover:to-amber-500 transition-all whitespace-nowrap"
+              className="flex items-center justify-center gap-2 rounded-2xl bg-amber-500 hover:bg-amber-400 px-6 py-3.5 text-sm font-semibold text-slate-950 transition-colors whitespace-nowrap"
             >
               <Calendar className="h-4 w-4" />
-              <span>Schedule VIP Tour</span>
+              <span>Schedule a Tour</span>
             </button>
           </div>
         </div>

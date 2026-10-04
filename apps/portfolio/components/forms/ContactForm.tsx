@@ -20,12 +20,12 @@ function SubmitButton() {
 		<button
 			type='submit'
 			disabled={pending}
-			className='w-full sm:w-auto flex justify-center py-3 px-6 border border-transparent rounded-full shadow-lg text-base font-medium text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 hover:-translate-y-0.5 hover:shadow-indigo-500/25'
+			className='w-full sm:w-auto inline-flex items-center justify-center py-2.5 px-6 border border-transparent rounded-xl shadow-md text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98] transition-all duration-200'
 		>
 			{pending ? (
 				<span className='flex items-center'>
 					<svg
-						className='animate-spin -ml-1 mr-3 h-5 w-5 text-white'
+						className='animate-spin -ml-1 mr-2.5 h-4 w-4 text-white'
 						xmlns='http://www.w3.org/2000/svg'
 						fill='none'
 						viewBox='0 0 24 24'
@@ -47,7 +47,7 @@ function SubmitButton() {
 					Sending...
 				</span>
 			) : (
-				'Send Message'
+				'Send message'
 			)}
 		</button>
 	)
@@ -94,31 +94,31 @@ function ContactFormInner() {
 
 	return (
 		<motion.div
-			initial={{ opacity: 0, y: 20 }}
+			initial={{ opacity: 0, y: 15 }}
 			animate={{ opacity: 1, y: 0 }}
-			transition={{ duration: 0.5 }}
-			className='bg-slate-900/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-slate-800 p-8 sm:p-10'
+			transition={{ duration: 0.4 }}
+			className='bg-slate-900/80 backdrop-blur-xl rounded-2xl shadow-xl border border-white/[0.08] p-6 sm:p-9 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)]'
 		>
 			<form
 				ref={formRef}
 				action={formAction}
-				className='grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8'
+				className='grid grid-cols-1 gap-y-5 sm:grid-cols-2 sm:gap-x-6'
 			>
 				<div>
 					<label
 						htmlFor='firstName'
-						className='block text-sm font-semibold text-slate-200'
+						className='block text-xs font-medium text-slate-300'
 					>
 						First name
 					</label>
-					<div className='mt-2'>
+					<div className='mt-1.5'>
 						<input
 							type='text'
 							name='firstName'
 							id='firstName'
 							autoComplete='given-name'
 							required
-							className='block w-full rounded-lg border-0 px-4 py-3 text-slate-100 shadow-sm ring-1 ring-inset ring-slate-700 placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 bg-slate-950/50 focus:bg-slate-950 transition-colors'
+							className='block w-full rounded-xl border-0 px-3.5 py-2.5 text-slate-100 shadow-sm ring-1 ring-inset ring-white/[0.1] placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm bg-slate-950/60 focus:bg-slate-950 transition-colors'
 						/>
 					</div>
 					{state.errors?.firstName && (
@@ -130,18 +130,18 @@ function ContactFormInner() {
 				<div>
 					<label
 						htmlFor='lastName'
-						className='block text-sm font-semibold text-slate-200'
+						className='block text-xs font-medium text-slate-300'
 					>
 						Last name
 					</label>
-					<div className='mt-2'>
+					<div className='mt-1.5'>
 						<input
 							type='text'
 							name='lastName'
 							id='lastName'
 							autoComplete='family-name'
 							required
-							className='block w-full rounded-lg border-0 px-4 py-3 text-slate-100 shadow-sm ring-1 ring-inset ring-slate-700 placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 bg-slate-950/50 focus:bg-slate-950 transition-colors'
+							className='block w-full rounded-xl border-0 px-3.5 py-2.5 text-slate-100 shadow-sm ring-1 ring-inset ring-white/[0.1] placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm bg-slate-950/60 focus:bg-slate-950 transition-colors'
 						/>
 					</div>
 					{state.errors?.lastName && (
@@ -154,18 +154,18 @@ function ContactFormInner() {
 				<div className='sm:col-span-2'>
 					<label
 						htmlFor='email'
-						className='block text-sm font-semibold text-slate-200'
+						className='block text-xs font-medium text-slate-300'
 					>
 						Email
 					</label>
-					<div className='mt-2'>
+					<div className='mt-1.5'>
 						<input
 							id='email'
 							name='email'
 							type='email'
 							autoComplete='email'
 							required
-							className='block w-full rounded-lg border-0 px-4 py-3 text-slate-100 shadow-sm ring-1 ring-inset ring-slate-700 placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 bg-slate-950/50 focus:bg-slate-950 transition-colors'
+							className='block w-full rounded-xl border-0 px-3.5 py-2.5 text-slate-100 shadow-sm ring-1 ring-inset ring-white/[0.1] placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm bg-slate-950/60 focus:bg-slate-950 transition-colors'
 						/>
 					</div>
 					{state.errors?.email && (
@@ -177,19 +177,19 @@ function ContactFormInner() {
 					<div className='flex justify-between'>
 						<label
 							htmlFor='phone'
-							className='block text-sm font-semibold text-slate-200'
+							className='block text-xs font-medium text-slate-300'
 						>
 							Phone
 						</label>
-						<span className='text-sm text-slate-500'>Optional</span>
+						<span className='text-xs text-slate-500'>Optional</span>
 					</div>
-					<div className='mt-2'>
+					<div className='mt-1.5'>
 						<input
 							type='text'
 							name='phone'
 							id='phone'
 							autoComplete='tel'
-							className='block w-full rounded-lg border-0 px-4 py-3 text-slate-100 shadow-sm ring-1 ring-inset ring-slate-700 placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 bg-slate-950/50 focus:bg-slate-950 transition-colors'
+							className='block w-full rounded-xl border-0 px-3.5 py-2.5 text-slate-100 shadow-sm ring-1 ring-inset ring-white/[0.1] placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm bg-slate-950/60 focus:bg-slate-950 transition-colors'
 						/>
 					</div>
 				</div>
@@ -197,11 +197,11 @@ function ContactFormInner() {
 				<div className='sm:col-span-2'>
 					<label
 						htmlFor='subject'
-						className='block text-sm font-semibold text-slate-200'
+						className='block text-xs font-medium text-slate-300'
 					>
 						Subject
 					</label>
-					<div className='mt-2'>
+					<div className='mt-1.5'>
 						<input
 							type='text'
 							name='subject'
@@ -209,7 +209,7 @@ function ContactFormInner() {
 							defaultValue={defaultSubject}
 							key={defaultSubject}
 							required
-							className='block w-full rounded-lg border-0 px-4 py-3 text-slate-100 shadow-sm ring-1 ring-inset ring-slate-700 placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 bg-slate-950/50 focus:bg-slate-950 transition-colors'
+							className='block w-full rounded-xl border-0 px-3.5 py-2.5 text-slate-100 shadow-sm ring-1 ring-inset ring-white/[0.1] placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm bg-slate-950/60 focus:bg-slate-950 transition-colors'
 						/>
 					</div>
 					{state.errors?.subject && (
@@ -223,20 +223,20 @@ function ContactFormInner() {
 					<div className='flex justify-between'>
 						<label
 							htmlFor='message'
-							className='block text-sm font-semibold text-slate-200'
+							className='block text-xs font-medium text-slate-300'
 						>
 							Message
 						</label>
-						<span className='text-sm text-slate-500'>Max. 500 characters</span>
+						<span className='text-xs text-slate-500'>Max. 500 characters</span>
 					</div>
-					<div className='mt-2'>
+					<div className='mt-1.5'>
 						<textarea
 							id='message'
 							name='message'
 							rows={4}
 							required
 							maxLength={500}
-							className='block w-full rounded-lg border-0 px-4 py-3 text-slate-100 shadow-sm ring-1 ring-inset ring-slate-700 placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6 bg-slate-950/50 focus:bg-slate-950 transition-colors resize-none'
+							className='block w-full rounded-xl border-0 px-3.5 py-2.5 text-slate-100 shadow-sm ring-1 ring-inset ring-white/[0.1] placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm bg-slate-950/60 focus:bg-slate-950 transition-colors resize-none'
 						/>
 					</div>
 					{state.errors?.message && (

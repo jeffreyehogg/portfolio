@@ -80,9 +80,9 @@ export default function MortgageCalculatorModal({
                 <Calculator className="h-5 w-5" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-white">Interactive Mortgage Estimator</h3>
+                <h3 className="text-xl font-bold text-white">Mortgage Estimator</h3>
                 <p className="text-xs text-slate-400">
-                  Calculate estimated monthly payments with Hogg Homes 4.99% Rate Lock incentives
+                  Estimate your monthly payment based on home price and financing options.
                 </p>
               </div>
             </div>

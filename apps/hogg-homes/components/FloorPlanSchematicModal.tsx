@@ -61,11 +61,11 @@ export default function FloorPlanSchematicModal({
           <div className="flex items-start justify-between border-b border-slate-800 pb-4">
             <div>
               <div className="flex items-center gap-2">
-                <span className="rounded bg-amber-500/10 border border-amber-500/30 px-2 py-0.5 text-xs font-mono text-amber-300">
-                  ARCHITECTURAL CAD SCHEMATIC
+                <span className="rounded bg-amber-500/10 border border-amber-500/30 px-2.5 py-0.5 text-xs text-amber-300">
+                  Interactive Floor Plan
                 </span>
-                <span className="text-xs font-mono text-slate-400">
-                  REV 2026.4 • CODE COMPLIANT
+                <span className="text-xs text-slate-400">
+                  {floorPlan.series}
                 </span>
               </div>
               <h2 className="mt-1 text-2xl sm:text-3xl font-extrabold text-white">
@@ -79,11 +79,11 @@ export default function FloorPlanSchematicModal({
             <div className="flex items-center gap-2">
               <button
                 onClick={handlePrint}
-                className="hidden sm:flex items-center gap-1.5 rounded-xl border border-slate-700 bg-slate-800 px-3 py-2 text-xs font-mono text-slate-300 hover:text-white hover:bg-slate-750 transition"
-                title="Print or Save CAD Schematic"
+                className="hidden sm:flex items-center gap-1.5 rounded-xl border border-slate-700 bg-slate-800 px-3 py-2 text-xs text-slate-300 hover:text-white hover:bg-slate-750 transition"
+                title="Print or Save Schematic"
               >
                 <Printer className="h-4 w-4 text-amber-400" />
-                <span>Print Spec</span>
+                <span>Print</span>
               </button>
               <button
                 onClick={onClose}

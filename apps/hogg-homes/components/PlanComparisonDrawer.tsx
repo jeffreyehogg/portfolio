@@ -93,7 +93,7 @@ export default function PlanComparisonDrawer({
                   </span>
                 </div>
                 <p className="text-xs text-slate-400 mt-0.5">
-                  Side-by-side architectural specifications, room geometries, and monthly investment deltas.
+                  Compare layout specifications, dimensions, and pricing side-by-side.
                 </p>
               </div>
             </div>

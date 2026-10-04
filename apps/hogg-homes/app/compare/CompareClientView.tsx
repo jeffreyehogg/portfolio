@@ -54,14 +54,14 @@ export default function CompareClientView() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-800 pb-6">
         <div>
-          <span className="text-xs font-mono uppercase tracking-wider text-amber-400 font-semibold">
-            Comparative Architecture
+          <span className="text-xs font-medium text-amber-400">
+            Comparison
           </span>
-          <h1 className="mt-2 text-3xl sm:text-4xl font-extrabold text-white">
-            Floor Plan Side-by-Side Comparison
+          <h1 className="mt-1 text-3xl sm:text-4xl font-extrabold text-white">
+            Compare Floor Plans
           </h1>
-          <p className="mt-2 text-sm text-slate-400 max-w-2xl">
-            Evaluate architectural specs, elevation aesthetics, spatial geometries, and estimated monthly payments side-by-side.
+          <p className="mt-2 text-sm text-slate-300 max-w-xl">
+            Compare home layouts, exterior elevations, and pricing side-by-side.
           </p>
         </div>
 

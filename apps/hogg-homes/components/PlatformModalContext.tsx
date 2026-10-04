@@ -99,45 +99,31 @@ export function PlatformModalProvider({ children }: { children: ReactNode }) {
 
       {/* Floating Bottom Plan Comparison Bar (Visible when 1+ plans pinned) */}
       {comparedPlanIds.length > 0 && !isCompareDrawerOpen && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 flex items-center gap-3 rounded-2xl border border-amber-500/40 bg-slate-900/95 px-4 py-2.5 shadow-2xl backdrop-blur-xl animate-in fade-in slide-in-from-bottom-4 duration-300">
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 flex items-center gap-3 rounded-full border border-amber-500/40 bg-slate-900/95 px-4 py-2 shadow-2xl backdrop-blur-xl">
           <div className="flex items-center gap-2">
-            <span className="flex h-2 w-2 rounded-full bg-amber-400 animate-ping" />
-            <span className="text-xs font-mono font-bold text-white">
-              Comparing {comparedPlanIds.length} of 3 Plans
+            <span className="flex h-2 w-2 rounded-full bg-amber-400" />
+            <span className="text-xs font-medium text-white">
+              Comparing {comparedPlanIds.length} of 3 plans
             </span>
           </div>
 
           <div className="flex items-center gap-2">
             <button
               onClick={() => setIsCompareDrawerOpen(true)}
-              className="flex items-center gap-1.5 rounded-xl bg-amber-500 px-3 py-1.5 text-xs font-bold text-slate-950 shadow-md hover:bg-amber-400 transition"
+              className="flex items-center gap-1.5 rounded-full bg-amber-500 hover:bg-amber-400 px-3 py-1 text-xs font-semibold text-slate-950 transition"
             >
               <Layers className="h-3.5 w-3.5" />
-              <span>View Specs</span>
-              <ArrowRight className="h-3.5 w-3.5" />
+              <span>View</span>
             </button>
             <button
               onClick={() => setComparedPlanIds([])}
-              className="text-xs font-mono text-slate-400 hover:text-white px-2 py-1"
+              className="text-xs text-slate-400 hover:text-white px-1.5 py-1"
             >
               Clear
             </button>
           </div>
         </div>
       )}
-
-      {/* Floating Architecture Insights Drawer Trigger */}
-      <div className="fixed bottom-6 right-6 z-30 hidden sm:block">
-        <button
-          onClick={() => setIsArchitectureDrawerOpen(true)}
-          className="group flex items-center gap-2 rounded-full border border-slate-700/80 bg-slate-900/90 px-3.5 py-2 text-xs font-mono font-medium text-slate-300 shadow-2xl backdrop-blur-md hover:border-amber-500/50 hover:bg-slate-850 hover:text-amber-300 transition-all hover:-translate-y-0.5"
-        >
-          <div className="flex h-5 w-5 items-center justify-center rounded-full bg-amber-500/10 text-amber-400 group-hover:bg-amber-500 group-hover:text-slate-950 transition">
-            <Terminal className="h-3 w-3" />
-          </div>
-          <span>Architecture Insights</span>
-        </button>
-      </div>
 
       {/* Modals & Slide-Over Drawers */}
       <TourBookingDrawer

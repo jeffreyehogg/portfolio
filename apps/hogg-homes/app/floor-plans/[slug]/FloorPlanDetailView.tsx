@@ -139,18 +139,18 @@ export default function FloorPlanDetailView({
           <div className="rounded-3xl border border-slate-800 bg-slate-900/60 p-6 sm:p-7 backdrop-blur-2xl shadow-2xl space-y-6">
             <div>
               <div className="flex items-center justify-between">
-                <span className="text-xs font-mono uppercase tracking-wider text-amber-400 font-semibold">
-                  Architectural Spec Sheet
+                <span className="text-xs font-medium text-amber-400">
+                  Floor Plan Details
                 </span>
                 <button
                   onClick={() => toggleComparePlan(plan.id)}
-                  className={`rounded-full px-3 py-1 text-xs font-mono transition ${
+                  className={`rounded-full px-3 py-1 text-xs transition ${
                     isCompared
                       ? 'bg-amber-500 text-slate-950 font-bold'
-                      : 'border border-slate-700 bg-slate-800 text-slate-300 hover:text-white hover:border-amber-500/50'
+                      : 'border border-slate-700 bg-slate-800 text-slate-300 hover:text-white'
                   }`}
                 >
-                  {isCompared ? '✓ Pinned to Compare' : '+ Pin to Compare'}
+                  {isCompared ? '✓ Comparing' : '+ Compare'}
                 </button>
               </div>
 
@@ -161,16 +161,16 @@ export default function FloorPlanDetailView({
               {/* Price Callout */}
               <div className="mt-4 flex items-baseline justify-between border-b border-slate-800/80 pb-4">
                 <div>
-                  <span className="text-[11px] font-mono uppercase text-slate-400 block">
-                    Starting Base Price
+                  <span className="text-xs text-slate-400 block">
+                    Starting From
                   </span>
-                  <span className="text-3xl font-extrabold font-mono text-white">
+                  <span className="text-3xl font-bold font-mono text-white">
                     ${plan.basePrice.toLocaleString()}
                   </span>
                 </div>
                 <div className="text-right">
-                  <span className="text-[11px] font-mono uppercase text-slate-400 block">
-                    Est. Payment (4.99% Rate)
+                  <span className="text-xs text-slate-400 block">
+                    Est. Monthly
                   </span>
                   <span className="text-xl font-bold font-mono text-emerald-400">
                     ~${estTotalMonthly.toLocaleString()}/mo
@@ -183,31 +183,31 @@ export default function FloorPlanDetailView({
             <div className="grid grid-cols-4 gap-2 text-center py-2 border-b border-slate-800/80">
               <div className="p-2 rounded-xl bg-slate-950/40 border border-slate-800/60">
                 <Layers className="h-4 w-4 text-amber-400 mx-auto mb-1" />
-                <span className="block text-sm font-mono font-bold text-white">
+                <span className="block text-sm font-bold text-white">
                   {plan.sqft.toLocaleString()}
                 </span>
-                <span className="text-[10px] font-mono uppercase text-slate-400">Sq Ft</span>
+                <span className="text-[10px] text-slate-400">Sq Ft</span>
               </div>
               <div className="p-2 rounded-xl bg-slate-950/40 border border-slate-800/60">
                 <Bed className="h-4 w-4 text-amber-400 mx-auto mb-1" />
-                <span className="block text-sm font-mono font-bold text-white">
+                <span className="block text-sm font-bold text-white">
                   {plan.bedrooms} Beds
                 </span>
-                <span className="text-[10px] font-mono uppercase text-slate-400">Bedrooms</span>
+                <span className="text-[10px] text-slate-400">Bedrooms</span>
               </div>
               <div className="p-2 rounded-xl bg-slate-950/40 border border-slate-800/60">
                 <Bath className="h-4 w-4 text-amber-400 mx-auto mb-1" />
-                <span className="block text-sm font-mono font-bold text-white">
+                <span className="block text-sm font-bold text-white">
                   {plan.bathrooms}.{plan.halfBaths}
                 </span>
-                <span className="text-[10px] font-mono uppercase text-slate-400">Baths</span>
+                <span className="text-[10px] text-slate-400">Baths</span>
               </div>
               <div className="p-2 rounded-xl bg-slate-950/40 border border-slate-800/60">
                 <Car className="h-4 w-4 text-amber-400 mx-auto mb-1" />
-                <span className="block text-sm font-mono font-bold text-white">
+                <span className="block text-sm font-bold text-white">
                   {plan.garageBays}-Car
                 </span>
-                <span className="text-[10px] font-mono uppercase text-slate-400">Garage</span>
+                <span className="text-[10px] text-slate-400">Garage</span>
               </div>
             </div>
 
@@ -215,44 +215,44 @@ export default function FloorPlanDetailView({
             <div className="space-y-2.5 pt-1">
               <button
                 onClick={() => openTourDrawer({ floorPlanId: plan.id })}
-                className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 px-5 py-3 text-sm font-bold text-slate-950 shadow-lg shadow-amber-500/20 hover:from-amber-400 hover:to-amber-500 transition-all"
+                className="w-full flex items-center justify-center gap-2 rounded-xl bg-amber-500 hover:bg-amber-400 px-5 py-3 text-sm font-semibold text-slate-950 transition"
               >
                 <Calendar className="h-4 w-4" />
-                <span>Schedule VIP Model Tour</span>
+                <span>Schedule a Tour</span>
                 <ArrowRight className="h-4 w-4" />
               </button>
 
               <div className="grid grid-cols-2 gap-2">
                 <button
                   onClick={() => openSchematic(plan)}
-                  className="flex items-center justify-center gap-1.5 rounded-xl border border-slate-700 bg-slate-800/90 px-3 py-2.5 text-xs font-semibold text-slate-200 hover:text-white hover:border-amber-500/40 transition"
+                  className="flex items-center justify-center gap-1.5 rounded-xl border border-slate-700 bg-slate-800/90 px-3 py-2.5 text-xs font-semibold text-slate-200 hover:text-white transition"
                 >
                   <Layers className="h-3.5 w-3.5 text-amber-400" />
-                  <span>CAD Schematic</span>
+                  <span>Floor Plan View</span>
                 </button>
 
                 <button
                   onClick={() => openMortgageModal(plan.basePrice)}
-                  className="flex items-center justify-center gap-1.5 rounded-xl border border-slate-700 bg-slate-800/90 px-3 py-2.5 text-xs font-semibold text-slate-200 hover:text-white hover:border-amber-500/40 transition"
+                  className="flex items-center justify-center gap-1.5 rounded-xl border border-slate-700 bg-slate-800/90 px-3 py-2.5 text-xs font-semibold text-slate-200 hover:text-white transition"
                 >
                   <Calculator className="h-3.5 w-3.5 text-emerald-400" />
-                  <span>Mortgage Calc</span>
+                  <span>Mortgage Estimator</span>
                 </button>
               </div>
 
               <button
                 onClick={() => openBrochure(plan)}
-                className="w-full flex items-center justify-center gap-1.5 rounded-xl border border-slate-800 bg-slate-950/60 px-3 py-2 text-xs font-mono text-slate-400 hover:text-white transition"
+                className="w-full flex items-center justify-center gap-1.5 rounded-xl border border-slate-800 bg-slate-950/60 px-3 py-2 text-xs text-slate-400 hover:text-white transition"
               >
                 <FileText className="h-3.5 w-3.5" />
-                <span>Download Printable Virtual Brochure</span>
+                <span>Download Brochure</span>
               </button>
             </div>
 
             {/* Key Standard Features */}
             <div className="rounded-2xl bg-slate-950/60 border border-slate-800 p-4 space-y-2">
-              <span className="text-[11px] font-mono uppercase tracking-wider text-slate-400 block font-semibold">
-                Included High-Craft Standards:
+              <span className="text-xs text-slate-400 block font-semibold">
+                Included Features:
               </span>
               <ul className="space-y-1.5 text-xs text-slate-300">
                 {plan.features.map((feature, i) => (

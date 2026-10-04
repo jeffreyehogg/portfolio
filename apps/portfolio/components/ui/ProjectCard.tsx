@@ -19,14 +19,14 @@ export default function ProjectCard({ project, index = 0, priorityImage = false 
 
 	return (
 		<motion.div
-			initial={shouldReduce ? false : { opacity: 0, y: 20 }}
+			initial={shouldReduce ? false : { opacity: 0, y: 16 }}
 			whileInView={shouldReduce ? undefined : { opacity: 1, y: 0 }}
 			viewport={{ once: true }}
-			transition={{ duration: 0.4, delay: index * 0.06 }}
+			transition={{ duration: 0.35, delay: index * 0.05 }}
 			className={cn(
-				'group relative flex flex-col rounded-2xl bg-slate-900/60 border border-slate-800/80 shadow-lg overflow-hidden backdrop-blur-sm',
+				'group relative flex flex-col rounded-2xl bg-slate-900/60 border border-white/[0.08] shadow-sm overflow-hidden backdrop-blur-sm shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)]',
 				!shouldReduce &&
-					'hover:shadow-2xl hover:border-slate-700 hover:bg-slate-900/90 hover:-translate-y-1 transition-all duration-300'
+					'hover:shadow-xl hover:border-white/[0.16] hover:bg-slate-900/80 hover:-translate-y-0.5 active:scale-[0.99] transition-all duration-200'
 			)}
 		>
 			{/* Project Image Header */}
@@ -34,7 +34,7 @@ export default function ProjectCard({ project, index = 0, priorityImage = false 
 				href={project.href}
 				target='_blank'
 				rel='noopener noreferrer'
-				className='relative aspect-[16/10] w-full overflow-hidden block bg-slate-950 border-b border-slate-800/60'
+				className='relative aspect-[16/10] w-full overflow-hidden block bg-slate-950 border-b border-white/[0.06]'
 			>
 				<Image
 					src={project.imageUrl}
@@ -50,33 +50,33 @@ export default function ProjectCard({ project, index = 0, priorityImage = false 
 				/>
 
 				{/* Hover Overlay */}
-				<div className='absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 bg-slate-950/40 backdrop-blur-[2px]'>
-					<span className='px-4 py-1.5 rounded-full text-xs font-medium text-white bg-slate-900/90 border border-slate-700 flex items-center gap-1.5 shadow-lg'>
-						Visit Project
+				<div className='absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-20 bg-slate-950/40 backdrop-blur-[2px]'>
+					<span className='px-3.5 py-1.5 rounded-full text-xs font-medium text-white bg-slate-900/90 border border-white/[0.12] flex items-center gap-1.5 shadow-lg'>
+						Visit project
 						<ArrowTopRightOnSquareIcon className='w-3.5 h-3.5 text-indigo-400' />
 					</span>
 				</div>
 			</Link>
 
 			{/* Card Body */}
-			<div className='p-6 flex-1 flex flex-col justify-between'>
+			<div className='p-5 sm:p-6 flex-1 flex flex-col justify-between'>
 				<div>
 					{/* Title & Action Links */}
-					<div className='flex items-center justify-between gap-3 mb-3'>
-						<h3 className='text-lg sm:text-xl font-bold text-white group-hover:text-indigo-300 transition-colors'>
+					<div className='flex items-center justify-between gap-3 mb-2.5'>
+						<h3 className='text-lg font-bold text-white group-hover:text-indigo-300 transition-colors'>
 							<Link href={project.href} target='_blank' rel='noopener noreferrer'>
 								{project.title}
 							</Link>
 						</h3>
-						<div className='flex items-center gap-2 shrink-0'>
+						<div className='flex items-center gap-1.5 shrink-0'>
 							{project.githubUrl && (
 								<a
 									href={project.githubUrl}
 									target='_blank'
 									rel='noopener noreferrer'
-									className='text-slate-400 hover:text-white transition-colors p-1'
+									className='text-slate-400 hover:text-white transition-colors p-1 rounded-lg hover:bg-white/5'
 									aria-label={`Source code for ${project.title}`}
-									title='View Source Code'
+									title='View source code'
 								>
 									<svg className='w-4 h-4' fill='currentColor' viewBox='0 0 24 24'>
 										<path
@@ -91,7 +91,7 @@ export default function ProjectCard({ project, index = 0, priorityImage = false 
 								href={project.href}
 								target='_blank'
 								rel='noopener noreferrer'
-								className='text-slate-400 hover:text-indigo-400 transition-colors p-1'
+								className='text-slate-400 hover:text-indigo-400 transition-colors p-1 rounded-lg hover:bg-white/5'
 								aria-label={`Visit ${project.title}`}
 							>
 								<ArrowTopRightOnSquareIcon className='w-4 h-4' />
@@ -100,17 +100,17 @@ export default function ProjectCard({ project, index = 0, priorityImage = false 
 					</div>
 
 					{/* Description */}
-					<p className='text-sm text-slate-400 leading-relaxed font-light mb-6'>
+					<p className='text-sm text-slate-400 leading-relaxed font-light mb-5'>
 						{project.description}
 					</p>
 				</div>
 
 				{/* Tech Stack Pills */}
-				<div className='flex flex-wrap gap-1.5 pt-4 border-t border-slate-800/80'>
+				<div className='flex flex-wrap gap-1.5 pt-3.5 border-t border-white/[0.06]'>
 					{displayTags.map((tag) => (
 						<span
 							key={tag}
-							className='text-xs text-slate-300 bg-slate-800/60 border border-slate-700/50 px-2.5 py-0.5 rounded-md'
+							className='text-xs text-slate-300 bg-slate-800/50 border border-white/[0.06] px-2.5 py-0.5 rounded-md'
 						>
 							{tag}
 						</span>

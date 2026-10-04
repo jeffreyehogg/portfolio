@@ -44,24 +44,24 @@ onUnmounted(() => {
       <div>
         <h3 class="text-sm font-semibold text-white flex items-center gap-2">
           <UIcon name="i-heroicons-arrow-path-rounded-square" class="w-4 h-4 text-cyan-400" />
-          Triangular Arbitrage & Cross-Currency Discrepancy Scanner
+          Triangular arbitrage scanner
         </h3>
-        <p class="text-xs text-slate-400">Algorithmic detection of synthetic pricing loops across G10 liquidity pools</p>
+        <p class="text-xs text-slate-400">Real-time detection of synthetic pricing loops across G10 liquidity pools</p>
       </div>
 
       <div class="flex items-center gap-2">
         <button
           @click="injectAnomaly"
           :disabled="simulatedAnomalyInjected"
-          class="min-h-[38px] px-3 py-1.5 rounded-lg text-xs font-mono font-semibold transition-all duration-150 active:scale-[0.98] border border-cyan-500/30 bg-cyan-500/10 text-cyan-300 hover:bg-cyan-500/20 disabled:opacity-50"
+          class="h-9 px-3 rounded-lg text-xs font-medium transition-all duration-150 active:scale-[0.98] border border-cyan-500/30 bg-cyan-500/10 text-cyan-300 hover:bg-cyan-500/20 disabled:opacity-50 flex items-center gap-1.5"
         >
           <span v-if="simulatedAnomalyInjected" class="flex items-center gap-1.5">
             <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
-            Anomaly Injected (Active)
+            Anomaly active (10s)
           </span>
           <span v-else class="flex items-center gap-1.5">
             <UIcon name="i-heroicons-bolt" class="w-3.5 h-3.5 text-cyan-400" />
-            Simulate ECN Anomaly
+            Simulate arbitrage anomaly
           </span>
         </button>
       </div>
@@ -89,18 +89,18 @@ onUnmounted(() => {
 
             <span
               :class="[
-                'font-mono text-[10px] px-2 py-0.5 rounded-md font-semibold',
+                'text-xs px-2 py-0.5 rounded-md font-medium',
                 opp.profitPercent > 0
                   ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 animate-pulse'
                   : 'bg-slate-800 text-slate-400 border border-white/[0.04]'
               ]"
             >
-              {{ opp.profitPercent > 0 ? 'ACTIVE ARB' : 'NEUTRAL SPREAD' }}
+              {{ opp.profitPercent > 0 ? 'Active arb' : 'Neutral' }}
             </span>
           </div>
 
           <!-- Rates Breakdown -->
-          <div class="space-y-1 font-mono text-[11px] text-slate-400 bg-slate-950/40 p-2 rounded-lg border border-white/[0.03]">
+          <div class="space-y-1 font-mono text-[11px] text-slate-400 bg-slate-950/40 p-2.5 rounded-lg border border-white/[0.03]">
             <div class="flex justify-between">
               <span>Leg 1 ({{ opp.path[0] }}/{{ opp.path[1] }}):</span>
               <span class="text-white">{{ opp.rates[0] }}</span>
@@ -117,16 +117,16 @@ onUnmounted(() => {
         </div>
 
         <!-- Profit Readout -->
-        <div class="mt-4 pt-3 border-t border-white/[0.06] flex items-center justify-between font-mono">
+        <div class="mt-4 pt-3 border-t border-white/[0.06] flex items-center justify-between">
           <div>
-            <span class="text-[10px] text-slate-500 uppercase block">Net Yield</span>
-            <span :class="['text-sm font-bold', opp.profitPercent > 0 ? 'text-emerald-400' : 'text-slate-400']">
+            <span class="text-[11px] text-slate-400 block">Net yield</span>
+            <span :class="['text-sm font-bold font-mono', opp.profitPercent > 0 ? 'text-emerald-400' : 'text-slate-400']">
               {{ opp.profitPercent > 0 ? '+' : '' }}{{ opp.profitPercent }}%
             </span>
           </div>
           <div class="text-right">
-            <span class="text-[10px] text-slate-500 uppercase block">$1M Lot Return</span>
-            <span :class="['text-xs font-bold', opp.profitPercent > 0 ? 'text-emerald-400' : 'text-slate-400']">
+            <span class="text-[11px] text-slate-400 block">Est. return ($1M lot)</span>
+            <span :class="['text-xs font-bold font-mono', opp.profitPercent > 0 ? 'text-emerald-400' : 'text-slate-400']">
               +${{ opp.estimatedProfitUsd.toLocaleString() }}
             </span>
           </div>
@@ -137,7 +137,7 @@ onUnmounted(() => {
     <!-- Empty/Scanning State -->
     <div v-else class="p-8 text-center rounded-xl border border-white/[0.06] bg-slate-900/30">
       <UIcon name="i-heroicons-arrow-path" class="w-6 h-6 text-slate-500 animate-spin mx-auto mb-2" />
-      <p class="font-mono text-xs text-slate-400">Scanning 120 G10 triangular cross-rate permutations...</p>
+      <p class="text-xs text-slate-400">Scanning 120 G10 triangular cross-rate permutations...</p>
     </div>
   </div>
 </template>

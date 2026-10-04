@@ -21,29 +21,27 @@ const emit = defineEmits<{
 
 <template>
   <div class="space-y-4">
-    <!-- Preset Buttons -->
-    <div>
-      <span class="text-xs font-mono font-semibold text-slate-400 uppercase block mb-2">
-        Instant Treasury Presets (1-Click)
-      </span>
-      <div class="flex flex-wrap gap-2">
+    <!-- Sleek Preset Pill Bar (Directive 3) -->
+    <div class="flex items-center gap-2 overflow-x-auto pb-1 max-w-full">
+      <span class="text-xs text-slate-400 font-medium whitespace-nowrap">Try a portfolio:</span>
+      <div class="flex items-center gap-1.5">
         <button
           v-for="preset in TREASURY_PRESETS"
           :key="preset.id"
           @click="emit('applyPreset', preset.id)"
-          class="min-h-[38px] px-3.5 py-1.5 rounded-xl border border-white/[0.08] bg-slate-900/60 hover:bg-slate-800 text-xs font-mono text-slate-300 hover:text-white transition-all duration-150 active:scale-[0.98]"
+          class="h-8 px-2.5 rounded-lg border border-white/[0.08] bg-slate-900/60 hover:bg-slate-800 text-xs text-slate-300 hover:text-white transition-all duration-150 active:scale-[0.98] whitespace-nowrap flex items-center gap-1.5"
         >
-          <span class="font-bold text-emerald-400 mr-1.5">●</span>
-          {{ preset.name }}
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+          <span>{{ preset.name }}</span>
         </button>
       </div>
     </div>
 
     <!-- Allocations List -->
     <div class="rounded-xl border border-white/[0.08] bg-[#0b0f19]/70 backdrop-blur-xl overflow-hidden">
-      <div class="p-3 bg-slate-900/50 border-b border-white/[0.06] flex justify-between items-center text-xs font-mono text-slate-400">
-        <span>CURRENCY EXPOSURE (USD NOTIONAL)</span>
-        <span>MARGINAL VaR / HEDGE</span>
+      <div class="p-3 bg-slate-900/50 border-b border-white/[0.06] flex justify-between items-center text-xs text-slate-400 font-medium">
+        <span>Currency exposure</span>
+        <span>Risk contribution</span>
       </div>
 
       <div class="divide-y divide-white/[0.04]">
@@ -56,7 +54,7 @@ const emit = defineEmits<{
             <span class="text-lg">{{ G10_CURRENCIES[pos.currency]?.flag }}</span>
             <div>
               <span class="font-mono text-xs font-bold text-white">{{ pos.currency }}</span>
-              <span class="text-[11px] text-slate-400 ml-2">{{ G10_CURRENCIES[pos.currency]?.name }}</span>
+              <span class="text-xs text-slate-400 ml-2">{{ G10_CURRENCIES[pos.currency]?.name }}</span>
             </div>
           </div>
 

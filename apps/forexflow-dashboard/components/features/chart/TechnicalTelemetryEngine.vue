@@ -49,31 +49,31 @@ const handleExportJson = () => {
       <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
         <div>
           <div class="flex items-center gap-2 mb-1">
-            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-            <span class="font-mono text-xs uppercase tracking-wider text-emerald-400 font-semibold">Institutional Telemetry Canvas</span>
-            <span class="font-mono text-[10px] px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
-              SPREAD: 0.8 PIPS
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span class="text-xs font-medium text-emerald-400">Live exchange rate</span>
+            <span class="font-mono text-xs px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+              Spread: 0.8 pips
             </span>
           </div>
-          <h2 class="text-xl font-bold text-white tracking-tight">
-            {{ baseCurrency }} / {{ targetCurrency }} Streaming Micro-Trend
+          <h2 class="text-lg sm:text-xl font-bold text-white tracking-tight">
+            {{ baseCurrency }}/{{ targetCurrency }} streaming trend
           </h2>
         </div>
 
-        <!-- Timeframe Switcher Tabs (44px Minimum Touch Targets) -->
+        <!-- Timeframe Switcher Tabs -->
         <div class="flex items-center p-1 rounded-xl bg-slate-950/60 border border-white/[0.06] overflow-x-auto w-full sm:w-auto">
           <button
             v-for="tf in timeframes"
             :key="tf"
             @click="activeTimeframe = tf"
             :class="[
-              'min-h-[44px] min-w-[44px] px-3.5 py-2 rounded-lg font-mono text-xs font-semibold transition-all duration-150 active:scale-[0.98]',
+              'h-8 px-3 rounded-lg font-mono text-xs font-semibold transition-all duration-150 active:scale-[0.98]',
               activeTimeframe === tf
                 ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
                 : 'text-slate-400 hover:text-white'
             ]"
           >
-            {{ tf }}
+            {{ tf.toLowerCase() }}
           </button>
         </div>
       </div>
@@ -81,17 +81,18 @@ const handleExportJson = () => {
       <!-- Technical Indicator Toggles Bar -->
       <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-white/[0.04]">
         <div class="flex flex-wrap items-center gap-2">
-          <span class="text-[11px] font-mono text-slate-500 uppercase mr-1">Overlays:</span>
+          <span class="text-xs text-slate-400 font-medium mr-1">Overlays:</span>
           <!-- EMA 20 -->
           <button
             @click="showEma20 = !showEma20"
             :class="[
-              'min-h-[34px] px-2.5 py-1 rounded-lg font-mono text-xs font-semibold transition-all duration-150 active:scale-[0.98] border',
+              'h-7 px-2.5 rounded-lg text-xs font-medium transition-all duration-150 active:scale-[0.98] border flex items-center gap-1.5',
               showEma20
                 ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
-                : 'bg-slate-950/40 text-slate-500 border-white/[0.04] hover:text-slate-300'
+                : 'bg-slate-950/40 text-slate-400 border-white/[0.04] hover:text-slate-200'
             ]"
           >
+            <span class="w-1.5 h-1.5 rounded-full" :class="showEma20 ? 'bg-amber-400' : 'bg-slate-500'" />
             EMA 20
           </button>
 
@@ -99,12 +100,13 @@ const handleExportJson = () => {
           <button
             @click="showEma50 = !showEma50"
             :class="[
-              'min-h-[34px] px-2.5 py-1 rounded-lg font-mono text-xs font-semibold transition-all duration-150 active:scale-[0.98] border',
+              'h-7 px-2.5 rounded-lg text-xs font-medium transition-all duration-150 active:scale-[0.98] border flex items-center gap-1.5',
               showEma50
                 ? 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40'
-                : 'bg-slate-950/40 text-slate-500 border-white/[0.04] hover:text-slate-300'
+                : 'bg-slate-950/40 text-slate-400 border-white/[0.04] hover:text-slate-200'
             ]"
           >
+            <span class="w-1.5 h-1.5 rounded-full" :class="showEma50 ? 'bg-cyan-400' : 'bg-slate-500'" />
             EMA 50
           </button>
 
@@ -112,12 +114,13 @@ const handleExportJson = () => {
           <button
             @click="showBollinger = !showBollinger"
             :class="[
-              'min-h-[34px] px-2.5 py-1 rounded-lg font-mono text-xs font-semibold transition-all duration-150 active:scale-[0.98] border',
+              'h-7 px-2.5 rounded-lg text-xs font-medium transition-all duration-150 active:scale-[0.98] border flex items-center gap-1.5',
               showBollinger
                 ? 'bg-indigo-500/20 text-indigo-300 border-indigo-500/40'
-                : 'bg-slate-950/40 text-slate-500 border-white/[0.04] hover:text-slate-300'
+                : 'bg-slate-950/40 text-slate-400 border-white/[0.04] hover:text-slate-200'
             ]"
           >
+            <span class="w-1.5 h-1.5 rounded-full" :class="showBollinger ? 'bg-indigo-400' : 'bg-slate-500'" />
             Bollinger (20, 2σ)
           </button>
         </div>
@@ -125,10 +128,10 @@ const handleExportJson = () => {
         <!-- Export Trigger Button -->
         <button
           @click="isExportModalOpen = true"
-          class="min-h-[36px] px-3 py-1 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white border border-white/[0.08] font-mono text-xs font-semibold flex items-center gap-1.5 transition-all duration-150 active:scale-[0.98]"
+          class="h-8 px-3 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-500/30 text-xs font-medium flex items-center gap-1.5 transition-all duration-150 active:scale-[0.98]"
         >
           <UIcon name="i-heroicons-arrow-down-tray" class="w-3.5 h-3.5 text-emerald-400" />
-          <span>Export Dataset</span>
+          <span>Export dataset</span>
         </button>
       </div>
 
@@ -137,7 +140,7 @@ const handleExportJson = () => {
         <ClientOnly>
           <div v-if="loading && history.length === 0" class="h-64 sm:h-80 flex flex-col items-center justify-center space-y-3">
             <UIcon name="i-heroicons-arrow-path" class="animate-spin h-7 w-7 text-emerald-400" />
-            <span class="font-mono text-xs text-slate-400 tracking-wide">Connecting to interbank feed...</span>
+            <span class="text-xs text-slate-400">Connecting to interbank feed...</span>
           </div>
           <ForexChart
             v-else
@@ -152,7 +155,7 @@ const handleExportJson = () => {
           <template #fallback>
             <div class="h-64 sm:h-80 flex flex-col items-center justify-center space-y-3 bg-[#0b0f19]/40 rounded-xl">
               <UIcon name="i-heroicons-arrow-path" class="animate-spin h-7 w-7 text-emerald-400" />
-              <span class="font-mono text-xs text-slate-400">Initializing chart canvas...</span>
+              <span class="text-xs text-slate-400">Initializing chart canvas...</span>
             </div>
           </template>
         </ClientOnly>
@@ -160,15 +163,15 @@ const handleExportJson = () => {
     </div>
 
     <!-- Live Depth Ladder & Order Flow (Col 9-12) -->
-    <div class="col-span-12 lg:col-span-4 rounded-2xl bg-slate-900/65 backdrop-blur-xl border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] p-6 flex flex-col justify-between">
+    <div class="col-span-12 lg:col-span-4 rounded-2xl bg-slate-900/65 backdrop-blur-xl border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] p-6 flex flex-col justify-between">
       <MarketDepthLadder
         :current-rate="currentRate"
         :target-currency="targetCurrency"
       />
 
-      <div class="pt-4 border-t border-white/[0.06] text-xs font-mono text-slate-500 flex justify-between">
-        <span>TICK LATENCY</span>
-        <span class="text-cyan-400 font-semibold">EDGE ACCELERATED</span>
+      <div class="pt-4 border-t border-white/[0.06] text-xs text-slate-400 flex justify-between">
+        <span>Tick latency</span>
+        <span class="text-cyan-400 font-mono text-xs">&lt; 20ms edge</span>
       </div>
     </div>
 

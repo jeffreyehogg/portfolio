@@ -28,13 +28,13 @@ const depthLevels = computed(() => {
 </script>
 
 <template>
-  <div class="space-y-3 font-mono">
+  <div class="space-y-3">
     <div class="flex items-center justify-between pb-2 border-b border-white/[0.06]">
       <div class="flex items-center gap-1.5">
         <UIcon name="i-heroicons-bars-arrow-up" class="w-4 h-4 text-cyan-400" />
-        <span class="text-xs uppercase tracking-wider text-cyan-400 font-semibold">Tier-1 Order Book Depth</span>
+        <span class="text-xs font-semibold text-white">Order book depth</span>
       </div>
-      <span class="text-[10px] text-slate-500">AGGREGATED ECN</span>
+      <span class="text-xs text-slate-400">Aggregated ECN</span>
     </div>
 
     <!-- Asks (Sells) -->
@@ -42,7 +42,7 @@ const depthLevels = computed(() => {
       <div
         v-for="(ask, idx) in depthLevels.asks"
         :key="`ask-${idx}`"
-        class="relative flex justify-between items-center text-xs py-1 px-2 rounded overflow-hidden"
+        class="relative flex justify-between items-center text-xs py-1 px-2 rounded overflow-hidden font-mono"
       >
         <div
           class="absolute inset-y-0 right-0 bg-rose-500/15 rounded transition-all duration-300"
@@ -55,8 +55,8 @@ const depthLevels = computed(() => {
 
     <!-- Mid Rate Line -->
     <div class="py-1 px-2.5 rounded-lg border border-white/[0.08] bg-slate-950/60 flex justify-between items-center">
-      <span class="text-[11px] text-slate-400 uppercase">Institutional Mid</span>
-      <span class="text-xs font-bold text-white tabular-nums">{{ rate.toFixed(targetCurrency === 'JPY' ? 3 : 5) }}</span>
+      <span class="text-xs text-slate-400">Mid quote</span>
+      <span class="text-xs font-bold text-white font-mono tabular-nums">{{ rate.toFixed(targetCurrency === 'JPY' ? 3 : 5) }}</span>
     </div>
 
     <!-- Bids (Buys) -->

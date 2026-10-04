@@ -81,12 +81,12 @@ const lossAreaPath = computed(() => {
 
 <template>
   <div class="space-y-3">
-    <div class="flex justify-between items-center text-xs font-mono text-slate-400">
-      <span class="flex items-center gap-1.5">
+    <div class="flex justify-between items-center text-xs text-slate-400">
+      <span class="flex items-center gap-1.5 font-medium">
         <span class="w-2.5 h-2.5 rounded bg-rose-500/30 border border-rose-500/50" />
-        {{ (confidenceLevel * 100).toFixed(0) }}% Tail Risk Zone (VaR &lt; -{{ varPercent }}%)
+        {{ (confidenceLevel * 100).toFixed(0) }}% tail risk zone (VaR &lt; -{{ varPercent }}%)
       </span>
-      <span class="text-slate-500">Normal Parametric PDF</span>
+      <span class="text-xs text-slate-400">Parametric normal model</span>
     </div>
 
     <!-- SVG Distribution Curve -->
@@ -107,10 +107,10 @@ const lossAreaPath = computed(() => {
       </svg>
     </div>
 
-    <div class="flex justify-between text-[11px] font-mono text-slate-400 px-2">
+    <div class="flex justify-between text-xs font-mono text-slate-400 px-2">
       <span class="text-rose-400 font-semibold">1-Day VaR: -{{ varPercent }}%</span>
-      <span class="text-amber-400 font-semibold">Expected Shortfall (CVaR): -{{ cvarPercent }}%</span>
-      <span class="text-slate-500">Daily Vol: ±{{ dailyVolPercent }}%</span>
+      <span class="text-amber-400 font-semibold">CVaR: -{{ cvarPercent }}%</span>
+      <span class="text-slate-400">Daily vol: ±{{ dailyVolPercent }}%</span>
     </div>
   </div>
 </template>

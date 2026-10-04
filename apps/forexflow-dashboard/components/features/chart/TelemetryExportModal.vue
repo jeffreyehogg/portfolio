@@ -66,7 +66,7 @@ onUnmounted(() => {
         <div class="flex items-center gap-2">
           <UIcon name="i-heroicons-arrow-down-tray" class="w-5 h-5 text-emerald-400" />
           <h3 id="export-modal-title" class="text-base font-bold text-white">
-            Export Market Telemetry &amp; OHLCV
+            Export market telemetry
           </h3>
         </div>
         <button
@@ -79,35 +79,35 @@ onUnmounted(() => {
       </div>
 
       <!-- Dataset Meta -->
-      <div class="p-3 rounded-xl bg-slate-950/60 border border-white/[0.06] font-mono text-xs space-y-1.5">
+      <div class="p-3 rounded-xl bg-slate-950/60 border border-white/[0.06] text-xs space-y-1.5">
         <div class="flex justify-between">
-          <span class="text-slate-400">Target Asset:</span>
-          <span class="text-white font-bold">{{ pair }}</span>
+          <span class="text-slate-400">Target asset:</span>
+          <span class="text-white font-mono font-bold">{{ pair }}</span>
         </div>
         <div class="flex justify-between">
-          <span class="text-slate-400">Aggregation Horizon:</span>
-          <span class="text-emerald-400">{{ timeframe }} Candlestick</span>
+          <span class="text-slate-400">Aggregation horizon:</span>
+          <span class="text-emerald-400 font-mono">{{ timeframe }} candlestick</span>
         </div>
         <div class="flex justify-between">
-          <span class="text-slate-400">Sample Count:</span>
-          <span class="text-white">{{ candles.length }} OHLCV records</span>
+          <span class="text-slate-400">Sample count:</span>
+          <span class="text-white font-mono">{{ candles.length }} records</span>
         </div>
         <div class="flex justify-between">
-          <span class="text-slate-400">Current Spot:</span>
-          <span class="text-white">{{ currentRate }}</span>
+          <span class="text-slate-400">Current spot:</span>
+          <span class="text-white font-mono">{{ currentRate }}</span>
         </div>
       </div>
 
       <!-- User Notes Field (Accessible Form Link) -->
       <div>
-        <label for="export-notes-input" class="block text-xs font-mono font-semibold text-slate-400 mb-1.5 uppercase">
-          Analyst / Audit Notes
+        <label for="export-notes-input" class="block text-xs font-medium text-slate-400 mb-1.5">
+          Analyst / export notes
         </label>
         <input
           id="export-notes-input"
           v-model="notes"
           type="text"
-          class="w-full h-11 px-3 rounded-lg bg-slate-950 border border-white/[0.1] text-xs font-mono text-white focus:ring-1 focus:ring-emerald-500"
+          class="w-full h-10 px-3 rounded-lg bg-slate-950 border border-white/[0.1] text-xs text-white focus:ring-1 focus:ring-emerald-500 placeholder:text-slate-600"
           placeholder="e.g. Session overlap risk analysis"
         />
       </div>
@@ -116,26 +116,26 @@ onUnmounted(() => {
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-2">
         <button
           @click="emit('exportCsv')"
-          class="min-h-[44px] px-3 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/30 font-mono text-xs font-semibold flex items-center justify-center gap-1.5 transition-all duration-150 active:scale-[0.98]"
+          class="h-10 px-3 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/30 text-xs font-medium flex items-center justify-center gap-1.5 transition-all duration-150 active:scale-[0.98]"
         >
-          <UIcon name="i-heroicons-document-text" class="w-4 h-4" />
-          <span>CSV Export</span>
+          <UIcon name="i-heroicons-document-text" class="w-4 h-4 text-emerald-400" />
+          <span>Download CSV</span>
         </button>
 
         <button
           @click="emit('exportJson')"
-          class="min-h-[44px] px-3 rounded-xl bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 hover:bg-cyan-500/30 font-mono text-xs font-semibold flex items-center justify-center gap-1.5 transition-all duration-150 active:scale-[0.98]"
+          class="h-10 px-3 rounded-xl bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 hover:bg-cyan-500/30 text-xs font-medium flex items-center justify-center gap-1.5 transition-all duration-150 active:scale-[0.98]"
         >
-          <UIcon name="i-heroicons-code-bracket" class="w-4 h-4" />
-          <span>JSON Schema</span>
+          <UIcon name="i-heroicons-code-bracket" class="w-4 h-4 text-cyan-400" />
+          <span>Download JSON</span>
         </button>
 
         <button
           @click="copySummary"
-          class="min-h-[44px] px-3 rounded-xl bg-slate-800 text-slate-200 border border-white/[0.08] hover:bg-slate-700 font-mono text-xs font-semibold flex items-center justify-center gap-1.5 transition-all duration-150 active:scale-[0.98]"
+          class="h-10 px-3 rounded-xl bg-slate-800 text-slate-200 border border-white/[0.08] hover:bg-slate-700 text-xs font-medium flex items-center justify-center gap-1.5 transition-all duration-150 active:scale-[0.98]"
         >
           <UIcon :name="copied ? 'i-heroicons-check' : 'i-heroicons-clipboard'" class="w-4 h-4 text-emerald-400" />
-          <span>{{ copied ? 'Copied!' : 'Copy Summary' }}</span>
+          <span>{{ copied ? 'Copied!' : 'Copy summary' }}</span>
         </button>
       </div>
     </div>

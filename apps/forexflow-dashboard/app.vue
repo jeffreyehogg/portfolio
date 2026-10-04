@@ -87,6 +87,7 @@ const loading = ref(false)
 const latencyMs = ref(28)
 const activeCockpitTab = ref<'charts' | 'matrix' | 'var'>('charts')
 const tickPulse = ref<'up' | 'down' | null>(null)
+const showArchitectureSpecs = ref(false)
 
 // Quick-swap pair presets (44px min touch target)
 const quickPairs = [
@@ -195,20 +196,23 @@ onUnmounted(() => {
     <div class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 relative z-10 space-y-6">
 
       <!-- TOP TELEMETRY HUD & NAVIGATION BAR -->
-      <header class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 pb-6 border-b border-white/[0.06]">
+      <header class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 pb-6 border-b border-white/[0.08]">
         <!-- Brand Identity -->
         <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center shadow-lg shadow-emerald-500/10">
-            <UIcon name="i-heroicons-chart-bar-square" class="w-6 h-6 text-emerald-400" />
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shadow-lg shadow-emerald-500/10">
+            <UIcon name="i-heroicons-chart-bar-square" class="w-5 h-5 text-emerald-400" />
           </div>
           <div>
-            <h1 class="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-              ForexFlow FX
-              <span class="font-mono text-[10px] uppercase tracking-widest text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full">
-                Telemetry Engine v2.0
+            <div class="flex items-center gap-2.5">
+              <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-white">
+                ForexFlow FX
+              </h1>
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium text-emerald-400 bg-emerald-500/10 border border-emerald-500/20">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                Live feed
               </span>
-            </h1>
-            <p class="text-xs text-slate-400 font-normal">
+            </div>
+            <p class="text-xs text-slate-400 font-normal mt-0.5">
               Sub-second interbank cross-rates &amp; enterprise treasury risk intelligence
             </p>
           </div>
@@ -217,25 +221,25 @@ onUnmounted(() => {
         <!-- Telemetry Status Pills & Selectors -->
         <div class="flex flex-wrap items-center gap-2.5 w-full lg:w-auto">
           <!-- Session Badge -->
-          <div class="h-11 px-3.5 rounded-xl bg-slate-900/70 border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] backdrop-blur-xl flex items-center gap-2">
+          <div class="h-10 px-3 rounded-xl bg-slate-900/70 border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] backdrop-blur-xl flex items-center gap-2 text-xs text-slate-300 font-medium">
             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span class="font-mono text-xs font-semibold text-slate-300">LONDON / NY OVERLAP</span>
+            <span>London / NY overlap</span>
           </div>
 
           <!-- Latency Badge -->
-          <div class="h-11 px-3.5 rounded-xl bg-slate-900/70 border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] backdrop-blur-xl flex items-center gap-2">
-            <UIcon name="i-heroicons-bolt" class="w-4 h-4 text-cyan-400" />
-            <span class="font-mono text-xs font-semibold text-cyan-400">{{ latencyMs }}ms Edge</span>
+          <div class="h-10 px-3 rounded-xl bg-slate-900/70 border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] backdrop-blur-xl flex items-center gap-1.5 text-xs text-cyan-400 font-medium font-mono">
+            <UIcon name="i-heroicons-bolt" class="w-3.5 h-3.5" />
+            <span>{{ latencyMs }}ms edge</span>
           </div>
 
-          <!-- Interactive Currency Selector Controls (44px min touch target) -->
-          <div class="h-11 p-1 rounded-xl bg-slate-900/80 border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] backdrop-blur-xl flex items-center gap-1">
+          <!-- Interactive Currency Selector Controls -->
+          <div class="h-10 p-1 rounded-xl bg-slate-900/80 border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] backdrop-blur-xl flex items-center gap-1">
             <label for="base-currency-select" class="sr-only">Base Currency</label>
             <select
               id="base-currency-select"
               v-model="baseCurrency"
               @change="onPairChange"
-              class="h-9 px-3 rounded-lg bg-slate-800 text-white font-mono text-xs font-semibold border-0 focus:ring-1 focus:ring-emerald-500 cursor-pointer"
+              class="h-8 px-2.5 rounded-lg bg-slate-800 text-white font-mono text-xs font-semibold border-0 focus:ring-1 focus:ring-emerald-500 cursor-pointer"
             >
               <option v-for="c in currencies" :key="`base-${c}`" :value="c">
                 {{ c }} {{ G10_CURRENCIES[c]?.flag }}
@@ -245,8 +249,8 @@ onUnmounted(() => {
             <button
               @click="invertPair"
               aria-label="Invert currency pair"
-              title="Invert Pair"
-              class="w-7 h-7 rounded-md flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+              title="Invert pair"
+              class="w-7 h-7 rounded-md flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800 active:scale-95 transition-all"
             >
               <UIcon name="i-heroicons-arrows-right-left" class="w-3.5 h-3.5" />
             </button>
@@ -256,7 +260,7 @@ onUnmounted(() => {
               id="target-currency-select"
               v-model="targetCurrency"
               @change="onPairChange"
-              class="h-9 px-3 rounded-lg bg-emerald-500/10 text-emerald-400 font-mono text-xs font-semibold border border-emerald-500/20 focus:ring-1 focus:ring-emerald-500 cursor-pointer"
+              class="h-8 px-2.5 rounded-lg bg-emerald-500/10 text-emerald-300 font-mono text-xs font-semibold border border-emerald-500/20 focus:ring-1 focus:ring-emerald-500 cursor-pointer"
             >
               <option v-for="c in currencies.filter(c => c !== baseCurrency)" :key="`target-${c}`" :value="c">
                 {{ c }} {{ G10_CURRENCIES[c]?.flag }}
@@ -267,59 +271,60 @@ onUnmounted(() => {
       </header>
 
       <!-- COCKPIT SEGMENTED VIEW SELECTOR -->
-      <nav aria-label="ForexFlow dashboard modules" class="flex flex-wrap items-center justify-between gap-3">
+      <nav aria-label="ForexFlow dashboard modules" class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <!-- Module Tabs -->
-        <div class="flex items-center p-1 rounded-xl bg-slate-900/80 border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] backdrop-blur-xl">
+        <div class="flex items-center p-1 rounded-xl bg-slate-900/80 border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] backdrop-blur-xl">
           <button
             @click="activeCockpitTab = 'charts'"
             :class="[
-              'min-h-[44px] px-4 py-2 rounded-lg font-mono text-xs font-semibold flex items-center gap-2 transition-all duration-150 active:scale-[0.98]',
+              'min-h-[40px] px-3.5 py-1.5 rounded-lg text-xs font-medium flex items-center gap-2 transition-all duration-150 active:scale-[0.98]',
               activeCockpitTab === 'charts'
                 ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 shadow-md shadow-emerald-500/10'
                 : 'text-slate-400 hover:text-white'
             ]"
           >
             <UIcon name="i-heroicons-chart-bar" class="w-4 h-4" />
-            <span>Telemetry &amp; Charts</span>
+            <span>Live Chart</span>
           </button>
 
           <button
             @click="activeCockpitTab = 'matrix'"
             :class="[
-              'min-h-[44px] px-4 py-2 rounded-lg font-mono text-xs font-semibold flex items-center gap-2 transition-all duration-150 active:scale-[0.98]',
+              'min-h-[40px] px-3.5 py-1.5 rounded-lg text-xs font-medium flex items-center gap-2 transition-all duration-150 active:scale-[0.98]',
               activeCockpitTab === 'matrix'
                 ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 shadow-md shadow-emerald-500/10'
                 : 'text-slate-400 hover:text-white'
             ]"
           >
             <UIcon name="i-heroicons-table-cells" class="w-4 h-4" />
-            <span>Cross-Rate &amp; Arbitrage</span>
+            <span>Cross-Rates &amp; Arb</span>
           </button>
 
           <button
             @click="activeCockpitTab = 'var'"
             :class="[
-              'min-h-[44px] px-4 py-2 rounded-lg font-mono text-xs font-semibold flex items-center gap-2 transition-all duration-150 active:scale-[0.98]',
+              'min-h-[40px] px-3.5 py-1.5 rounded-lg text-xs font-medium flex items-center gap-2 transition-all duration-150 active:scale-[0.98]',
               activeCockpitTab === 'var'
                 ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 shadow-md shadow-emerald-500/10'
                 : 'text-slate-400 hover:text-white'
             ]"
           >
             <UIcon name="i-heroicons-shield-check" class="w-4 h-4" />
-            <span>Treasury VaR &amp; Stress Test</span>
+            <span>Treasury VaR</span>
           </button>
         </div>
 
-        <!-- Quick-Swap Pair Chips (Thumb-Accessible 44px targets) -->
-        <div class="flex items-center gap-2 overflow-x-auto pb-1 max-w-full">
+        <!-- Quick-Swap Pair Chips (Sleek Single-Row Pill Bar) -->
+        <div class="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 max-w-full">
+          <span class="text-xs text-slate-400 font-medium whitespace-nowrap mr-1">Quick pairs:</span>
           <button
             v-for="pair in quickPairs"
             :key="`${pair.base}-${pair.target}`"
             @click="selectPair(pair.base, pair.target)"
             :class="[
-              'min-h-[44px] px-3.5 rounded-xl font-mono text-xs font-semibold flex items-center gap-2 whitespace-nowrap transition-all duration-150 active:scale-[0.98]',
+              'h-8 px-2.5 rounded-lg font-mono text-xs font-semibold flex items-center gap-1.5 whitespace-nowrap transition-all duration-150 active:scale-[0.98]',
               baseCurrency === pair.base && targetCurrency === pair.target
-                ? 'bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 shadow-md shadow-emerald-500/10'
+                ? 'bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 shadow-sm'
                 : 'bg-slate-900/60 border border-white/[0.06] text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
             ]"
           >
@@ -347,18 +352,18 @@ onUnmounted(() => {
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-5">
 
           <!-- Card 1: Primary Spot Rate & Pipette Highlight (Col 1-4) -->
-          <div class="sm:col-span-2 lg:col-span-4 rounded-2xl bg-slate-900/65 backdrop-blur-xl border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] p-6 flex flex-col justify-between">
+          <div class="sm:col-span-2 lg:col-span-4 rounded-2xl bg-slate-900/65 backdrop-blur-xl border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] p-6 flex flex-col justify-between">
             <div>
               <div class="flex justify-between items-center mb-3">
-                <span class="font-mono text-xs uppercase tracking-wider text-slate-400 font-semibold">Institutional Mid Quote</span>
-                <span class="font-mono text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                  LIVE FEED
+                <span class="text-xs font-medium text-slate-400">Mid quote</span>
+                <span class="text-xs font-medium px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                  Live
                 </span>
               </div>
 
               <!-- Numerical Readout with Fractional Pipette -->
               <div class="py-1">
-                <div class="text-4xl sm:text-5xl font-extrabold font-mono text-white tracking-tight tabular-nums flex items-baseline">
+                <div class="text-4xl sm:text-5xl font-bold font-mono text-white tracking-tight tabular-nums flex items-baseline">
                   <span>{{ currentRate.toFixed(targetCurrency === 'JPY' ? 2 : 4) }}</span>
                   <span class="text-2xl sm:text-3xl text-emerald-400 font-semibold ml-0.5">
                     {{ currentRate.toFixed(targetCurrency === 'JPY' ? 3 : 5).slice(-1) }}
@@ -376,16 +381,16 @@ onUnmounted(() => {
               </div>
             </div>
 
-            <div class="pt-4 border-t border-white/[0.04] flex items-center justify-between text-xs font-mono text-slate-500">
-              <span>LAST TICK</span>
-              <span class="text-slate-300">{{ lastUpdated || 'Synchronizing...' }}</span>
+            <div class="pt-4 border-t border-white/[0.04] flex items-center justify-between text-xs text-slate-400">
+              <span>Last update</span>
+              <span class="text-slate-300 font-mono">{{ lastUpdated || 'Synchronizing...' }}</span>
             </div>
           </div>
 
           <!-- Card 2: 24h Extremes Visual Meter (Col 5-8) -->
-          <div class="sm:col-span-2 lg:col-span-4 rounded-2xl bg-slate-900/65 backdrop-blur-xl border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] p-6 flex flex-col justify-between">
+          <div class="sm:col-span-2 lg:col-span-4 rounded-2xl bg-slate-900/65 backdrop-blur-xl border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] p-6 flex flex-col justify-between">
             <div>
-              <span class="font-mono text-xs uppercase tracking-wider text-slate-400 font-semibold">24h Session Boundary</span>
+              <span class="text-xs font-medium text-slate-400">24h Range</span>
               <div class="mt-4 space-y-4">
                 <!-- Visual Slider Bar -->
                 <div>
@@ -400,63 +405,63 @@ onUnmounted(() => {
 
                 <div class="grid grid-cols-2 gap-3 pt-2">
                   <div class="p-3 rounded-xl bg-slate-950/50 border border-white/[0.04]">
-                    <span class="font-mono text-[10px] text-slate-500 uppercase">Daily Open</span>
+                    <span class="text-[11px] text-slate-400 block font-medium">Daily open</span>
                     <p class="font-mono text-sm font-semibold text-slate-200 mt-0.5">
                       {{ (currentRate * 0.996).toFixed(targetCurrency === 'JPY' ? 3 : 5) }}
                     </p>
                   </div>
                   <div class="p-3 rounded-xl bg-slate-950/50 border border-white/[0.04]">
-                    <span class="font-mono text-[10px] text-slate-500 uppercase">Intraday Range</span>
-                    <p class="font-mono text-sm font-semibold text-cyan-400 mt-0.5">78 Pips</p>
+                    <span class="text-[11px] text-slate-400 block font-medium">Intraday range</span>
+                    <p class="font-mono text-sm font-semibold text-cyan-400 mt-0.5">78 pips</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="pt-4 border-t border-white/[0.04] text-xs font-mono text-slate-500 flex justify-between">
-              <span>VOLATILITY</span>
-              <span class="text-emerald-400 font-semibold">STABLE (0.68%)</span>
+            <div class="pt-4 border-t border-white/[0.04] text-xs text-slate-400 flex justify-between">
+              <span>Volatility</span>
+              <span class="text-emerald-400 font-medium">Normal (0.68%)</span>
             </div>
           </div>
 
           <!-- Card 3: Global Trading Sessions Clocks (Col 9-12) -->
-          <div class="sm:col-span-2 lg:col-span-4 rounded-2xl bg-slate-900/65 backdrop-blur-xl border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] p-6 flex flex-col justify-between">
+          <div class="sm:col-span-2 lg:col-span-4 rounded-2xl bg-slate-900/65 backdrop-blur-xl border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] p-6 flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between mb-4">
-                <span class="font-mono text-xs uppercase tracking-wider text-slate-400 font-semibold">Global FX Market Clocks</span>
-                <span class="font-mono text-[10px] text-emerald-400 font-semibold">PEAK LIQUIDITY</span>
+                <span class="text-xs font-medium text-slate-400">Market sessions</span>
+                <span class="text-xs text-emerald-400 font-medium">Peak liquidity</span>
               </div>
 
               <div class="space-y-2.5">
-                <div class="flex items-center justify-between p-2 rounded-xl bg-slate-950/50 border border-white/[0.04]">
+                <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-950/50 border border-white/[0.04]">
                   <div class="flex items-center gap-2">
                     <span class="w-2 h-2 rounded-full bg-emerald-400" />
-                    <span class="font-mono text-xs text-white">London (08:00 - 17:00 UTC)</span>
+                    <span class="text-xs text-white">London (08:00 - 17:00 UTC)</span>
                   </div>
-                  <span class="font-mono text-[11px] text-emerald-400 font-semibold">ACTIVE</span>
+                  <span class="text-xs text-emerald-400 font-medium">Open</span>
                 </div>
 
-                <div class="flex items-center justify-between p-2 rounded-xl bg-slate-950/50 border border-white/[0.04]">
+                <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-950/50 border border-white/[0.04]">
                   <div class="flex items-center gap-2">
                     <span class="w-2 h-2 rounded-full bg-emerald-400" />
-                    <span class="font-mono text-xs text-white">New York (13:00 - 22:00 UTC)</span>
+                    <span class="text-xs text-white">New York (13:00 - 22:00 UTC)</span>
                   </div>
-                  <span class="font-mono text-[11px] text-emerald-400 font-semibold">ACTIVE</span>
+                  <span class="text-xs text-emerald-400 font-medium">Open</span>
                 </div>
 
-                <div class="flex items-center justify-between p-2 rounded-xl bg-slate-950/30 border border-white/[0.02]">
+                <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-950/30 border border-white/[0.02]">
                   <div class="flex items-center gap-2">
                     <span class="w-2 h-2 rounded-full bg-slate-600" />
-                    <span class="font-mono text-xs text-slate-400">Tokyo (00:00 - 09:00 UTC)</span>
+                    <span class="text-xs text-slate-400">Tokyo (00:00 - 09:00 UTC)</span>
                   </div>
-                  <span class="font-mono text-[11px] text-slate-500">CLOSED</span>
+                  <span class="text-xs text-slate-500 font-medium">Closed</span>
                 </div>
               </div>
             </div>
 
-            <div class="pt-4 border-t border-white/[0.04] text-xs font-mono text-slate-500 flex justify-between">
-              <span>ECN ROUTING</span>
-              <span class="text-cyan-400 font-semibold">CURRENEX / EBS PRIME</span>
+            <div class="pt-4 border-t border-white/[0.04] text-xs text-slate-400 flex justify-between">
+              <span>ECN routing</span>
+              <span class="text-cyan-400 font-mono text-xs">Currenex / EBS</span>
             </div>
           </div>
 
@@ -473,55 +478,75 @@ onUnmounted(() => {
         <PortfolioStressTester />
       </section>
 
-      <!-- PROBLEM / SOLUTION DOMAIN CONTRAST TABLE -->
-      <section class="rounded-2xl bg-slate-900/65 backdrop-blur-xl border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] p-6 space-y-4">
-        <div>
-          <h3 class="text-sm font-semibold text-white flex items-center gap-2">
-            <UIcon name="i-heroicons-scale" class="w-4 h-4 text-emerald-400" />
-            Engineering Contrast: Retail Trackers vs. Institutional FX Engine
-          </h3>
-          <p class="text-xs text-slate-400">Architectural divergence between retail polling wrappers and high-performance financial systems</p>
-        </div>
+      <!-- PROGRESSIVE DISCLOSURE: ARCHITECTURE & ENGINEERING SPECS -->
+      <section class="rounded-2xl bg-slate-900/50 backdrop-blur-xl border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] overflow-hidden transition-all">
+        <button
+          @click="showArchitectureSpecs = !showArchitectureSpecs"
+          class="w-full p-4 sm:p-5 flex items-center justify-between text-left hover:bg-slate-800/30 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/50"
+        >
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
+              <UIcon name="i-heroicons-cpu-chip" class="w-4 h-4" />
+            </div>
+            <div>
+              <h3 class="text-sm font-semibold text-white flex items-center gap-2">
+                System architecture &amp; telemetry pipeline
+              </h3>
+              <p class="text-xs text-slate-400">
+                Sub-second edge proxy, synthetic microstructure, and parametric risk calculations
+              </p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 text-xs font-medium text-slate-400">
+            <span>{{ showArchitectureSpecs ? 'Hide details' : 'Show details' }}</span>
+            <UIcon
+              name="i-heroicons-chevron-down"
+              :class="['w-4 h-4 text-slate-400 transition-transform duration-200', showArchitectureSpecs ? 'rotate-180' : '']"
+            />
+          </div>
+        </button>
 
-        <div class="overflow-x-auto rounded-xl border border-white/[0.06]">
-          <table class="w-full text-left text-xs font-mono divide-y divide-white/[0.06]">
-            <thead class="bg-slate-950/60 text-slate-400 uppercase text-[11px]">
-              <tr>
-                <th class="p-3.5">Architecture Dimension</th>
-                <th class="p-3.5 text-rose-400">Retail / Toy Converters</th>
-                <th class="p-3.5 text-emerald-400">ForexFlow Institutional Engine</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-white/[0.04] bg-[#0b0f19]/60">
-              <tr>
-                <td class="p-3.5 font-bold text-slate-200">Ingestion Pipeline</td>
-                <td class="p-3.5 text-slate-400">Direct client-to-API calls exposing private keys or un-cached 10s polling</td>
-                <td class="p-3.5 text-emerald-300 font-semibold">Nuxt 3 Nitro edge proxy with SWR caching, Frankfurt ECB fallback &amp; synthetic drift</td>
-              </tr>
-              <tr>
-                <td class="p-3.5 font-bold text-slate-200">Pricing Microstructure</td>
-                <td class="p-3.5 text-slate-400">Flat, single mid rate with zero spread or liquidity visibility</td>
-                <td class="p-3.5 text-emerald-300 font-semibold">Synthetic Bid/Ask quotes, pip differential calculations, and fractional pipette precision</td>
-              </tr>
-              <tr>
-                <td class="p-3.5 font-bold text-slate-200">Risk &amp; Portfolio Utility</td>
-                <td class="p-3.5 text-slate-400">Passive converter calculator with no enterprise context</td>
-                <td class="p-3.5 text-emerald-300 font-semibold">Parametric VaR &amp; Expected Shortfall (CVaR) with historical crisis simulations</td>
-              </tr>
-              <tr>
-                <td class="p-3.5 font-bold text-slate-200">Execution Modeling</td>
-                <td class="p-3.5 text-slate-400">Assumes zero transaction friction and infinite liquidity</td>
-                <td class="p-3.5 text-emerald-300 font-semibold">Almgren-Chriss market impact law and multi-ECN smart order routing allocations</td>
-              </tr>
-            </tbody>
-          </table>
+        <div v-show="showArchitectureSpecs" class="p-5 pt-0 border-t border-white/[0.06] space-y-4">
+          <div class="overflow-x-auto rounded-xl border border-white/[0.06] mt-4">
+            <table class="w-full text-left text-xs divide-y divide-white/[0.06]">
+              <thead class="bg-slate-950/60 text-slate-400 uppercase text-[11px] font-mono">
+                <tr>
+                  <th class="p-3.5">Architecture dimension</th>
+                  <th class="p-3.5 text-rose-400">Retail / Toy converters</th>
+                  <th class="p-3.5 text-emerald-400">ForexFlow institutional engine</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-white/[0.04] bg-[#0b0f19]/60">
+                <tr>
+                  <td class="p-3.5 font-semibold text-slate-200">Ingestion pipeline</td>
+                  <td class="p-3.5 text-slate-400">Direct client-to-API calls exposing keys; un-cached polling</td>
+                  <td class="p-3.5 text-emerald-300">Nuxt 3 Nitro edge proxy with SWR caching, Frankfurt ECB fallback &amp; synthetic drift</td>
+                </tr>
+                <tr>
+                  <td class="p-3.5 font-semibold text-slate-200">Pricing microstructure</td>
+                  <td class="p-3.5 text-slate-400">Flat, single mid rate with zero spread or depth visibility</td>
+                  <td class="p-3.5 text-emerald-300">Synthetic Bid/Ask quotes, pip differential calculations, and fractional pipette precision</td>
+                </tr>
+                <tr>
+                  <td class="p-3.5 font-semibold text-slate-200">Risk &amp; portfolio utility</td>
+                  <td class="p-3.5 text-slate-400">Passive converter calculator with no enterprise context</td>
+                  <td class="p-3.5 text-emerald-300">Parametric VaR &amp; Expected Shortfall (CVaR) with historical crisis simulations</td>
+                </tr>
+                <tr>
+                  <td class="p-3.5 font-semibold text-slate-200">Execution modeling</td>
+                  <td class="p-3.5 text-slate-400">Assumes zero transaction friction and infinite liquidity</td>
+                  <td class="p-3.5 text-emerald-300">Almgren-Chriss market impact law and multi-ECN smart order routing allocations</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </section>
 
       <!-- DEVOPS & SYSTEMS ARCHITECTURE FOOTER -->
-      <footer class="rounded-2xl bg-slate-950/70 border border-white/[0.08] p-6 text-xs font-mono text-slate-400 flex flex-col md:flex-row justify-between items-center gap-4">
-        <div class="flex items-center gap-3">
-          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+      <footer class="rounded-2xl bg-slate-950/70 border border-white/[0.08] p-5 text-xs text-slate-400 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="flex items-center gap-2.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
           <span>Nuxt 3 Nitro • Edge SWR Cache • Chart.js Canvas • Turborepo Monorepo</span>
         </div>
 
@@ -530,7 +555,7 @@ onUnmounted(() => {
             href="https://github.com/jeffreyehogg/portfolio/tree/main/apps/forexflow-dashboard"
             target="_blank"
             rel="noopener noreferrer"
-            class="text-emerald-400 hover:text-emerald-300 transition-colors flex items-center gap-1"
+            class="text-emerald-400 hover:text-emerald-300 transition-colors flex items-center gap-1 font-medium"
           >
             <UIcon name="i-heroicons-code-bracket" class="w-4 h-4" />
             <span>Source Code</span>

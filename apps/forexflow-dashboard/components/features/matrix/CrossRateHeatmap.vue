@@ -25,18 +25,18 @@ const getHeatmapColor = (change24h: number) => {
       <div>
         <h3 class="text-sm font-semibold text-white flex items-center gap-2">
           <UIcon name="i-heroicons-table-cells" class="w-4 h-4 text-emerald-400" />
-          G10 Interbank Cross-Rate Matrix
+          G10 cross-rate matrix
         </h3>
-        <p class="text-xs text-slate-400">Click any pair cell to immediately spotlight in chart visualizer</p>
+        <p class="text-xs text-slate-400">Click any pair to load directly in live chart</p>
       </div>
-      <div class="flex items-center gap-2 text-[11px] font-mono text-slate-400">
-        <span class="inline-flex items-center gap-1">
+      <div class="flex items-center gap-3 text-xs text-slate-400">
+        <span class="inline-flex items-center gap-1.5">
           <span class="w-2 h-2 rounded bg-emerald-500/60" /> Positive
         </span>
-        <span class="inline-flex items-center gap-1">
+        <span class="inline-flex items-center gap-1.5">
           <span class="w-2 h-2 rounded bg-rose-500/60" /> Negative
         </span>
-        <span class="inline-flex items-center gap-1">
+        <span class="inline-flex items-center gap-1.5">
           <span class="w-2 h-2 rounded bg-slate-700" /> Parity
         </span>
       </div>
@@ -44,14 +44,14 @@ const getHeatmapColor = (change24h: number) => {
 
     <!-- Matrix Table -->
     <div class="overflow-x-auto rounded-xl border border-white/[0.08] bg-[#0b0f19]/80 backdrop-blur-xl">
-      <table class="w-full border-collapse text-xs font-mono">
+      <table class="w-full border-collapse text-xs">
         <thead>
-          <tr class="border-b border-white/[0.08] bg-slate-900/60">
-            <th class="p-3 text-left font-bold text-slate-400 uppercase tracking-wider text-[11px]">Base / Quote</th>
+          <tr class="border-b border-white/[0.08] bg-slate-900/60 font-mono text-[11px]">
+            <th class="p-3 text-left font-bold text-slate-400">Base / Quote</th>
             <th 
               v-for="target in activeCurrencies" 
               :key="`th-${target}`"
-              class="p-3 text-center font-bold text-slate-300 uppercase tracking-wider text-[11px]"
+              class="p-3 text-center font-bold text-slate-300"
             >
               {{ target }}
             </th>

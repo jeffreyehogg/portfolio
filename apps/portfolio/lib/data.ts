@@ -5,6 +5,7 @@ export interface Project {
 	description: string
 	imageUrl: string
 	tags: string[]
+	category?: 'apps' | 'tools'
 	learnings?: string
 	featured?: boolean
 	metrics?: string
@@ -212,118 +213,100 @@ export const experienceData: ExperienceItem[] = [
 export const projectsData: Project[] = [
 	{
 		title: 'Texas Tint Plus',
+		category: 'apps',
 		href: 'https://texastint.com',
 		githubUrl: 'https://github.com/jeffreyehogg/texas-tint',
 		description:
-			'A high-performance commercial and automotive window film platform serving the Greater Houston area. Features an interactive commercial bid estimator, segmented service portals (commercial, residential, automotive), and localized SEO architecture with structured JSON-LD schemas.',
+			'Commercial and residential window film platform for a Houston-area business, featuring an interactive quote estimator and service catalog.',
 		imageUrl: '/images/projects/texas-tint.png',
-		tags: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Headless UI', 'JSON-LD'],
-		learnings:
-			'Engineered an interactive quote request workflow with custom property type filtering, integrated Schema.org LocalBusiness structured data for Houston metro search ranking, and optimized high-resolution architectural imagery.',
+		tags: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS'],
 		featured: true,
-		metrics: 'Houston Commercial & Automotive Film Authority',
 	},
 	{
 		title: 'Vision Integrated Systems',
+		category: 'apps',
 		href: 'https://vision-texas.com/',
 		description:
-			'Official corporate platform for Vision Integrated Systems, a leading provider of enterprise structured cabling, security solutions, and commercial AV.',
+			'Corporate website for a commercial security and audio-visual provider, designed for fast load times and clean presentation across all devices.',
 		imageUrl: '/images/projects/vision.png',
-		tags: ['Next.js', 'React 19', 'Tailwind CSS', 'Framer Motion'],
-		learnings:
-			'Focused on component modularity, SEO optimization, and sub-second load times to deliver an accessible corporate web presence.',
+		tags: ['Next.js', 'React', 'Tailwind CSS', 'Framer Motion'],
 		featured: true,
-		metrics: 'Enterprise corporate web presence',
 	},
 	{
 		title: 'Hogg Homes',
+		category: 'apps',
 		href: 'https://homes.jeffhogg.com',
 		githubUrl: 'https://github.com/jeffreyehogg/portfolio/tree/main/apps/hogg-homes',
 		description:
-			'A high-craft residential real estate and community discovery platform for modern homebuilders. Features faceted client-side filtering, interactive Elevation A/B/C architectural toggles, CAD floor plan schematics with electrical/plumbing layers, and Zod-validated VIP tour booking with real-time CRM webhooks.',
+			'Modern real estate platform for homebuilders, featuring searchable communities, interactive architectural elevations, and tour scheduling.',
 		imageUrl: '/images/projects/hogg-homes.png',
-		tags: ['Next.js 16', 'React 19', 'Server Actions', 'Zod', 'Framer Motion', 'Tailwind CSS', 'Turborepo'],
-		learnings:
-			'Replaced slow legacy homebuilder CMS monoliths with sub-second React Server Components (RSC). Engineered interactive SVG CAD schematics with toggleable MEP layers, optimized AVIF elevation switching, and built type-safe CRM lead synchronization.',
+		tags: ['Next.js', 'React', 'Tailwind CSS', 'Framer Motion'],
 		featured: true,
-		metrics: 'Sub-second LCP (0.7s) • Zero CLS • Edge RSC',
 	},
 	{
 		title: 'AutoDBA',
+		category: 'tools',
 		href: 'https://autodba.jeffhogg.com',
 		githubUrl: 'https://github.com/jeffreyehogg/portfolio/tree/main/apps/autodba',
 		description:
-			'Agentic SQL diagnostic & query optimization platform. sqlglot AST analysis across T-SQL, PostgreSQL and MySQL detects non-SARGable predicates, Cartesian joins and cursor loops; an AST-verified Gemini Flash rewrite loop synthesizes optimized SQL and zero-downtime CREATE INDEX DDL. Ships with an MCP server for Claude Desktop and Cursor.',
+			'AI-powered database assistant that analyzes SQL queries, identifies performance bottlenecks, and recommends index optimizations.',
 		imageUrl: '/images/projects/autodba.png',
-		tags: ['Python 3.12', 'FastAPI', 'sqlglot', 'Agentic AI', 'Next.js 16', 'MS SQL Server', 'PostgreSQL'],
-		learnings:
-			"Built a cyclic analyze → rewrite → verify → critique agent loop where every LLM rewrite is checked against the original sqlglot AST (table preservation, statement-type locking, critical anti-pattern regression), guarding against semantic drift and prompt injection. Shipped a polyglot Next.js 16 + FastAPI app on Vercel's free tier with deterministic fallbacks, IP quotas, and zero-token enterprise presets.",
+		tags: ['Next.js', 'Python', 'FastAPI', 'AI'],
 		featured: true,
-		metrics: 'AST Query Profiler • Zero-Downtime Index Synthesis • Free Tier Vercel Serverless',
 	},
 	{
 		title: 'Legacy Link',
+		category: 'tools',
 		href: 'https://legacy-link.jeffhogg.com',
 		githubUrl: 'https://github.com/jeffreyehogg/portfolio/tree/main/apps/legacy-link',
 		description:
-			'A specialized middleware utility designed to modernize physical security data migration. Ingests raw exports from legacy systems (Lenel, DNA Fusion) and provides an interactive visual interface to map, sanitize, and transform data for import into Genetec, reducing days of manual work to minutes.',
+			'Data migration tool for building security systems, allowing teams to map, clean, and transfer badge and access records in minutes.',
 		imageUrl: '/images/projects/legacy-link.png',
-		tags: ['Next.js', 'TypeScript', 'PostgreSQL JSONB', 'Clerk', 'PapaParse'],
-		learnings:
-			'Architected a flexible data schema using PostgreSQL JSONB to ingest unpredictable legacy datasets without schema migrations. Built a stateful wizard interface for complex data mapping and implemented secure, signed file handling for sensitive records.',
+		tags: ['Next.js', 'TypeScript', 'PostgreSQL', 'Clerk'],
 		featured: false,
-		metrics: 'Reduces data migration from days to minutes',
 	},
 	{
 		title: 'Kingdom Connect',
+		category: 'apps',
 		href: 'https://kingdom.jeffhogg.com',
 		githubUrl: 'https://github.com/jeffreyehogg/portfolio/tree/main/apps/kingdom-connect',
 		description:
-			'A modern full-stack faith platform unifying hands-on volunteer mobilization, transparent mission crowdfunding with tangible unit economics, community intercessory prayer with scripture promise anchors, and a private devotional sanctuary with drag-and-drop prioritization.',
+			'Community engagement platform featuring a volunteer signup board, transparent mission funding, and a shared community prayer wall.',
 		imageUrl: '/images/projects/kingdom-connect.png',
-		tags: ['Next.js 16', 'Next.js', 'React 19', 'Neon Postgres', 'Drizzle ORM', 'Tailwind CSS v4', 'Clerk', 'Zod Server Actions', 'dnd-kit'],
-		learnings:
-			'Architected on Next.js 16 (Turbopack) and React 19 Server Components with Neon Serverless Postgres and Drizzle ORM. Engineered an interactive 60-second Spiritual Gifts & Ministry Matcher, a dynamic mission impact unit calculator, a Scripture Promise Anchor engine with 1-click journal persistence, and optimistic drag-and-drop state machines with Clerk authentication.',
+		tags: ['Next.js', 'React', 'PostgreSQL', 'Tailwind CSS'],
 		featured: false,
-		metrics: 'Sub-second Turbopack RSC • 4-Pillar Ministry Suite • Drizzle & Neon',
 	},
 	{
 		title: 'ForexFlow FX Dashboard',
+		category: 'apps',
 		href: 'https://forexflow-dashboard.vercel.app/',
 		githubUrl: 'https://github.com/jeffreyehogg/portfolio/tree/main/apps/forexflow-dashboard',
 		description:
-			'An institutional-grade FX telemetry and treasury risk intelligence engine tracking live mid-market rates, synthetic Bid/Ask pip spreads, G10 cross-currency correlation matrices, triangular arbitrage cycles, and enterprise Value-at-Risk (VaR) exposure scenarios.',
+			'Real-time foreign exchange dashboard displaying live currency exchange rates, interactive trend charts, and market depth.',
 		imageUrl: '/images/projects/forexflow.png',
-		tags: ['Nuxt 3', 'Vue 3', 'TypeScript', 'Chart.js', 'Nitro Engine', 'Tailwind CSS', 'Turborepo'],
-		learnings:
-			'Engineered a multi-tier Nitro edge API proxy layer with SWR caching, ECB Frankfurter failover, and stochastic market synthesis to guarantee 0% downtime. Built client-side Chart.js telemetry with EMA 20/50 and Bollinger Bands, an Almgren-Chriss smart order routing simulator, and parametric portfolio VaR stress-testing.',
+		tags: ['Nuxt 3', 'Vue 3', 'TypeScript', 'Chart.js'],
 		featured: false,
-		metrics: 'Sub-50ms Edge Telemetry • Live Pip Spreads • Treasury VaR Engine',
 	},
 	{
-		title: 'Engineering Monorepo & Portfolio Platform',
+		title: 'Developer Portfolio & Monorepo',
+		category: 'tools',
 		href: 'https://www.jeffhogg.com',
 		githubUrl: 'https://github.com/jeffreyehogg/portfolio',
 		description:
-			'An enterprise-grade Turborepo monorepo orchestrating 4 production applications (Next.js 16, Nuxt 3, React 19) with pnpm workspaces, remote build caching, shared configurations, and automated Vercel CI/CD.',
+			'The multi-project codebase behind this portfolio, uniting several web applications into a single shared repository with automated deployment.',
 		imageUrl: '/images/projects/portfolio.png',
-		tags: ['Turborepo', 'pnpm Workspaces', 'Next.js', 'Nuxt', 'TypeScript'],
-		learnings:
-			'Architected a multi-app monorepo with Turborepo task pipeline caching, independent Vercel deployment detection, shared ESLint/TS configs, and automated agentic protocols.',
+		tags: ['Turborepo', 'Next.js', 'TypeScript', 'Tailwind CSS'],
 		featured: false,
-		metrics: 'Turborepo 4-App Architecture',
 	},
 	{
 		title: 'Webex Control Hub',
+		category: 'tools',
 		href: 'https://www.webex.com/control-hub.html',
 		description:
-			'An enterprise-grade platform for global IT administrators to manage users, devices, calling routes, and security services across the Webex enterprise ecosystem.',
+			'Enterprise management portal for IT administrators to manage users, devices, and calling services across Cisco’s Webex ecosystem.',
 		imageUrl: '/images/projects/controlhub.png',
-		tags: ['Angular', 'TypeScript', 'Cypress', 'Jenkins', 'Enterprise SaaS'],
-		learnings:
-			'Delivered mission-critical features with strict enterprise scalability, accessibility, and high test coverage via Cypress E2E automation in Jenkins.',
+		tags: ['Angular', 'TypeScript', 'Cypress', 'Enterprise'],
 		featured: false,
-		metrics: 'Powers administration for millions of users worldwide',
 	},
 ]
 

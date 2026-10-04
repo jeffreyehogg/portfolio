@@ -7,12 +7,12 @@ import ProjectCard from '../ui/ProjectCard'
 import BackgroundBlobs from '../ui/BackgroundBlobs'
 import { cn } from '../../lib/utils'
 
-type CategoryFilter = 'all' | 'systems' | 'fullstack'
+type CategoryFilter = 'all' | 'apps' | 'tools'
 
 const categories: { id: CategoryFilter; label: string }[] = [
 	{ id: 'all', label: 'All Projects' },
-	{ id: 'systems', label: 'Systems & DevOps' },
-	{ id: 'fullstack', label: 'Full-Stack SaaS' },
+	{ id: 'apps', label: 'Web Applications' },
+	{ id: 'tools', label: 'Tools & Systems' },
 ]
 
 export default function ProjectList() {
@@ -22,30 +22,7 @@ export default function ProjectList() {
 
 	const filteredProjects = useMemo(() => {
 		if (activeCategory === 'all') return projectsData
-		if (activeCategory === 'systems') {
-			return projectsData.filter((p) =>
-				p.tags.some((t) =>
-					[
-						'Enterprise SaaS',
-						'PostgreSQL JSONB',
-						'Cypress',
-						'Jenkins',
-						'PapaParse',
-						'Angular',
-						'Turborepo',
-						'pnpm Workspaces',
-					].includes(t)
-				)
-			)
-		}
-		if (activeCategory === 'fullstack') {
-			return projectsData.filter((p) =>
-				p.tags.some((t) =>
-					['Next.js', 'Nuxt', 'Neon Postgres', 'Drizzle ORM', 'React 19'].includes(t)
-				)
-			)
-		}
-		return projectsData
+		return projectsData.filter((p) => p.category === activeCategory)
 	}, [activeCategory])
 
 	return (
@@ -63,7 +40,7 @@ export default function ProjectList() {
 						animate={shouldReduce ? undefined : { opacity: 1, y: 0 }}
 						className='inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-mono uppercase tracking-wider mb-4'
 					>
-						Systems & Applications
+						Projects
 					</motion.div>
 					<motion.h1
 						initial={shouldReduce ? false : { opacity: 0, y: 15 }}
@@ -71,7 +48,7 @@ export default function ProjectList() {
 						transition={{ delay: 0.1 }}
 						className='text-3xl sm:text-5xl font-extrabold text-white tracking-tight'
 					>
-						Selected Engineering Work
+						Featured Work
 					</motion.h1>
 					<motion.p
 						initial={shouldReduce ? false : { opacity: 0, y: 15 }}
@@ -79,12 +56,11 @@ export default function ProjectList() {
 						transition={{ delay: 0.2 }}
 						className='mt-4 text-base sm:text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed'
 					>
-						A curated showcase of enterprise architectures, data migration middleware,
-						and modern full-stack web platforms.
+						A collection of web applications, client projects, and software tools I've built.
 					</motion.p>
 				</div>
 
-				{/* Minimal 3-Segment Category Switcher */}
+				{/* Category Switcher */}
 				<div className='flex justify-center mb-12 sm:mb-16'>
 					<div className='inline-flex p-1 rounded-full bg-slate-900/90 border border-slate-800 shadow-inner backdrop-blur-md'>
 						{categories.map((cat) => {
@@ -118,7 +94,7 @@ export default function ProjectList() {
 					</div>
 				</div>
 
-				{/* Elegant Project Cards Grid */}
+				{/* Project Cards Grid */}
 				<AnimatePresence mode='wait'>
 					<motion.div
 						key={activeCategory}

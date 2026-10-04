@@ -3,7 +3,7 @@
 import { motion, useReducedMotion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowTopRightOnSquareIcon, CommandLineIcon } from '@heroicons/react/24/outline'
+import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline'
 import type { Project } from '../../lib/data'
 import { cn } from '../../lib/utils'
 
@@ -15,29 +15,27 @@ interface ProjectCardProps {
 
 export default function ProjectCard({ project, index = 0, priorityImage = false }: ProjectCardProps) {
 	const shouldReduce = useReducedMotion()
-	// Keep up to 4 tags to preserve clean alignment and prevent erratic height wrapping
 	const displayTags = project.tags.slice(0, 4)
 
 	return (
 		<motion.div
-			initial={shouldReduce ? false : { opacity: 0, y: 25 }}
+			initial={shouldReduce ? false : { opacity: 0, y: 20 }}
 			whileInView={shouldReduce ? undefined : { opacity: 1, y: 0 }}
 			viewport={{ once: true }}
-			transition={{ type: 'spring', bounce: 0.2, duration: 0.5, delay: index * 0.08 }}
+			transition={{ duration: 0.4, delay: index * 0.06 }}
 			className={cn(
-				'group relative flex flex-col rounded-2xl bg-slate-900/70 border border-slate-800/80 shadow-xl overflow-hidden',
+				'group relative flex flex-col rounded-2xl bg-slate-900/60 border border-slate-800/80 shadow-lg overflow-hidden backdrop-blur-sm',
 				!shouldReduce &&
-					'hover:shadow-2xl hover:border-indigo-500/40 hover:bg-slate-900/95 hover:-translate-y-1 transition-all duration-300'
+					'hover:shadow-2xl hover:border-slate-700 hover:bg-slate-900/90 hover:-translate-y-1 transition-all duration-300'
 			)}
 		>
-			{/* Project Image Header with Hover Reveal */}
+			{/* Project Image Header */}
 			<Link
 				href={project.href}
 				target='_blank'
 				rel='noopener noreferrer'
 				className='relative aspect-[16/10] w-full overflow-hidden block bg-slate-950 border-b border-slate-800/60'
 			>
-				<div className='absolute inset-0 bg-slate-950/20 group-hover:bg-transparent transition-colors z-10' />
 				<Image
 					src={project.imageUrl}
 					alt={project.title}
@@ -46,44 +44,31 @@ export default function ProjectCard({ project, index = 0, priorityImage = false 
 					className={cn(
 						'object-cover',
 						!shouldReduce &&
-							'transform transition-transform duration-700 ease-out group-hover:scale-105'
+							'transition-transform duration-500 ease-out group-hover:scale-105'
 					)}
 					sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
 				/>
 
-				{/* Subtle Hover Reveal */}
+				{/* Hover Overlay */}
 				<div className='absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 bg-slate-950/40 backdrop-blur-[2px]'>
-					<span className='px-4 py-1.5 rounded-full text-xs font-semibold text-white bg-slate-900/90 border border-slate-700 flex items-center gap-1.5 shadow-lg'>
-						View Live System
+					<span className='px-4 py-1.5 rounded-full text-xs font-medium text-white bg-slate-900/90 border border-slate-700 flex items-center gap-1.5 shadow-lg'>
+						Visit Project
 						<ArrowTopRightOnSquareIcon className='w-3.5 h-3.5 text-indigo-400' />
 					</span>
 				</div>
 			</Link>
 
-			{/* Card Content */}
-			<div className='p-6 sm:p-7 flex-1 flex flex-col justify-between'>
+			{/* Card Body */}
+			<div className='p-6 flex-1 flex flex-col justify-between'>
 				<div>
-					{/* Telemetry Metric Pill (cleanly positioned above title without image overflow) */}
-					{project.metrics && (
-						<div className='flex items-center gap-1.5 text-xs font-mono text-emerald-400 font-medium mb-2.5'>
-							<span
-								className={cn(
-									'h-1.5 w-1.5 rounded-full bg-emerald-400 shrink-0',
-									!shouldReduce && 'animate-pulse'
-								)}
-							/>
-							<span className='truncate'>{project.metrics}</span>
-						</div>
-					)}
-
 					{/* Title & Action Links */}
-					<div className='flex items-center justify-between mb-2.5'>
-						<h3 className='text-xl font-bold text-white group-hover:text-indigo-300 transition-colors'>
+					<div className='flex items-center justify-between gap-3 mb-3'>
+						<h3 className='text-lg sm:text-xl font-bold text-white group-hover:text-indigo-300 transition-colors'>
 							<Link href={project.href} target='_blank' rel='noopener noreferrer'>
 								{project.title}
 							</Link>
 						</h3>
-						<div className='flex items-center gap-1.5'>
+						<div className='flex items-center gap-2 shrink-0'>
 							{project.githubUrl && (
 								<a
 									href={project.githubUrl}
@@ -115,38 +100,17 @@ export default function ProjectCard({ project, index = 0, priorityImage = false 
 					</div>
 
 					{/* Description */}
-					<p className='text-sm text-slate-400 leading-relaxed font-light line-clamp-3 mb-4'>
+					<p className='text-sm text-slate-400 leading-relaxed font-light mb-6'>
 						{project.description}
 					</p>
-
-					{/* Architectural Telemetry Insight */}
-					{project.learnings && (
-						<div className='mb-5 rounded-xl bg-slate-950/80 border border-slate-800/90 overflow-hidden text-xs text-slate-300'>
-							<div className='flex items-center justify-between px-3.5 py-1.5 bg-slate-900/90 border-b border-slate-800/80'>
-								<div className='flex items-center gap-1.5'>
-									<span className='w-2 h-2 rounded-full bg-rose-500/70' />
-									<span className='w-2 h-2 rounded-full bg-amber-500/70' />
-									<span className='w-2 h-2 rounded-full bg-emerald-500/70' />
-									<span className='text-[10px] font-mono text-slate-500 ml-1.5'>arch.telemetry</span>
-								</div>
-								<span className='text-[10px] font-mono text-indigo-400 flex items-center gap-1 uppercase tracking-wider'>
-									<CommandLineIcon className='w-3 h-3' />
-									Insight
-								</span>
-							</div>
-							<p className='p-3.5 text-slate-400 font-light text-xs leading-relaxed'>
-								{project.learnings}
-							</p>
-						</div>
-					)}
 				</div>
 
 				{/* Tech Stack Pills */}
-				<div className='flex flex-wrap gap-2 pt-4 border-t border-slate-800/80'>
+				<div className='flex flex-wrap gap-1.5 pt-4 border-t border-slate-800/80'>
 					{displayTags.map((tag) => (
 						<span
 							key={tag}
-							className='text-xs font-mono text-indigo-300 bg-indigo-500/10 border border-indigo-500/20 px-2.5 py-0.5 rounded-full'
+							className='text-xs text-slate-300 bg-slate-800/60 border border-slate-700/50 px-2.5 py-0.5 rounded-md'
 						>
 							{tag}
 						</span>

@@ -86,6 +86,7 @@ pnpm add <package> --filter <app-name>
   - *Enterprise Software Engineer @ Cisco (Webex Calling)*: Enterprise frontend (Control Hub), Cypress E2E, Jenkins, Kibana/PagerDuty production operations.
   - *Freelance Software Developer*: Next.js full-stack apps on Vercel, enterprise data migrations (Python/SQL).
 - **Aesthetic**: High-craft developer aesthetic—clean typography, subtle borders/glows, interactive system architecture callouts, dark/light themes, performance-oriented.
+- **Calm Craft & Anti-Bento-Slop (User Preference)**: Avoid visual clutter, screaming all-caps monospace labels, and decorative 4-card bento grids on functional apps/tools. Favor calm, clean, elegant interfaces (inspired by Linear, Supabase, Raycast) with immediate utility above the fold, single-row compact pill selectors, sentence-case typography, and progressive disclosure for secondary architecture notes.
 
 ### Engineering & Code Preferences
 - Focus on real-world engineering impact: API integration, database architecture, CI/CD automation, and modern full-stack TypeScript.

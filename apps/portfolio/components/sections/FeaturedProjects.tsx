@@ -14,13 +14,13 @@ export default function FeaturedProjects() {
 				<div className='flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4'>
 					<div>
 						<div className='inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-mono uppercase tracking-wider mb-3'>
-							Featured Engineering Work
+							Featured Work
 						</div>
 						<h2 className='text-3xl sm:text-4xl font-extrabold text-white tracking-tight'>
-							Production Systems & Applications
+							Selected Projects
 						</h2>
 						<p className='mt-3 text-base sm:text-lg text-slate-400 max-w-2xl'>
-							Real-world software built for enterprise scale, data migration, and modern SaaS.
+							Real-world web applications and software tools built for businesses and clients.
 						</p>
 					</div>
 

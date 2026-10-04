@@ -212,6 +212,27 @@ export const experienceData: ExperienceItem[] = [
 
 export const projectsData: Project[] = [
 	{
+		title: 'AlgoQuest',
+		category: 'apps',
+		href: 'https://algoquest.jeffhogg.com',
+		githubUrl: 'https://github.com/jeffreyehogg/portfolio/tree/main/apps/algoquest',
+		description:
+			'An interactive, gamified algorithm and programming language learning quest built with in-browser Pyodide WebAssembly and TypeScript.',
+		imageUrl: '/images/projects/algoquest.png',
+		tags: [
+			'Next.js 16',
+			'React 19',
+			'Python WASM (Pyodide)',
+			'TypeScript',
+			'Web Workers',
+			'CodeMirror',
+			'Framer Motion',
+			'Clerk',
+		],
+		metrics: '100% In-Browser WASM • Zero-Server Cost • Multi-Language Quest',
+		featured: true,
+	},
+	{
 		title: 'AutoDBA',
 		category: 'tools',
 		href: 'https://autodba.jeffhogg.com',

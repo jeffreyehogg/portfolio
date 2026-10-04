@@ -11,6 +11,7 @@ This file is automatically loaded by Antigravity as the primary context and oper
   - `apps/portfolio`: Next.js 15 (App Router), React 19, Tailwind CSS v3, Framer Motion
   - `apps/hogg-homes`: Next.js 16 (App Router), React 19, Tailwind CSS v3, Framer Motion, Zod Server Actions (High-craft residential community and floor plan platform)
   - `apps/kingdom-connect`: Next.js 16 (Turbopack), React 19, Tailwind CSS v4, Clerk, Drizzle, Neon (Unified faith platform with Volunteer Board, Kingdom Fund, Community Prayer Wall, and Personal Prayer Journal)
+  - `apps/algoquest`: Next.js 16 (Turbopack), React 19, Tailwind CSS v3, Pyodide WASM, CodeMirror 6, Zustand, Framer Motion, Clerk (Interactive algorithmic coding quest in Python & TypeScript)
   - `apps/legacy-link`: Next.js 16, TypeScript, Clerk (Security data migration utility)
   - `apps/forexflow-dashboard`: Nuxt 3, Vue, Chart.js (Forex telemetry dashboard)
 - **Shared Packages**:

@@ -35,10 +35,26 @@ export function PlanTelemetry({
     );
   }
 
-  const beforeReads = costModel?.logical_reads_before || 120000;
-  const afterReads = costModel?.logical_reads_after || 8400;
-  const beforeCost = costModel?.before_cost || 184.6;
-  const afterCost = costModel?.after_cost || 12.8;
+  if (!costModel) {
+    return (
+      <div className="rounded-2xl border border-dashed border-slate-800/80 bg-slate-900/30 p-10 text-center">
+        <div className="w-12 h-12 rounded-2xl bg-slate-800/60 border border-white/[0.06] flex items-center justify-center mx-auto mb-3 text-slate-400">
+          <Activity className="w-6 h-6" />
+        </div>
+        <h4 className="text-sm font-bold text-white mb-1">
+          No Performance Telemetry Yet
+        </h4>
+        <p className="text-xs text-slate-400 max-w-sm mx-auto">
+          Run an optimization to view estimated logical reads, I/O cost reduction, and execution plan bottleneck analysis.
+        </p>
+      </div>
+    );
+  }
+
+  const beforeReads = costModel.logical_reads_before;
+  const afterReads = costModel.logical_reads_after;
+  const beforeCost = costModel.before_cost;
+  const afterCost = costModel.after_cost;
 
   // Arc gauge calculation
   const radius = 42;

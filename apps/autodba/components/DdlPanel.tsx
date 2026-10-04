@@ -7,9 +7,10 @@ import type { IndexRecommendation } from "@/lib/types";
 interface DdlPanelProps {
   indexes: IndexRecommendation[];
   isLoading: boolean;
+  hasRun?: boolean;
 }
 
-export function DdlPanel({ indexes, isLoading }: DdlPanelProps) {
+export function DdlPanel({ indexes, isLoading, hasRun = true }: DdlPanelProps) {
   const [copiedAll, setCopiedAll] = useState(false);
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
 
@@ -35,6 +36,22 @@ export function DdlPanel({ indexes, isLoading }: DdlPanelProps) {
             className="rounded-2xl bg-slate-900/60 border border-white/[0.08] p-4 h-32"
           />
         ))}
+      </div>
+    );
+  }
+
+  if (!hasRun && indexes.length === 0) {
+    return (
+      <div className="rounded-2xl border border-dashed border-slate-800/80 bg-slate-900/30 p-10 text-center">
+        <div className="w-12 h-12 rounded-2xl bg-slate-800/60 border border-white/[0.06] flex items-center justify-center mx-auto mb-3 text-slate-400">
+          <Layers className="w-6 h-6" />
+        </div>
+        <h4 className="text-sm font-bold text-white mb-1">
+          No Index Recommendations Yet
+        </h4>
+        <p className="text-xs text-slate-400 max-w-sm mx-auto">
+          Run an optimization to synthesize covering index DDL and partition strategies.
+        </p>
       </div>
     );
   }

@@ -89,30 +89,26 @@ export function Studio() {
       .then(setQuota)
       .catch(() => {});
 
-    // 3. Load Presets & auto-select Preset 1
+    // 2. Load Presets (without auto-selecting so the editor starts clean and empty)
     getPresets()
-      .then(async (res) => {
+      .then((res) => {
         setPresets(res.presets);
-        if (res.presets.length > 0) {
-          const first = res.presets[0];
-          setSelectedPresetId(first.id);
-          try {
-            const detail = await getPresetDetail(first.id);
-            setSql(detail.sql);
-            setDialect(detail.dialect);
-            setPlan(detail.plan || "");
-            setOptResult(detail.result);
-            setAnalysisReport(detail.result.before);
-            setIsStale(false);
-          } catch (e) {
-            console.error("Failed to load preset detail:", e);
-          }
-        }
       })
       .catch((e) => {
         setErrorMessage(`Could not load enterprise presets: ${e.message}`);
       });
   }, []);
+
+  // Clear workspace and reset state
+  const handleClear = () => {
+    setSql("");
+    setPlan("");
+    setSelectedPresetId(null);
+    setOptResult(null);
+    setAnalysisReport(null);
+    setErrorMessage(null);
+    setIsStale(false);
+  };
 
   // Update BYOK key
   const handleSaveByok = (key: string) => {
@@ -245,6 +241,7 @@ export function Studio() {
               onChangeDialect={setDialect}
               plan={plan}
               onChangePlan={setPlan}
+              onClear={handleClear}
               onAnalyze={handleAnalyze}
               onOptimize={handleOptimize}
               isAnalyzing={isAnalyzing}
@@ -371,14 +368,18 @@ export function Studio() {
                       Ready for Optimization
                     </h4>
                     <p className="text-xs max-w-sm mb-4">
-                      Click <strong>Optimize Query</strong> to run the AST analysis, cyclic LLM rewrite loop, and index synthesis.
+                      {sql.trim()
+                        ? "Click Optimize Query to run the AST analysis, cyclic LLM rewrite loop, and index synthesis."
+                        : "Paste or type a SQL query in the editor, or pick one of the example queries above to get started."}
                     </p>
-                    <button
-                      onClick={handleOptimize}
-                      className="px-4 py-2 rounded-xl bg-indigo-600 text-white text-xs font-semibold hover:bg-indigo-500 transition-all active:scale-[0.98]"
-                    >
-                      Run Optimization →
-                    </button>
+                    {sql.trim() && (
+                      <button
+                        onClick={handleOptimize}
+                        className="px-4 py-2 rounded-xl bg-indigo-600 text-white text-xs font-semibold hover:bg-indigo-500 transition-all active:scale-[0.98]"
+                      >
+                        Run Optimization →
+                      </button>
+                    )}
                   </div>
                 )
               )}
@@ -387,6 +388,7 @@ export function Studio() {
                 <DiagnosticsList
                   diagnostics={currentDiagnostics}
                   isLoading={isAnalyzing}
+                  hasRun={Boolean(optResult || analysisReport)}
                 />
               )}
 
@@ -403,6 +405,7 @@ export function Studio() {
                 <DdlPanel
                   indexes={currentIndexes}
                   isLoading={isOptimizing}
+                  hasRun={Boolean(optResult || analysisReport)}
                 />
               )}
 

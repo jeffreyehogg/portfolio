@@ -5,6 +5,7 @@ import {
   AlertCircle,
   AlertTriangle,
   CheckCircle2,
+  Code2,
   Info,
   Lightbulb,
 } from "lucide-react";
@@ -13,6 +14,7 @@ import type { Diagnostic, Severity } from "@/lib/types";
 interface DiagnosticsListProps {
   diagnostics: Diagnostic[];
   isLoading: boolean;
+  hasRun?: boolean;
   onSelectSnippet?: (snippet: string) => void;
 }
 
@@ -52,6 +54,7 @@ const SEVERITY_CONFIG: Record<
 export function DiagnosticsList({
   diagnostics,
   isLoading,
+  hasRun = true,
 }: DiagnosticsListProps) {
   if (isLoading) {
     return (
@@ -66,6 +69,22 @@ export function DiagnosticsList({
             <div className="h-10 w-full bg-slate-950/60 rounded" />
           </div>
         ))}
+      </div>
+    );
+  }
+
+  if (!hasRun && diagnostics.length === 0) {
+    return (
+      <div className="rounded-2xl border border-dashed border-slate-800/80 bg-slate-900/30 p-10 text-center">
+        <div className="w-12 h-12 rounded-2xl bg-slate-800/60 border border-white/[0.06] flex items-center justify-center mx-auto mb-3 text-slate-400">
+          <Code2 className="w-6 h-6" />
+        </div>
+        <h4 className="text-sm font-bold text-white mb-1">
+          No Diagnostics Run Yet
+        </h4>
+        <p className="text-xs text-slate-400 max-w-sm mx-auto">
+          Write or paste a query on the left and click Analyze or Optimize Query to inspect AST anti-patterns.
+        </p>
       </div>
     );
   }

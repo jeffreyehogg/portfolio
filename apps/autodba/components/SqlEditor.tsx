@@ -7,6 +7,7 @@ import {
   FileText,
   Play,
   Sparkles,
+  Trash2,
   Upload,
   Zap,
 } from "lucide-react";
@@ -20,6 +21,7 @@ interface SqlEditorProps {
   onChangeDialect: (val: Dialect) => void;
   plan: string;
   onChangePlan: (val: string) => void;
+  onClear?: () => void;
   onAnalyze: () => void;
   onOptimize: () => void;
   isAnalyzing: boolean;
@@ -35,6 +37,7 @@ export function SqlEditor({
   onChangeDialect,
   plan,
   onChangePlan,
+  onClear,
   onAnalyze,
   onOptimize,
   isAnalyzing,
@@ -102,6 +105,7 @@ export function SqlEditor({
   const tokens = tokenizeSql(sql);
   const charCount = (activeTab === "sql" ? sql : plan).length;
   const charLimit = activeTab === "sql" ? 20000 : 500000;
+  const hasContent = Boolean(sql.trim() || plan.trim());
 
   return (
     <div className="flex flex-col h-full rounded-2xl bg-slate-900/70 backdrop-blur-xl border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] overflow-hidden">
@@ -136,7 +140,7 @@ export function SqlEditor({
           </button>
         </div>
 
-        {/* Dialect selector & File Upload */}
+        {/* Dialect selector, File Upload & Clear */}
         <div className="flex items-center gap-2">
           {activeTab === "sql" && (
             <select
@@ -161,6 +165,19 @@ export function SqlEditor({
               className="hidden"
             />
           </label>
+
+          {/* Clear button */}
+          {hasContent && onClear && (
+            <button
+              type="button"
+              onClick={onClear}
+              className="flex items-center gap-1 px-2 py-1 rounded-lg bg-slate-900/60 hover:bg-rose-950/40 text-slate-400 hover:text-rose-300 text-xs font-medium border border-white/[0.06] hover:border-rose-500/30 transition-all active:scale-[0.98]"
+              title="Clear editor and reset"
+            >
+              <Trash2 className="h-3.5 w-3.5" />
+              <span className="hidden sm:inline">Clear</span>
+            </button>
+          )}
         </div>
       </div>
 
@@ -205,7 +222,7 @@ export function SqlEditor({
                 onKeyDown={handleKeyDown}
                 spellCheck={false}
                 placeholder="-- Paste or write your SQL query here..."
-                className="absolute inset-0 w-full h-full p-4 font-mono text-xs leading-6 bg-transparent text-transparent caret-white resize-none focus:outline-none overflow-auto whitespace-pre-wrap break-words"
+                className="absolute inset-0 w-full h-full p-4 font-mono text-xs leading-6 bg-transparent text-transparent caret-white resize-none focus:outline-none overflow-auto whitespace-pre-wrap break-words placeholder:text-slate-500"
               />
             </>
           ) : (
@@ -214,7 +231,7 @@ export function SqlEditor({
               onChange={(e) => onChangePlan(e.target.value)}
               spellCheck={false}
               placeholder="<!-- Paste XML ShowPlan (.sqlplan) or PostgreSQL / MySQL EXPLAIN JSON here (optional) -->"
-              className="w-full h-full p-4 font-mono text-xs leading-6 bg-transparent text-slate-200 caret-white resize-none focus:outline-none overflow-auto"
+              className="w-full h-full p-4 font-mono text-xs leading-6 bg-transparent text-slate-200 caret-white resize-none focus:outline-none overflow-auto placeholder:text-slate-500"
             />
           )}
         </div>

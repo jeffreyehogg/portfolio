@@ -93,39 +93,30 @@ export default async function ServePage({ searchParams }: ServePageProps) {
     <div className="min-h-screen bg-slate-50 font-sans flex flex-col">
       <Navbar />
 
-      <main id="main-content" className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+      <main id="main-content" className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 w-full">
         {/* Page Header */}
-        <div className="mb-8">
-          <div className="flex items-center gap-2 text-indigo-600 text-xs font-mono uppercase tracking-wider mb-2 font-bold">
-            <Heart className="w-4 h-4 fill-current" /> Hands &amp; Feet of Jesus
+        <div className="mb-6">
+          <div className="flex items-center gap-1.5 text-indigo-600 text-xs font-semibold mb-1">
+            <Heart className="w-3.5 h-3.5 fill-current" />
+            <span>Hands &amp; feet of Jesus</span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-            Serve Our City
+            Serve our city
           </h1>
-          <p className="text-slate-600 mt-2 max-w-2xl leading-relaxed text-sm sm:text-base">
-            &ldquo;Each of you should use whatever gift you have received to serve others, as faithful stewards of God&apos;s grace in its various forms.&rdquo;{" "}
-            <span className="font-serif italic font-semibold text-indigo-900">— 1 Peter 4:10</span>
+          <p className="text-slate-600 mt-1 max-w-xl text-sm leading-relaxed">
+            Find where your gifts fit. Discover local outreach teams, meals ministry, and skilled repairs.
           </p>
-        </div>
 
-        {/* First-Time Volunteer Hospitality Card */}
-        <div className="bg-linear-to-r from-indigo-50/80 via-white to-indigo-50/40 border border-indigo-100 rounded-3xl p-6 mb-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-2xs">
-          <div className="flex items-start gap-4">
-            <div className="p-3 bg-indigo-600 text-white rounded-2xl shadow-xs shrink-0 mt-0.5">
-              <Users className="w-5 h-5" />
+          {/* First-Time Volunteer Progressive Disclosure */}
+          <details className="group mt-2.5 text-xs text-slate-500 cursor-pointer">
+            <summary className="inline-flex items-center gap-1.5 text-indigo-600 hover:text-indigo-700 font-medium select-none">
+              <span className="group-open:hidden">First time serving? Show newcomer details ▾</span>
+              <span className="hidden group-open:inline">Hide newcomer details ▴</span>
+            </summary>
+            <div className="mt-2 p-3 bg-indigo-50/60 rounded-xl border border-indigo-100 text-slate-600 max-w-xl leading-relaxed">
+              No church membership or prior volunteer experience required. Every team provides on-site orientation, all tools, and a friendly team lead to guide you.
             </div>
-            <div>
-              <h2 className="text-sm font-bold text-slate-900">
-                Serving for the First Time?
-              </h2>
-              <p className="text-xs text-slate-600 leading-relaxed mt-1 max-w-xl">
-                We know stepping onto a new team can feel intimidating. Every opportunity includes on-site orientation, all needed tools, and a friendly team lead who will guide you every step.
-              </p>
-            </div>
-          </div>
-          <span className="text-xs font-mono font-semibold px-3 py-1.5 bg-indigo-100 text-indigo-800 rounded-xl shrink-0 self-start md:self-auto">
-            All Skill Levels Welcome
-          </span>
+          </details>
         </div>
 
         {/* Interactive Feature: 60-Second Spiritual Gifts Matcher */}

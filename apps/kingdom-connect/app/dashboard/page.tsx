@@ -99,49 +99,44 @@ export default async function DashboardPage() {
     <div className="min-h-screen bg-slate-50 font-sans flex flex-col">
       <Navbar />
 
-      <main id="main-content" className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+      <main id="main-content" className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 w-full">
         {!userId && (
-          <div className="mb-8 p-5 rounded-3xl bg-indigo-50/90 border border-indigo-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-indigo-950 shadow-xs">
-            <div className="flex items-center gap-3">
-              <span className="p-2.5 rounded-2xl bg-indigo-600 text-white shadow-xs">
-                <Sparkles className="w-5 h-5" />
+          <div className="mb-6 px-4 py-3 rounded-2xl bg-indigo-50/90 border border-indigo-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-indigo-950 shadow-2xs">
+            <div className="flex items-center gap-2.5">
+              <span className="p-1.5 rounded-xl bg-indigo-600 text-white shrink-0">
+                <Sparkles className="w-4 h-4" />
               </span>
-              <div>
-                <p className="text-sm font-bold text-indigo-950">
-                  Previewing the Steward Dashboard (Guest Mode)
-                </p>
-                <p className="text-xs text-indigo-800/80 mt-0.5">
-                  Showing sample service commitments and community generosity. Sign in to track your personal schedule permanently.
-                </p>
-              </div>
+              <p className="text-xs text-indigo-900 leading-snug">
+                <strong className="font-semibold text-indigo-950">Guest preview:</strong> Displaying sample schedule and community impact. Sign in to track commitments.
+              </p>
             </div>
             <Link
               href="/sign-in"
-              className="text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 px-4 py-2.5 rounded-xl transition-all shadow-xs self-start sm:self-auto shrink-0"
+              className="text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 px-3.5 py-1.5 rounded-xl transition-all shadow-xs self-start sm:self-auto shrink-0 active:scale-[0.98]"
             >
-              Sign In
+              Sign in
             </Link>
           </div>
         )}
 
-        <div className="mb-10">
+        <div className="mb-8">
           <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-            My Kingdom Journey
+            My kingdom journey
           </h1>
-          <p className="text-slate-600 mt-2 text-sm sm:text-base">
-            Welcome back! Here is your upcoming service schedule, community stewardship, and personal devotions.
+          <p className="text-slate-600 mt-1 text-sm sm:text-base">
+            Your upcoming service schedule, community stewardship, and personal devotions.
           </p>
         </div>
 
         {/* Stats Row */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-10">
           {/* Card 1: Commitments */}
-          <div className="bg-linear-to-br from-indigo-600 to-indigo-800 text-white rounded-3xl p-6 shadow-xl relative overflow-hidden group hover:scale-[1.02] transition-transform duration-300">
+          <div className="bg-linear-to-br from-indigo-600 to-indigo-800 text-white rounded-3xl p-5 sm:p-6 shadow-md relative overflow-hidden group hover:scale-[1.01] transition-transform duration-300">
             <div className="relative z-10">
-              <h2 className="text-indigo-100 text-xs font-mono uppercase tracking-wider font-bold flex items-center gap-2">
-                <Calendar className="h-4 w-4" /> Active Commitments
+              <h2 className="text-indigo-100 text-xs font-semibold flex items-center gap-2">
+                <Calendar className="h-4 w-4" /> Active commitments
               </h2>
-              <p className="text-4xl font-extrabold mt-3 tracking-tight font-mono">
+              <p className="text-3xl sm:text-4xl font-extrabold mt-2.5 tracking-tight font-mono">
                 {userSignups.length}
               </p>
               <p className="text-xs text-indigo-200 mt-1">
@@ -152,22 +147,22 @@ export default async function DashboardPage() {
           </div>
 
           {/* Card 2: Hours */}
-          <div className="bg-white rounded-3xl p-6 shadow-xs border border-slate-200/80 hover:shadow-xl hover:border-indigo-200 card-hover-glow transition-all relative overflow-hidden">
-            <h2 className="text-slate-500 text-xs font-mono uppercase tracking-wider font-bold flex items-center gap-2">
-              <Clock className="h-4 w-4 text-indigo-600" /> Hours of Service
+          <div className="bg-white rounded-3xl p-5 sm:p-6 shadow-xs border border-slate-200/80 hover:shadow-lg hover:border-indigo-200 card-hover-glow transition-all relative overflow-hidden">
+            <h2 className="text-slate-500 text-xs font-semibold flex items-center gap-2">
+              <Clock className="h-4 w-4 text-indigo-600" /> Hours of service
             </h2>
-            <p className="text-4xl font-extrabold mt-3 text-slate-900 font-mono">
+            <p className="text-3xl sm:text-4xl font-extrabold mt-2.5 text-slate-900 font-mono">
               {totalHours}
             </p>
             <p className="text-xs text-slate-500 mt-1">Invested in our community</p>
           </div>
 
           {/* Card 3: Impact */}
-          <div className="bg-white rounded-3xl p-6 shadow-xs border border-slate-200/80 hover:shadow-xl hover:border-emerald-200 card-hover-glow transition-all relative overflow-hidden">
-            <h2 className="text-slate-500 text-xs font-mono uppercase tracking-wider font-bold flex items-center gap-2">
-              <DollarSign className="h-4 w-4 text-emerald-600" /> Community Generosity
+          <div className="bg-white rounded-3xl p-5 sm:p-6 shadow-xs border border-slate-200/80 hover:shadow-lg hover:border-emerald-200 card-hover-glow transition-all relative overflow-hidden">
+            <h2 className="text-slate-500 text-xs font-semibold flex items-center gap-2">
+              <DollarSign className="h-4 w-4 text-emerald-600" /> Community generosity
             </h2>
-            <p className="text-4xl font-extrabold mt-3 text-emerald-600 font-mono">
+            <p className="text-3xl sm:text-4xl font-extrabold mt-2.5 text-emerald-600 font-mono">
               ${(communityRaised / 100).toLocaleString()}
             </p>
             <p className="text-xs text-slate-500 mt-1">
@@ -178,12 +173,12 @@ export default async function DashboardPage() {
           {/* Card 4: Personal Prayer Journal */}
           <Link
             href="/journal"
-            className="bg-white rounded-3xl p-6 shadow-xs border border-slate-200/80 hover:shadow-xl hover:border-purple-200 card-hover-glow transition-all relative overflow-hidden group"
+            className="bg-white rounded-3xl p-5 sm:p-6 shadow-xs border border-slate-200/80 hover:shadow-lg hover:border-purple-200 card-hover-glow transition-all relative overflow-hidden group"
           >
-            <h2 className="text-slate-500 text-xs font-mono uppercase tracking-wider font-bold flex items-center gap-2">
-              <BookOpen className="h-4 w-4 text-purple-600" /> Prayer Sanctuary
+            <h2 className="text-slate-500 text-xs font-semibold flex items-center gap-2">
+              <BookOpen className="h-4 w-4 text-purple-600" /> Prayer sanctuary
             </h2>
-            <p className="text-4xl font-extrabold mt-3 text-slate-900 group-hover:text-purple-600 transition-colors font-mono">
+            <p className="text-3xl sm:text-4xl font-extrabold mt-2.5 text-slate-900 group-hover:text-purple-600 transition-colors font-mono">
               {activePrayersCount}
             </p>
             <p className="text-xs text-slate-500 mt-1 flex items-center gap-1">
@@ -198,8 +193,8 @@ export default async function DashboardPage() {
           {/* Left Column: Signups List */}
           <div className="lg:col-span-2 space-y-6">
             <div className="flex items-center gap-2">
-              <h2 className="text-xl font-extrabold text-slate-900">Your Service Schedule</h2>
-              <span className="bg-slate-100 text-slate-700 px-2.5 py-0.5 rounded-full text-xs font-bold font-mono">
+              <h2 className="text-xl font-extrabold text-slate-900">Your service schedule</h2>
+              <span className="bg-slate-100 text-slate-700 px-2.5 py-0.5 rounded-full text-xs font-semibold font-mono">
                 {userSignups.length}
               </span>
             </div>
@@ -217,9 +212,9 @@ export default async function DashboardPage() {
                 </p>
                 <Link
                   href="/serve"
-                  className="inline-flex items-center bg-indigo-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-indigo-700 transition-all shadow-md shadow-indigo-600/20 text-xs"
+                  className="inline-flex items-center bg-indigo-600 text-white px-5 py-2.5 rounded-xl font-semibold hover:bg-indigo-500 transition-all shadow-md shadow-indigo-600/20 text-xs active:scale-[0.98]"
                 >
-                  Explore Opportunities to Serve <ArrowRight className="ml-2 w-4 h-4" />
+                  Explore opportunities to serve <ArrowRight className="ml-2 w-4 h-4" />
                 </Link>
               </div>
             ) : (
@@ -229,12 +224,12 @@ export default async function DashboardPage() {
                     event && (
                       <div
                         key={signupId}
-                        className="bg-white rounded-3xl border border-slate-200/80 p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 hover:shadow-lg hover:border-indigo-100 transition-all duration-200 group"
+                        className="bg-white rounded-3xl border border-slate-200/80 p-5 sm:p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 hover:shadow-lg hover:border-indigo-100 transition-all duration-200 group"
                       >
                         <div className="flex-1">
                           <div className="flex items-center gap-3 mb-2">
                             <span
-                              className={`px-3 py-0.5 rounded-full text-[11px] font-bold font-mono uppercase tracking-wider ${
+                              className={`px-2.5 py-0.5 rounded-full text-xs font-semibold capitalize ${
                                 status === "confirmed"
                                   ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
                                   : "bg-slate-100 text-slate-600"

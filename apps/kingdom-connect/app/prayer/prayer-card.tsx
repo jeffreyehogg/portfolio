@@ -74,9 +74,9 @@ export function PrayerCard({ request, hasPrayed }: PrayerCardProps) {
       </div>
 
       <div className="mt-auto pt-4 border-t border-slate-100 flex items-center justify-between gap-2">
-        <span className="text-xs text-slate-500 font-medium font-mono">
-          {optimisticState.count}{" "}
-          {optimisticState.count === 1 ? "believer" : "believers"} standing in prayer
+        <span className="text-xs text-slate-500">
+          <strong className="font-mono font-bold text-slate-700">{optimisticState.count}</strong>{" "}
+          {optimisticState.count === 1 ? "believer" : "believers"} praying
         </span>
 
         <button
@@ -85,7 +85,7 @@ export function PrayerCard({ request, hasPrayed }: PrayerCardProps) {
           aria-pressed={optimisticState.prayed}
           aria-label={optimisticState.prayed ? "Stop praying for this request" : "Pray with this believer"}
           className={`
-            flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer active:scale-95
+            flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer active:scale-[0.98]
             ${
               optimisticState.prayed
                 ? "bg-rose-50 text-rose-700 border border-rose-300 shadow-2xs"
@@ -98,7 +98,7 @@ export function PrayerCard({ request, hasPrayed }: PrayerCardProps) {
               optimisticState.prayed ? "fill-rose-500 text-rose-500" : ""
             }`}
           />
-          <span>{optimisticState.prayed ? "Praying With You" : "I'll Pray"}</span>
+          <span>{optimisticState.prayed ? "Praying with you" : "I'll pray"}</span>
         </button>
       </div>
     </div>

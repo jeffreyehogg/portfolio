@@ -31,16 +31,16 @@ export function PrayerForm() {
   };
 
   return (
-    <div className="bg-white p-6 sm:p-7 rounded-3xl shadow-xs border border-slate-200/80 mb-12">
-      <div className="flex items-center justify-between mb-4">
+    <div className="bg-white p-5 sm:p-6 rounded-3xl shadow-xs border border-slate-200/80 mb-8">
+      <div className="flex items-center justify-between mb-3.5">
         <label
           htmlFor="prayer-content"
           className="text-sm font-bold text-slate-900 flex items-center gap-2"
         >
           <PlusCircle className="w-4 h-4 text-rose-600" />
-          Share a Prayer Petition or Praise Report
+          Share a prayer petition or praise report
         </label>
-        <span className="text-[11px] text-slate-400 font-mono">Shared with church community</span>
+        <span className="text-xs text-slate-400">Shared with community</span>
       </div>
 
       <form onSubmit={handleSubmit} className="relative">
@@ -51,16 +51,16 @@ export function PrayerForm() {
           rows={3}
           placeholder="What would you like our community to bring before the Lord with you? (e.g. healing, family peace, guidance, or thanksgiving)..."
           aria-label="Write your prayer request"
-          className="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none resize-none text-sm text-slate-900 placeholder-slate-400 transition-all leading-relaxed"
+          className="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none resize-none text-sm text-slate-900 placeholder-slate-400 transition-all leading-relaxed"
         />
-        <div className="mt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div className="mt-3.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <p className="text-xs text-slate-500 italic">
             &ldquo;Do not be anxious about anything... present your requests to God.&rdquo; — Phil 4:6
           </p>
           <button
             type="submit"
             disabled={loading}
-            className="bg-rose-600 hover:bg-rose-700 text-white px-5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center shadow-md shadow-rose-600/20 active:scale-95 cursor-pointer self-end sm:self-auto disabled:opacity-50"
+            className="bg-rose-600 hover:bg-rose-500 text-white px-5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center shadow-md shadow-rose-600/20 active:scale-[0.98] cursor-pointer self-end sm:self-auto disabled:opacity-50"
           >
             {loading ? (
               <>
@@ -69,7 +69,7 @@ export function PrayerForm() {
               </>
             ) : (
               <>
-                <Send className="w-3.5 h-3.5 mr-2" /> Share on Prayer Wall
+                <Send className="w-3.5 h-3.5 mr-2" /> Share on prayer wall
               </>
             )}
           </button>

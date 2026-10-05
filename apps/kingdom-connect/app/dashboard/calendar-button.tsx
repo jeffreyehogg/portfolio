@@ -18,10 +18,10 @@ export function CalendarButton({ event }: CalendarButtonProps) {
       href={googleUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className="inline-flex items-center text-xs font-semibold text-indigo-600 hover:text-indigo-800 bg-indigo-50 hover:bg-indigo-100 px-3.5 py-1.5 rounded-xl transition-colors shadow-2xs"
+      className="inline-flex items-center text-xs font-semibold text-indigo-600 hover:text-indigo-800 bg-indigo-50 hover:bg-indigo-100 px-3.5 py-1.5 rounded-xl transition-all shadow-2xs active:scale-[0.98]"
     >
       <CalendarPlus className="w-3.5 h-3.5 mr-1.5" />
-      Sync to Google Calendar
+      Add to Google Calendar
     </a>
   );
 }

@@ -49,7 +49,7 @@ export function NoteList({
 
   return (
     <div className="space-y-3">
-      <h3 className="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider">
+      <h3 className="text-xs font-semibold text-slate-600">
         Timeline ({notes.length})
       </h3>
 

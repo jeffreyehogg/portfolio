@@ -51,8 +51,8 @@ export function FundForm() {
       </div>
 
       <div>
-        <label htmlFor="fund-title" className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-          Initiative Name
+        <label htmlFor="fund-title" className="block text-xs font-semibold text-slate-700 mb-1.5">
+          Initiative name
         </label>
         <input
           id="fund-title"
@@ -64,8 +64,8 @@ export function FundForm() {
       </div>
 
       <div>
-        <label htmlFor="fund-description" className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-          Mission &amp; Impact Story
+        <label htmlFor="fund-description" className="block text-xs font-semibold text-slate-700 mb-1.5">
+          Mission &amp; impact story
         </label>
         <textarea
           id="fund-description"
@@ -78,8 +78,8 @@ export function FundForm() {
       </div>
 
       <div>
-        <label htmlFor="fund-goal" className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-          Goal Amount (USD)
+        <label htmlFor="fund-goal" className="block text-xs font-semibold text-slate-700 mb-1.5">
+          Goal amount (USD)
         </label>
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">

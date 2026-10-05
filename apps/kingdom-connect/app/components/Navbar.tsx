@@ -52,8 +52,8 @@ export function Navbar() {
               <span className="font-extrabold text-xl text-slate-900 tracking-tight leading-none">
                 Kingdom<span className="text-indigo-600">Connect</span>
               </span>
-              <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500 font-semibold mt-0.5">
-                Faith in Action
+              <span className="text-xs text-slate-500 font-medium mt-0.5">
+                Faith in action
               </span>
             </div>
           </Link>

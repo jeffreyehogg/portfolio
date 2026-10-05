@@ -32,12 +32,12 @@ export function ImpactChart({ data }: ImpactChartProps) {
   }
 
   return (
-    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+    <div className="bg-white p-5 sm:p-6 rounded-3xl shadow-xs border border-slate-200/80">
       <div className="mb-6">
-        <h3 className="text-lg font-bold text-gray-900">
-          Your Impact Over Time
+        <h3 className="text-base font-bold text-slate-900">
+          Your impact over time
         </h3>
-        <p className="text-sm text-gray-500">Volunteer hours per month</p>
+        <p className="text-xs text-slate-500">Volunteer hours per month</p>
       </div>
 
       <div className="h-[300px] w-full">

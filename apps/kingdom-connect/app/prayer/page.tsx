@@ -38,21 +38,18 @@ export default async function PrayerWallPage() {
     <div className="min-h-screen bg-slate-50 font-sans flex flex-col">
       <Navbar />
 
-      <main id="main-content" className="flex-1 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+      <main id="main-content" className="flex-1 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 w-full">
         {/* Header */}
-        <div className="text-center mb-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-50 border border-rose-200 text-rose-700 text-xs font-mono uppercase tracking-wider mb-3 font-bold">
-            <Heart className="w-3.5 h-3.5 fill-rose-500 text-rose-500" /> Holy Intercession
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-50 border border-rose-200 text-rose-700 text-xs font-semibold mb-2">
+            <Heart className="w-3.5 h-3.5 fill-rose-500 text-rose-500" />
+            <span>Holy intercession</span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-            Community Prayer Wall
+            Community prayer wall
           </h1>
-          <p className="text-slate-600 mt-2 max-w-xl mx-auto text-sm sm:text-base leading-relaxed">
-            &ldquo;Bear one another&apos;s burdens, and so fulfill the law of Christ.&rdquo;{" "}
-            <span className="font-serif italic font-semibold text-rose-900">— Galatians 6:2</span>
-          </p>
-          <p className="text-xs text-slate-500 mt-1 max-w-lg mx-auto font-light">
-            Whether you are walking through deep waters or carrying a silent petition—our church family is honored to stand with you before the throne of grace.
+          <p className="text-slate-600 mt-1.5 max-w-lg mx-auto text-sm leading-relaxed">
+            Share petitions and stand in prayer for brothers and sisters across our community.
           </p>
         </div>
 
@@ -64,12 +61,12 @@ export default async function PrayerWallPage() {
 
         {/* Wall of Requests */}
         <div className="mb-8">
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center justify-between mb-5">
             <h2 className="text-xl font-extrabold text-slate-900">
-              Community Petitions ({requests.length})
+              Community petitions ({requests.length})
             </h2>
-            <span className="text-xs text-slate-500 font-mono">
-              Tap &ldquo;I&apos;ll Pray&rdquo; to encourage a brother or sister
+            <span className="text-xs text-slate-500">
+              Tap &ldquo;I&apos;ll Pray&rdquo; to stand in agreement
             </span>
           </div>
 

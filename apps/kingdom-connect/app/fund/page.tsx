@@ -43,59 +43,59 @@ export default async function KingdomFundPage() {
 
       <main id="main-content" className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
         {/* Header */}
-        <div className="max-w-3xl mx-auto text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-mono uppercase tracking-wider mb-3 font-bold border border-emerald-200">
-            <DollarSign className="w-3.5 h-3.5" /> Generosity with 100% Direct Impact
+        <div className="max-w-3xl mx-auto text-center mb-8">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-semibold mb-2.5 border border-emerald-200">
+            <DollarSign className="w-3.5 h-3.5" />
+            <span>100% direct stewardship</span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
             The Kingdom Fund
           </h1>
-          <p className="text-slate-600 mt-3 text-sm sm:text-base leading-relaxed">
-            &ldquo;Each of you should give what you have decided in your heart to give, not reluctantly or under compulsion, for God loves a cheerful giver.&rdquo;{" "}
-            <span className="font-serif italic font-semibold text-emerald-900">— 2 Corinthians 9:7</span>
+          <p className="text-slate-600 mt-2 text-sm sm:text-base leading-relaxed">
+            Every dollar directly fuels verified outreach missions with zero overhead deductions.
           </p>
         </div>
 
-        {/* 3-Pillar Financial Integrity Assurance Banner */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12 max-w-5xl mx-auto">
-          <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-2xs flex items-start gap-3">
-            <div className="p-2.5 rounded-xl bg-emerald-50 text-emerald-600 shrink-0">
-              <ShieldCheck className="w-5 h-5" />
+        {/* 3-Pillar Financial Integrity Trust Bar */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8 max-w-4xl mx-auto">
+          <div className="bg-white rounded-2xl p-3.5 border border-slate-200/80 shadow-2xs flex items-center gap-3">
+            <div className="p-2 rounded-xl bg-emerald-50 text-emerald-600 shrink-0">
+              <ShieldCheck className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider font-mono">
-                100% Direct Outreach
+              <h3 className="text-xs font-semibold text-slate-900">
+                100% direct outreach
               </h3>
-              <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">
-                Zero administrative overhead deductions. Every cent goes to verified outreach.
+              <p className="text-[11px] text-slate-500">
+                Zero administrative deductions.
               </p>
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-2xs flex items-start gap-3">
-            <div className="p-2.5 rounded-xl bg-indigo-50 text-indigo-600 shrink-0">
-              <HeartHandshake className="w-5 h-5" />
+          <div className="bg-white rounded-2xl p-3.5 border border-slate-200/80 shadow-2xs flex items-center gap-3">
+            <div className="p-2 rounded-xl bg-indigo-50 text-indigo-600 shrink-0">
+              <HeartHandshake className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider font-mono">
-                Elder &amp; Pastoral Vetted
+              <h3 className="text-xs font-semibold text-slate-900">
+                Elder &amp; pastoral vetted
               </h3>
-              <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">
-                Every project is prayerfully inspected and confirmed by local church leadership.
+              <p className="text-[11px] text-slate-500">
+                Confirmed by church leadership.
               </p>
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-2xs flex items-start gap-3">
-            <div className="p-2.5 rounded-xl bg-purple-50 text-purple-600 shrink-0">
-              <Eye className="w-5 h-5" />
+          <div className="bg-white rounded-2xl p-3.5 border border-slate-200/80 shadow-2xs flex items-center gap-3">
+            <div className="p-2 rounded-xl bg-purple-50 text-purple-600 shrink-0">
+              <Eye className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider font-mono">
-                Real-Time Telemetry
+              <h3 className="text-xs font-semibold text-slate-900">
+                Real-time telemetry
               </h3>
-              <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">
-                Transparent milestone tracking and community impact updates.
+              <p className="text-[11px] text-slate-500">
+                Transparent milestone tracking.
               </p>
             </div>
           </div>
@@ -107,7 +107,7 @@ export default async function KingdomFundPage() {
         {/* Fund Campaigns Grid */}
         <div className="mb-8">
           <h2 className="text-xl font-bold text-slate-900 mb-6">
-            Active Verified Initiatives
+            Active verified initiatives
           </h2>
 
           {fundList.length === 0 ? (
@@ -123,7 +123,7 @@ export default async function KingdomFundPage() {
               </p>
             </div>
           ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
               {fundList.map((fund) => {
                 const percentage = Math.min(
                   100,
@@ -133,15 +133,15 @@ export default async function KingdomFundPage() {
                 return (
                   <div
                     key={fund.id}
-                    className="bg-white rounded-3xl shadow-xs border border-slate-200/80 p-7 hover:shadow-xl hover:border-emerald-200 card-hover-glow transition-all flex flex-col justify-between"
+                    className="bg-white rounded-3xl shadow-xs border border-slate-200/80 p-6 sm:p-7 hover:shadow-xl hover:border-emerald-200 card-hover-glow transition-all flex flex-col justify-between"
                   >
                     <div>
                       <div className="flex justify-between items-start mb-6">
-                        <div className="bg-emerald-50 p-3 rounded-2xl text-emerald-600">
-                          <DollarSign className="h-6 w-6" />
+                        <div className="bg-emerald-50 p-2.5 rounded-2xl text-emerald-600">
+                          <DollarSign className="h-5 w-5" />
                         </div>
-                        <span className="bg-emerald-50 text-emerald-700 border border-emerald-200/60 px-3 py-1 rounded-full text-xs font-bold font-mono uppercase tracking-wide">
-                          Verified Need
+                        <span className="bg-emerald-50 text-emerald-700 border border-emerald-200/60 px-3 py-1 rounded-full text-xs font-semibold">
+                          Verified project
                         </span>
                       </div>
 

@@ -44,7 +44,7 @@ export function CancelButton({ signupId }: { signupId: number }) {
       ) : (
         <XCircle className="h-3 w-3 mr-1" />
       )}
-      {loading ? "Releasing..." : "Release Shift"}
+      {loading ? "Releasing..." : "Release shift"}
     </button>
   );
 }

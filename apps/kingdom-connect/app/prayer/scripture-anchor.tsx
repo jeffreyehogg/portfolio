@@ -94,28 +94,28 @@ export function ScriptureAnchor() {
   };
 
   return (
-    <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-sm mb-12">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+    <div className="bg-white rounded-3xl p-5 sm:p-7 border border-slate-200/80 shadow-xs mb-8">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-50 border border-rose-200 text-rose-700 text-xs font-mono uppercase tracking-wider mb-2">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-50 border border-rose-200 text-rose-700 text-xs font-semibold mb-2">
             <Sparkles className="w-3.5 h-3.5 text-rose-500" />
-            Scripture Promise Anchor Engine
+            <span>Scripture promises</span>
           </div>
           <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
             Where is your heart today?
           </h3>
-          <p className="text-xs text-slate-500 mt-1">
-            Select what you are walking through to anchor your soul in God&apos;s unfailing Word.
+          <p className="text-xs text-slate-500 mt-0.5">
+            Select your posture to anchor your day in God&apos;s unfailing Word.
           </p>
         </div>
 
         <button
           onClick={handleAnchor}
           disabled={isAnchoring || anchoredMap[currentPromise.id]}
-          className={`shrink-0 px-4 py-2.5 rounded-xl font-bold text-xs transition-all flex items-center gap-2 shadow-xs ${
+          className={`shrink-0 px-4 py-2 rounded-xl font-bold text-xs transition-all flex items-center gap-2 shadow-xs cursor-pointer active:scale-[0.98] ${
             anchoredMap[currentPromise.id]
               ? "bg-emerald-50 text-emerald-700 border border-emerald-200 cursor-default"
-              : "bg-rose-600 hover:bg-rose-700 text-white shadow-rose-600/20 active:scale-95"
+              : "bg-rose-600 hover:bg-rose-500 text-white shadow-rose-600/20"
           }`}
         >
           {anchoredMap[currentPromise.id] ? (
@@ -126,14 +126,14 @@ export function ScriptureAnchor() {
           ) : (
             <>
               <BookOpen className="w-4 h-4" />
-              <span>{isAnchoring ? "Anchoring..." : "Anchor to My Journal"}</span>
+              <span>{isAnchoring ? "Anchoring..." : "Anchor to journal"}</span>
             </>
           )}
         </button>
       </div>
 
-      {/* Heart State Filter Chips */}
-      <div className="flex flex-wrap gap-2 mb-6">
+      {/* Heart State Filter Chips - Sleek Pill Bar */}
+      <div className="flex flex-wrap gap-1.5 mb-5">
         {PROMISES.map((item) => {
           const isSelected = item.id === selectedId;
           const Icon = item.icon;
@@ -142,9 +142,9 @@ export function ScriptureAnchor() {
             <button
               key={item.id}
               onClick={() => setSelectedId(item.id)}
-              className={`px-3.5 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-2 ${
+              className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer active:scale-[0.98] ${
                 isSelected
-                  ? "bg-rose-600 text-white shadow-md shadow-rose-600/20 font-bold"
+                  ? "bg-rose-600 text-white shadow-xs font-semibold"
                   : "bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900"
               }`}
             >
@@ -156,14 +156,14 @@ export function ScriptureAnchor() {
       </div>
 
       {/* Radiant Scripture Display Card */}
-      <div className="relative rounded-2xl bg-linear-to-br from-rose-50/80 via-slate-50 to-indigo-50/40 p-6 sm:p-8 border border-rose-100 overflow-hidden">
+      <div className="relative rounded-2xl bg-linear-to-br from-rose-50/80 via-slate-50 to-indigo-50/40 p-5 sm:p-6 border border-rose-100 overflow-hidden">
         <div className="relative z-10">
-          <blockquote className="text-base sm:text-lg font-serif italic text-slate-800 leading-relaxed">
+          <blockquote className="text-sm sm:text-base font-serif italic text-slate-800 leading-relaxed">
             &ldquo;{currentPromise.verse}&rdquo;
           </blockquote>
 
-          <div className="mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-4 border-t border-rose-200/50">
-            <span className="font-mono text-xs font-bold uppercase tracking-wider text-rose-600">
+          <div className="mt-3 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 pt-3 border-t border-rose-200/50">
+            <span className="font-mono text-xs font-bold text-rose-600">
               {currentPromise.reference}
             </span>
             <span className="text-xs text-slate-500 font-light italic">

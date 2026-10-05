@@ -123,7 +123,7 @@ export default async function PrayerDetailPage({
             {prayer.title}
           </h1>
 
-          <p className="text-xs text-slate-400 mt-3 font-mono">
+          <p className="text-xs text-slate-400 mt-3">
             Committed to prayer on {prayer.createdAt ? new Date(prayer.createdAt).toLocaleDateString(undefined, { dateStyle: "long" }) : "recently"}
           </p>
         </div>
@@ -133,7 +133,7 @@ export default async function PrayerDetailPage({
           <p className="text-xs sm:text-sm italic text-purple-950 font-serif">
             &ldquo;Write down the revelation and make it plain on tablets so that a herald may run with it.&rdquo;
           </p>
-          <p className="text-xs font-bold font-mono text-purple-600 mt-1 uppercase tracking-wider">
+          <p className="text-xs font-semibold text-purple-600 mt-1">
             Habakkuk 2:2
           </p>
         </div>

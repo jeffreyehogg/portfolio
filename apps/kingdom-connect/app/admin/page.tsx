@@ -70,8 +70,8 @@ export default async function AdminPage() {
 
       <main id="main-content" className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
         <div className="mb-8">
-          <span className="text-xs font-mono uppercase tracking-wider text-indigo-600 font-bold bg-indigo-50 px-3 py-1 rounded-full border border-indigo-200">
-            Administrative Oversight
+          <span className="text-xs font-semibold text-indigo-700 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-200">
+            Administrative oversight
           </span>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mt-2">
             Ministry Leadership Portal
@@ -112,7 +112,7 @@ export default async function AdminPage() {
                         <span className="text-slate-400">{event.location}</span>
                       </div>
                     </div>
-                    <span className="px-3 py-1 text-xs font-mono uppercase font-bold rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200/60">
+                    <span className="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200/60 capitalize">
                       {event.category}
                     </span>
                   </div>

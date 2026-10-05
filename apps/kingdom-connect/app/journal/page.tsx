@@ -63,38 +63,33 @@ export default async function JournalPage({
       <main id="main-content" className="flex-1 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
         {/* Unauthenticated Demo Mode Banner */}
         {!userId && (
-          <div className="mb-8 p-5 rounded-3xl bg-purple-50/90 border border-purple-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-purple-950 shadow-xs">
-            <div className="flex items-center gap-3">
-              <span className="p-2.5 rounded-2xl bg-purple-600 text-white shadow-xs">
-                <Sparkles className="w-5 h-5" />
+          <div className="mb-6 px-4 py-3 rounded-2xl bg-purple-50/90 border border-purple-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-purple-950 shadow-2xs">
+            <div className="flex items-center gap-2.5">
+              <span className="p-1.5 rounded-xl bg-purple-600 text-white shrink-0">
+                <Sparkles className="w-4 h-4" />
               </span>
-              <div>
-                <p className="text-sm font-bold text-purple-950">
-                  Your Personal Prayer Sanctuary (Interactive Demo)
-                </p>
-                <p className="text-xs text-purple-800/80 mt-0.5">
-                  Feel free to add petitions, drag to prioritize daily focus, and anchor scripture. Sign in to save across devices.
-                </p>
-              </div>
+              <p className="text-xs text-purple-900 leading-snug">
+                <strong className="font-semibold text-purple-950">Interactive demo mode:</strong> Add petitions, drag to prioritize daily focus, and anchor scripture.
+              </p>
             </div>
             <Link
               href="/sign-in"
-              className="text-xs font-bold text-white bg-purple-600 hover:bg-purple-700 px-4 py-2.5 rounded-xl transition-all shadow-xs shrink-0 self-start sm:self-auto"
+              className="text-xs font-semibold text-white bg-purple-600 hover:bg-purple-700 px-3.5 py-1.5 rounded-xl transition-all shadow-xs shrink-0 self-start sm:self-auto active:scale-[0.98]"
             >
-              Sign In to Save
+              Sign in to save
             </Link>
           </div>
         )}
 
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div>
-            <div className="flex items-center gap-2.5 mb-1">
-              <span className="p-2 rounded-2xl bg-purple-100 text-purple-700 shadow-2xs">
-                <BookOpen className="w-5 h-5" />
+            <div className="flex items-center gap-2 mb-1">
+              <span className="p-1.5 rounded-xl bg-purple-100 text-purple-700 shadow-2xs">
+                <BookOpen className="w-4 h-4" />
               </span>
               <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-                My Prayer Sanctuary
+                My prayer sanctuary
               </h1>
             </div>
             <p className="text-xs sm:text-sm text-slate-500">
@@ -106,21 +101,21 @@ export default async function JournalPage({
         </div>
 
         {/* Navigation Tabs & Search Bar */}
-        <div className="bg-white p-3 rounded-2xl border border-slate-200/80 shadow-xs mb-8 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl w-full sm:w-auto">
+        <div className="bg-white p-2.5 sm:p-3 rounded-2xl border border-slate-200/80 shadow-xs mb-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="flex items-center gap-1 bg-slate-100/80 p-1 rounded-xl w-full sm:w-auto">
             <Link
               href="/journal"
-              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold transition-all bg-white text-purple-700 shadow-xs"
+              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all bg-white text-purple-700 shadow-xs"
             >
               <Clock className="w-3.5 h-3.5" />
-              Active Prayers ({prayers.length})
+              Active prayers ({prayers.length})
             </Link>
             <Link
               href="/journal/answered"
-              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold transition-all text-slate-600 hover:text-slate-900"
+              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all text-slate-600 hover:text-slate-900"
             >
               <CheckCircle2 className="w-3.5 h-3.5" />
-              Answered Memorials
+              Answered memorials
             </Link>
           </div>
 
@@ -128,11 +123,11 @@ export default async function JournalPage({
         </div>
 
         {/* Scripture Anchor Quote */}
-        <div className="bg-linear-to-r from-purple-50/80 to-indigo-50/50 border-l-4 border-purple-500 p-4 rounded-r-2xl mb-8">
+        <div className="bg-linear-to-r from-purple-50/80 to-indigo-50/50 border-l-4 border-purple-500 p-3.5 rounded-r-2xl mb-6">
           <p className="text-xs sm:text-sm italic text-purple-950 font-serif">
             &ldquo;Devote yourselves to prayer, being watchful and thankful.&rdquo;
           </p>
-          <p className="text-xs font-bold font-mono text-purple-600 mt-1 uppercase tracking-wider">
+          <p className="text-xs font-semibold text-purple-600 mt-1">
             Colossians 4:2
           </p>
         </div>

@@ -54,8 +54,8 @@ export function EventForm() {
 
       {/* Image Upload Field */}
       <div>
-        <label htmlFor="event-image-upload" className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-700 mb-2">
-          Initiative Header Photo
+        <label htmlFor="event-image-upload" className="block text-xs font-semibold text-slate-700 mb-2">
+          Initiative header photo
         </label>
         <div id="event-image-upload">
           <FileUpload
@@ -67,8 +67,8 @@ export function EventForm() {
       </div>
 
       <div>
-        <label htmlFor="event-title" className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-          Opportunity Title
+        <label htmlFor="event-title" className="block text-xs font-semibold text-slate-700 mb-1.5">
+          Opportunity title
         </label>
         <input
           id="event-title"
@@ -81,8 +81,8 @@ export function EventForm() {
 
       <div>
         <div className="flex justify-between items-center mb-1.5">
-          <label htmlFor="event-description" className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-700">
-            Impact Description &amp; What to Expect
+          <label htmlFor="event-description" className="block text-xs font-semibold text-slate-700">
+            Impact description &amp; what to expect
           </label>
           <span className="text-[11px] text-slate-400 italic">Focus on people &amp; grace</span>
         </div>
@@ -98,8 +98,8 @@ export function EventForm() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label htmlFor="event-date" className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-            Date &amp; Time
+          <label htmlFor="event-date" className="block text-xs font-semibold text-slate-700 mb-1.5">
+            Date &amp; time
           </label>
           <input
             id="event-date"
@@ -110,8 +110,8 @@ export function EventForm() {
           />
         </div>
         <div>
-          <label htmlFor="event-category" className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-            Ministry Gifting Category
+          <label htmlFor="event-category" className="block text-xs font-semibold text-slate-700 mb-1.5">
+            Ministry gifting category
           </label>
           <select
             id="event-category"
@@ -127,8 +127,8 @@ export function EventForm() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label htmlFor="event-location" className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-            Meeting Location &amp; Room
+          <label htmlFor="event-location" className="block text-xs font-semibold text-slate-700 mb-1.5">
+            Meeting location &amp; room
           </label>
           <input
             id="event-location"
@@ -139,8 +139,8 @@ export function EventForm() {
           />
         </div>
         <div>
-          <label htmlFor="event-max-volunteers" className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-            Target Team Size
+          <label htmlFor="event-max-volunteers" className="block text-xs font-semibold text-slate-700 mb-1.5">
+            Target team size
           </label>
           <input
             id="event-max-volunteers"

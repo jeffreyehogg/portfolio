@@ -59,7 +59,7 @@ export function FilterBar() {
   };
 
   return (
-    <div className="bg-white p-4 rounded-2xl shadow-xs border border-slate-200/80 mb-8 flex flex-col md:flex-row gap-4 items-center justify-between">
+    <div className="bg-white p-3.5 sm:p-4 rounded-2xl shadow-xs border border-slate-200/80 mb-6 flex flex-col md:flex-row gap-3 sm:gap-4 items-stretch md:items-center justify-between">
       {/* Search Input */}
       <div className="relative w-full md:max-w-md">
         <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
@@ -75,22 +75,22 @@ export function FilterBar() {
           value={searchTerm}
           onChange={(e) => handleSearchChange(e.target.value)}
           aria-label="Search volunteer opportunities"
-          className="block w-full pl-10 pr-4 py-2.5 min-h-[44px] border border-slate-200 rounded-xl leading-5 bg-slate-50 placeholder-slate-400 focus:outline-none focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 sm:text-sm text-slate-900"
+          className="block w-full pl-10 pr-4 py-2 min-h-[42px] border border-slate-200 rounded-xl leading-5 bg-slate-50 placeholder-slate-400 focus:outline-none focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 text-sm text-slate-900"
         />
       </div>
 
       {/* Category Tabs */}
-      <div className="flex flex-wrap gap-1.5 bg-slate-100 p-1 rounded-xl w-full md:w-auto">
+      <div className="flex flex-wrap gap-1 bg-slate-100/80 p-1 rounded-xl w-full md:w-auto">
         {CATEGORIES.map((cat) => (
           <button
             key={cat.id}
             onClick={() => handleCategory(cat.id)}
             className={`
-              flex-1 md:flex-none px-4 py-2 min-h-[40px] text-xs font-bold rounded-lg transition-all active:scale-95 cursor-pointer
+              flex-1 md:flex-none px-3.5 py-1.5 min-h-[36px] text-xs font-semibold rounded-lg transition-all active:scale-[0.98] cursor-pointer
               ${
                 currentCategory === cat.id
-                  ? "bg-white text-indigo-700 shadow-xs font-extrabold"
-                  : "text-slate-600 hover:text-slate-900 hover:bg-slate-200/70"
+                  ? "bg-white text-indigo-600 shadow-xs font-bold"
+                  : "text-slate-600 hover:text-slate-900 hover:bg-slate-200/60"
               }
             `}
           >

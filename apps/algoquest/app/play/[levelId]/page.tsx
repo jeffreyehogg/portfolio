@@ -267,13 +267,25 @@ export default function PlayLevelPage({ params }: PlayPageProps) {
         setHeroPos({ x: step.data.position.x, y: step.data.position.y })
       }
     } else if (step.type === 'collect') {
-      if (step.data?.item) {
+      const pos = step.data?.position || heroPos
+      // Find entity at current hero position and mark its ID collected so it pops on the board
+      const entity = level?.gridConfig.entities?.find(
+        (e) => e.x === pos.x && e.y === pos.y
+      )
+      if (entity) {
+        setCollectedEntities((prev) => (prev.includes(entity.id) ? prev : [...prev, entity.id]))
+      } else if (step.data?.item) {
         setCollectedEntities((prev) => [...prev, String(step.data?.item)])
       }
     } else if (step.type === 'turn') {
       if (step.data?.direction) {
         setHeroDirection(step.data.direction)
       }
+    }
+
+    // Auto-open gate when hero reaches or crosses gate at (2, 0)
+    if (level?.id === 'level-2-the-gatekeeper') {
+      setGateOpen(true)
     }
 
     // Animate Visualizers for Level 7 / Level 8

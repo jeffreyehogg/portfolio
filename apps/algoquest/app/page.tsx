@@ -15,7 +15,6 @@ import {
   Play,
   Lightbulb,
   Zap,
-  BookOpen,
   RotateCcw,
 } from 'lucide-react'
 import { LEVELS, Level } from '../lib/quests'
@@ -25,8 +24,6 @@ import { UserProfileBadge } from '../components/auth/UserProfileBadge'
 export default function HomePage() {
   const hasHydrated = useGameStoreHydration()
   const {
-    activeLanguage,
-    setActiveLanguage,
     unlockedLevels,
     completedLevels,
     totalXp,
@@ -54,54 +51,21 @@ export default function HomePage() {
         <div className="absolute inset-0 grid-board-pattern opacity-25" />
       </div>
 
-      {/* Navigation Header */}
+      {/* Clean Navigation Header - No Language Switcher or WASM Badges */}
       <header className="sticky top-0 z-40 w-full border-b border-white/[0.08] bg-slate-950/80 backdrop-blur-xl">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-500 to-cyan-500 p-0.5 shadow-[0_0_15px_rgba(16,185,129,0.3)] flex items-center justify-center group-hover:scale-105 transition-transform">
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-500 to-cyan-500 p-0.5 shadow-[0_0_15px_rgba(16,185,129,0.25)] flex items-center justify-center group-hover:scale-105 transition-transform">
               <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
                 <Compass className="w-4 h-4 text-emerald-400" />
               </div>
             </div>
-            <div>
-              <span className="font-extrabold text-white text-base tracking-tight">AlgoQuest</span>
-              <span className="hidden sm:inline-block text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-1.5 py-0.2 rounded ml-2 border border-emerald-500/20">
-                WASM
-              </span>
-            </div>
+            <span className="font-extrabold text-white text-lg tracking-tight">AlgoQuest</span>
           </Link>
 
-          {/* Language Switcher */}
-          <div className="flex items-center gap-1 bg-slate-900/90 p-1 rounded-xl border border-white/[0.08]">
-            <button
-              type="button"
-              onClick={() => setActiveLanguage('python')}
-              className={`px-3 py-1 rounded-lg text-xs font-mono font-medium transition-all flex items-center gap-1.5 ${
-                activeLanguage === 'python'
-                  ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-sm'
-                  : 'text-slate-400 hover:text-white'
-              }`}
-            >
-              <span>🐍</span>
-              <span className="hidden sm:inline">Python</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveLanguage('typescript')}
-              className={`px-3 py-1 rounded-lg text-xs font-mono font-medium transition-all flex items-center gap-1.5 ${
-                activeLanguage === 'typescript'
-                  ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 shadow-sm'
-                  : 'text-slate-400 hover:text-white'
-              }`}
-            >
-              <span>⚡</span>
-              <span className="hidden sm:inline">TypeScript</span>
-            </button>
-          </div>
-
           {/* XP & Profile */}
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-3">
             <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900/90 border border-amber-500/30 text-amber-300 text-xs font-mono font-bold shadow-sm">
               <Sparkles className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
               <span>{hasHydrated ? totalXp : 0} XP</span>
@@ -112,36 +76,25 @@ export default function HomePage() {
       </header>
 
       {/* Main Content */}
-      <main className="relative z-10 flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 py-10 flex flex-col items-center">
-        {/* Simple & Bold Hero Section */}
-        <div className="w-full text-center max-w-2xl mx-auto mb-10">
-          <motion.div
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono tracking-wide uppercase mb-4"
-          >
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Interactive Coding Adventure</span>
-          </motion.div>
-
+      <main className="relative z-10 flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 py-12 flex flex-col items-center">
+        {/* Simple & Bold Hero Section - No Green Pill Banners */}
+        <div className="w-full text-center max-w-2xl mx-auto mb-12">
           <motion.h1
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.05 }}
-            className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-3 leading-tight"
+            className="text-4xl sm:text-6xl font-extrabold tracking-tight text-white mb-4 leading-tight"
           >
-            Learn to code by playing a puzzle game.
+            Learn to code by solving puzzles.
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-sm sm:text-base text-slate-300 max-w-xl mx-auto leading-relaxed mb-6"
+            transition={{ delay: 0.08 }}
+            className="text-base sm:text-lg text-slate-300 max-w-xl mx-auto leading-relaxed mb-8"
           >
-            8 bite-sized challenges to master syntax &amp; algorithms in <strong>Python</strong> or{' '}
-            <strong>TypeScript</strong>. Watch your code animate the hero and manipulate real data
-            structures right in your browser.
+            Eight interactive coding challenges. Write code to guide your hero across the dungeon,
+            manipulate stacks, and master algorithms with live visual feedback.
           </motion.p>
 
           {/* Primary Action Button */}
@@ -153,7 +106,7 @@ export default function HomePage() {
           >
             <Link
               href={`/play/${nextPlayableLevel.id}`}
-              className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-bold font-mono text-base transition-all shadow-[0_0_25px_rgba(16,185,129,0.35)] flex items-center justify-center gap-2.5 active:scale-[0.98] group"
+              className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-bold font-mono text-base transition-all shadow-[0_0_30px_rgba(16,185,129,0.35)] flex items-center justify-center gap-2.5 active:scale-[0.98] group"
             >
               <Play className="w-5 h-5 fill-current" />
               <span>
@@ -165,7 +118,7 @@ export default function HomePage() {
             </Link>
 
             <span className="text-xs font-mono text-slate-500">
-              Free guest mode • State saves in browser • No sign-in required
+              Free • No sign-up required • Saves progress automatically
             </span>
           </motion.div>
         </div>
@@ -174,18 +127,15 @@ export default function HomePage() {
         <div className="w-full p-4 rounded-2xl bg-slate-900/60 border border-white/[0.08] backdrop-blur-xl mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-lg">
           <div className="flex-1">
             <div className="flex items-center justify-between text-xs font-mono mb-2">
-              <span className="text-slate-300 font-semibold flex items-center gap-1.5">
-                <BookOpen className="w-3.5 h-3.5 text-cyan-400" />
-                Quest Track Progress
-              </span>
+              <span className="text-slate-300 font-semibold">Your Progress</span>
               <span className="text-emerald-400 font-bold">
                 {completedCount} of {totalLevelsCount} Completed ({progressPercent}%)
               </span>
             </div>
             <div className="w-full h-2 rounded-full bg-slate-950 border border-white/[0.06] overflow-hidden">
               <div
-                className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full transition-all duration-500"
-                style={{ width: `${Math.max(progressPercent, 5)}%` }}
+                className="h-full bg-emerald-500 rounded-full transition-all duration-500"
+                style={{ width: `${Math.max(progressPercent, 4)}%` }}
               />
             </div>
           </div>
@@ -202,13 +152,13 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Unified 8-Level Quest List (Clean Linear Track - No Worlds!) */}
-        <div className="w-full space-y-3 mb-14">
+        {/* Unified 8-Level Quest List (Clean, Linear & Minimal - No Worlds!) */}
+        <div className="w-full space-y-3 mb-16">
           <div className="flex items-center justify-between px-1 mb-2">
             <h2 className="text-sm font-mono font-bold uppercase tracking-wider text-slate-400">
-              The 8 Coding Challenges
+              Curriculum Challenges
             </h2>
-            <span className="text-xs font-mono text-slate-500">Click any unlocked quest to play</span>
+            <span className="text-xs font-mono text-slate-500">8 Progressive Puzzles</span>
           </div>
 
           {LEVELS.map((lvl) => {
@@ -262,7 +212,7 @@ export default function HomePage() {
                         Level {lvl.number}
                       </span>
                       <span className="text-slate-600 font-mono">•</span>
-                      <span className="text-xs font-mono font-semibold px-2 py-0.5 rounded bg-slate-800/90 text-indigo-300 border border-white/[0.06]">
+                      <span className="text-xs font-mono font-medium px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-white/[0.06]">
                         {lvl.concept}
                       </span>
                       {isNextUp && (
@@ -342,16 +292,16 @@ export default function HomePage() {
           })}
         </div>
 
-        {/* 3 Pillars Explainer Cards */}
+        {/* 3 Value Highlights */}
         <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-4 mb-14">
           <div className="p-4 rounded-2xl bg-slate-900/40 border border-white/[0.06] flex items-start gap-3">
             <div className="w-8 h-8 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
               <Code2 className="w-4 h-4" />
             </div>
             <div>
-              <h4 className="text-xs font-bold text-white mb-0.5">In-Browser WASM</h4>
+              <h4 className="text-xs font-bold text-white mb-0.5">Real Code Execution</h4>
               <p className="text-[11px] text-slate-400 leading-relaxed">
-                Python 3.12 and TypeScript execute directly in your browser with 0 server latency.
+                Run code safely inside your browser with sub-millisecond execution and zero server delays.
               </p>
             </div>
           </div>
@@ -361,9 +311,9 @@ export default function HomePage() {
               <Zap className="w-4 h-4" />
             </div>
             <div>
-              <h4 className="text-xs font-bold text-white mb-0.5">Visual 2D Simulation</h4>
+              <h4 className="text-xs font-bold text-white mb-0.5">Visual 2D Feedback</h4>
               <p className="text-[11px] text-slate-400 leading-relaxed">
-                Watch character steps, stack pillars rising, and two-pointer arrows slide across memory.
+                Watch character steps, stack pillars, and dual-pointer arrows animate directly on screen.
               </p>
             </div>
           </div>
@@ -373,9 +323,9 @@ export default function HomePage() {
               <Lightbulb className="w-4 h-4" />
             </div>
             <div>
-              <h4 className="text-xs font-bold text-white mb-0.5">Free 3-Tier Hints</h4>
+              <h4 className="text-xs font-bold text-white mb-0.5">Progressive Hints</h4>
               <p className="text-[11px] text-slate-400 leading-relaxed">
-                Gentle nudges, logic clues, and complete code snippets are always 100% free.
+                Gentle nudges, logic clues, and complete code snippets are available whenever you need guidance.
               </p>
             </div>
           </div>
@@ -383,17 +333,8 @@ export default function HomePage() {
 
         {/* Minimalist Footer */}
         <footer className="w-full pt-6 border-t border-white/[0.08] text-center text-xs font-mono text-slate-500 flex flex-col items-center gap-2">
-          <div className="flex items-center gap-3 text-slate-400 flex-wrap justify-center text-[11px]">
-            <span>Python 3.12 (Pyodide WASM)</span>
-            <span>•</span>
-            <span>TypeScript Sandboxed</span>
-            <span>•</span>
-            <span>CodeMirror 6</span>
-            <span>•</span>
-            <span>Framer Motion</span>
-          </div>
           <p className="text-slate-500 text-[11px]">
-            Engineered by Jeff Hogg as an interactive algorithms module.
+            AlgoQuest • Interactive Algorithmic Puzzles
           </p>
         </footer>
       </main>

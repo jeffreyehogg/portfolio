@@ -15,70 +15,39 @@ interface LevelNavBarProps {
   level: Level
   world?: World
   onOpenHint: () => void
-  language: Language
+  language?: Language
   // eslint-disable-next-line no-unused-vars
-  onLanguageChange: (lang: Language) => void
+  onLanguageChange?: (lang: Language) => void
 }
 
 export function LevelNavBar({
   level,
-  world,
   onOpenHint,
-  language,
-  onLanguageChange,
 }: LevelNavBarProps) {
   const { totalXp, hintsUnlocked } = useGameStore()
   const unlockedTier = hintsUnlocked[level.id] || 0
 
   return (
-    <header className="w-full flex items-center justify-between px-4 py-2.5 bg-slate-950/80 backdrop-blur-xl border-b border-white/[0.08] select-none">
-      {/* Left: Back to Map & Quest Breadcrumb */}
+    <header className="w-full flex items-center justify-between px-4 sm:px-6 py-2.5 bg-slate-950/80 backdrop-blur-xl border-b border-white/[0.08] select-none">
+      {/* Left: Back to Challenges & Breadcrumb */}
       <div className="flex items-center gap-3">
         <Link
           href="/"
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900/80 hover:bg-slate-800 text-slate-300 hover:text-white border border-white/[0.06] text-xs font-mono font-medium transition-all active:scale-[0.98]"
         >
           <ChevronLeft className="w-4 h-4" />
-          <span>World Map</span>
+          <span>All Quests</span>
         </Link>
 
-        <div className="hidden sm:flex items-center gap-2">
-          {world && (
-            <span className="text-xs font-mono text-slate-400">
-              W{world.number}: {world.title}
-            </span>
-          )}
-          <span className="text-slate-600 font-mono">/</span>
-          <span className="text-xs font-mono font-semibold text-white bg-slate-900 px-2 py-0.5 rounded-lg border border-white/[0.08]">
-            L{level.number}: {level.title}
+        <div className="flex items-center gap-2">
+          <span className="text-slate-600 font-mono hidden sm:inline">/</span>
+          <span className="text-xs font-mono font-semibold text-white bg-slate-900 px-2.5 py-1 rounded-lg border border-white/[0.08]">
+            Level {level.number}: {level.title}
+          </span>
+          <span className="text-xs font-mono text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded border border-indigo-500/20 hidden sm:inline">
+            {level.concept}
           </span>
         </div>
-      </div>
-
-      {/* Center: Language Switcher pill */}
-      <div className="flex items-center gap-1 bg-slate-900/90 p-1 rounded-xl border border-white/[0.08]">
-        <button
-          type="button"
-          onClick={() => onLanguageChange('python')}
-          className={`px-2.5 py-1 rounded-lg text-xs font-mono font-medium transition-all ${
-            language === 'python'
-              ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
-              : 'text-slate-400 hover:text-white'
-          }`}
-        >
-          🐍 Python
-        </button>
-        <button
-          type="button"
-          onClick={() => onLanguageChange('typescript')}
-          className={`px-2.5 py-1 rounded-lg text-xs font-mono font-medium transition-all ${
-            language === 'typescript'
-              ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40'
-              : 'text-slate-400 hover:text-white'
-          }`}
-        >
-          ⚡ TypeScript
-        </button>
       </div>
 
       {/* Right: XP, Hints & Profile Badge */}

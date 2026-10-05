@@ -12,6 +12,8 @@
     "@clerk/nextjs": "^6.34.0",
     "@codemirror/lang-javascript": "^6.2.4",
     "@codemirror/lang-python": "^6.1.7",
+    "@codemirror/language": "^6.12.4",
+    "@codemirror/legacy-modes": "^6.5.4",
     "@uiw/react-codemirror": "^4.23.10",
     "canvas-confetti": "^1.9.4",
     "clsx": "^2.1.1",

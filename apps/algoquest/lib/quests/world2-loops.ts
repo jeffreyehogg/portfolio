@@ -26,7 +26,7 @@ export const WORLD_2_LEVELS: Level[] = [
     instructions: [
       'A while loop repeats instructions as long as its condition evaluates to true.',
       'The function at_goal() returns false while the hero has not yet reached (4, 0), and true once reached.',
-      'Use while not at_goal(): step() in Python or while (!at_goal()) { step(); } in TypeScript.',
+      'Use while not at_goal(): step() in Python/Lua or while (!at_goal()) { step(); } in JavaScript/TypeScript.',
     ],
     availableActions: [
       { name: 'step', signature: 'step()', description: 'Moves hero forward 1 tile' },
@@ -46,11 +46,17 @@ export const WORLD_2_LEVELS: Level[] = [
     },
     starterCode: {
       python: '# Keep walking forward until the hero reaches the goal.\n# Built-in actions: at_goal() checks position, step() moves forward 1 tile.\n\nwhile not at_goal():\n    # Take a step forward using step()\n    pass\n',
+      javascript: '// Keep walking forward until the hero reaches the goal.\n// Built-in actions: at_goal() checks position, step() moves forward 1 tile.\n\nwhile (!at_goal()) {\n  // Take a step forward using step()\n}\n',
       typescript: '// Keep walking forward until the hero reaches the goal.\n// Built-in actions: at_goal() checks position, step() moves forward 1 tile.\n\nwhile (!at_goal()) {\n  // Take a step forward using step()\n}\n',
+      ruby: '# Keep walking forward until the hero reaches the goal.\n# Built-in actions: at_goal checks position, step moves forward 1 tile.\n\nwhile !at_goal\n  # Take a step forward using step\nend\n',
+      lua: '-- Keep walking forward until the hero reaches the goal.\n-- Built-in actions: at_goal() checks position, step() moves forward 1 tile.\n\nwhile not at_goal() do\n  -- Take a step forward using step()\nend\n',
     },
     solutionCode: {
       python: 'while not at_goal():\n    step()\n',
+      javascript: 'while (!at_goal()) {\n  step();\n}\n',
       typescript: 'while (!at_goal()) {\n  step();\n}\n',
+      ruby: 'while !at_goal\n  step\nend\n',
+      lua: 'while not at_goal() do\n  step()\nend\n',
     },
     hints: [
       {
@@ -64,16 +70,22 @@ export const WORLD_2_LEVELS: Level[] = [
         description: 'Inside the loop body, call step() to move one unit east each turn.',
         codeSnippet: {
           python: 'while not at_goal():\n    step()',
+          javascript: 'while (!at_goal()) {\n  step();\n}',
           typescript: 'while (!at_goal()) {\n  step();\n}',
+          ruby: 'while !at_goal\n  step\nend',
+          lua: 'while not at_goal() do\n  step()\nend',
         },
       },
       {
         tier: 3,
         title: 'Direct Solution',
-        description: 'Replace pass or the empty body with step() so the hero traverses each corridor tile.',
+        description: 'Advance step-by-step until reaching the goal.',
         codeSnippet: {
           python: 'while not at_goal():\n    step()',
+          javascript: 'while (!at_goal()) {\n  step();\n}',
           typescript: 'while (!at_goal()) {\n  step();\n}',
+          ruby: 'while !at_goal\n  step\nend',
+          lua: 'while not at_goal() do\n  step()\nend',
         },
       },
     ],
@@ -128,11 +140,17 @@ export const WORLD_2_LEVELS: Level[] = [
     },
     starterCode: {
       python: '# Cross the 5-tile bridge and harvest every gem!\n# Built-in actions: step() moves forward 1 tile, collect() gathers the gem.\n\nfor i in range(5):\n    # Step onto the next tile (use step())\n    # Collect the gem (use collect())\n    pass\n',
+      javascript: '// Cross the 5-tile bridge and harvest every gem!\n// Built-in actions: step() moves forward 1 tile, collect() gathers the gem.\n\nfor (let i = 0; i < 5; i++) {\n  // Step onto the next tile (use step())\n  // Collect the gem (use collect())\n}\n',
       typescript: '// Cross the 5-tile bridge and harvest every gem!\n// Built-in actions: step() moves forward 1 tile, collect() gathers the gem.\n\nfor (let i = 0; i < 5; i++) {\n  // Step onto the next tile (use step())\n  // Collect the gem (use collect())\n}\n',
+      ruby: '# Cross the 5-tile bridge and harvest every gem!\n# Built-in actions: step moves forward 1 tile, collect gathers the gem.\n\n5.times do\n  # Step onto the next tile (use step)\n  # Collect the gem (use collect)\nend\n',
+      lua: '-- Cross the 5-tile bridge and harvest every gem!\n-- Built-in actions: step() moves forward 1 tile, collect() gathers the gem.\n\nfor i = 1, 5 do\n  -- Step onto the next tile (use step())\n  -- Collect the gem (use collect())\nend\n',
     },
     solutionCode: {
       python: 'for i in range(5):\n    step()\n    collect()\n',
+      javascript: 'for (let i = 0; i < 5; i++) {\n  step();\n  collect();\n}\n',
       typescript: 'for (let i = 0; i < 5; i++) {\n  step();\n  collect();\n}\n',
+      ruby: '5.times do\n  step\n  collect\nend\n',
+      lua: 'for i = 1, 5 do\n  step()\n  collect()\nend\n',
     },
     hints: [
       {
@@ -144,10 +162,13 @@ export const WORLD_2_LEVELS: Level[] = [
       {
         tier: 2,
         title: 'Loop Structure',
-        description: 'In Python use range(5). In TypeScript use for (let i = 0; i < 5; i++).',
+        description: 'Iterate 5 times across the bridge, calling step() and collect() each iteration.',
         codeSnippet: {
           python: 'for i in range(5):\n    step()\n    collect()',
+          javascript: 'for (let i = 0; i < 5; i++) {\n  step();\n  collect();\n}',
           typescript: 'for (let i = 0; i < 5; i++) {\n  step();\n  collect();\n}',
+          ruby: '5.times do\n  step\n  collect\nend',
+          lua: 'for i = 1, 5 do\n  step()\n  collect()\nend',
         },
       },
       {
@@ -156,7 +177,10 @@ export const WORLD_2_LEVELS: Level[] = [
         description: 'Execute step() followed by collect() on each iteration of the 5-step loop.',
         codeSnippet: {
           python: 'for i in range(5):\n    step()\n    collect()',
+          javascript: 'for (let i = 0; i < 5; i++) {\n  step();\n  collect();\n}',
           typescript: 'for (let i = 0; i < 5; i++) {\n  step();\n  collect();\n}',
+          ruby: '5.times do\n  step\n  collect\nend',
+          lua: 'for i = 1, 5 do\n  step()\n  collect()\nend',
         },
       },
     ],
@@ -184,9 +208,9 @@ export const WORLD_2_LEVELS: Level[] = [
     objective:
       'Extract the potion from index 0 and the key from index 2 to unlock the sealed gate at (3, 0).',
     instructions: [
-      'Arrays and lists are zero-indexed: the first element is at index 0, the second at 1, and the third at 2.',
+      'Arrays and lists allow index-based access: retrieve items by their offset.',
       'Your adventurer bag holds items = ["potion", "shield", "key"].',
-      'Assign items[0] to potion and items[2] to key. When both are retrieved, the sealed door opens and the hero steps 3 times to (3, 0).',
+      'Assign the potion and key from the items array to unlock the gate and step 3 times to (3, 0).',
     ],
     availableActions: [
       { name: 'items', signature: 'items[index]', description: 'Accesses item in bag at index (0 = potion, 2 = key)' },
@@ -209,11 +233,17 @@ export const WORLD_2_LEVELS: Level[] = [
     },
     starterCode: {
       python: '# items = ["potion", "shield", "key"] is in your inventory.\n# Access the 1st item (index 0) for your health potion\n# and the 3rd item (index 2) for the bronze key.\n\npotion = items[0]\nkey = items[0]  # Fix this index to get the key!\n',
+      javascript: '// items = ["potion", "shield", "key"] is in your inventory.\n// Access the 1st item (index 0) for your health potion\n// and the 3rd item (index 2) for the bronze key.\n\nlet potion = items[0];\nlet key = items[0]; // Fix this index to get the key!\n',
       typescript: '// items = ["potion", "shield", "key"] is in your inventory.\n// Access the 1st item (index 0) for your health potion\n// and the 3rd item (index 2) for the bronze key.\n\nconst potion = items[0];\nconst key = items[0]; // Fix this index to get the key!\n',
+      ruby: '# items = ["potion", "shield", "key"] is in your inventory.\n# Access the 1st item (index 0) for your health potion\n# and the 3rd item (index 2) for the bronze key.\n\npotion = items[0]\nkey = items[0]  # Fix this index to get the key!\n',
+      lua: '-- items = {"potion", "shield", "key"} is in your inventory.\n-- Access the potion and the bronze key.\n\npotion = items[0]\nkey = items[0]  -- Fix this index to get the key!\n',
     },
     solutionCode: {
       python: 'potion = items[0]\nkey = items[2]\n',
+      javascript: 'let potion = items[0];\nlet key = items[2];\n',
       typescript: 'const potion = items[0];\nconst key = items[2];\n',
+      ruby: 'potion = items[0]\nkey = items[2]\n',
+      lua: 'potion = items[0]\nkey = items[2]\n',
     },
     hints: [
       {
@@ -228,7 +258,10 @@ export const WORLD_2_LEVELS: Level[] = [
         description: 'The bronze key is the third item in the array, so its index is 2.',
         codeSnippet: {
           python: 'key = items[2]',
+          javascript: 'let key = items[2];',
           typescript: 'const key = items[2];',
+          ruby: 'key = items[2]',
+          lua: 'key = items[2]',
         },
       },
       {
@@ -237,7 +270,10 @@ export const WORLD_2_LEVELS: Level[] = [
         description: 'Set potion = items[0] and key = items[2] to unlock the gate.',
         codeSnippet: {
           python: 'potion = items[0]\nkey = items[2]',
+          javascript: 'let potion = items[0];\nlet key = items[2];',
           typescript: 'const potion = items[0];\nconst key = items[2];',
+          ruby: 'potion = items[0]\nkey = items[2]',
+          lua: 'potion = items[0]\nkey = items[2]',
         },
       },
     ],
@@ -252,6 +288,12 @@ export const WORLD_2_LEVELS: Level[] = [
     prepareCode: (userCode, language) => {
       if (language === 'python') {
         return `items = ["potion", "shield", "key"]\n${userCode}\nif locals().get('potion') == items[0] and locals().get('key') == items[2]:\n    for _ in range(3):\n        step()\n`
+      }
+      if (language === 'ruby') {
+        return `items = ["potion", "shield", "key"]\n${userCode}\nif defined?(potion) && defined?(key) && potion == items[0] && key == items[2]\n  3.times { step }\nend\n`
+      }
+      if (language === 'lua') {
+        return `items = { [0] = "potion", [1] = "shield", [2] = "key", "potion", "shield", "key" }\n${userCode}\nif (potion == "potion") and (key == "key") then\n  for i = 1, 3 do step() end\nend\n`
       }
       return `const items = ["potion", "shield", "key"];\n${userCode}\nif (typeof potion !== 'undefined' && typeof key !== 'undefined' && potion === items[0] && key === items[2]) {\n  for (let i = 0; i < 3; i++) {\n    step();\n  }\n}\n`
     },

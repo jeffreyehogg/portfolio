@@ -44,12 +44,18 @@ export const WORLD_1_LEVELS: Level[] = [
       type: 'grid',
     },
     starterCode: {
-      python: '# The hero needs 3 steps to reach the treasure chest.\n# Assign the number 3 to the variable \'steps\'.\nsteps = 1\n',
-      typescript: '// The hero needs 3 steps to reach the treasure chest.\n// Assign the number 3 to the variable \'steps\'.\nconst steps = 1;\n',
+      python: "# The hero needs 3 steps to reach the treasure chest.\n# Assign the number 3 to the variable 'steps'.\nsteps = 1\n",
+      javascript: "// The hero needs 3 steps to reach the treasure chest.\n// Assign the number 3 to the variable 'steps'.\nlet steps = 1;\n",
+      typescript: "// The hero needs 3 steps to reach the treasure chest.\n// Assign the number 3 to the variable 'steps'.\nconst steps: number = 1;\n",
+      ruby: "# The hero needs 3 steps to reach the treasure chest.\n# Assign the number 3 to the variable 'steps'.\nsteps = 1\n",
+      lua: "-- The hero needs 3 steps to reach the treasure chest.\n-- Assign the number 3 to the variable 'steps'.\nsteps = 1\n",
     },
     solutionCode: {
       python: 'steps = 3\n',
-      typescript: 'const steps = 3;\n',
+      javascript: 'let steps = 3;\n',
+      typescript: 'const steps: number = 3;\n',
+      ruby: 'steps = 3\n',
+      lua: 'steps = 3\n',
     },
     hints: [
       {
@@ -63,7 +69,10 @@ export const WORLD_1_LEVELS: Level[] = [
         description: 'The chest is located at coordinate (3, 0). From (0, 0), the hero needs exactly 3 steps.',
         codeSnippet: {
           python: 'steps = 3',
+          javascript: 'let steps = 3;',
           typescript: 'const steps = 3;',
+          ruby: 'steps = 3',
+          lua: 'steps = 3',
         },
       },
       {
@@ -72,7 +81,10 @@ export const WORLD_1_LEVELS: Level[] = [
         description: 'Update steps to equal 3 so the game loop advances your hero directly onto the chest.',
         codeSnippet: {
           python: 'steps = 3',
+          javascript: 'let steps = 3;',
           typescript: 'const steps = 3;',
+          ruby: 'steps = 3',
+          lua: 'steps = 3',
         },
       },
     ],
@@ -87,6 +99,12 @@ export const WORLD_1_LEVELS: Level[] = [
     prepareCode: (userCode, language) => {
       if (language === 'python') {
         return `${userCode}\nif 'steps' in locals():\n    for _ in range(int(steps)):\n        step()\n`
+      }
+      if (language === 'ruby') {
+        return `${userCode}\nif defined?(steps)\n  (steps.to_i).times { step }\nend\n`
+      }
+      if (language === 'lua') {
+        return `${userCode}\nif steps ~= nil then\n  for i = 1, tonumber(steps) do\n    step()\n  end\nend\n`
       }
       return `${userCode}\nif (typeof steps !== 'undefined') {\n  for (let i = 0; i < Number(steps); i++) {\n    step();\n  }\n}\n`
     },
@@ -126,17 +144,23 @@ export const WORLD_1_LEVELS: Level[] = [
     },
     starterCode: {
       python: '# The gatekeeper demands the secret password.\n# Change the string to "open" to lower the gate and cross.\npassword = "closed"\n',
+      javascript: '// The gatekeeper demands the secret password.\n// Change the string to "open" to lower the gate and cross.\nlet password = "closed";\n',
       typescript: '// The gatekeeper demands the secret password.\n// Change the string to "open" to lower the gate and cross.\nconst password = "closed";\n',
+      ruby: '# The gatekeeper demands the secret password.\n# Change the string to "open" to lower the gate and cross.\npassword = "closed"\n',
+      lua: '-- The gatekeeper demands the secret password.\n-- Change the string to "open" to lower the gate and cross.\npassword = "closed"\n',
     },
     solutionCode: {
       python: 'password = "open"\n',
+      javascript: 'let password = "open";\n',
       typescript: 'const password = "open";\n',
+      ruby: 'password = "open"\n',
+      lua: 'password = "open"\n',
     },
     hints: [
       {
         tier: 1,
         title: 'String Quotes',
-        description: 'Strings in Python and TypeScript are enclosed in double quotes or single quotes, like "open".',
+        description: 'Strings are enclosed in quotes, such as "open".',
       },
       {
         tier: 2,
@@ -144,7 +168,10 @@ export const WORLD_1_LEVELS: Level[] = [
         description: 'Replace the text "closed" with the text "open" so the gatekeeper lets you pass.',
         codeSnippet: {
           python: 'password = "open"',
+          javascript: 'let password = "open";',
           typescript: 'const password = "open";',
+          ruby: 'password = "open"',
+          lua: 'password = "open"',
         },
       },
       {
@@ -153,7 +180,10 @@ export const WORLD_1_LEVELS: Level[] = [
         description: 'Assign the string literal "open" to the variable password.',
         codeSnippet: {
           python: 'password = "open"',
+          javascript: 'let password = "open";',
           typescript: 'const password = "open";',
+          ruby: 'password = "open"',
+          lua: 'password = "open"',
         },
       },
     ],
@@ -168,6 +198,12 @@ export const WORLD_1_LEVELS: Level[] = [
     prepareCode: (userCode, language) => {
       if (language === 'python') {
         return `${userCode}\nif 'password' in locals() and password == "open":\n    for _ in range(4):\n        step()\n`
+      }
+      if (language === 'ruby') {
+        return `${userCode}\nif defined?(password) && password == "open"\n  4.times { step }\nend\n`
+      }
+      if (language === 'lua') {
+        return `${userCode}\nif password == "open" then\n  for i = 1, 4 do\n    step()\n  end\nend\n`
       }
       return `${userCode}\nif (typeof password !== 'undefined' && password === "open") {\n  for (let i = 0; i < 4; i++) {\n    step();\n  }\n}\n`
     },
@@ -205,11 +241,17 @@ export const WORLD_1_LEVELS: Level[] = [
     },
     starterCode: {
       python: '# The sensor detects what tile lies ahead:\n# tile is set to "lava".\n# Built-in actions: jump() leaps 2 spaces forward, step() moves 1 space.\n\nif tile == "lava":\n    # Leap over the molten lava using jump()\n    pass\nelse:\n    step()\n',
+      javascript: '// The sensor detects what tile lies ahead:\n// tile is set to "lava".\n// Built-in actions: jump() leaps 2 spaces forward, step() moves 1 space.\n\nif (tile === "lava") {\n  // Leap over the molten lava using jump()\n} else {\n  step();\n}\n',
       typescript: '// The sensor detects what tile lies ahead:\n// tile is set to "lava".\n// Built-in actions: jump() leaps 2 spaces forward, step() moves 1 space.\n\nif (tile === "lava") {\n  // Leap over the molten lava using jump()\n} else {\n  step();\n}\n',
+      ruby: '# The sensor detects what tile lies ahead:\n# tile is set to "lava".\n# Built-in actions: jump leaps 2 spaces forward, step moves 1 space.\n\nif tile == "lava"\n  # Leap over the molten lava using jump\nelse\n  step\nend\n',
+      lua: '-- The sensor detects what tile lies ahead:\n-- tile is set to "lava".\n-- Built-in actions: jump() leaps 2 spaces forward, step() moves 1 space.\n\nif tile == "lava" then\n  -- Leap over the molten lava using jump()\nelse\n  step()\nend\n',
     },
     solutionCode: {
       python: 'if tile == "lava":\n    jump()\nelse:\n    step()\n',
+      javascript: 'if (tile === "lava") {\n  jump();\n} else {\n  step();\n}\n',
       typescript: 'if (tile === "lava") {\n  jump();\n} else {\n  step();\n}\n',
+      ruby: 'if tile == "lava"\n  jump\nelse\n  step\nend\n',
+      lua: 'if tile == "lava" then\n  jump()\nelse\n  step()\nend\n',
     },
     hints: [
       {
@@ -220,10 +262,13 @@ export const WORLD_1_LEVELS: Level[] = [
       {
         tier: 2,
         title: 'The Jump Action',
-        description: 'When tile is "lava", replace pass or the empty block with jump().',
+        description: 'When tile is "lava", replace the empty branch with jump().',
         codeSnippet: {
           python: 'if tile == "lava":\n    jump()',
+          javascript: 'if (tile === "lava") {\n  jump();\n}',
           typescript: 'if (tile === "lava") {\n  jump();\n}',
+          ruby: 'if tile == "lava"\n  jump\nend',
+          lua: 'if tile == "lava" then\n  jump()\nend',
         },
       },
       {
@@ -232,7 +277,10 @@ export const WORLD_1_LEVELS: Level[] = [
         description: 'Complete the if-else block with jump() in the true branch and step() in the false branch.',
         codeSnippet: {
           python: 'if tile == "lava":\n    jump()\nelse:\n    step()',
+          javascript: 'if (tile === "lava") {\n  jump();\n} else {\n  step();\n}',
           typescript: 'if (tile === "lava") {\n  jump();\n} else {\n  step();\n}',
+          ruby: 'if tile == "lava"\n  jump\nelse\n  step\nend',
+          lua: 'if tile == "lava" then\n  jump()\nelse\n  step()\nend',
         },
       },
     ],
@@ -246,6 +294,12 @@ export const WORLD_1_LEVELS: Level[] = [
     ],
     prepareCode: (userCode, language) => {
       if (language === 'python') {
+        return `tile = "lava"\n${userCode}\n`
+      }
+      if (language === 'ruby') {
+        return `tile = "lava"\n${userCode}\n`
+      }
+      if (language === 'lua') {
         return `tile = "lava"\n${userCode}\n`
       }
       return `const tile = "lava";\n${userCode}\n`

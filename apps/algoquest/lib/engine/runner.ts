@@ -40,6 +40,46 @@ function cleanErrorMessage(rawError: string, language: Language): ErrorDetails {
       message,
       line,
     }
+  } else if (language === 'ruby') {
+    let line: number | undefined
+    let message = rawError
+    let type = 'RubyError'
+
+    const lineMatch = rawError.match(/eval:(\d+):/i)
+    if (lineMatch && lineMatch[1]) {
+      line = parseInt(lineMatch[1], 10)
+    }
+
+    const typeMatch = rawError.match(/\(([A-Za-z0-9_:]+Error)\)/)
+    if (typeMatch && typeMatch[1]) {
+      type = typeMatch[1]
+    }
+
+    const colonIdx = rawError.indexOf("': ")
+    if (colonIdx > 0) {
+      message = rawError.slice(colonIdx + 3).replace(/\s*\([A-Za-z0-9_:]+\).*/s, '').trim()
+    }
+
+    return {
+      type,
+      message,
+      line,
+    }
+  } else if (language === 'lua') {
+    let line: number | undefined
+    let message = rawError
+
+    const match = rawError.match(/\[string\s+[^\]]+\]:(\d+):\s*(.*)/s)
+    if (match) {
+      line = parseInt(match[1], 10)
+      message = match[2].trim()
+    }
+
+    return {
+      type: 'LuaError',
+      message,
+      line,
+    }
   } else {
     // JavaScript / TypeScript error cleaning
     let message = rawError
@@ -82,6 +122,10 @@ export class ExecutionRunner {
       const workerUrl =
         language === 'python'
           ? '/workers/pyodide-worker.js'
+          : language === 'ruby'
+          ? '/workers/ruby-worker.js'
+          : language === 'lua'
+          ? '/workers/lua-worker.js'
           : '/workers/ts-worker.js'
 
       worker = new Worker(workerUrl)

@@ -299,9 +299,9 @@ export default function HomePage() {
               <Code2 className="w-4 h-4" />
             </div>
             <div>
-              <h4 className="text-xs font-bold text-white mb-0.5">Real Code Execution</h4>
+              <h4 className="text-xs font-bold text-white mb-0.5">5 Modern Languages</h4>
               <p className="text-[11px] text-slate-400 leading-relaxed">
-                Run code safely inside your browser with sub-millisecond execution and zero server delays.
+                Code in Python, JavaScript, TypeScript, Ruby, or Lua with instant client-side execution.
               </p>
             </div>
           </div>

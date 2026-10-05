@@ -1,4 +1,4 @@
-export type Language = 'python' | 'typescript'
+export type Language = 'python' | 'javascript' | 'typescript' | 'ruby' | 'lua'
 
 export type TileType =
   | 'path'
@@ -46,10 +46,7 @@ export interface Hint {
   tier: 1 | 2 | 3
   title: string
   description: string
-  codeSnippet?: {
-    python: string
-    typescript: string
-  }
+  codeSnippet?: Partial<Record<Language, string>>
 }
 
 export interface AvailableAction {
@@ -79,14 +76,8 @@ export interface Level {
   availableActions?: AvailableAction[]
   gridConfig: GridConfig
   visualizerConfig?: VisualizerConfig
-  starterCode: {
-    python: string
-    typescript: string
-  }
-  solutionCode: {
-    python: string
-    typescript: string
-  }
+  starterCode: Record<Language, string>
+  solutionCode: Record<Language, string>
   hints: [Hint, Hint, Hint] // Strict 3-tier hints
   testCases: Array<{ id: string; name: string; expected: any; description?: string }>
   /* eslint-disable no-unused-vars */

@@ -1,4 +1,4 @@
-export type Language = 'python' | 'typescript'
+export type Language = 'python' | 'javascript' | 'typescript' | 'ruby' | 'lua'
 
 export type StepEventType = 'step' | 'jump' | 'collect' | 'at_goal' | 'turn' | 'log'
 

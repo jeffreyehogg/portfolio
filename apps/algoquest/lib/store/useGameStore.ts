@@ -18,7 +18,7 @@ export interface GameState {
   activeLanguage: Language
   unlockedLevels: string[]
   completedLevels: Record<string, CompletedLevelInfo>
-  levelDrafts: Record<string, Record<Language, string>>
+  levelDrafts: Record<string, Partial<Record<Language, string>>>
   hintsUnlocked: Record<string, number>
   totalXp: number
   streakDays: number
@@ -48,7 +48,7 @@ const DEFAULT_STATE = {
   activeLanguage: 'python' as Language,
   unlockedLevels: ['level-1-first-step'],
   completedLevels: {} as Record<string, CompletedLevelInfo>,
-  levelDrafts: {} as Record<string, Record<Language, string>>,
+  levelDrafts: {} as Record<string, Partial<Record<Language, string>>>,
   hintsUnlocked: {} as Record<string, number>,
   totalXp: 0,
   streakDays: 1,
@@ -141,7 +141,7 @@ export const useGameStore = create<GameState>()(
           levelDrafts: {
             ...state.levelDrafts,
             [levelId]: {
-              ...(state.levelDrafts[levelId] || { python: '', typescript: '' }),
+              ...(state.levelDrafts[levelId] || {}),
               [lang]: code,
             },
           },

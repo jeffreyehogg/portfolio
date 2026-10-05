@@ -128,7 +128,7 @@ export default function PlayLevelPage({ params }: PlayPageProps) {
     if (saved && saved.trim().length > 0) {
       setCode(saved)
     } else {
-      setCode(level.starterCode[activeLanguage])
+      setCode(level.starterCode[activeLanguage] || level.starterCode.python)
     }
 
     // Reset game board to level initial position
@@ -139,6 +139,9 @@ export default function PlayLevelPage({ params }: PlayPageProps) {
   useEffect(() => {
     executionRunner.preload('python')
     executionRunner.preload('typescript')
+    executionRunner.preload('javascript')
+    executionRunner.preload('ruby')
+    executionRunner.preload('lua')
   }, [])
 
   // Auto-save code draft on change
@@ -152,7 +155,7 @@ export default function PlayLevelPage({ params }: PlayPageProps) {
   // Reset to original starter code
   const handleResetCode = () => {
     if (!level) return
-    const starter = level.starterCode[activeLanguage]
+    const starter = level.starterCode[activeLanguage] || level.starterCode.python
     setCode(starter)
     saveDraft(level.id, activeLanguage, starter)
     resetGameBoard()

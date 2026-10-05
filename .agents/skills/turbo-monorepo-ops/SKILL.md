@@ -94,8 +94,8 @@ Turborepo scrubs environment variables during the `build` task to guarantee cach
 ## 5. Vercel Monorepo Deployment Guidelines
 
 1. **Ignored Build Step**:
-   - In each app's Vercel Project Settings > Git, the **"Ignored Build Step"** must remain on **Automatic**.
-   - Vercel detects Turborepo and automatically runs `npx turbo-ignore` to skip deployment if that specific app and its shared dependencies did not change.
+   - Instead of default `npx turbo-ignore` (which triggers on root `pnpm-lock.yaml` or global doc edits), each app uses `"ignoreCommand": "bash ../../scripts/ignore-build-step.sh apps/<app>"` in its `vercel.json`.
+   - The script performs a path-scoped git diff checking only `apps/<app>` and shared `packages/`, cleanly exiting with code 0 to skip builds when the app is untouched.
 2. **Root Directory**:
    - Each project on Vercel must have its **Root Directory** pointed to its specific app folder (e.g., `apps/portfolio`, `apps/kingdom-connect`).
 3. **Daemon Cleanup**:

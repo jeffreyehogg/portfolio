@@ -28,6 +28,10 @@ export const WORLD_2_LEVELS: Level[] = [
       'The function at_goal() returns false while the hero has not yet reached (4, 0), and true once reached.',
       'Use while not at_goal(): step() in Python or while (!at_goal()) { step(); } in TypeScript.',
     ],
+    availableActions: [
+      { name: 'step', signature: 'step()', description: 'Moves hero forward 1 tile' },
+      { name: 'at_goal', signature: 'at_goal()', description: 'Returns true when the hero reaches the goal' },
+    ],
     gridConfig: {
       width: 5,
       height: 1,
@@ -41,8 +45,8 @@ export const WORLD_2_LEVELS: Level[] = [
       type: 'grid',
     },
     starterCode: {
-      python: '# Keep walking forward until the hero reaches the goal.\n# Use at_goal() to test your position.\n\nwhile not at_goal():\n    # Take a step forward\n    pass\n',
-      typescript: '// Keep walking forward until the hero reaches the goal.\n// Use at_goal() to test your position.\n\nwhile (!at_goal()) {\n  // Take a step forward\n}\n',
+      python: '# Keep walking forward until the hero reaches the goal.\n# Built-in actions: at_goal() checks position, step() moves forward 1 tile.\n\nwhile not at_goal():\n    # Take a step forward using step()\n    pass\n',
+      typescript: '// Keep walking forward until the hero reaches the goal.\n// Built-in actions: at_goal() checks position, step() moves forward 1 tile.\n\nwhile (!at_goal()) {\n  // Take a step forward using step()\n}\n',
     },
     solutionCode: {
       python: 'while not at_goal():\n    step()\n',
@@ -98,7 +102,11 @@ export const WORLD_2_LEVELS: Level[] = [
     instructions: [
       'A for loop executes a block of code a fixed number of times using a range or counter.',
       'There are 5 bridge tiles from (0, 0) to (5, 0). Each tile contains a sparkling gem.',
-      'Use a for loop running 5 times. Inside the loop, take a step and collect the gem.',
+      'Inside the loop, call step() to move forward onto each tile, then call collect() to pick up the gem!',
+    ],
+    availableActions: [
+      { name: 'step', signature: 'step()', description: 'Moves hero forward 1 tile' },
+      { name: 'collect', signature: 'collect()', description: 'Picks up the gem on the current tile' },
     ],
     gridConfig: {
       width: 6,
@@ -119,8 +127,8 @@ export const WORLD_2_LEVELS: Level[] = [
       type: 'grid',
     },
     starterCode: {
-      python: '# Cross the 5-tile bridge and harvest every gem!\n# On each repetition, step forward and collect the gem.\n\nfor i in range(5):\n    # Step onto the next tile\n    # Collect the gem\n    pass\n',
-      typescript: '// Cross the 5-tile bridge and harvest every gem!\n// On each repetition, step forward and collect the gem.\n\nfor (let i = 0; i < 5; i++) {\n  // Step onto the next tile\n  // Collect the gem\n}\n',
+      python: '# Cross the 5-tile bridge and harvest every gem!\n# Built-in actions: step() moves forward 1 tile, collect() gathers the gem.\n\nfor i in range(5):\n    # Step onto the next tile (use step())\n    # Collect the gem (use collect())\n    pass\n',
+      typescript: '// Cross the 5-tile bridge and harvest every gem!\n// Built-in actions: step() moves forward 1 tile, collect() gathers the gem.\n\nfor (let i = 0; i < 5; i++) {\n  // Step onto the next tile (use step())\n  // Collect the gem (use collect())\n}\n',
     },
     solutionCode: {
       python: 'for i in range(5):\n    step()\n    collect()\n',
@@ -179,6 +187,9 @@ export const WORLD_2_LEVELS: Level[] = [
       'Arrays and lists are zero-indexed: the first element is at index 0, the second at 1, and the third at 2.',
       'Your adventurer bag holds items = ["potion", "shield", "key"].',
       'Assign items[0] to potion and items[2] to key. When both are retrieved, the sealed door opens and the hero steps 3 times to (3, 0).',
+    ],
+    availableActions: [
+      { name: 'items', signature: 'items[index]', description: 'Accesses item in bag at index (0 = potion, 2 = key)' },
     ],
     gridConfig: {
       width: 4,

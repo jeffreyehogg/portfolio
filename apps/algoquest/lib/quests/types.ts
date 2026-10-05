@@ -52,6 +52,12 @@ export interface Hint {
   }
 }
 
+export interface AvailableAction {
+  name: string
+  signature: string
+  description: string
+}
+
 export interface LevelTestCase {
   id: string
   name: string
@@ -70,6 +76,7 @@ export interface Level {
   xp: number
   objective: string
   instructions: string[]
+  availableActions?: AvailableAction[]
   gridConfig: GridConfig
   visualizerConfig?: VisualizerConfig
   starterCode: {

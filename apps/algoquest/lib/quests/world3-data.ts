@@ -30,6 +30,10 @@ export const WORLD_3_LEVELS: Level[] = [
       'Push 3 stones onto the stack using append("stone") in Python or push("stone") in TypeScript.',
       'Call stack.pop() to pop the topmost stone and retrieve the key, lowering the barrier so the hero can step to (1, 0).',
     ],
+    availableActions: [
+      { name: 'push', signature: 'stack.append() / stack.push()', description: 'Pushes a stone onto the top of the stack' },
+      { name: 'pop', signature: 'stack.pop()', description: 'Pops and retrieves the topmost stone from the stack' },
+    ],
     gridConfig: {
       width: 2,
       height: 1,
@@ -112,6 +116,9 @@ export const WORLD_3_LEVELS: Level[] = [
       'Initialize left = 0 and right = 6 representing the bridge span.',
       'Run a while loop while left < right: increment left by 1 and decrement right by 1 on each step.',
       'When the pointers meet at index 3, the bridge stabilizes and the hero claims the central keystone.',
+    ],
+    availableActions: [
+      { name: 'pointers', signature: 'left += 1 / right -= 1', description: 'Advances pointer indices inward toward center' },
     ],
     gridConfig: {
       width: 7,

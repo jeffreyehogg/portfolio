@@ -28,6 +28,9 @@ export const WORLD_1_LEVELS: Level[] = [
       'Assign the integer 3 to the variable steps.',
       'Run your code to watch the hero march across the path to open the chest!',
     ],
+    availableActions: [
+      { name: 'step', signature: 'step()', description: 'Moves hero forward 1 tile (auto-triggered by steps variable)' },
+    ],
     gridConfig: {
       width: 4,
       height: 1,
@@ -102,6 +105,9 @@ export const WORLD_1_LEVELS: Level[] = [
       'Strings represent sequences of text surrounded by quotes.',
       'The ancient iron gate is sealed shut until you set password = "open".',
       'Once the gate lowers, the hero will march forward across the bridge to (4, 0).',
+    ],
+    availableActions: [
+      { name: 'step', signature: 'step()', description: 'Moves hero forward 1 tile (auto-triggered when gate opens)' },
     ],
     gridConfig: {
       width: 5,
@@ -181,6 +187,10 @@ export const WORLD_1_LEVELS: Level[] = [
       'A hazardous lava fissure sits at tile (1, 0). Stepping directly on it will fail the quest.',
       'The variable tile is provided as "lava". Check if tile == "lava" and call jump() to leap 2 spaces straight to the chest!',
     ],
+    availableActions: [
+      { name: 'jump', signature: 'jump()', description: 'Leaps 2 tiles forward over obstacles' },
+      { name: 'step', signature: 'step()', description: 'Moves hero forward 1 tile' },
+    ],
     gridConfig: {
       width: 3,
       height: 1,
@@ -194,8 +204,8 @@ export const WORLD_1_LEVELS: Level[] = [
       type: 'grid',
     },
     starterCode: {
-      python: '# The sensor detects what tile lies ahead:\n# tile is set to "lava".\n# If tile is "lava", call jump() to leap 2 spaces forward.\n# Otherwise, call step() to move 1 space.\n\nif tile == "lava":\n    # Leap over the molten lava\n    pass\nelse:\n    step()\n',
-      typescript: '// The sensor detects what tile lies ahead:\n// tile is set to "lava".\n// If tile is "lava", call jump() to leap 2 spaces forward.\n// Otherwise, call step() to move 1 space.\n\nif (tile === "lava") {\n  // Leap over the molten lava\n} else {\n  step();\n}\n',
+      python: '# The sensor detects what tile lies ahead:\n# tile is set to "lava".\n# Built-in actions: jump() leaps 2 spaces forward, step() moves 1 space.\n\nif tile == "lava":\n    # Leap over the molten lava using jump()\n    pass\nelse:\n    step()\n',
+      typescript: '// The sensor detects what tile lies ahead:\n// tile is set to "lava".\n// Built-in actions: jump() leaps 2 spaces forward, step() moves 1 space.\n\nif (tile === "lava") {\n  // Leap over the molten lava using jump()\n} else {\n  step();\n}\n',
     },
     solutionCode: {
       python: 'if tile == "lava":\n    jump()\nelse:\n    step()\n',

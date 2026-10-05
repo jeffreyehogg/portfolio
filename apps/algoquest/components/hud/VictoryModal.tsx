@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import confetti from 'canvas-confetti'
 import { Star, Sparkles, ArrowRight, RotateCcw, Map, Award, X } from 'lucide-react'
@@ -28,7 +28,9 @@ export function VictoryModal({
   onNextLevel,
   onClose,
 }: VictoryModalProps) {
-  // Fire celebratory confetti cannons
+  const continueButtonRef = useRef<HTMLButtonElement | null>(null)
+
+  // Fire celebratory confetti cannons and focus continue button
   useEffect(() => {
     if (isOpen) {
       try {
@@ -41,8 +43,46 @@ export function VictoryModal({
       } catch {
         // Safe fallback if canvas-confetti is unavailable
       }
+
+      // Blur background elements like CodeMirror and focus primary CTA
+      if (document.activeElement instanceof HTMLElement) {
+        document.activeElement.blur()
+      }
+
+      const timer = setTimeout(() => {
+        continueButtonRef.current?.focus()
+      }, 80)
+      return () => clearTimeout(timer)
     }
   }, [isOpen])
+
+  // Global keyboard listener: Enter/Space advances, Esc closes, R replays
+  useEffect(() => {
+    if (!isOpen) return
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        e.preventDefault()
+        e.stopPropagation()
+        if (nextLevelId) {
+          onNextLevel()
+        } else {
+          window.location.href = '/'
+        }
+      } else if (e.key === 'Escape') {
+        e.preventDefault()
+        e.stopPropagation()
+        onClose()
+      } else if (e.key === 'r' || e.key === 'R') {
+        e.preventDefault()
+        e.stopPropagation()
+        onReplay()
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown, true)
+    return () => window.removeEventListener('keydown', handleKeyDown, true)
+  }, [isOpen, nextLevelId, onNextLevel, onClose, onReplay])
 
   return (
     <AnimatePresence>
@@ -134,20 +174,28 @@ export function VictoryModal({
             <div className="flex flex-col gap-2.5 mt-6">
               {nextLevelId ? (
                 <button
+                  ref={continueButtonRef}
                   type="button"
                   onClick={onNextLevel}
-                  className="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-bold font-mono text-sm transition-all shadow-[0_0_20px_rgba(16,185,129,0.4)] flex items-center justify-center gap-2 active:scale-[0.98]"
+                  autoFocus
+                  className="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-bold font-mono text-sm transition-all shadow-[0_0_20px_rgba(16,185,129,0.4)] flex items-center justify-center gap-2 active:scale-[0.98] ring-2 ring-emerald-400/40 hover:ring-emerald-400/70 focus:outline-none focus:ring-4 focus:ring-emerald-400/60"
                 >
                   <span>Continue to Next Level</span>
+                  <span className="inline-flex items-center text-[10px] bg-slate-950/20 px-1.5 py-0.5 rounded border border-slate-950/20 font-mono font-bold ml-1">
+                    ↵ Enter
+                  </span>
                   <ArrowRight className="w-4 h-4 stroke-[2.5]" />
                 </button>
               ) : (
                 <Link
                   href="/"
-                  className="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-400 hover:to-purple-400 text-white font-bold font-mono text-sm transition-all shadow-[0_0_20px_rgba(99,102,241,0.4)] flex items-center justify-center gap-2 active:scale-[0.98]"
+                  className="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-400 hover:to-purple-400 text-white font-bold font-mono text-sm transition-all shadow-[0_0_20px_rgba(99,102,241,0.4)] flex items-center justify-center gap-2 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-indigo-400/60"
                 >
                   <Map className="w-4 h-4" />
                   <span>Return to World Map</span>
+                  <span className="inline-flex items-center text-[10px] bg-white/20 px-1.5 py-0.5 rounded border border-white/20 font-mono ml-1">
+                    ↵ Enter
+                  </span>
                 </Link>
               )}
 
@@ -156,9 +204,11 @@ export function VictoryModal({
                   type="button"
                   onClick={onReplay}
                   className="flex-1 py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-mono text-xs font-medium transition-all flex items-center justify-center gap-1.5 active:scale-[0.98] border border-white/[0.06]"
+                  title="Press R to replay"
                 >
                   <RotateCcw className="w-3.5 h-3.5" />
-                  <span>Replay Level</span>
+                  <span>Replay</span>
+                  <kbd className="text-[10px] text-slate-400 bg-slate-900/80 px-1 py-0.2 rounded border border-white/[0.08]">R</kbd>
                 </button>
 
                 <Link

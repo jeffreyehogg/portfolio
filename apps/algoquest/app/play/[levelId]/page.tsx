@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useMemo, useRef, useCallback, use } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { Compass, BookOpen } from 'lucide-react'
+import { Compass, BookOpen, Lightbulb, Zap } from 'lucide-react'
 import {
   getLevelById,
   getNextLevelId,
@@ -381,6 +381,42 @@ export default function PlayLevelPage({ params }: PlayPageProps) {
                   </li>
                 ))}
               </ul>
+            </div>
+
+            {/* Built-in Hero Actions / Commands */}
+            {level.availableActions && level.availableActions.length > 0 && (
+              <div className="mt-3 bg-slate-950/60 rounded-xl p-3 border border-white/[0.04]">
+                <div className="text-[11px] font-mono text-slate-400 font-semibold mb-1.5 flex items-center gap-1.5">
+                  <Zap className="w-3.5 h-3.5 text-amber-400" />
+                  <span>Available Actions / Commands:</span>
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  {level.availableActions.map((action) => (
+                    <div
+                      key={action.name}
+                      className="flex items-baseline gap-2 text-xs"
+                    >
+                      <code className="text-emerald-300 font-mono font-bold bg-emerald-950/50 border border-emerald-500/30 px-1.5 py-0.5 rounded text-[11px]">
+                        {action.signature}
+                      </code>
+                      <span className="text-slate-300 text-xs">— {action.description}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Quick Hint & Shortcut Footer */}
+            <div className="mt-3 pt-2.5 border-t border-white/[0.06] flex items-center justify-between">
+              <button
+                type="button"
+                onClick={() => setIsHintOpen(true)}
+                className="inline-flex items-center gap-1.5 text-xs font-mono text-amber-400 hover:text-amber-300 transition-colors active:scale-[0.98]"
+              >
+                <Lightbulb className="w-3.5 h-3.5 text-amber-400" />
+                <span>Need a hint? (Free · 3 tiers)</span>
+              </button>
+              <span className="text-[11px] font-mono text-slate-500">Run code: ⌘↵</span>
             </div>
           </div>
 

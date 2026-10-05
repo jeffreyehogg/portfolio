@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Lightbulb,
@@ -65,34 +65,53 @@ export function HintModal({
   const [selectedTier, setSelectedTier] = useState<1 | 2 | 3>(1)
   const [copied, setCopied] = useState(false)
 
-  // Sync selected tier when opening or when hints unlock
+  // Sync selected tier when opening and auto-unlock Tier 1 if nothing is unlocked yet
   useEffect(() => {
     if (isOpen) {
-      if (hintsUnlocked >= 1) {
-        setSelectedTier(Math.min(hintsUnlocked, 3) as 1 | 2 | 3)
-      } else {
+      if (hintsUnlocked === 0) {
+        unlockHint(levelId, 1)
         setSelectedTier(1)
+      } else {
+        setSelectedTier(Math.min(hintsUnlocked, 3) as 1 | 2 | 3)
       }
     }
-  }, [isOpen, hintsUnlocked])
+  }, [isOpen, hintsUnlocked, levelId, unlockHint])
 
-  // Keyboard navigation: Escape to close
+  const handleSelectTier = useCallback(
+    (tier: 1 | 2 | 3) => {
+      if (hintsUnlocked < tier) {
+        unlockHint(levelId, tier)
+      }
+      setSelectedTier(tier)
+    },
+    [hintsUnlocked, levelId, unlockHint]
+  )
+
+  // Keyboard navigation: Escape to close, 1/2/3 to switch tiers
   useEffect(() => {
+    if (!isOpen) return
+
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isOpen) {
+      if (e.key === 'Escape') {
         onClose()
+      } else if (e.key === '1') {
+        handleSelectTier(1)
+      } else if (e.key === '2') {
+        handleSelectTier(2)
+      } else if (e.key === '3') {
+        handleSelectTier(3)
       }
     }
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [isOpen, onClose])
+  }, [isOpen, onClose, handleSelectTier])
 
   const currentHint = hints.find((h) => h.tier === selectedTier) || hints[selectedTier - 1]
-  const isSelectedTierUnlocked = hintsUnlocked >= selectedTier
+  const isSelectedTierUnlocked = (hintsUnlocked || 1) >= selectedTier
 
-  const handleUnlockCurrentTier = () => {
+  const handleUnlockCurrentTier = useCallback(() => {
     unlockHint(levelId, selectedTier)
-  }
+  }, [levelId, selectedTier, unlockHint])
 
   const handleCopyCode = async (code: string) => {
     try {
@@ -169,10 +188,10 @@ export function HintModal({
             <div className="px-6 py-2.5 bg-emerald-950/30 border-b border-emerald-500/20 flex items-center justify-between text-xs text-emerald-300">
               <span className="flex items-center gap-2">
                 <Sparkles className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                Learning is iterative! Unlocking hints never deducts XP.
+                <span>Hints are 100% free! Click any tab or the button below to reveal guidance anytime.</span>
               </span>
               <span className="font-mono text-[11px] text-emerald-400/80">
-                Unlocked: {hintsUnlocked}/3
+                Unlocked: {Math.max(hintsUnlocked, 1)}/3
               </span>
             </div>
 
@@ -187,7 +206,8 @@ export function HintModal({
                   return (
                     <button
                       key={tier}
-                      onClick={() => setSelectedTier(tier)}
+                      type="button"
+                      onClick={() => handleSelectTier(tier)}
                       className={`relative flex items-center justify-center gap-2 py-2.5 px-3 rounded-lg text-xs font-medium transition-all ${
                         isCurrent
                           ? 'bg-slate-800 text-white shadow-sm border border-white/[0.1]'
@@ -195,13 +215,17 @@ export function HintModal({
                       }`}
                     >
                       {isUnlocked ? (
-                        <Unlock className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                        <Sparkles className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
                       ) : (
-                        <Lock className="w-3.5 h-3.5 text-slate-500 shrink-0" />
+                        <Unlock className="w-3.5 h-3.5 text-amber-400 shrink-0" />
                       )}
                       <span className="truncate">{meta.tag}</span>
-                      {isUnlocked && (
+                      {isUnlocked ? (
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
+                      ) : (
+                        <span className="text-[10px] px-1 rounded bg-amber-500/20 text-amber-300 font-mono font-bold">
+                          Reveal
+                        </span>
                       )}
                     </button>
                   )
@@ -314,20 +338,38 @@ export function HintModal({
                   )}
 
                   {/* Next Tier Progression Prompt */}
-                  {selectedTier < 3 && hintsUnlocked === selectedTier && (
-                    <div className="pt-2 flex items-center justify-between text-xs border-t border-white/[0.06]">
-                      <span className="text-slate-400">Need more detailed guidance?</span>
+                  {selectedTier < 3 && (
+                    <div className="pt-3 border-t border-white/[0.08]">
                       <button
+                        type="button"
                         onClick={() => {
                           const nextTier = (selectedTier + 1) as 2 | 3
                           unlockHint(levelId, nextTier)
                           setSelectedTier(nextTier)
                         }}
-                        className="text-amber-400 hover:text-amber-300 font-medium inline-flex items-center gap-1 transition-colors"
+                        className={`w-full py-3 px-4 rounded-xl font-bold font-mono text-xs transition-all flex items-center justify-center gap-2 group shadow-sm active:scale-[0.99] border ${
+                          selectedTier === 1
+                            ? 'bg-cyan-500/15 hover:bg-cyan-500/25 border-cyan-500/40 text-cyan-300 shadow-[0_0_15px_rgba(6,182,212,0.15)]'
+                            : 'bg-amber-500/15 hover:bg-amber-500/25 border-amber-500/40 text-amber-300 shadow-[0_0_15px_rgba(245,158,11,0.15)]'
+                        }`}
                       >
-                        Unlock Tier {selectedTier + 1} ({TIER_META[selectedTier + 1].tag})
-                        <ChevronRight className="w-3.5 h-3.5" />
+                        <Sparkles className="w-4 h-4" />
+                        <span>
+                          {selectedTier === 1
+                            ? 'Reveal Tier 2: Logic Clue (Algorithmic Outline)'
+                            : 'Reveal Tier 3: Syntax Reveal (Full Solution)'}
+                        </span>
+                        <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
                       </button>
+                    </div>
+                  )}
+
+                  {selectedTier === 3 && (
+                    <div className="pt-3 border-t border-white/[0.08]">
+                      <div className="py-2.5 px-4 rounded-xl bg-emerald-500/10 border border-emerald-500/25 text-emerald-300 text-xs font-mono flex items-center justify-center gap-2">
+                        <Check className="w-4 h-4 text-emerald-400" />
+                        <span>Full solution revealed! Copy snippet or return to editor to test.</span>
+                      </div>
                     </div>
                   )}
                 </div>

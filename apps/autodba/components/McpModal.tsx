@@ -10,7 +10,7 @@ interface McpModalProps {
 
 export function McpModal({ isOpen, onClose }: McpModalProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const [activeTab, setActiveTab] = useState<"cursor" | "claude" | "curl">("cursor");
+  const [activeTab, setActiveTab] = useState<"uvx" | "remote" | "curl">("uvx");
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
@@ -24,11 +24,12 @@ export function McpModal({ isOpen, onClose }: McpModalProps) {
     }
   }, [isOpen]);
 
-  const cursorConfig = JSON.stringify(
+  const uvxConfig = JSON.stringify(
     {
       mcpServers: {
         autodba: {
-          url: "https://autodba.jeffhogg.com/api/py/mcp",
+          command: "uvx",
+          args: ["autodba-mcp"],
         },
       },
     },
@@ -36,12 +37,11 @@ export function McpModal({ isOpen, onClose }: McpModalProps) {
     2
   );
 
-  const claudeConfig = JSON.stringify(
+  const remoteConfig = JSON.stringify(
     {
       mcpServers: {
         autodba: {
-          command: "npx",
-          args: ["-y", "mcp-remote", "https://autodba.jeffhogg.com/api/py/mcp"],
+          url: "https://autodba.jeffhogg.com/api/py/mcp",
         },
       },
     },
@@ -54,10 +54,10 @@ export function McpModal({ isOpen, onClose }: McpModalProps) {
   -d '{"jsonrpc": "2.0", "id": 1, "method": "tools/list"}'`;
 
   const activeSnippet =
-    activeTab === "cursor"
-      ? cursorConfig
-      : activeTab === "claude"
-      ? claudeConfig
+    activeTab === "uvx"
+      ? uvxConfig
+      : activeTab === "remote"
+      ? remoteConfig
       : curlExample;
 
   const handleCopy = () => {
@@ -99,16 +99,16 @@ export function McpModal({ isOpen, onClose }: McpModalProps) {
 
         {/* Overview */}
         <p className="text-xs text-slate-300 leading-relaxed">
-          AutoDBA implements a stateless <strong>JSON-RPC 2.0</strong> Streamable HTTP endpoint conforming to the <strong>2025-06-18</strong> MCP specification. It exposes tools: <code className="text-cyan-300">analyze_sql</code>, <code className="text-cyan-300">optimize_sql</code>, and <code className="text-cyan-300">list_presets</code>.
+          AutoDBA is published as a standalone Python MCP server package (<code className="text-cyan-300">autodba-mcp</code>). Run it locally in Claude Desktop, Cursor, or Antigravity via <code className="text-cyan-300">uvx autodba-mcp</code>, or connect to the serverless JSON-RPC HTTP endpoint.
         </p>
 
         {/* Tabs */}
         <div className="flex items-center gap-1.5 p-1 rounded-xl bg-slate-900 border border-white/[0.06]">
           {(
             [
-              { id: "cursor", label: "Cursor (~/.cursor/mcp.json)" },
-              { id: "claude", label: "Claude Desktop Config" },
-              { id: "curl", label: "Direct cURL Probe" },
+              { id: "uvx", label: "Local Stdio (uvx autodba-mcp)" },
+              { id: "remote", label: "Remote HTTP Endpoint" },
+              { id: "curl", label: "cURL JSON-RPC Probe" },
             ] as const
           ).map((tab) => (
             <button
@@ -151,8 +151,18 @@ export function McpModal({ isOpen, onClose }: McpModalProps) {
 
         {/* Footer info */}
         <div className="pt-2 flex items-center justify-between text-[11px] text-slate-400 font-mono">
-          <span>Endpoint: https://autodba.jeffhogg.com/api/py/mcp</span>
-          <span className="text-emerald-400">Streamable HTTP Active</span>
+          <span>
+            Repo:{" "}
+            <a
+              href="https://github.com/jeffreyehogg/autodba-mcp"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-cyan-400 hover:underline"
+            >
+              github.com/jeffreyehogg/autodba-mcp
+            </a>
+          </span>
+          <span className="text-emerald-400">Open-Source MCP Server</span>
         </div>
       </div>
     </dialog>

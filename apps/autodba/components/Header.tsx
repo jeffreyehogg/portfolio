@@ -91,7 +91,7 @@ export function Header({
 
           {/* GitHub Link */}
           <a
-            href="https://github.com/jeffreyehogg/portfolio/tree/main/apps/autodba"
+            href="https://github.com/jeffreyehogg/autodba-mcp"
             target="_blank"
             rel="noopener noreferrer"
             className="flex h-7 w-7 items-center justify-center rounded-lg text-slate-400 hover:text-white hover:bg-slate-900/80 transition-all active:scale-[0.98]"

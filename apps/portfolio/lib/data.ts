@@ -236,11 +236,12 @@ export const projectsData: Project[] = [
 		title: 'AutoDBA',
 		category: 'tools',
 		href: 'https://autodba.jeffhogg.com',
-		githubUrl: 'https://github.com/jeffreyehogg/portfolio/tree/main/apps/autodba',
+		githubUrl: 'https://github.com/jeffreyehogg/autodba-mcp',
 		description:
-			'AI-powered database assistant that formats SQL, identifies query performance bottlenecks, and recommends index optimizations (modern SSMS alternative).',
+			'Zero-connection SQL analyzer, query optimizer, and standalone MCP server (uvx autodba-mcp) that eliminates non-SARGable bottlenecks and synthesizes zero-downtime index migrations.',
 		imageUrl: '/images/projects/autodba.png',
-		tags: ['Next.js', 'Python', 'FastAPI', 'AI'],
+		tags: ['MCP Server', 'Python', 'sqlglot', 'Next.js 16', 'FastAPI'],
+		metrics: 'Standalone MCP Server • Zero-Connection AST • PyPI & uvx',
 		featured: true,
 	},
 	{

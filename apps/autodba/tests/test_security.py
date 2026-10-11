@@ -4,7 +4,7 @@ Tests for security utilities, rate limiting, and SQL sanitization.
 
 import pytest
 
-from engine.core.security import (
+from autodba_mcp.engine.core.security import (
     RateLimiter,
     client_ip,
     is_plausible_api_key,

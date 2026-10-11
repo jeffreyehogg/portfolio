@@ -2,9 +2,9 @@
 Tests for heuristic cost estimation and logical reads.
 """
 
-from engine.analyzer.ast_visitor import analyze_sql
-from engine.optimizer.cost_model import estimate_cost
-from engine.optimizer.ddl_generator import synthesize_indexes
+from autodba_mcp.engine.analyzer.ast_visitor import analyze_sql
+from autodba_mcp.engine.optimizer.cost_model import estimate_cost
+from autodba_mcp.engine.optimizer.ddl_generator import synthesize_indexes
 
 
 def test_cost_model_improvement_and_clamping():

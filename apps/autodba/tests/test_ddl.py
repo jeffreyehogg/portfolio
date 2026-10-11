@@ -2,8 +2,8 @@
 Tests for index synthesis and zero-downtime DDL generation.
 """
 
-from engine.analyzer.ast_visitor import analyze_sql
-from engine.optimizer.ddl_generator import build_index_ddl, synthesize_indexes
+from autodba_mcp.engine.analyzer.ast_visitor import analyze_sql
+from autodba_mcp.engine.optimizer.ddl_generator import build_index_ddl, synthesize_indexes
 
 
 def test_tsql_ddl_generation():

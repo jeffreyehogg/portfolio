@@ -2,8 +2,8 @@
 Tests for query rewrite verifier (table preservation, statement type safety).
 """
 
-from engine.analyzer.ast_visitor import analyze_sql
-from engine.optimizer.verifier import verify_rewrite
+from autodba_mcp.engine.analyzer.ast_visitor import analyze_sql
+from autodba_mcp.engine.optimizer.verifier import verify_rewrite
 
 
 def test_verifier_passes_on_valid_rewrite():

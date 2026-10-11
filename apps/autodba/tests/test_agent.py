@@ -4,8 +4,8 @@ Tests for agent optimization workflow and mock LLM loop.
 
 import asyncio
 
-from engine.optimizer.agent import run_optimization
-from engine.schemas import LLMRewrite
+from autodba_mcp.engine.optimizer.agent import run_optimization
+from autodba_mcp.engine.schemas import LLMRewrite
 
 
 def test_agent_deterministic_flow():
@@ -18,7 +18,7 @@ def test_agent_deterministic_flow():
 
 
 def test_agent_mock_llm_success(monkeypatch):
-    from engine.optimizer import agent
+    from autodba_mcp.engine.optimizer import agent
 
     mock_rewrite = LLMRewrite(
         optimized_sql="SELECT l.LeadId, l.Email FROM dbo.Leads l WHERE l.CreatedDate >= '2026-01-01' AND l.CreatedDate < '2027-01-01'",
@@ -42,7 +42,7 @@ def test_agent_mock_llm_success(monkeypatch):
 
 def test_agent_mock_llm_critique_retry(monkeypatch):
     """Simulate iteration 1 failing verification (dropped table), then iteration 2 succeeding."""
-    from engine.optimizer import agent
+    from autodba_mcp.engine.optimizer import agent
 
     calls = 0
 

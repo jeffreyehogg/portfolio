@@ -2,8 +2,8 @@
 Tests for execution plan parser (SQL Server XML, Postgres JSON, MySQL JSON).
 """
 
-from engine.analyzer.plan_parser import parse_plan
-from engine.data.presets import PRESETS
+from autodba_mcp.engine.analyzer.plan_parser import parse_plan
+from autodba_mcp.engine.data.presets import PRESETS
 
 
 def test_parse_sqlserver_xml_plan():

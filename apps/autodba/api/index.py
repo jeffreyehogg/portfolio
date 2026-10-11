@@ -10,29 +10,24 @@ import sys
 from pathlib import Path
 from typing import Any
 
-# Ensure monorepo app root is on python path for engine imports
-app_root = str(Path(__file__).resolve().parent.parent)
-if app_root not in sys.path:
-    sys.path.insert(0, app_root)
-
 import sqlglot
 from fastapi import FastAPI, Header, HTTPException, Request, Response, status
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 
-from engine.analyzer.ast_visitor import analyze_sql
-from engine.analyzer.plan_parser import parse_plan
-from engine.core.config import get_settings
-from engine.core.security import (
+from autodba_mcp.engine.analyzer.ast_visitor import analyze_sql
+from autodba_mcp.engine.analyzer.plan_parser import parse_plan
+from autodba_mcp.engine.core.config import get_settings
+from autodba_mcp.engine.core.security import (
     RateLimiter,
     client_ip,
     is_plausible_api_key,
     sanitize_sql,
 )
-from engine.data.presets import PRESETS, get_preset_seed
-from engine.optimizer.agent import build_curated_result, run_optimization
-from engine.optimizer.ddl_generator import synthesize_indexes
-from engine.schemas import (
+from autodba_mcp.engine.data.presets import PRESETS, get_preset_seed
+from autodba_mcp.engine.optimizer.agent import build_curated_result, run_optimization
+from autodba_mcp.engine.optimizer.ddl_generator import synthesize_indexes
+from autodba_mcp.engine.schemas import (
     AnalyzeRequest,
     AnalyzeResponse,
     FormatRequest,

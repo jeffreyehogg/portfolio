@@ -2,8 +2,8 @@
 Tests for deterministic AST query rewriter.
 """
 
-from engine.analyzer.ast_visitor import analyze_sql
-from engine.optimizer.rewriter import deterministic_rewrite
+from autodba_mcp.engine.analyzer.ast_visitor import analyze_sql
+from autodba_mcp.engine.optimizer.rewriter import deterministic_rewrite
 
 
 def test_rewrite_year_function():

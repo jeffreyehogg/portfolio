@@ -2,8 +2,8 @@
 Tests for AST static analyzer and diagnostic rules.
 """
 
-from engine.analyzer.ast_visitor import analyze_sql
-from engine.schemas import Severity
+from autodba_mcp.engine.analyzer.ast_visitor import analyze_sql
+from autodba_mcp.engine.schemas import Severity
 
 
 def test_analyze_empty_sql():

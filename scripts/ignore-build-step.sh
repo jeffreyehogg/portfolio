@@ -17,6 +17,12 @@ if [ -z "$TARGET_APP" ]; then
   exit 1
 fi
 
+# Skip preview builds triggered by Dependabot
+if [[ "$VERCEL_GIT_COMMIT_REF" == dependabot/* ]] || [[ "$VERCEL_GIT_COMMIT_AUTHOR_LOGIN" == *"dependabot"* ]]; then
+  echo "✓ [ignore-build-step] Skipping preview build for Dependabot branch: ${VERCEL_GIT_COMMIT_REF:-unknown}"
+  exit 0
+fi
+
 # Determine commit range
 FROM_SHA="${VERCEL_GIT_PREVIOUS_SHA:-HEAD^}"
 TO_SHA="${VERCEL_GIT_COMMIT_SHA:-HEAD}"

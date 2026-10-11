@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { Check, Copy, Terminal, X } from "lucide-react";
+import { Check, Copy, ShieldCheck, Terminal, X } from "lucide-react";
 
 interface McpModalProps {
   isOpen: boolean;
@@ -101,6 +101,17 @@ export function McpModal({ isOpen, onClose }: McpModalProps) {
         <p className="text-xs text-slate-300 leading-relaxed">
           AutoDBA is published as a standalone Python MCP server package (<code className="text-cyan-300">autodba-mcp</code>). Run it locally in Claude Desktop, Cursor, or Antigravity via <code className="text-cyan-300">uvx autodba-mcp</code>, or connect to the serverless JSON-RPC HTTP endpoint.
         </p>
+
+        {/* Zero-Connection Privacy Guarantee Callout */}
+        <div className="rounded-xl bg-emerald-950/30 border border-emerald-500/20 p-3 flex items-start gap-2.5 text-xs text-emerald-300">
+          <ShieldCheck className="h-4 w-4 shrink-0 mt-0.5 text-emerald-400" />
+          <div className="space-y-0.5">
+            <span className="font-semibold text-emerald-200">100% Safe for Work & Production Queries</span>
+            <p className="text-[11px] text-slate-300 leading-relaxed">
+              Unlike other tools that ask for your database password, AutoDBA never connects to your database. It analyzes query syntax offline—meaning zero access to real customer data, zero security risk, and zero chance of accidental database mutations.
+            </p>
+          </div>
+        </div>
 
         {/* Tabs */}
         <div className="flex items-center gap-1.5 p-1 rounded-xl bg-slate-900 border border-white/[0.06]">

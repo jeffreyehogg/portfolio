@@ -5,6 +5,7 @@ import {
   Database,
   ExternalLink,
   Key,
+  ShieldCheck,
   Sparkles,
   Terminal,
 } from "lucide-react";
@@ -40,7 +41,14 @@ export function Header({
             </span>
             <span className="text-xs text-slate-500 hidden sm:inline">/</span>
             <span className="text-xs text-slate-400 font-medium hidden sm:inline">
-              SQL Optimizer & Formatter
+              SQL Optimizer
+            </span>
+            <span
+              className="hidden md:inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[10px] font-medium text-emerald-400"
+              title="100% Private: AutoDBA analyzes query syntax offline without needing database passwords or network access."
+            >
+              <ShieldCheck className="h-3 w-3" />
+              <span>Zero DB Connection</span>
             </span>
           </div>
         </div>

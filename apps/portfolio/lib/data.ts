@@ -238,10 +238,10 @@ export const projectsData: Project[] = [
 		href: 'https://autodba.jeffhogg.com',
 		githubUrl: 'https://github.com/jeffreyehogg/autodba-mcp',
 		description:
-			'Zero-connection SQL analyzer, query optimizer, and standalone MCP server (uvx autodba-mcp) that eliminates non-SARGable bottlenecks and synthesizes zero-downtime index migrations.',
+			'Private SQL optimizer and standalone MCP server (uvx autodba-mcp). Speeds up slow queries and builds background indexes without needing database passwords or exposing private data.',
 		imageUrl: '/images/projects/autodba.png',
 		tags: ['MCP Server', 'Python', 'sqlglot', 'Next.js 16', 'FastAPI'],
-		metrics: 'Standalone MCP Server • Zero-Connection AST • PyPI & uvx',
+		metrics: 'Standalone MCP Server • Zero DB Connection • Published on PyPI',
 		featured: true,
 	},
 	{

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { GIFT_QUESTIONS, GIFT_PROFILES, GiftProfile } from "./gift-questions";
 import { Sparkles, X, ArrowRight, CheckCircle2, RotateCcw, Heart, ChefHat, Hammer, Package } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -12,6 +12,21 @@ export function SpiritualGiftsModal() {
   const [scores, setScores] = useState<Record<string, number>>({ food: 0, labor: 0, supplies: 0 });
   const [result, setResult] = useState<GiftProfile | null>(null);
   const router = useRouter();
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
 
   const handleSelectOption = (category: "food" | "labor" | "supplies") => {
     const updated = { ...scores, [category]: scores[category] + 1 };
@@ -100,9 +115,15 @@ export function SpiritualGiftsModal() {
           <div
             className="fixed inset-0 bg-slate-950/70 backdrop-blur-sm transition-opacity"
             onClick={() => setIsOpen(false)}
+            aria-hidden="true"
           />
 
-          <div className="relative bg-white w-full max-w-xl rounded-3xl shadow-2xl border border-slate-100 p-6 sm:p-8 z-10 animate-in fade-in zoom-in-95 duration-200 overflow-hidden">
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="spiritual-gifts-modal-title"
+            className="relative bg-white w-full max-w-xl rounded-3xl shadow-2xl border border-slate-100 p-6 sm:p-8 z-10 animate-in fade-in zoom-in-95 duration-200 overflow-hidden"
+          >
             {/* Header */}
             <div className="flex items-center justify-between pb-4 border-b border-slate-100 mb-6">
               <div className="flex items-center gap-2">
@@ -110,7 +131,7 @@ export function SpiritualGiftsModal() {
                   <Sparkles className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-extrabold text-base text-slate-900">
+                  <h3 id="spiritual-gifts-modal-title" className="font-extrabold text-base text-slate-900">
                     Spiritual Gifts Matcher
                   </h3>
                   <p className="text-xs text-slate-500">

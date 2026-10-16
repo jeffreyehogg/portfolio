@@ -33,6 +33,7 @@ export default function FloorPlanSchematicModal({
   if (!floorPlan) return null
 
   const selectedRoom = floorPlan.rooms[selectedRoomIndex] || floorPlan.rooms[0]
+  const ROOMS = floorPlan.rooms.map((r) => ({ name: r.room }))
 
   const handlePrint = () => {
     window.print()
@@ -180,6 +181,16 @@ export default function FloorPlanSchematicModal({
 
                 {/* Primary Suite (Top Left) */}
                 <g
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Select room: ${ROOMS[1]?.name || 'Room'}`}
+                  aria-pressed={selectedRoomIndex === 1}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault()
+                      setSelectedRoomIndex(1)
+                    }
+                  }}
                   onClick={() => setSelectedRoomIndex(1)}
                   className="cursor-pointer group"
                 >
@@ -211,6 +222,16 @@ export default function FloorPlanSchematicModal({
 
                 {/* Great Room (Center / Top Right) */}
                 <g
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Select room: ${ROOMS[0]?.name || 'Room'}`}
+                  aria-pressed={selectedRoomIndex === 0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault()
+                      setSelectedRoomIndex(0)
+                    }
+                  }}
                   onClick={() => setSelectedRoomIndex(0)}
                   className="cursor-pointer group"
                 >
@@ -239,6 +260,16 @@ export default function FloorPlanSchematicModal({
 
                 {/* Kitchen & Island (Center Middle) */}
                 <g
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Select room: ${ROOMS[2]?.name || 'Room'}`}
+                  aria-pressed={selectedRoomIndex === 2}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault()
+                      setSelectedRoomIndex(2)
+                    }
+                  }}
                   onClick={() => setSelectedRoomIndex(2)}
                   className="cursor-pointer group"
                 >
@@ -267,6 +298,16 @@ export default function FloorPlanSchematicModal({
 
                 {/* Covered Patio (Top Center Outward) */}
                 <g
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Select room: ${ROOMS[5]?.name || 'Room'}`}
+                  aria-pressed={selectedRoomIndex === 5}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault()
+                      setSelectedRoomIndex(5)
+                    }
+                  }}
                   onClick={() => setSelectedRoomIndex(5)}
                   className="cursor-pointer group"
                 >
@@ -291,6 +332,16 @@ export default function FloorPlanSchematicModal({
 
                 {/* 2 or 3-Car Garage (Bottom Left) */}
                 <g
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Select room: ${ROOMS[6]?.name || 'Room'}`}
+                  aria-pressed={selectedRoomIndex === 6}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault()
+                      setSelectedRoomIndex(6)
+                    }
+                  }}
                   onClick={() => setSelectedRoomIndex(6)}
                   className="cursor-pointer group"
                 >

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Lightbulb,
@@ -58,6 +58,7 @@ export function HintModal({
   levelId,
   language,
 }: HintModalProps) {
+  const modalRef = useRef<HTMLDivElement>(null)
   const hintsUnlocked = useGameStore((state) => state.hintsUnlocked[levelId] || 0)
   const unlockHint = useGameStore((state) => state.unlockHint)
 
@@ -87,14 +88,57 @@ export function HintModal({
     [hintsUnlocked, levelId, unlockHint]
   )
 
-  // Keyboard navigation: Escape to close, 1/2/3 to switch tiers
+  // Focus trap and keyboard navigation: Escape to close, Tab / Shift+Tab trap, 1/2/3 to switch tiers
   useEffect(() => {
     if (!isOpen) return
 
+    // Auto-focus first interactive element inside modal on mount
+    const timer = setTimeout(() => {
+      if (modalRef.current) {
+        const focusable = modalRef.current.querySelector<HTMLElement>(
+          'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        )
+        focusable?.focus()
+      }
+    }, 50)
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
+        e.preventDefault()
         onClose()
-      } else if (e.key === '1') {
+        return
+      }
+
+      if (e.key === 'Tab') {
+        if (!modalRef.current) return
+        const focusables = Array.from(
+          modalRef.current.querySelectorAll<HTMLElement>(
+            'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+          )
+        )
+        if (focusables.length === 0) {
+          e.preventDefault()
+          return
+        }
+
+        const firstElement = focusables[0]
+        const lastElement = focusables[focusables.length - 1]
+
+        if (e.shiftKey) {
+          if (document.activeElement === firstElement || !modalRef.current.contains(document.activeElement)) {
+            e.preventDefault()
+            lastElement.focus()
+          }
+        } else {
+          if (document.activeElement === lastElement || !modalRef.current.contains(document.activeElement)) {
+            e.preventDefault()
+            firstElement.focus()
+          }
+        }
+        return
+      }
+
+      if (e.key === '1') {
         handleSelectTier(1)
       } else if (e.key === '2') {
         handleSelectTier(2)
@@ -103,7 +147,10 @@ export function HintModal({
       }
     }
     window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
+    return () => {
+      clearTimeout(timer)
+      window.removeEventListener('keydown', handleKeyDown)
+    }
   }, [isOpen, onClose, handleSelectTier])
 
   const currentHint = hints.find((h) => h.tier === selectedTier) || hints[selectedTier - 1]
@@ -144,6 +191,7 @@ export function HintModal({
 
           {/* Modal Card */}
           <motion.div
+            ref={modalRef}
             initial={{ opacity: 0, scale: 0.95, y: 15 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 15 }}

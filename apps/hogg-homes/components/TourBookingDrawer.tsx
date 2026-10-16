@@ -63,6 +63,18 @@ export default function TourBookingDrawer({
     }
   }, [preselected, isOpen])
 
+  // Close drawer on Escape key
+  useEffect(() => {
+    if (!isOpen) return
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose()
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [isOpen, onClose])
+
   const selectedPlan = FLOOR_PLANS.find((p) => p.id === floorPlanId)
   const selectedLot = QUICK_MOVE_IN_LOTS.find((l) => l.id === lotId)
 
@@ -149,6 +161,9 @@ END:VCALENDAR`
 
         {/* Slide-Over Drawer */}
         <motion.div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="tour-drawer-title"
           initial={{ x: '100%' }}
           animate={{ x: 0 }}
           exit={{ x: '100%' }}
@@ -158,9 +173,10 @@ END:VCALENDAR`
           <div>
             {/* Top Bar */}
             <div className="flex items-center justify-between border-b border-slate-800 pb-4">
-              <span className="text-sm font-semibold text-white">Schedule a Tour</span>
+              <span id="tour-drawer-title" className="text-sm font-semibold text-white">Schedule a Tour</span>
               <button
                 onClick={onClose}
+                aria-label="Close schedule tour drawer"
                 className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-800 hover:text-white transition"
               >
                 <X className="h-5 w-5" />
@@ -264,10 +280,11 @@ END:VCALENDAR`
 
                 {/* Community */}
                 <div>
-                  <label className="block text-xs text-slate-300 mb-1">
+                  <label htmlFor="tour-community" className="block text-xs text-slate-300 mb-1">
                     Community
                   </label>
                   <select
+                    id="tour-community"
                     value={communityId}
                     onChange={(e) => setCommunityId(e.target.value)}
                     className="w-full rounded-xl border border-slate-750 bg-slate-850 px-3.5 py-2.5 text-xs text-white focus:border-amber-400 focus:outline-none"
@@ -284,10 +301,11 @@ END:VCALENDAR`
                 {/* Date & Time */}
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs text-slate-300 mb-1">
+                    <label htmlFor="tour-date" className="block text-xs text-slate-300 mb-1">
                       Date
                     </label>
                     <input
+                      id="tour-date"
                       type="date"
                       value={preferredDate}
                       onChange={(e) => setPreferredDate(e.target.value)}
@@ -297,10 +315,11 @@ END:VCALENDAR`
                   </div>
 
                   <div>
-                    <label className="block text-xs text-slate-300 mb-1">
+                    <label htmlFor="tour-time" className="block text-xs text-slate-300 mb-1">
                       Time Slot
                     </label>
                     <select
+                      id="tour-time"
                       value={preferredTime}
                       onChange={(e) => setPreferredTime(e.target.value)}
                       className="w-full rounded-xl border border-slate-750 bg-slate-850 px-3 py-2 text-xs text-white focus:border-amber-400 focus:outline-none"
@@ -316,10 +335,11 @@ END:VCALENDAR`
 
                 {/* Contact Information */}
                 <div>
-                  <label className="block text-xs text-slate-300 mb-1">
+                  <label htmlFor="tour-fullname" className="block text-xs text-slate-300 mb-1">
                     Full Name
                   </label>
                   <input
+                    id="tour-fullname"
                     type="text"
                     placeholder="Your name"
                     value={fullName}
@@ -331,10 +351,11 @@ END:VCALENDAR`
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs text-slate-300 mb-1">
+                    <label htmlFor="tour-email" className="block text-xs text-slate-300 mb-1">
                       Email
                     </label>
                     <input
+                      id="tour-email"
                       type="email"
                       placeholder="name@example.com"
                       value={email}
@@ -345,10 +366,11 @@ END:VCALENDAR`
                   </div>
 
                   <div>
-                    <label className="block text-xs text-slate-300 mb-1">
+                    <label htmlFor="tour-phone" className="block text-xs text-slate-300 mb-1">
                       Phone
                     </label>
                     <input
+                      id="tour-phone"
                       type="tel"
                       placeholder="(555) 000-0000"
                       value={phone}
@@ -361,10 +383,11 @@ END:VCALENDAR`
 
                 {/* Optional Note */}
                 <div>
-                  <label className="block text-xs text-slate-300 mb-1">
+                  <label htmlFor="tour-notes" className="block text-xs text-slate-300 mb-1">
                     Special Requests or Questions (Optional)
                   </label>
                   <textarea
+                    id="tour-notes"
                     rows={2}
                     placeholder="Anything we should prepare for your visit?"
                     value={notes}

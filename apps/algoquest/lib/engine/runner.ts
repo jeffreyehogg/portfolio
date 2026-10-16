@@ -211,34 +211,15 @@ export class ExecutionRunner {
         return
       }
 
-      // Hard timeout enforcement to protect against infinite loops
-      const timeoutTimer = setTimeout(() => {
-        if (isResolved) return
+      let timeoutTimer: ReturnType<typeof setTimeout>
+
+      const cleanup = () => {
         isResolved = true
-
-        // Forcibly kill worker thread
-        this.terminate(request.language)
-
-        const executionTimeMs = Math.round(performance.now() - startTime)
-        const timeoutError = `Execution timed out after ${timeoutMs}ms. Check for infinite loops or deep recursion.`
-
-        resolve({
-          requestId: request.requestId,
-          success: false,
-          output: [],
-          steps: [],
-          testResults: [],
-          allTestsPassed: false,
-          executionTimeMs,
-          error: timeoutError,
-          errorDetails: {
-            type: 'TimeoutError',
-            message: timeoutError,
-          },
-        })
-      }, timeoutMs)
-
-      this.activeTimeouts.set(request.requestId, timeoutTimer)
+        clearTimeout(timeoutTimer)
+        this.activeTimeouts.delete(request.requestId)
+        worker.removeEventListener('message', messageHandler)
+        worker.removeEventListener('error', errorHandler)
+      }
 
       // Temporary listener for this execution
       const messageHandler = (e: MessageEvent<WorkerOutMessage>) => {
@@ -301,16 +282,37 @@ export class ExecutionRunner {
         })
       }
 
-      const cleanup = () => {
-        isResolved = true
-        clearTimeout(timeoutTimer)
-        this.activeTimeouts.delete(request.requestId)
-        worker.removeEventListener('message', messageHandler)
-        worker.removeEventListener('error', errorHandler)
-      }
-
       worker.addEventListener('message', messageHandler)
       worker.addEventListener('error', errorHandler)
+
+      // Hard timeout enforcement to protect against infinite loops
+      timeoutTimer = setTimeout(() => {
+        if (isResolved) return
+        cleanup()
+
+        // Forcibly kill worker thread
+        this.terminate(request.language)
+
+        const executionTimeMs = Math.round(performance.now() - startTime)
+        const timeoutError = `Execution timed out after ${timeoutMs}ms. Check for infinite loops or deep recursion.`
+
+        resolve({
+          requestId: request.requestId,
+          success: false,
+          output: [],
+          steps: [],
+          testResults: [],
+          allTestsPassed: false,
+          executionTimeMs,
+          error: timeoutError,
+          errorDetails: {
+            type: 'TimeoutError',
+            message: timeoutError,
+          },
+        })
+      }, timeoutMs)
+
+      this.activeTimeouts.set(request.requestId, timeoutTimer)
 
       // Dispatch execution payload to worker
       worker.postMessage({

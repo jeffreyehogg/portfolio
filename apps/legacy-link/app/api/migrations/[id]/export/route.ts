@@ -2,6 +2,17 @@ import { auth } from '@clerk/nextjs/server'
 import { NextResponse } from 'next/server'
 import Papa from 'papaparse'
 import { sql } from '@/lib/db'
+import { transformRecord } from '@/lib/pacs-transformer'
+
+const FORMULA_INJECTION_PREFIXES = ['=', '+', '-', '@', '\t', '\r']
+
+function sanitizeCsvValue(val: unknown): string {
+  const str = val === null || val === undefined ? '' : String(val)
+  if (FORMULA_INJECTION_PREFIXES.some((char) => str.startsWith(char))) {
+    return `'${str}`
+  }
+  return str
+}
 
 export async function GET(
   request: Request,
@@ -38,60 +49,19 @@ export async function GET(
       ORDER BY id ASC
     `
 
-    // 3. Transformation Engine
-    const cleanData = records.map((record) => {
-      const raw = record.raw_data as Record<string, any>
-      const mappedRow: Record<string, string | number> = {}
+    // 3. Transformation Engine using transformRecord and CSV formula sanitization
+    const cleanData = records.map((record, index) => {
+      const { data: mappedRow } = transformRecord(
+        record.raw_data as Record<string, string>,
+        mappings,
+        index
+      )
 
-      Object.entries(mappings).forEach(([targetField, rule]) => {
-        // Direct Mapping
-        if (typeof rule === 'string') {
-          mappedRow[targetField] = raw[rule] || ''
-        }
-        // Advanced Transformations
-        else if (typeof rule === 'object' && rule !== null) {
-          const transformation = rule as any
-
-          switch (transformation.type) {
-            case 'concatenate':
-              mappedRow[targetField] = (transformation.sources || [])
-                .map((src: string) => raw[src] || '')
-                .join(transformation.separator || ' ')
-                .trim()
-              break
-
-            case 'static':
-              mappedRow[targetField] = transformation.value || ''
-              break
-
-            case 'uppercase':
-              mappedRow[targetField] = String(raw[transformation.source] || '').toUpperCase()
-              break
-
-            case 'access-flatten':
-              mappedRow[targetField] = String(raw[transformation.source] || '')
-                .split(transformation.inputDelimiter || ';')
-                .map((s: string) => s.trim())
-                .filter(Boolean)
-                .join(transformation.outputDelimiter || ', ')
-              break
-
-            case 'status-normalize': {
-              const val = String(raw[transformation.source] || '').trim().toLowerCase()
-              const actives = (transformation.activeValues || ['1', 'true', 'active']).map((v: string) =>
-                v.toLowerCase()
-              )
-              mappedRow[targetField] = actives.includes(val) ? 'Active' : 'Inactive'
-              break
-            }
-
-            default:
-              mappedRow[targetField] = ''
-          }
-        }
-      })
-
-      return mappedRow
+      const sanitizedRow: Record<string, string> = {}
+      for (const [key, value] of Object.entries(mappedRow)) {
+        sanitizedRow[key] = sanitizeCsvValue(value)
+      }
+      return sanitizedRow
     })
 
     // 4. Convert to CSV
@@ -109,6 +79,6 @@ export async function GET(
     })
   } catch (error: any) {
     console.error('Export error:', error)
-    return NextResponse.json({ error: error.message }, { status: 500 })
+    return NextResponse.json({ error: 'Failed to generate CSV export' }, { status: 500 })
   }
 }

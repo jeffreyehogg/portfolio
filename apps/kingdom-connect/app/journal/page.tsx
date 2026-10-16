@@ -3,6 +3,7 @@ import { db } from "@/lib/db";
 import { personalPrayers } from "@/db/schema";
 import { auth } from "@clerk/nextjs/server";
 import { eq, and, asc, ilike, inArray } from "drizzle-orm";
+import { getEffectiveUserId } from "@/lib/guest-session";
 import { AddPrayerForm } from "./components/AddPrayerForm";
 import { PrayerList } from "./components/PrayerList";
 import { SearchInput } from "./components/SearchInput";
@@ -26,7 +27,7 @@ export default async function JournalPage({
   searchParams: Promise<{ search?: string }>;
 }) {
   const { userId } = await auth();
-  const effectiveUserId = userId || "guest_user";
+  const effectiveUserId = await getEffectiveUserId({ createIfMissing: false });
 
   const { search } = await searchParams;
   const searchFilter = search ? `%${search}%` : undefined;

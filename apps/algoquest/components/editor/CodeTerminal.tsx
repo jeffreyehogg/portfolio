@@ -35,7 +35,7 @@ const LANGUAGES: Array<{
   { id: 'lua', name: 'Lua', icon: '🌙', activeClass: 'bg-indigo-500/20 text-indigo-300 border-indigo-500/40 shadow-sm' },
 ]
 
-export function CodeTerminal({
+export const CodeTerminal = React.memo(function CodeTerminal({
   code,
   onChange,
   language,
@@ -182,4 +182,6 @@ export function CodeTerminal({
       </div>
     </div>
   )
-}
+})
+
+CodeTerminal.displayName = 'CodeTerminal'

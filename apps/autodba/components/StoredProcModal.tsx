@@ -35,6 +35,12 @@ export function StoredProcModal({
   // Selected SQL string
   const activeSql = (source === "optimized" && hasOptimized ? optimizedSql : originalSql) || "";
 
+  const [activeDialect, setActiveDialect] = useState<Dialect>(dialect);
+
+  useEffect(() => {
+    setActiveDialect(dialect);
+  }, [dialect]);
+
   // Database settings with localStorage persistence
   const [databaseName, setDatabaseName] = useState(() => {
     if (typeof window !== "undefined") {
@@ -71,6 +77,19 @@ export function StoredProcModal({
     onClose();
   };
 
+  // Close on Escape key press when modal is open
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        handleClose();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen]);
+
   // Save database name to localStorage
   const handleDatabaseChange = (val: string) => {
     setDatabaseName(val);
@@ -83,9 +102,9 @@ export function StoredProcModal({
   const generatedScript = useMemo(() => {
     return generateStoredProcedure({
       sql: activeSql,
-      dialect,
+      dialect: activeDialect,
       databaseName: databaseName.trim() || "AppDB",
-      schemaName: schemaName.trim() || (dialect === "postgres" ? "public" : "dbo"),
+      schemaName: schemaName.trim() || (activeDialect === "postgres" ? "public" : "dbo"),
       procedureName: procedureName.trim() || "sp_GetData",
       includeBatches,
       includeAnsiSettings,
@@ -95,7 +114,7 @@ export function StoredProcModal({
     });
   }, [
     activeSql,
-    dialect,
+    activeDialect,
     databaseName,
     schemaName,
     procedureName,
@@ -128,6 +147,9 @@ export function StoredProcModal({
   return (
     <dialog
       ref={dialogRef}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="sp-modal-title"
       onClose={handleClose}
       className="m-auto rounded-2xl bg-slate-950/95 text-slate-100 border border-white/[0.1] shadow-2xl backdrop:bg-slate-950/80 backdrop:backdrop-blur-md p-0 max-w-3xl w-full focus:outline-none"
     >
@@ -139,10 +161,10 @@ export function StoredProcModal({
               <ScrollText className="h-5 w-5" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-white tracking-tight flex items-center gap-2">
+              <h3 id="sp-modal-title" className="text-base font-bold text-white tracking-tight flex items-center gap-2">
                 Generate Stored Procedure
                 <span className="text-[11px] px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 font-mono font-normal border border-white/[0.06]">
-                  {dialect === "tsql" ? "T-SQL (SQL Server)" : dialect === "postgres" ? "PostgreSQL" : "MySQL"}
+                  {activeDialect === "tsql" ? "T-SQL (SQL Server)" : activeDialect === "postgres" ? "PostgreSQL" : "MySQL"}
                 </span>
               </h3>
               <p className="text-xs text-slate-400">
@@ -152,7 +174,9 @@ export function StoredProcModal({
           </div>
 
           <button
+            type="button"
             onClick={handleClose}
+            aria-label="Close modal"
             className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
           >
             <X className="h-4 w-4" />
@@ -191,13 +215,30 @@ export function StoredProcModal({
         )}
 
         {/* Configuration Row */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          {dialect === "tsql" && (
+        <div className={`grid grid-cols-1 gap-3 ${activeDialect === "tsql" ? "sm:grid-cols-2 md:grid-cols-4" : "sm:grid-cols-3"}`}>
+          <div>
+            <label htmlFor="sp-dialect" className="block text-[11px] font-medium text-slate-400 mb-1">
+              Dialect
+            </label>
+            <select
+              id="sp-dialect"
+              value={activeDialect}
+              onChange={(e) => setActiveDialect(e.target.value as Dialect)}
+              className="w-full bg-slate-900/90 border border-white/[0.08] rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:ring-1 focus:ring-indigo-500 font-mono"
+            >
+              <option value="tsql">T-SQL (SQL Server)</option>
+              <option value="postgres">PostgreSQL</option>
+              <option value="mysql">MySQL</option>
+            </select>
+          </div>
+
+          {activeDialect === "tsql" && (
             <div>
-              <label className="block text-[11px] font-medium text-slate-400 mb-1">
+              <label htmlFor="sp-db-name" className="block text-[11px] font-medium text-slate-400 mb-1">
                 Database Name
               </label>
               <input
+                id="sp-db-name"
                 type="text"
                 value={databaseName}
                 onChange={(e) => handleDatabaseChange(e.target.value)}
@@ -208,23 +249,25 @@ export function StoredProcModal({
           )}
 
           <div>
-            <label className="block text-[11px] font-medium text-slate-400 mb-1">
+            <label htmlFor="sp-schema-name" className="block text-[11px] font-medium text-slate-400 mb-1">
               Schema
             </label>
             <input
+              id="sp-schema-name"
               type="text"
               value={schemaName}
               onChange={(e) => setSchemaName(e.target.value)}
-              placeholder={dialect === "postgres" ? "public" : "dbo"}
+              placeholder={activeDialect === "postgres" ? "public" : "dbo"}
               className="w-full bg-slate-900/90 border border-white/[0.08] rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:ring-1 focus:ring-indigo-500 font-mono"
             />
           </div>
 
           <div>
-            <label className="block text-[11px] font-medium text-slate-400 mb-1">
+            <label htmlFor="sp-proc-name" className="block text-[11px] font-medium text-slate-400 mb-1">
               Procedure Name
             </label>
             <input
+              id="sp-proc-name"
               type="text"
               value={procedureName}
               onChange={(e) => setCustomProcedureName(e.target.value)}
@@ -235,10 +278,11 @@ export function StoredProcModal({
         </div>
 
         {/* Options Toggles (T-SQL specific DBA settings) */}
-        {dialect === "tsql" && (
+        {activeDialect === "tsql" && (
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2 pt-1 text-xs text-slate-300">
-            <label className="flex items-center gap-1.5 cursor-pointer">
+            <label htmlFor="sp-opt-batches" className="flex items-center gap-1.5 cursor-pointer">
               <input
+                id="sp-opt-batches"
                 type="checkbox"
                 checked={includeBatches}
                 onChange={(e) => setIncludeBatches(e.target.checked)}
@@ -247,8 +291,9 @@ export function StoredProcModal({
               <span className="text-[11px]">USE [{databaseName || "AppDB"}] & GO</span>
             </label>
 
-            <label className="flex items-center gap-1.5 cursor-pointer">
+            <label htmlFor="sp-opt-ansi" className="flex items-center gap-1.5 cursor-pointer">
               <input
+                id="sp-opt-ansi"
                 type="checkbox"
                 checked={includeAnsiSettings}
                 onChange={(e) => setIncludeAnsiSettings(e.target.checked)}
@@ -257,8 +302,9 @@ export function StoredProcModal({
               <span className="text-[11px]">ANSI_NULLS & QUOTED_IDENTIFIER</span>
             </label>
 
-            <label className="flex items-center gap-1.5 cursor-pointer">
+            <label htmlFor="sp-opt-error" className="flex items-center gap-1.5 cursor-pointer">
               <input
+                id="sp-opt-error"
                 type="checkbox"
                 checked={includeErrorHandling}
                 onChange={(e) => setIncludeErrorHandling(e.target.checked)}
@@ -267,8 +313,9 @@ export function StoredProcModal({
               <span className="text-[11px]">TRY...CATCH with THROW</span>
             </label>
 
-            <label className="flex items-center gap-1.5 cursor-pointer">
+            <label htmlFor="sp-opt-nocount" className="flex items-center gap-1.5 cursor-pointer">
               <input
+                id="sp-opt-nocount"
                 type="checkbox"
                 checked={includeNoCount}
                 onChange={(e) => setIncludeNoCount(e.target.checked)}
@@ -330,7 +377,7 @@ export function StoredProcModal({
         {/* Footer */}
         <div className="flex items-center justify-between text-[11px] text-slate-400 font-mono pt-1">
           <span>
-            {dialect === "tsql" ? "CREATE OR ALTER PROCEDURE (SQL Server 2016 SP1+)" : "Idempotent Procedure Template"}
+            {activeDialect === "tsql" ? "CREATE OR ALTER PROCEDURE (SQL Server 2016 SP1+)" : "Idempotent Procedure Template"}
           </span>
           <button
             type="button"

@@ -32,9 +32,13 @@ export function OutputConsole({
     <div className="flex flex-col h-full rounded-2xl bg-slate-900/80 backdrop-blur-xl border border-white/[0.08] shadow-2xl overflow-hidden">
       {/* Console Header */}
       <div className="flex items-center justify-between px-4 py-2 bg-slate-950/70 border-b border-white/[0.06]">
-        <div className="flex items-center gap-2">
+        <div role="tablist" aria-label="Console Output Tabs" className="flex items-center gap-2">
           <button
             type="button"
+            role="tab"
+            id="tab-tests"
+            aria-selected={activeTab === 'tests'}
+            aria-controls="panel-tests"
             onClick={() => setActiveTab('tests')}
             className={`px-3 py-1 rounded-lg text-xs font-mono font-medium transition-all flex items-center gap-1.5 ${
               activeTab === 'tests'
@@ -59,6 +63,10 @@ export function OutputConsole({
 
           <button
             type="button"
+            role="tab"
+            id="tab-terminal"
+            aria-selected={activeTab === 'terminal'}
+            aria-controls="panel-terminal"
             onClick={() => setActiveTab('terminal')}
             className={`px-3 py-1 rounded-lg text-xs font-mono font-medium transition-all flex items-center gap-1.5 ${
               activeTab === 'terminal'
@@ -85,7 +93,13 @@ export function OutputConsole({
       </div>
 
       {/* Main Console Body */}
-      <div className="flex-1 overflow-auto p-4 bg-slate-950/60 font-mono text-xs">
+      <div
+        id={`panel-${activeTab}`}
+        role="tabpanel"
+        aria-labelledby={`tab-${activeTab}`}
+        aria-live="polite"
+        className="flex-1 overflow-auto p-4 bg-slate-950/60 font-mono text-xs"
+      >
         {/* Error Callout Banner */}
         {error && (
           <div className="mb-4 rounded-xl bg-rose-950/40 border border-rose-500/40 p-3 text-rose-200">

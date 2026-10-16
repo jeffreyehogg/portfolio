@@ -1,9 +1,9 @@
 import { Navbar } from "@/app/components/Navbar";
 import { db } from "@/lib/db";
 import { personalPrayers, prayerNotes } from "@/db/schema";
-import { auth } from "@clerk/nextjs/server";
 import { notFound } from "next/navigation";
 import { eq, and, desc } from "drizzle-orm";
+import { getEffectiveUserId } from "@/lib/guest-session";
 import Link from "next/link";
 import { ArrowLeft, Clock, Flame, CheckCircle2, Tag } from "lucide-react";
 import { AddNoteForm } from "../components/AddNoteForm";
@@ -25,8 +25,7 @@ export default async function PrayerDetailPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const { userId } = await auth();
-  const effectiveUserId = userId || "guest_user";
+  const effectiveUserId = await getEffectiveUserId({ createIfMissing: false });
 
   const { id } = await params;
   const prayerId = parseInt(id, 10);

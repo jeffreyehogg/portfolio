@@ -64,6 +64,7 @@ const emit = defineEmits<{
               <span class="absolute left-2.5 top-2 text-xs font-mono text-slate-500">$</span>
               <input
                 type="number"
+                :aria-label="`${pos.currency} notional exposure in USD`"
                 :value="pos.notionalUsd"
                 @input="emit('updatePosition', pos.currency, Number(($event.target as HTMLInputElement).value))"
                 class="w-36 h-9 pl-6 pr-2 rounded-lg bg-slate-900 border border-white/[0.1] text-xs font-mono text-white font-semibold focus:ring-1 focus:ring-emerald-500 text-right"

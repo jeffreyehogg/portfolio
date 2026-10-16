@@ -1,4 +1,4 @@
-import { pgTable, serial, text, integer, timestamp, boolean } from 'drizzle-orm/pg-core';
+import { pgTable, serial, text, integer, timestamp, boolean, index } from 'drizzle-orm/pg-core';
 
 // --- Users Table ---
 export const users = pgTable('users', {
@@ -29,7 +29,9 @@ export const signups = pgTable('signups', {
   eventId: integer('event_id').references(() => events.id),
   status: text('status').default('confirmed'),
   signedUpAt: timestamp('signed_up_at').defaultNow(),
-});
+}, (table) => [
+  index('idx_signups_user_event').on(table.userId, table.eventId),
+]);
 
 // --- Kingdom Funds ---
 export const funds = pgTable('funds', {
@@ -56,7 +58,9 @@ export const prayerInteractions = pgTable('prayer_interactions', {
   requestId: integer('request_id').references(() => prayerRequests.id, { onDelete: 'cascade' }),
   userId: text('user_id').notNull(), 
   prayedAt: timestamp('prayed_at').defaultNow(),
-});
+}, (table) => [
+  index('idx_prayer_interactions_req_user').on(table.requestId, table.userId),
+]);
 
 // --- Personal Prayers (Prayer Journal) ---
 export const personalPrayers = pgTable('personal_prayers', {
@@ -67,7 +71,9 @@ export const personalPrayers = pgTable('personal_prayers', {
   category: text('category'),
   sortOrder: integer('sort_order').default(0),
   createdAt: timestamp('created_at').defaultNow(),
-});
+}, (table) => [
+  index('idx_personal_prayers_user_id').on(table.userId),
+]);
 
 // --- Prayer Notes ---
 export const prayerNotes = pgTable('prayer_notes', {
@@ -76,4 +82,6 @@ export const prayerNotes = pgTable('prayer_notes', {
   userId: text('user_id').notNull(),
   content: text('content').notNull(),
   createdAt: timestamp('created_at').defaultNow(),
-});
+}, (table) => [
+  index('idx_prayer_notes_prayer_id').on(table.prayerId),
+]);

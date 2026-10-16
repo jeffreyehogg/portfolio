@@ -118,11 +118,13 @@ function ContactFormInner() {
 							id='firstName'
 							autoComplete='given-name'
 							required
+							aria-invalid={!!state.errors?.firstName}
+							aria-describedby={state.errors?.firstName ? 'firstName-error' : undefined}
 							className='block w-full rounded-xl border-0 px-3.5 py-2.5 text-slate-100 shadow-sm ring-1 ring-inset ring-white/[0.1] placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm bg-slate-950/60 focus:bg-slate-950 transition-colors'
 						/>
 					</div>
 					{state.errors?.firstName && (
-						<p className='text-sm text-red-400 mt-1'>
+						<p id='firstName-error' role='alert' className='text-sm text-red-400 mt-1'>
 							{state.errors.firstName[0]}
 						</p>
 					)}
@@ -141,11 +143,13 @@ function ContactFormInner() {
 							id='lastName'
 							autoComplete='family-name'
 							required
+							aria-invalid={!!state.errors?.lastName}
+							aria-describedby={state.errors?.lastName ? 'lastName-error' : undefined}
 							className='block w-full rounded-xl border-0 px-3.5 py-2.5 text-slate-100 shadow-sm ring-1 ring-inset ring-white/[0.1] placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm bg-slate-950/60 focus:bg-slate-950 transition-colors'
 						/>
 					</div>
 					{state.errors?.lastName && (
-						<p className='text-sm text-red-400 mt-1'>
+						<p id='lastName-error' role='alert' className='text-sm text-red-400 mt-1'>
 							{state.errors.lastName[0]}
 						</p>
 					)}
@@ -165,11 +169,13 @@ function ContactFormInner() {
 							type='email'
 							autoComplete='email'
 							required
+							aria-invalid={!!state.errors?.email}
+							aria-describedby={state.errors?.email ? 'email-error' : undefined}
 							className='block w-full rounded-xl border-0 px-3.5 py-2.5 text-slate-100 shadow-sm ring-1 ring-inset ring-white/[0.1] placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm bg-slate-950/60 focus:bg-slate-950 transition-colors'
 						/>
 					</div>
 					{state.errors?.email && (
-						<p className='text-sm text-red-400 mt-1'>{state.errors.email[0]}</p>
+						<p id='email-error' role='alert' className='text-sm text-red-400 mt-1'>{state.errors.email[0]}</p>
 					)}
 				</div>
 
@@ -209,11 +215,13 @@ function ContactFormInner() {
 							defaultValue={defaultSubject}
 							key={defaultSubject}
 							required
+							aria-invalid={!!state.errors?.subject}
+							aria-describedby={state.errors?.subject ? 'subject-error' : undefined}
 							className='block w-full rounded-xl border-0 px-3.5 py-2.5 text-slate-100 shadow-sm ring-1 ring-inset ring-white/[0.1] placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm bg-slate-950/60 focus:bg-slate-950 transition-colors'
 						/>
 					</div>
 					{state.errors?.subject && (
-						<p className='text-sm text-red-400 mt-1'>
+						<p id='subject-error' role='alert' className='text-sm text-red-400 mt-1'>
 							{state.errors.subject[0]}
 						</p>
 					)}
@@ -236,17 +244,19 @@ function ContactFormInner() {
 							rows={4}
 							required
 							maxLength={500}
+							aria-invalid={!!state.errors?.message}
+							aria-describedby={state.errors?.message ? 'message-error' : undefined}
 							className='block w-full rounded-xl border-0 px-3.5 py-2.5 text-slate-100 shadow-sm ring-1 ring-inset ring-white/[0.1] placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm bg-slate-950/60 focus:bg-slate-950 transition-colors resize-none'
 						/>
 					</div>
 					{state.errors?.message && (
-						<p className='text-sm text-red-400 mt-1'>
+						<p id='message-error' role='alert' className='text-sm text-red-400 mt-1'>
 							{state.errors.message[0]}
 						</p>
 					)}
 				</div>
 
-				<div className='col-span-1 sm:col-span-2'>
+				<div className='col-span-1 sm:col-span-2' role='status' aria-live='polite'>
 					<AnimatePresence>
 						{state.status === 'success' && (
 							<motion.div

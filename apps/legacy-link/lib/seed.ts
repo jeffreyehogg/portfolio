@@ -33,6 +33,11 @@ export async function seed() {
 
   console.log(`Created "data_records" table`)
 
+  // 3. Performance Indexes
+  await sql`CREATE INDEX IF NOT EXISTS idx_migrations_user_id ON migrations(user_id);`
+  await sql`CREATE INDEX IF NOT EXISTS idx_data_records_migration_id ON data_records(migration_id);`
+  console.log(`Created indexes on "migrations" and "data_records"`)
+
   return {
     createMigrationsTable,
     createRecordsTable,

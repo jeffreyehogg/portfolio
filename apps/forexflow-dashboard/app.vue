@@ -147,9 +147,10 @@ const fetchRates = async () => {
 
     history.value.push({ time, rate })
     if (history.value.length > 25) history.value.shift()
-    loading.value = false
   } catch (e) {
     console.error('[ForexFlow] Telemetry poll failed:', e)
+  } finally {
+    loading.value = false
   }
 }
 
@@ -273,8 +274,11 @@ onUnmounted(() => {
       <!-- COCKPIT SEGMENTED VIEW SELECTOR -->
       <nav aria-label="ForexFlow dashboard modules" class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <!-- Module Tabs -->
-        <div class="flex items-center p-1 rounded-xl bg-slate-900/80 border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] backdrop-blur-xl">
+        <div role="tablist" class="flex items-center p-1 rounded-xl bg-slate-900/80 border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] backdrop-blur-xl">
           <button
+            role="tab"
+            :aria-selected="activeCockpitTab === 'charts'"
+            aria-controls="panel-charts"
             @click="activeCockpitTab = 'charts'"
             :class="[
               'min-h-[40px] px-3.5 py-1.5 rounded-lg text-xs font-medium flex items-center gap-2 transition-all duration-150 active:scale-[0.98]',
@@ -288,6 +292,9 @@ onUnmounted(() => {
           </button>
 
           <button
+            role="tab"
+            :aria-selected="activeCockpitTab === 'matrix'"
+            aria-controls="panel-matrix"
             @click="activeCockpitTab = 'matrix'"
             :class="[
               'min-h-[40px] px-3.5 py-1.5 rounded-lg text-xs font-medium flex items-center gap-2 transition-all duration-150 active:scale-[0.98]',
@@ -301,6 +308,9 @@ onUnmounted(() => {
           </button>
 
           <button
+            role="tab"
+            :aria-selected="activeCockpitTab === 'var'"
+            aria-controls="panel-var"
             @click="activeCockpitTab = 'var'"
             :class="[
               'min-h-[40px] px-3.5 py-1.5 rounded-lg text-xs font-medium flex items-center gap-2 transition-all duration-150 active:scale-[0.98]',
@@ -338,7 +348,7 @@ onUnmounted(() => {
       </nav>
 
       <!-- PRIMARY ASYMMETRIC BENTO GRID (TELEMETRY MODULE) -->
-      <section v-if="activeCockpitTab === 'charts'" class="space-y-6">
+      <section id="panel-charts" role="tabpanel" v-show="activeCockpitTab === 'charts'" class="space-y-6">
         <!-- Interactive Technical Chart Engine & Depth Ladder -->
         <TechnicalTelemetryEngine
           :base-currency="baseCurrency"
@@ -469,12 +479,12 @@ onUnmounted(() => {
       </section>
 
       <!-- MODULE 2: G10 CROSS-RATE MATRIX & ARBITRAGE SCANNER -->
-      <section v-else-if="activeCockpitTab === 'matrix'">
+      <section id="panel-matrix" role="tabpanel" v-show="activeCockpitTab === 'matrix'">
         <CurrencyMatrix @select-pair="(b, t) => selectPair(b as G10Currency, t as G10Currency)" />
       </section>
 
       <!-- MODULE 3: TREASURY VALUE-AT-RISK (VaR) & STRESS TESTER -->
-      <section v-else-if="activeCockpitTab === 'var'">
+      <section id="panel-var" role="tabpanel" v-show="activeCockpitTab === 'var'">
         <PortfolioStressTester />
       </section>
 

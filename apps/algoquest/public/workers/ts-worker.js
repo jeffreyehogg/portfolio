@@ -94,6 +94,15 @@ async function handleExecute(request) {
   }, timeoutMs)
 
   // Simulation Hooks
+  function recordStep(stepEvent, shouldPost = true) {
+    if (recordedSteps.length < 1000) {
+      recordedSteps.push(stepEvent)
+      if (shouldPost) {
+        self.postMessage({ type: 'STEP', step: stepEvent })
+      }
+    }
+  }
+
   const step = function (direction) {
     if (isTimedOut || performance.now() - startTime > timeoutMs) {
       throw new Error(`Execution timed out (${timeoutMs}ms limit exceeded). Check for infinite loops.`)
@@ -115,8 +124,7 @@ async function handleExecute(request) {
         position: { ...gameState.position },
       },
     }
-    recordedSteps.push(stepEvent)
-    self.postMessage({ type: 'STEP', step: stepEvent })
+    recordStep(stepEvent, true)
     return { ...gameState.position }
   }
 
@@ -139,8 +147,7 @@ async function handleExecute(request) {
         position: { ...gameState.position },
       },
     }
-    recordedSteps.push(stepEvent)
-    self.postMessage({ type: 'STEP', step: stepEvent })
+    recordStep(stepEvent, true)
     return { ...gameState.position }
   }
 
@@ -157,8 +164,7 @@ async function handleExecute(request) {
         position: { ...gameState.position },
       },
     }
-    recordedSteps.push(stepEvent)
-    self.postMessage({ type: 'STEP', step: stepEvent })
+    recordStep(stepEvent, true)
     return collectedItem
   }
 
@@ -178,7 +184,7 @@ async function handleExecute(request) {
         goal: gameState.goal,
       },
     }
-    recordedSteps.push(stepEvent)
+    recordStep(stepEvent, false)
     return atGoal
   }
 
@@ -189,8 +195,7 @@ async function handleExecute(request) {
       timestamp: Date.now(),
       data: { direction, position: { ...gameState.position } },
     }
-    recordedSteps.push(stepEvent)
-    self.postMessage({ type: 'STEP', step: stepEvent })
+    recordStep(stepEvent, true)
     return direction
   }
 
@@ -202,8 +207,14 @@ async function handleExecute(request) {
   const customConsole = {
     log: (...args) => {
       const line = args.map((a) => (typeof a === 'object' ? JSON.stringify(a) : String(a))).join(' ')
-      currentStdout.push(line)
-      self.postMessage({ type: 'STDOUT', text: line })
+      if (currentStdout.length < 200) {
+        currentStdout.push(line)
+        self.postMessage({ type: 'STDOUT', text: line })
+      } else if (currentStdout.length === 200) {
+        const truncationNotice = '[Stdout truncated: exceeded 200 lines]'
+        currentStdout.push(truncationNotice)
+        self.postMessage({ type: 'STDOUT', text: truncationNotice })
+      }
     },
     info: (...args) => customConsole.log(...args),
     warn: (...args) => customConsole.log(...args),

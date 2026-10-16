@@ -2,6 +2,7 @@ import { auth } from "@clerk/nextjs/server";
 import { db } from "@/lib/db";
 import { signups, events, funds, personalPrayers } from "@/db/schema";
 import { eq, desc, sql, and, inArray } from "drizzle-orm";
+import { getEffectiveUserId } from "@/lib/guest-session";
 import { Navbar } from "@/app/components/Navbar";
 import {
   Calendar,
@@ -31,22 +32,38 @@ export const metadata: Metadata = {
 
 export default async function DashboardPage() {
   const { userId } = await auth();
-  const effectiveUserId = userId || "guest_user";
+  const effectiveUserId = await getEffectiveUserId({ createIfMissing: false });
 
-  // Fetch user's signups
-  const userSignups = await db
-    .select({
-      signupId: signups.id,
-      status: signups.status,
-      event: events,
-    })
-    .from(signups)
-    .leftJoin(events, eq(signups.eventId, events.id))
-    .where(eq(signups.userId, effectiveUserId))
-    .orderBy(desc(events.date));
+  // Concurrently fetch independent queries (userSignups, globalImpact, activePrayers)
+  const [userSignups, globalImpact, activePrayers] = await Promise.all([
+    db
+      .select({
+        signupId: signups.id,
+        status: signups.status,
+        event: events,
+      })
+      .from(signups)
+      .leftJoin(events, eq(signups.eventId, events.id))
+      .where(eq(signups.userId, effectiveUserId))
+      .orderBy(desc(events.date)),
+    db
+      .select({ totalRaised: sql<number>`sum(${funds.raised})` })
+      .from(funds),
+    db
+      .select({ count: sql<number>`count(*)` })
+      .from(personalPrayers)
+      .where(
+        and(
+          eq(personalPrayers.userId, effectiveUserId),
+          inArray(personalPrayers.status, ["Pending", "Praying"])
+        )
+      ),
+  ]);
 
   // Calculate Stats
   const totalHours = userSignups.length * 3;
+  const communityRaised = Number(globalImpact[0]?.totalRaised || 0);
+  const activePrayersCount = Number(activePrayers[0]?.count || 0);
 
   // Calculate Monthly Data for Chart
   const monthlyDataMap = new Map<string, number>();
@@ -76,24 +93,6 @@ export default async function DashboardPage() {
       hours,
     })
   );
-
-  // Global Impact Stats
-  const globalImpact = await db
-    .select({ totalRaised: sql<number>`sum(${funds.raised})` })
-    .from(funds);
-  const communityRaised = Number(globalImpact[0]?.totalRaised || 0);
-
-  // Personal Prayer Journal Stats
-  const activePrayers = await db
-    .select({ count: sql<number>`count(*)` })
-    .from(personalPrayers)
-    .where(
-      and(
-        eq(personalPrayers.userId, effectiveUserId),
-        inArray(personalPrayers.status, ["Pending", "Praying"])
-      )
-    );
-  const activePrayersCount = Number(activePrayers[0]?.count || 0);
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans flex flex-col">

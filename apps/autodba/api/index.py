@@ -14,6 +14,7 @@ import sqlglot
 from fastapi import FastAPI, Header, HTTPException, Request, Response, status
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
+from starlette.concurrency import run_in_threadpool
 
 from autodba_mcp.engine.analyzer.ast_visitor import analyze_sql
 from autodba_mcp.engine.analyzer.plan_parser import parse_plan
@@ -28,6 +29,8 @@ from autodba_mcp.engine.data.presets import PRESETS, get_preset_seed
 from autodba_mcp.engine.optimizer.agent import build_curated_result, run_optimization
 from autodba_mcp.engine.optimizer.ddl_generator import synthesize_indexes
 from autodba_mcp.engine.schemas import (
+    MAX_PLAN_CHARS,
+    MAX_SQL_CHARS,
     AnalyzeRequest,
     AnalyzeResponse,
     FormatRequest,
@@ -52,6 +55,7 @@ app = FastAPI(
 
 # In-memory rate limiters
 analyze_limiter = RateLimiter(limit=settings.analyze_per_minute, window_s=60)
+optimize_limiter = RateLimiter(limit=settings.analyze_per_minute, window_s=60)
 server_llm_limiter = RateLimiter(limit=settings.llm_daily_limit, window_s=86400)
 byok_limiter = RateLimiter(limit=settings.byok_daily_limit, window_s=86400)
 
@@ -192,9 +196,13 @@ async def analyze_endpoint(payload: AnalyzeRequest, request: Request, response: 
     except ValueError as ve:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(ve))
 
-    report = analyze_sql(clean_sql, payload.dialect)
-    plan_summary = parse_plan(payload.plan, payload.dialect) if payload.plan else None
-    indexes = synthesize_indexes(report)
+    report = await run_in_threadpool(analyze_sql, clean_sql, payload.dialect)
+    plan_summary = (
+        await run_in_threadpool(parse_plan, payload.plan, payload.dialect)
+        if payload.plan
+        else None
+    )
+    indexes = await run_in_threadpool(synthesize_indexes, report)
 
     return AnalyzeResponse(
         report=report,
@@ -294,9 +302,12 @@ async def format_query_endpoint(req: FormatRequest, request: Request):
     if not clean.strip():
         return FormatResponse(formatted_sql="")
 
+    def _format(sql_code: str, dialect: str) -> str:
+        expr = sqlglot.parse_one(sql_code, read=dialect)
+        return expr.sql(dialect=dialect, pretty=True)
+
     try:
-        expr = sqlglot.parse_one(clean, read=req.dialect)
-        formatted = expr.sql(dialect=req.dialect, pretty=True)
+        formatted = await run_in_threadpool(_format, clean, req.dialect)
         return FormatResponse(formatted_sql=formatted)
     except Exception:
         # Fallback to returning cleaned original if syntax is incomplete
@@ -420,12 +431,51 @@ async def mcp_endpoint(request: Request):
         tool_name = params.get("name")
         args = params.get("arguments", {})
 
-        if tool_name == "analyze_sql":
-            sql_text = args.get("sql", "")
+        # Rate limiting and bounds checking for query execution tools
+        if tool_name in (
+            "analyze_sql",
+            "analyze_query",
+            "optimize_sql",
+            "optimize_query",
+            "explain_plan",
+            "explain_execution_plan",
+        ):
+            ip = client_ip(request.headers, fallback=request.client.host if request.client else None)
+            if tool_name in ("optimize_sql", "optimize_query"):
+                allowed, _, reset_s = optimize_limiter.hit(ip)
+            else:
+                allowed, _, reset_s = analyze_limiter.hit(ip)
+
+            if not allowed:
+                return {
+                    "jsonrpc": "2.0",
+                    "id": req_id,
+                    "error": {
+                        "code": -32029,
+                        "message": f"Rate limit exceeded. Try again in {reset_s}s.",
+                    },
+                }
+
+            sql_text = args.get("sql") or args.get("query") or ""
+            plan_text = args.get("plan") or args.get("plan_content") or args.get("plan_xml_or_json")
+            if (sql_text and len(str(sql_text)) > MAX_SQL_CHARS) or (
+                plan_text and len(str(plan_text)) > MAX_PLAN_CHARS
+            ):
+                return {
+                    "jsonrpc": "2.0",
+                    "id": req_id,
+                    "error": {
+                        "code": -32602,
+                        "message": f"Invalid params: input exceeds maximum allowed length (SQL: {MAX_SQL_CHARS}, plan: {MAX_PLAN_CHARS}).",
+                    },
+                }
+
+        if tool_name in ("analyze_sql", "analyze_query"):
+            sql_text = args.get("sql") or args.get("query") or ""
             d_val = args.get("dialect", "tsql")
             try:
                 clean = sanitize_sql(sql_text)
-                report = analyze_sql(clean, d_val)
+                report = await run_in_threadpool(analyze_sql, clean, d_val)
                 summary_md = f"### AutoDBA Analysis ({d_val})\n\n"
                 summary_md += f"- **Tables**: {', '.join(t.name for t in report.tables)}\n"
                 summary_md += f"- **Complexity Score**: {report.complexity_score}/100\n"
@@ -452,10 +502,10 @@ async def mcp_endpoint(request: Request):
                     },
                 }
 
-        elif tool_name == "optimize_sql":
-            sql_text = args.get("sql", "")
+        elif tool_name in ("optimize_sql", "optimize_query"):
+            sql_text = args.get("sql") or args.get("query") or ""
             d_val = args.get("dialect", "tsql")
-            plan_text = args.get("plan")
+            plan_text = args.get("plan") or args.get("plan_xml_or_json")
             try:
                 clean = sanitize_sql(sql_text)
                 # Deterministic execution for MCP (free tier safe, zero external token consumption)
@@ -484,6 +534,39 @@ async def mcp_endpoint(request: Request):
                     "id": req_id,
                     "result": {
                         "content": [{"type": "text", "text": f"Error during optimization: {e}"}],
+                        "isError": True,
+                    },
+                }
+
+        elif tool_name in ("explain_plan", "explain_execution_plan"):
+            plan_text = args.get("plan") or args.get("plan_content") or args.get("plan_xml_or_json") or ""
+            d_val = args.get("dialect", "tsql")
+            try:
+                plan_summary = await run_in_threadpool(parse_plan, plan_text, d_val)
+                summary_md = f"### AutoDBA Execution Plan Diagnostics ({d_val})\n\n"
+                if plan_summary.parse_error:
+                    summary_md += f"**Parse Error**: {plan_summary.parse_error}\n"
+                else:
+                    summary_md += f"- **Format**: {plan_summary.format}\n"
+                    summary_md += f"- **Operators**: {len(plan_summary.operators)}\n"
+                    summary_md += f"- **Bottlenecks**: {len(plan_summary.bottlenecks)}\n"
+                    summary_md += f"- **Missing Indexes**: {len(plan_summary.missing_indexes)}\n"
+
+                return {
+                    "jsonrpc": "2.0",
+                    "id": req_id,
+                    "result": {
+                        "content": [{"type": "text", "text": summary_md}],
+                        "structuredContent": plan_summary.model_dump(),
+                        "isError": False,
+                    },
+                }
+            except Exception as e:
+                return {
+                    "jsonrpc": "2.0",
+                    "id": req_id,
+                    "result": {
+                        "content": [{"type": "text", "text": f"Error during plan parsing: {e}"}],
                         "isError": True,
                     },
                 }

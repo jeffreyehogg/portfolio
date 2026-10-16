@@ -130,7 +130,9 @@ export default defineCachedEventHandler(
     name: 'forexflow-rates',
     getKey: (event) => {
       const query = getQuery(event)
-      return `rates-${String(query.base || 'USD').toUpperCase()}`
+      const raw = typeof query.base === 'string' ? query.base.toUpperCase() : 'USD'
+      const safeBase = SUPPORTED_CURRENCIES.includes(raw) ? raw : 'USD'
+      return `rates-${safeBase}`
     },
     swr: true
   }

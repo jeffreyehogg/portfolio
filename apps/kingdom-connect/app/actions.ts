@@ -6,6 +6,7 @@ import { auth, currentUser } from "@clerk/nextjs/server";
 import { eq, sql, and } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
+import { getEffectiveUserId } from "@/lib/guest-session";
 
 // Zod Validation Schemas
 const CreateEventSchema = z.object({
@@ -26,7 +27,11 @@ const CreateFundSchema = z.object({
 
 const DonateSchema = z.object({
   fundId: z.number().int().positive(),
-  amountInCents: z.number().int().positive("Donation amount must be greater than 0"),
+  amountInCents: z
+    .number()
+    .int()
+    .positive("Donation amount must be greater than 0")
+    .max(10_000_000, "Donation exceeds maximum single transaction limit"),
 });
 
 const PrayerRequestSchema = z.object({
@@ -75,13 +80,16 @@ export async function donateToFund(fundId: number, amountInCents: number) {
 }
 
 export async function createEvent(formData: FormData) {
-  const { userId } = await auth();
+  const { userId, sessionClaims } = await auth();
   if (!userId) {
     return { success: false, message: "Unauthorized: Sign in required." };
   }
 
-  const adminUserId = process.env.ADMIN_USER_ID;
-  if (adminUserId && userId !== adminUserId) {
+  const adminUserId = process.env.ADMIN_USER_ID?.trim();
+  const isRoleAdmin = (sessionClaims?.metadata as { role?: string } | undefined)?.role === "admin";
+  const isAuthorized = (adminUserId && userId === adminUserId) || isRoleAdmin;
+
+  if (!isAuthorized) {
     return { success: false, message: "Forbidden: Ministry Leadership access required." };
   }
 
@@ -116,13 +124,16 @@ export async function createEvent(formData: FormData) {
 }
 
 export async function createFund(formData: FormData) {
-  const { userId } = await auth();
+  const { userId, sessionClaims } = await auth();
   if (!userId) {
     return { success: false, message: "Unauthorized: Sign in required." };
   }
 
-  const adminUserId = process.env.ADMIN_USER_ID;
-  if (adminUserId && userId !== adminUserId) {
+  const adminUserId = process.env.ADMIN_USER_ID?.trim();
+  const isRoleAdmin = (sessionClaims?.metadata as { role?: string } | undefined)?.role === "admin";
+  const isAuthorized = (adminUserId && userId === adminUserId) || isRoleAdmin;
+
+  if (!isAuthorized) {
     return { success: false, message: "Forbidden: Ministry Leadership access required." };
   }
 
@@ -228,8 +239,7 @@ export async function togglePrayForRequest(requestId: number) {
  * Anchor a Scripture Promise directly into the user's personal prayer journal
  */
 export async function anchorScriptureToJournal(reference: string, verseText: string, heartState: string) {
-  const { userId } = await auth();
-  const effectiveUserId = userId || "guest_user";
+  const effectiveUserId = await getEffectiveUserId({ createIfMissing: true });
 
   const [newPrayer] = await db.insert(personalPrayers).values({
     userId: effectiveUserId,

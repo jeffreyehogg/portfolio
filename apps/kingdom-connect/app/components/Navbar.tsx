@@ -125,7 +125,12 @@ export function Navbar() {
           />
 
           {/* Slide-over Drawer */}
-          <div className="relative w-72 max-w-[85vw] bg-white h-full shadow-2xl flex flex-col justify-between p-6 z-10 animate-in slide-in-from-right duration-200">
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mobile Navigation"
+            className="relative w-72 max-w-[85vw] bg-white h-full shadow-2xl flex flex-col justify-between p-6 z-10 animate-in slide-in-from-right duration-200"
+          >
             <div>
               <div className="flex items-center justify-between pb-6 border-b border-slate-100">
                 <div className="flex items-center gap-2">

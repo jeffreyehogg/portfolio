@@ -6,12 +6,24 @@ import { z } from 'zod'
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 const contactSchema = z.object({
-	firstName: z.string().min(1, { message: 'First name is required.' }),
-	lastName: z.string().min(1, { message: 'Last name is required.' }),
+	firstName: z
+		.string()
+		.min(1, { message: 'First name is required.' })
+		.max(100, { message: 'First name must be 100 characters or less.' }),
+	lastName: z
+		.string()
+		.min(1, { message: 'Last name is required.' })
+		.max(100, { message: 'Last name must be 100 characters or less.' }),
 	email: z.string().email({ message: 'Invalid email address.' }),
 	phone: z.string().optional(),
-	subject: z.string().min(1, { message: 'Subject is required.' }),
-	message: z.string().min(1, { message: 'Message is required.' }),
+	subject: z
+		.string()
+		.min(1, { message: 'Subject is required.' })
+		.max(200, { message: 'Subject must be 200 characters or less.' }),
+	message: z
+		.string()
+		.min(1, { message: 'Message is required.' })
+		.max(5000, { message: 'Message must be 5000 characters or less.' }),
 	recaptchaToken: z
 		.string()
 		.min(1, { message: 'reCAPTCHA verification failed.' }),
@@ -42,10 +54,17 @@ export async function sendEmail(
 	const { recaptchaToken, ...emailContent } = validatedFields.data
 
 	const recaptchaSecret = process.env.RECAPTCHA_SECRET_KEY
-	const recaptchaUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${recaptchaSecret}&response=${recaptchaToken}`
+	const recaptchaUrl = 'https://www.google.com/recaptcha/api/siteverify'
 
 	try {
-		const recaptchaRes = await fetch(recaptchaUrl, { method: 'POST' })
+		const recaptchaRes = await fetch(recaptchaUrl, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+			body: new URLSearchParams({
+				secret: recaptchaSecret || '',
+				response: recaptchaToken,
+			}),
+		})
 		const recaptchaData = await recaptchaRes.json()
 
 		if (!recaptchaData.success || recaptchaData.score < 0.5) {

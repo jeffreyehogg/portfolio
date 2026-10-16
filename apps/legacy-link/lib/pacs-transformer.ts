@@ -131,16 +131,18 @@ export function transformAllRecords(
   })
 
   const duplicateBadgeCollisions: string[] = []
+  const duplicateBadgeSet = new Set<string>()
   badgeCounts.forEach((count, badge) => {
     if (count > 1) {
       duplicateBadgeCollisions.push(badge)
+      duplicateBadgeSet.add(badge)
     }
   })
 
   // Add duplicate warnings
-  if (duplicateBadgeCollisions.length > 0) {
+  if (duplicateBadgeSet.size > 0) {
     results.forEach((res) => {
-      if (res.data.BadgeID && duplicateBadgeCollisions.includes(res.data.BadgeID)) {
+      if (res.data.BadgeID && duplicateBadgeSet.has(res.data.BadgeID)) {
         res.warnings.push(`Duplicate badge ID collision: #${res.data.BadgeID}`)
       }
     })

@@ -46,8 +46,23 @@ async function getPyodide() {
 self._py_stdout_writer = function (text) {
   if (text !== undefined && text !== null) {
     const str = String(text)
-    currentStdout.push(str)
-    self.postMessage({ type: 'STDOUT', text: str })
+    if (currentStdout.length < 200) {
+      currentStdout.push(str)
+      self.postMessage({ type: 'STDOUT', text: str })
+    } else if (currentStdout.length === 200) {
+      const truncationNotice = '[Stdout truncated: exceeded 200 lines]'
+      currentStdout.push(truncationNotice)
+      self.postMessage({ type: 'STDOUT', text: truncationNotice })
+    }
+  }
+}
+
+function recordStep(stepEvent, shouldPost = true) {
+  if (recordedSteps.length < 1000) {
+    recordedSteps.push(stepEvent)
+    if (shouldPost) {
+      self.postMessage({ type: 'STEP', step: stepEvent })
+    }
   }
 }
 
@@ -73,8 +88,7 @@ self._py_hook_step = function (direction) {
       position: { ...gameState.position },
     },
   }
-  recordedSteps.push(stepEvent)
-  self.postMessage({ type: 'STEP', step: stepEvent })
+  recordStep(stepEvent, true)
   return JSON.stringify(gameState.position)
 }
 
@@ -99,8 +113,7 @@ self._py_hook_jump = function () {
       position: { ...gameState.position },
     },
   }
-  recordedSteps.push(stepEvent)
-  self.postMessage({ type: 'STEP', step: stepEvent })
+  recordStep(stepEvent, true)
   return JSON.stringify(gameState.position)
 }
 
@@ -117,8 +130,7 @@ self._py_hook_collect = function (item) {
       position: { ...gameState.position },
     },
   }
-  recordedSteps.push(stepEvent)
-  self.postMessage({ type: 'STEP', step: stepEvent })
+  recordStep(stepEvent, true)
   return collectedItem
 }
 
@@ -138,7 +150,7 @@ self._py_hook_at_goal = function () {
       goal: gameState.goal,
     },
   }
-  recordedSteps.push(stepEvent)
+  recordStep(stepEvent, false)
   return atGoal
 }
 

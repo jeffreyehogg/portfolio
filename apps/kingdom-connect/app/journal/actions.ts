@@ -2,14 +2,13 @@
 
 import { db } from "@/lib/db";
 import { personalPrayers, prayerNotes } from "@/db/schema";
-import { auth } from "@clerk/nextjs/server";
-import { eq, and, desc } from "drizzle-orm";
+import { eq, and, desc, sql, inArray } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
+import { getEffectiveUserId } from "@/lib/guest-session";
 import type { PrayerStatus } from "./types";
 
 export async function addPrayer(title: string, category: string | null) {
-  const { userId } = await auth();
-  const effectiveUserId = userId || "guest_user";
+  const effectiveUserId = await getEffectiveUserId({ createIfMissing: true });
 
   if (!title || !title.trim()) {
     return { error: "Title is required." };
@@ -42,18 +41,28 @@ export async function addPrayer(title: string, category: string | null) {
 }
 
 export async function updatePrayerOrder(orderedIds: number[]) {
-  const { userId } = await auth();
-  const effectiveUserId = userId || "guest_user";
+  const effectiveUserId = await getEffectiveUserId({ createIfMissing: true });
+
+  if (!orderedIds || orderedIds.length === 0) {
+    return { success: true };
+  }
 
   try {
-    await Promise.all(
-      orderedIds.map((id, index) =>
-        db
-          .update(personalPrayers)
-          .set({ sortOrder: index + 1 })
-          .where(and(eq(personalPrayers.id, id), eq(personalPrayers.userId, effectiveUserId)))
-      )
-    );
+    const sqlChunks = [sql`CASE ${personalPrayers.id}`];
+    for (let index = 0; index < orderedIds.length; index++) {
+      sqlChunks.push(sql`WHEN ${orderedIds[index]} THEN ${index + 1}`);
+    }
+    sqlChunks.push(sql`ELSE ${personalPrayers.sortOrder} END`);
+
+    await db
+      .update(personalPrayers)
+      .set({ sortOrder: sql.join(sqlChunks, sql` `) })
+      .where(
+        and(
+          inArray(personalPrayers.id, orderedIds),
+          eq(personalPrayers.userId, effectiveUserId)
+        )
+      );
 
     revalidatePath("/journal");
     revalidatePath("/journal/answered");
@@ -65,8 +74,7 @@ export async function updatePrayerOrder(orderedIds: number[]) {
 }
 
 export async function updatePrayerStatus(id: number, status: PrayerStatus) {
-  const { userId } = await auth();
-  const effectiveUserId = userId || "guest_user";
+  const effectiveUserId = await getEffectiveUserId({ createIfMissing: true });
 
   try {
     await db
@@ -89,8 +97,7 @@ export async function updatePrayer(
   title: string,
   category: string | null
 ) {
-  const { userId } = await auth();
-  const effectiveUserId = userId || "guest_user";
+  const effectiveUserId = await getEffectiveUserId({ createIfMissing: true });
 
   if (!title || !title.trim()) {
     return { error: "Title is required." };
@@ -116,8 +123,7 @@ export async function updatePrayer(
 }
 
 export async function deletePrayer(id: number) {
-  const { userId } = await auth();
-  const effectiveUserId = userId || "guest_user";
+  const effectiveUserId = await getEffectiveUserId({ createIfMissing: true });
 
   try {
     await db
@@ -134,8 +140,7 @@ export async function deletePrayer(id: number) {
 }
 
 export async function addNote(prayerId: number, content: string) {
-  const { userId } = await auth();
-  const effectiveUserId = userId || "guest_user";
+  const effectiveUserId = await getEffectiveUserId({ createIfMissing: true });
 
   if (!content || !content.trim()) {
     return { error: "Note content cannot be empty." };
@@ -168,8 +173,7 @@ export async function addNote(prayerId: number, content: string) {
 }
 
 export async function updateNote(noteId: number, content: string) {
-  const { userId } = await auth();
-  const effectiveUserId = userId || "guest_user";
+  const effectiveUserId = await getEffectiveUserId({ createIfMissing: true });
 
   if (!content || !content.trim()) {
     return { error: "Note content cannot be empty." };
@@ -189,8 +193,7 @@ export async function updateNote(noteId: number, content: string) {
 }
 
 export async function deleteNote(noteId: number, prayerId: number) {
-  const { userId } = await auth();
-  const effectiveUserId = userId || "guest_user";
+  const effectiveUserId = await getEffectiveUserId({ createIfMissing: true });
 
   try {
     await db

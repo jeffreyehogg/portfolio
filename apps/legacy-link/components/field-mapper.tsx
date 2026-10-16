@@ -173,6 +173,7 @@ export default function FieldMapper({
                     <select
                       value={currentMap || ''}
                       onChange={(e) => handleMapChange(field.key, e.target.value)}
+                      aria-label={`Source column mapping for ${field.label}`}
                       className="w-full appearance-none rounded-xl border border-slate-700/60 bg-slate-950 px-3 py-1.5 font-mono text-xs text-slate-200 outline-none focus:border-indigo-500"
                     >
                       <option value="">Select legacy column...</option>

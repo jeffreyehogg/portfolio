@@ -20,6 +20,14 @@ export async function POST(
       return NextResponse.json({ error: 'Invalid or empty dataset' }, { status: 400 })
     }
 
+    const MAX_UPLOAD_RECORDS = 10000
+    if (data.length > MAX_UPLOAD_RECORDS) {
+      return NextResponse.json(
+        { error: 'Dataset exceeds maximum batch limit of 10,000 records' },
+        { status: 413 }
+      )
+    }
+
     // 1. Verify migration ownership
     const migration = await sql`
       SELECT id FROM migrations 
@@ -36,13 +44,16 @@ export async function POST(
       raw_data: row,
     }))
 
-    // 3. Bulk Insert
-    const result = await sql`
-      INSERT INTO data_records ${
-        sql(recordsToInsert, 'migration_id', 'raw_data')
-      }
-      RETURNING id
-    `
+    // 3. Bulk Insert in chunks of 500 without RETURNING id
+    const BATCH_SIZE = 500
+    for (let i = 0; i < recordsToInsert.length; i += BATCH_SIZE) {
+      const chunk = recordsToInsert.slice(i, i + BATCH_SIZE)
+      await sql`
+        INSERT INTO data_records ${
+          sql(chunk, 'migration_id', 'raw_data')
+        }
+      `
+    }
 
     // 4. Update status
     await sql`
@@ -51,13 +62,13 @@ export async function POST(
       WHERE id = ${id}
     `
 
-    return NextResponse.json({ success: true, count: result.length })
+    return NextResponse.json({ success: true, count: recordsToInsert.length })
   } catch (error: any) {
     console.error('Upload error details:', error)
     return NextResponse.json(
       {
         error: 'Database Error',
-        details: error.message || String(error),
+        details: 'Failed to ingest migration records',
       },
       { status: 500 }
     )

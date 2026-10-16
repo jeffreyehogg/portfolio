@@ -21,6 +21,4 @@ export const sql =
     connect_timeout: 10,
   })
 
-if (process.env.NODE_ENV !== 'production') {
-  globalThis._postgresSql = sql
-}
+globalThis._postgresSql = sql

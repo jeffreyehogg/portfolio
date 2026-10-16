@@ -19,7 +19,7 @@ interface GridCanvasProps {
 
 const TILE_SIZE = 64
 
-export function GridCanvas({
+export const GridCanvas = React.memo(function GridCanvas({
   gridConfig,
   heroPosition,
   heroDirection = 'east',
@@ -299,4 +299,7 @@ export function GridCanvas({
       </div>
     </div>
   )
-}
+})
+
+GridCanvas.displayName = 'GridCanvas'
+

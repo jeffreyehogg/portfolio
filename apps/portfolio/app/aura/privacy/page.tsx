@@ -78,10 +78,13 @@ export default function AuraPrivacy() {
             </p>
             <ul className="list-disc pl-5 mt-2 space-y-1.5 text-slate-300">
               <li>
-                <strong>LibriVox API:</strong> Used for catalog searches and chapter metadata.
+                <strong>LibriVox API:</strong> Used for catalog searches and chapter metadata for public-domain audiobooks.
               </li>
               <li>
                 <strong>Internet Archive:</strong> Hosts public domain audio recordings and cover imagery.
+              </li>
+              <li>
+                <strong>Apple iTunes Search API &amp; Podcast RSS Feeds:</strong> Used for discovering and streaming publicly accessible podcast episodes directly from creators&apos; feeds.
               </li>
             </ul>
             <p className="mt-3 leading-relaxed text-sm text-slate-400">

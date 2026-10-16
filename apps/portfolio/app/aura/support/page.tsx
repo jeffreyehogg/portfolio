@@ -59,7 +59,16 @@ export default function AuraSupport() {
                 Is Aura completely free?
               </h3>
               <p className="text-sm text-slate-400 leading-relaxed">
-                Yes. Aura has no subscriptions, no paywalls, and no in-app purchases. All books available in Aura are public domain masterpieces recorded by volunteer narrators from LibriVox and the Internet Archive.
+                Yes. Aura has no subscriptions, no paywalls, and no in-app purchases. All audiobooks in Aura are public domain classics recorded by volunteer narrators from LibriVox and the Internet Archive, and podcasts are streamed directly from open public RSS feeds.
+              </p>
+            </div>
+
+            <div className="border-t border-slate-800 pt-4">
+              <h3 className="text-base font-semibold text-white mb-1">
+                Where does the content come from?
+              </h3>
+              <p className="text-sm text-slate-400 leading-relaxed">
+                Audiobooks are sourced from the LibriVox open catalog and the Internet Archive. Podcasts are discovered using Apple&apos;s iTunes Search API and streamed directly from the original creators&apos; RSS audio feeds.
               </p>
             </div>
 

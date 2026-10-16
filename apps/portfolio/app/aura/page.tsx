@@ -3,14 +3,14 @@ import Link from "next/link";
 import BackgroundBlobs from "../../components/ui/BackgroundBlobs";
 
 export const metadata: Metadata = {
-  title: "Aura — Spoken Literature in Pure Light",
+  title: "Aura — Audiobooks & Podcasts in Pure Light",
   description:
-    "A high-craft, native iOS audio listening app for public domain literature, inspired by the serene, editorial design of Libby and Apple Books.",
+    "A high-craft, native iOS audio listening app for public domain literature and podcasts, inspired by the serene, editorial design of Libby and Apple Books.",
   alternates: { canonical: "/aura" },
   openGraph: {
-    title: "Aura — Spoken Literature in Pure Light",
+    title: "Aura — Audiobooks & Podcasts in Pure Light",
     description:
-      "A serene, native iOS audiobook player for timeless public domain classics. Free, zero paywalls, no login required.",
+      "A serene, native iOS player for timeless public domain classics and open podcasts. Free, zero paywalls, no login required.",
     url: "https://www.jeffhogg.com/aura",
   },
 };
@@ -26,16 +26,16 @@ export default function AuraPage() {
         {/* Hero Section */}
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-medium mb-4">
-            iOS Application • Public Domain Audiobooks
+            iOS Application • Audiobooks &amp; Podcasts
           </div>
           <h1 className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
             Aura
           </h1>
           <p className="mt-3 text-lg sm:text-xl text-slate-300 font-serif italic max-w-xl mx-auto">
-            Spoken Literature in Pure Light
+            Audiobooks &amp; Podcasts in Pure Light
           </p>
           <p className="mt-4 text-slate-400 max-w-2xl mx-auto leading-relaxed">
-            A high-craft, native iOS audio listening app for public domain literature, inspired by the serene, editorial design of Libby and Apple Books. Completely free, with no waitlists, subscriptions, or login required.
+            A high-craft, native iOS audio listening app for timeless literature and podcasts, inspired by the serene, editorial design of Libby and Apple Books. Completely free, with no waitlists, subscriptions, or login required.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">

@@ -1,5 +1,3 @@
-'use client'
-
 import Link from 'next/link'
 import { ArrowRightIcon } from '@heroicons/react/24/outline'
 import { projectsData } from '../../lib/data'
@@ -9,7 +7,7 @@ export default function FeaturedProjects() {
 	const featured = projectsData.filter((p) => p.featured)
 
 	return (
-		<section className='relative py-20 sm:py-24 bg-slate-900/40 border-y border-white/[0.06] overflow-hidden'>
+		<section className='cv-auto relative py-20 sm:py-24 bg-slate-900/40 border-y border-white/[0.06] overflow-hidden'>
 			<div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
 				<div className='flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-14 gap-4'>
 					<div>

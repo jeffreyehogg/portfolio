@@ -1,6 +1,3 @@
-'use client'
-
-import { motion, useReducedMotion } from 'framer-motion'
 import {
 	ServerStackIcon,
 	CommandLineIcon,
@@ -19,58 +16,41 @@ const iconMap = {
 }
 
 export default function EngineeringPillars() {
-	const shouldReduce = useReducedMotion()
-
 	return (
-		<section className='relative py-20 sm:py-24 bg-slate-950 overflow-hidden'>
-			{/* Background ambient lighting */}
-			<div className='absolute top-1/2 left-1/4 -translate-y-1/2 w-96 h-96 bg-indigo-600/10 rounded-full blur-[140px] pointer-events-none' />
-			<div className='absolute top-1/2 right-1/4 -translate-y-1/2 w-96 h-96 bg-purple-600/10 rounded-full blur-[140px] pointer-events-none' />
+		<section className='cv-auto relative py-20 sm:py-24 bg-slate-950 overflow-hidden'>
+			{/* GPU-free ambient lighting */}
+			<div
+				className='absolute inset-0 pointer-events-none'
+				style={{
+					background:
+						'radial-gradient(450px 350px at 25% 50%, rgba(79, 70, 229, 0.09), transparent 70%), radial-gradient(450px 350px at 75% 50%, rgba(147, 51, 234, 0.08), transparent 70%)',
+				}}
+				aria-hidden='true'
+			/>
 
 			<div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
 				<div className='text-center max-w-3xl mx-auto mb-14 sm:mb-16'>
-					<motion.div
-						initial={shouldReduce ? false : { opacity: 0, y: 15 }}
-						whileInView={shouldReduce ? undefined : { opacity: 1, y: 0 }}
-						viewport={{ once: true }}
-						className='inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-medium mb-3.5'
-					>
+					<div className='inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-medium mb-3.5'>
 						Core technical focus
-					</motion.div>
-					<motion.h2
-						initial={shouldReduce ? false : { opacity: 0, y: 15 }}
-						whileInView={shouldReduce ? undefined : { opacity: 1, y: 0 }}
-						viewport={{ once: true }}
-						transition={{ delay: 0.1 }}
-						className='text-3xl sm:text-4xl font-extrabold text-white tracking-tight'
-					>
+					</div>
+					<h2 className='text-3xl sm:text-4xl font-extrabold text-white tracking-tight'>
 						Architecting resilient systems & modern automation
-					</motion.h2>
-					<motion.p
-						initial={shouldReduce ? false : { opacity: 0, y: 15 }}
-						whileInView={shouldReduce ? undefined : { opacity: 1, y: 0 }}
-						viewport={{ once: true }}
-						transition={{ delay: 0.15 }}
-						className='mt-3.5 text-base sm:text-lg text-slate-400 leading-relaxed'
-					>
+					</h2>
+					<p className='mt-3.5 text-base sm:text-lg text-slate-400 leading-relaxed'>
 						Full-stack engineering at LGI Homes across web applications,
 						distributed database administration, and automated CI/CD DevOps.
-					</motion.p>
+					</p>
 				</div>
 
 				{/* 4-Pillar Grid */}
 				<div className='grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6'>
-					{engineeringPillars.map((pillar, idx) => {
+					{engineeringPillars.map((pillar) => {
 						const Icon = iconMap[pillar.id as keyof typeof iconMap] || ServerStackIcon
 
 						return (
-							<motion.div
+							<div
 								key={pillar.id}
-								initial={shouldReduce ? false : { opacity: 0, y: 20 }}
-								whileInView={shouldReduce ? undefined : { opacity: 1, y: 0 }}
-								viewport={{ once: true }}
-								transition={{ type: 'spring', bounce: 0.2, duration: 0.5, delay: idx * 0.08 }}
-								className='group relative rounded-2xl bg-slate-900/60 border border-white/[0.08] p-6 sm:p-7 backdrop-blur-xl hover:border-indigo-500/30 hover:bg-slate-900/80 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)] hover:shadow-xl hover:shadow-indigo-500/5 transition-all duration-200 flex flex-col justify-between'
+								className='group relative rounded-2xl bg-slate-900/70 border border-white/[0.08] p-6 sm:p-7 hover:border-indigo-500/30 hover:bg-slate-900/90 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)] hover:shadow-xl hover:shadow-indigo-500/5 transition-colors duration-200 flex flex-col justify-between'
 							>
 								{/* Subtle hover gradient glow */}
 								<div className='absolute inset-0 rounded-2xl bg-gradient-to-br from-indigo-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none' />
@@ -78,7 +58,7 @@ export default function EngineeringPillars() {
 								<div>
 									{/* Clean Card Top Row */}
 									<div className='flex items-center justify-between mb-5'>
-										<div className='p-2.5 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-200'>
+										<div className='p-2.5 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 group-hover:bg-indigo-600 group-hover:text-white transition-colors duration-200'>
 											<Icon className='w-5 h-5' />
 										</div>
 										<span className='text-xs font-medium text-indigo-300 bg-indigo-500/10 px-2.5 py-1 rounded-full border border-indigo-500/20'>
@@ -113,7 +93,7 @@ export default function EngineeringPillars() {
 										))}
 									</div>
 								</div>
-							</motion.div>
+							</div>
 						)
 					})}
 				</div>

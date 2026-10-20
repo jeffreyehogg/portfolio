@@ -1,6 +1,3 @@
-'use client'
-
-import { motion, useReducedMotion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline'
@@ -13,20 +10,14 @@ interface ProjectCardProps {
 	priorityImage?: boolean
 }
 
-export default function ProjectCard({ project, index = 0, priorityImage = false }: ProjectCardProps) {
-	const shouldReduce = useReducedMotion()
+export default function ProjectCard({ project, priorityImage = false }: ProjectCardProps) {
 	const displayTags = project.tags.slice(0, 4)
 
 	return (
-		<motion.div
-			initial={shouldReduce ? false : { opacity: 0, y: 16 }}
-			whileInView={shouldReduce ? undefined : { opacity: 1, y: 0 }}
-			viewport={{ once: true }}
-			transition={{ duration: 0.35, delay: index * 0.05 }}
+		<div
 			className={cn(
-				'group relative flex flex-col rounded-2xl bg-slate-900/60 border border-white/[0.08] shadow-sm overflow-hidden backdrop-blur-sm shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)]',
-				!shouldReduce &&
-					'hover:shadow-xl hover:border-white/[0.16] hover:bg-slate-900/80 hover:-translate-y-0.5 active:scale-[0.99] transition-all duration-200'
+				'group relative flex flex-col rounded-2xl bg-slate-900/70 border border-white/[0.08] shadow-sm overflow-hidden shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)]',
+				'hover:shadow-xl hover:border-white/[0.16] hover:bg-slate-900/90 motion-safe:hover:-translate-y-0.5 active:scale-[0.99] transition-[transform,border-color,background-color,box-shadow] duration-200'
 			)}
 		>
 			{/* Project Image Header */}
@@ -41,16 +32,14 @@ export default function ProjectCard({ project, index = 0, priorityImage = false 
 					alt={project.title}
 					fill
 					priority={priorityImage}
-					className={cn(
-						'object-cover',
-						!shouldReduce &&
-							'transition-transform duration-500 ease-out group-hover:scale-105'
-					)}
+					fetchPriority={priorityImage ? 'high' : undefined}
+					loading={priorityImage ? undefined : 'lazy'}
+					className='object-cover motion-safe:transition-transform motion-safe:duration-500 motion-safe:ease-out motion-safe:group-hover:scale-105'
 					sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
 				/>
 
 				{/* Hover Overlay */}
-				<div className='absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-20 bg-slate-950/40 backdrop-blur-[2px]'>
+				<div className='absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-20 bg-slate-950/40'>
 					<span className='px-3.5 py-1.5 rounded-full text-xs font-medium text-white bg-slate-900/90 border border-white/[0.12] flex items-center gap-1.5 shadow-lg'>
 						Visit project
 						<ArrowTopRightOnSquareIcon className='w-3.5 h-3.5 text-indigo-400' />
@@ -117,6 +106,6 @@ export default function ProjectCard({ project, index = 0, priorityImage = false 
 					))}
 				</div>
 			</div>
-		</motion.div>
+		</div>
 	)
 }

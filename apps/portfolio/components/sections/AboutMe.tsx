@@ -7,7 +7,6 @@ import Socials from './Socials'
 import Experience from './Experience'
 import { skillsData, educationData } from '../../lib/data'
 import BackgroundBlobs from '../ui/BackgroundBlobs'
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { CheckCircleIcon } from '@heroicons/react/24/solid'
 import {
 	ArrowDownTrayIcon,
@@ -28,12 +27,11 @@ const coreCapabilities = [
 ]
 
 export default function AboutMe() {
-	const shouldReduce = useReducedMotion()
 	const [showExtendedBio, setShowExtendedBio] = useState(false)
 
 	return (
 		<div className='min-h-screen bg-slate-950 relative overflow-hidden'>
-			<div className='absolute inset-0 pointer-events-none opacity-20'>
+			<div className='absolute inset-0 pointer-events-none opacity-40'>
 				<BackgroundBlobs />
 			</div>
 
@@ -42,12 +40,7 @@ export default function AboutMe() {
 					{/* Left Column: Bio & Image */}
 					<div className='lg:col-span-5 space-y-8 lg:sticky lg:top-32 self-start'>
 						{/* Profile Image with Glow */}
-						<motion.div
-							initial={shouldReduce ? false : { opacity: 0, scale: 0.95 }}
-							animate={shouldReduce ? undefined : { opacity: 1, scale: 1 }}
-							transition={{ type: 'spring', bounce: 0.2, duration: 0.5 }}
-							className='relative w-48 h-48 sm:w-56 sm:h-56 mx-auto lg:mx-0'
-						>
+						<div className='relative w-48 h-48 sm:w-56 sm:h-56 mx-auto lg:mx-0 animate-fade-up'>
 							<div className='absolute -inset-3 bg-gradient-to-r from-indigo-500 to-cyan-500 rounded-2xl blur-xl opacity-20' />
 							<Image
 								className='relative rounded-2xl shadow-xl object-cover border border-white/[0.1]'
@@ -56,14 +49,11 @@ export default function AboutMe() {
 								alt='Jeff Hogg headshot'
 								sizes='224px'
 								priority
+								fetchPriority='high'
 							/>
-						</motion.div>
+						</div>
 
-						<motion.div
-							initial={shouldReduce ? false : { opacity: 0, y: 15 }}
-							animate={shouldReduce ? undefined : { opacity: 1, y: 0 }}
-							transition={{ type: 'spring', bounce: 0.2, duration: 0.5, delay: 0.1 }}
-						>
+						<div className='animate-fade-up animation-delay-100'>
 							<div className='inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-medium mb-3'>
 								Engineering profile
 							</div>
@@ -99,27 +89,19 @@ export default function AboutMe() {
 										)}
 									</button>
 
-									<AnimatePresence>
-										{showExtendedBio && (
-											<motion.div
-												initial={{ opacity: 0, height: 0 }}
-												animate={{ opacity: 1, height: 'auto' }}
-												exit={{ opacity: 0, height: 0 }}
-												transition={{ duration: 0.3 }}
-												className='overflow-hidden mt-3 space-y-3.5 text-xs sm:text-sm text-slate-400 border-l-2 border-indigo-500/30 pl-3.5'
-											>
-												<p>
-													At LGI Homes, migrated manually deployed on-premise servers into a disciplined, automated Git workflow. Containerized core applications with Docker and automated SSL/DNS routing, eliminating deployment downtime.
-												</p>
-												<p>
-													Designed custom Node.js and TypeScript integration services to bridge distributed MS SQL Server and MySQL databases with third-party enterprise APIs, implementing schema sanitization and profiling stored procedures.
-												</p>
-												<p>
-													My engineering approach leverages agentic IDE workflows and Model Context Protocol (MCP) tooling as collaborative pair programmers—accelerating query profiling, de-risking deep refactors, and maintaining high delivery velocity.
-												</p>
-											</motion.div>
-										)}
-									</AnimatePresence>
+									{showExtendedBio && (
+										<div className='mt-3 space-y-3.5 text-xs sm:text-sm text-slate-400 border-l-2 border-indigo-500/30 pl-3.5 animate-fade-up'>
+											<p>
+												At LGI Homes, migrated manually deployed on-premise servers into a disciplined, automated Git workflow. Containerized core applications with Docker and automated SSL/DNS routing, eliminating deployment downtime.
+											</p>
+											<p>
+												Designed custom Node.js and TypeScript integration services to bridge distributed MS SQL Server and MySQL databases with third-party enterprise APIs, implementing schema sanitization and profiling stored procedures.
+											</p>
+											<p>
+												My engineering approach leverages agentic IDE workflows and Model Context Protocol (MCP) tooling as collaborative pair programmers—accelerating query profiling, de-risking deep refactors, and maintaining high delivery velocity.
+											</p>
+										</div>
+									)}
 								</div>
 							</div>
 
@@ -144,14 +126,14 @@ export default function AboutMe() {
 									href='/Jeff_Hogg_Resume.pdf'
 									target='_blank'
 									rel='noopener noreferrer'
-									className='inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-500 active:scale-[0.98] shadow-sm transition-all duration-200'
+									className='inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-500 active:scale-[0.98] shadow-sm transition-colors duration-200'
 								>
 									<ArrowDownTrayIcon className='w-4 h-4' />
 									Download resume (PDF)
 								</a>
 								<Link
 									href='/contact'
-									className='inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-slate-300 bg-slate-900/80 border border-white/[0.08] hover:bg-slate-800 hover:text-white active:scale-[0.98] transition-all duration-200'
+									className='inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-slate-300 bg-slate-900/80 border border-white/[0.08] hover:bg-slate-800 hover:text-white active:scale-[0.98] transition-colors duration-200'
 								>
 									<EnvelopeIcon className='w-4 h-4 text-indigo-400' />
 									Get in touch
@@ -161,7 +143,7 @@ export default function AboutMe() {
 							<div className='mt-6 pt-5 border-t border-white/[0.06]'>
 								<Socials />
 							</div>
-						</motion.div>
+						</div>
 					</div>
 
 					{/* Right Column: Experience & Skills */}
@@ -175,14 +157,10 @@ export default function AboutMe() {
 								Technical stack & tooling
 							</h3>
 							<div className='grid gap-3.5'>
-								{skillsData.map((skill, index) => (
-									<motion.div
+								{skillsData.map((skill) => (
+									<div
 										key={skill.category}
-										initial={shouldReduce ? false : { opacity: 0, x: 15 }}
-										whileInView={shouldReduce ? undefined : { opacity: 1, x: 0 }}
-										transition={{ delay: index * 0.08 }}
-										viewport={{ once: true }}
-										className='group bg-slate-900/60 p-5 rounded-2xl border border-white/[0.08] hover:border-indigo-500/30 transition-all duration-200 backdrop-blur-sm hover:bg-slate-900/80 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)]'
+										className='group bg-slate-900/70 p-5 rounded-2xl border border-white/[0.08] hover:border-indigo-500/30 transition-colors duration-200 hover:bg-slate-900/90 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)]'
 									>
 										<h4 className='font-semibold text-indigo-300 mb-1.5 text-sm'>
 											{skill.category}
@@ -190,7 +168,7 @@ export default function AboutMe() {
 										<p className='text-slate-300 leading-relaxed text-sm font-light'>
 											{skill.list}
 										</p>
-									</motion.div>
+									</div>
 								))}
 							</div>
 						</div>
@@ -202,14 +180,10 @@ export default function AboutMe() {
 								Education
 							</h3>
 							<div className='grid gap-3.5'>
-								{educationData.map((edu, index) => (
-									<motion.div
+								{educationData.map((edu) => (
+									<div
 										key={edu.school}
-										initial={shouldReduce ? false : { opacity: 0, x: 15 }}
-										whileInView={shouldReduce ? undefined : { opacity: 1, x: 0 }}
-										transition={{ delay: index * 0.08 }}
-										viewport={{ once: true }}
-										className='group bg-slate-900/60 p-5 rounded-2xl border border-white/[0.08] hover:border-indigo-500/30 transition-all duration-200 backdrop-blur-sm hover:bg-slate-900/80 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)]'
+										className='group bg-slate-900/70 p-5 rounded-2xl border border-white/[0.08] hover:border-indigo-500/30 transition-colors duration-200 hover:bg-slate-900/90 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)]'
 									>
 										<h4 className='font-bold text-white text-base mb-1'>
 											{edu.school}
@@ -217,7 +191,7 @@ export default function AboutMe() {
 										<p className='text-indigo-300 text-sm'>
 											{edu.degree}
 										</p>
-									</motion.div>
+									</div>
 								))}
 							</div>
 						</div>

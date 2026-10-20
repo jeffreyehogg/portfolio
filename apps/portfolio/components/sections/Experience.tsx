@@ -1,12 +1,7 @@
-'use client'
-
-import { motion, useReducedMotion } from 'framer-motion'
 import { BriefcaseIcon, MapPinIcon } from '@heroicons/react/24/outline'
 import { experienceData } from '../../lib/data'
 
 export default function Experience() {
-	const shouldReduce = useReducedMotion()
-
 	return (
 		<div id='experience' className='py-6 scroll-mt-28 sm:scroll-mt-32'>
 			<div className='flex items-center justify-between mb-8'>
@@ -17,13 +12,9 @@ export default function Experience() {
 			</div>
 
 			<div className='space-y-10'>
-				{experienceData.map((job, index) => (
-					<motion.div
+				{experienceData.map((job) => (
+					<div
 						key={job.company + job.period}
-						initial={shouldReduce ? false : { opacity: 0, x: -15 }}
-						whileInView={shouldReduce ? undefined : { opacity: 1, x: 0 }}
-						transition={{ type: 'spring', bounce: 0.2, duration: 0.5, delay: index * 0.1 }}
-						viewport={{ once: true }}
 						className='group relative pl-7 sm:pl-9 border-l-2 border-indigo-500/20 hover:border-indigo-500/50 transition-colors duration-200'
 					>
 						{/* Timeline Dot */}
@@ -106,7 +97,7 @@ export default function Experience() {
 								</span>
 							))}
 						</div>
-					</motion.div>
+					</div>
 				))}
 			</div>
 		</div>

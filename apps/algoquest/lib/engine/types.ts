@@ -1,6 +1,18 @@
 export type Language = 'python' | 'javascript' | 'typescript' | 'ruby' | 'lua'
 
-export type StepEventType = 'step' | 'jump' | 'collect' | 'at_goal' | 'turn' | 'log'
+export type StepEventType =
+  | 'step'
+  | 'jump'
+  | 'collect'
+  | 'at_goal'
+  | 'turn'
+  | 'log'
+  | 'stack'
+  | 'pointer'
+  | 'array'
+  | 'hashmap'
+  | 'binary_search'
+  | 'hazard'
 
 export interface StepEvent {
   type: StepEventType
@@ -10,8 +22,22 @@ export interface StepEvent {
     position?: { x: number; y: number }
     item?: string
     message?: string
+    stack?: string[]
+    pointers?: { left: number; right: number; mid?: number }
+    accessedIndex?: number
+    hashmap?: Record<string, string | number>
+    tileType?: string
     [key: string]: unknown
   }
+}
+
+export interface LintDiagnostic {
+  line?: number
+  column?: number
+  code: string
+  rule: string
+  severity: 'warning' | 'info'
+  message: string
 }
 
 export interface TestCase {
@@ -38,6 +64,9 @@ export interface GridState {
   position?: { x: number; y: number }
   direction?: 'north' | 'south' | 'east' | 'west' | string
   grid?: unknown
+  tiles?: string[][]
+  width?: number
+  height?: number
   inventory?: string[]
   goal?: { x: number; y: number }
   items?: Array<{ id: string; x: number; y: number; type: string }>
@@ -48,6 +77,7 @@ export interface ExecutionRequest {
   requestId: string
   language: Language
   code: string
+  rawUserCode?: string
   testCases?: TestCase[]
   initialState?: GridState
   timeoutMs?: number
@@ -60,6 +90,11 @@ export interface ErrorDetails {
   message: string
 }
 
+export interface ExecutionMetrics {
+  stepCount: number
+  lineCount: number
+}
+
 export interface ExecutionResult {
   requestId: string
   success: boolean
@@ -68,6 +103,8 @@ export interface ExecutionResult {
   testResults: TestCaseResult[]
   allTestsPassed: boolean
   executionTimeMs: number
+  lintDiagnostics?: LintDiagnostic[]
+  metrics?: ExecutionMetrics
   error?: string
   errorDetails?: ErrorDetails
 }

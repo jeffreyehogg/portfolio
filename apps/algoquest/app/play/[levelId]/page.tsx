@@ -11,8 +11,18 @@ import {
   Language,
 } from '../../../lib/quests'
 import { useGameStore } from '../../../lib/store'
-import { executionRunner } from '../../../lib/engine'
-import { StepEvent, TestCaseResult, ErrorDetails } from '../../../lib/engine/types'
+import {
+  executionRunner,
+  evaluateLevelStars,
+  analyzeCodeQuality,
+  StarEvaluationResult,
+} from '../../../lib/engine'
+import {
+  StepEvent,
+  TestCaseResult,
+  ErrorDetails,
+  LintDiagnostic,
+} from '../../../lib/engine/types'
 import { GridCanvas } from '../../../components/game/GridCanvas'
 import { Visualizer } from '../../../components/game/Visualizer'
 import { CodeTerminal } from '../../../components/editor/CodeTerminal'
@@ -45,6 +55,7 @@ export default function PlayLevelPage({ params }: PlayPageProps) {
     getDraft,
     completeLevel,
     unlockLevel,
+    getUnlockedHintTier,
   } = useGameStore()
 
   // Code state
@@ -54,6 +65,7 @@ export default function PlayLevelPage({ params }: PlayPageProps) {
   // Modals state
   const [isHintOpen, setIsHintOpen] = useState<boolean>(false)
   const [isVictoryOpen, setIsVictoryOpen] = useState<boolean>(false)
+  const [starEval, setStarEval] = useState<StarEvaluationResult | undefined>(undefined)
 
   // Simulation & Game State
   const [heroPos, setHeroPos] = useState<{ x: number; y: number }>({ x: 0, y: 0 })
@@ -66,12 +78,13 @@ export default function PlayLevelPage({ params }: PlayPageProps) {
 
   // Visualizer live state
   const [liveStack, setLiveStack] = useState<string[]>([])
-  const [livePointers, setLivePointers] = useState<{ left: number; right: number }>({
+  const [livePointers, setLivePointers] = useState<{ left: number; right: number; mid?: number }>({
     left: 0,
     right: 6,
   })
   const [liveArray, setLiveArray] = useState<string[]>(['potion', 'shield', 'key'])
   const [accessedIndex, setAccessedIndex] = useState<number | null>(null)
+  const [liveMap, setLiveMap] = useState<Record<string, string | number>>({ wind: 1, ice: 2 })
 
   // Step playback state
   const [recordedSteps, setRecordedSteps] = useState<StepEvent[]>([])
@@ -83,6 +96,7 @@ export default function PlayLevelPage({ params }: PlayPageProps) {
   // Execution results
   const [testResults, setTestResults] = useState<TestCaseResult[]>([])
   const [stdoutLogs, setStdoutLogs] = useState<string[]>([])
+  const [lintDiagnostics, setLintDiagnostics] = useState<LintDiagnostic[]>([])
   const [executionError, setExecutionError] = useState<string | undefined>()
   const [errorDetails, setErrorDetails] = useState<ErrorDetails | undefined>()
   const [executionTimeMs, setExecutionTimeMs] = useState<number>(0)
@@ -105,7 +119,9 @@ export default function PlayLevelPage({ params }: PlayPageProps) {
 
     // Reset visualizer
     if (level.visualizerConfig) {
-      setLiveStack(level.visualizerConfig.initialStack ? [...level.visualizerConfig.initialStack] : [])
+      setLiveStack(
+        level.visualizerConfig.initialStack ? [...level.visualizerConfig.initialStack] : []
+      )
       setLivePointers(
         level.visualizerConfig.initialPointers
           ? { ...level.visualizerConfig.initialPointers }
@@ -117,6 +133,11 @@ export default function PlayLevelPage({ params }: PlayPageProps) {
           : ['potion', 'shield', 'key']
       )
       setAccessedIndex(null)
+      setLiveMap(
+        level.visualizerConfig.initialMap
+          ? { ...level.visualizerConfig.initialMap }
+          : { wind: 1, ice: 2 }
+      )
     }
   }, [level])
 
@@ -166,6 +187,34 @@ export default function PlayLevelPage({ params }: PlayPageProps) {
     setActiveLanguage(lang)
   }
 
+  // Level Clear Celebration with Dynamic 3-Star Rating
+  const handleVictory = useCallback(
+    (diagnostics: LintDiagnostic[], stepCount: number) => {
+      if (!level) return
+      setIsLevelSolved(true)
+      setGateOpen(true)
+
+      const evaluation = evaluateLevelStars({
+        hintsUnlockedTier: getUnlockedHintTier(level.id),
+        lintDiagnostics: diagnostics,
+        stepCount,
+        optimalSteps: level.optimalSteps,
+        code,
+      })
+      setStarEval(evaluation)
+      completeLevel(level.id, evaluation.stars, level.xp, code)
+
+      if (nextLevelId) {
+        unlockLevel(nextLevelId)
+      }
+
+      setTimeout(() => {
+        setIsVictoryOpen(true)
+      }, 600)
+    },
+    [level, getUnlockedHintTier, code, completeLevel, nextLevelId, unlockLevel]
+  )
+
   // Execute Code in Web Worker
   const handleRunCode = async () => {
     if (!level || isRunning) return
@@ -179,6 +228,7 @@ export default function PlayLevelPage({ params }: PlayPageProps) {
 
     // Transform user code with level test wrapper
     const preparedCode = level.prepareCode(code, activeLanguage)
+    const staticLint = analyzeCodeQuality(code, activeLanguage)
 
     try {
       const result = await executionRunner.execute(
@@ -186,11 +236,15 @@ export default function PlayLevelPage({ params }: PlayPageProps) {
           requestId: `${level.id}-${Date.now()}`,
           language: activeLanguage,
           code: preparedCode,
+          rawUserCode: code,
           testCases: level.testCases,
           initialState: {
             position: { ...level.gridConfig.heroStart },
             direction: level.gridConfig.heroDirection,
             goal: { ...level.gridConfig.goal },
+            tiles: level.gridConfig.tiles,
+            width: level.gridConfig.width,
+            height: level.gridConfig.height,
           },
           timeoutMs: 4000,
         },
@@ -199,21 +253,33 @@ export default function PlayLevelPage({ params }: PlayPageProps) {
         }
       )
 
+      // Merge worker AST diagnostics with client-side static diagnostics (deduplicated)
+      const combinedDiagnostics: LintDiagnostic[] = [...(result.lintDiagnostics || [])]
+      for (const diag of staticLint) {
+        if (!combinedDiagnostics.some((d) => d.line === diag.line && d.code === diag.code)) {
+          combinedDiagnostics.push(diag)
+        }
+      }
+
       setIsRunning(false)
       setTestResults(result.testResults)
+      setLintDiagnostics(combinedDiagnostics)
       setExecutionTimeMs(result.executionTimeMs)
       setStdoutLogs(result.output)
 
       if (!result.success || result.error) {
         setExecutionError(result.error)
         setErrorDetails(result.errorDetails)
+        if (result.steps && result.steps.length > 0) {
+          setRecordedSteps(result.steps)
+          playStepSequence(result.steps, false, combinedDiagnostics)
+        }
       } else {
-        // Record steps for playback
         setRecordedSteps(result.steps)
         if (result.steps.length > 0) {
-          playStepSequence(result.steps, result.allTestsPassed)
+          playStepSequence(result.steps, result.allTestsPassed, combinedDiagnostics)
         } else if (result.allTestsPassed) {
-          handleVictory()
+          handleVictory(combinedDiagnostics, 0)
         }
       }
     } catch (err) {
@@ -223,7 +289,11 @@ export default function PlayLevelPage({ params }: PlayPageProps) {
   }
 
   // Animate recorded steps tile-by-tile
-  const playStepSequence = (steps: StepEvent[], testsPassed: boolean) => {
+  const playStepSequence = (
+    steps: StepEvent[],
+    testsPassed: boolean,
+    diagnostics: LintDiagnostic[]
+  ) => {
     if (steps.length === 0) return
 
     let currentIdx = 0
@@ -240,7 +310,10 @@ export default function PlayLevelPage({ params }: PlayPageProps) {
         setIsHeroJumping(false)
 
         if (testsPassed) {
-          handleVictory()
+          const moveStepCount = steps.filter(
+            (s) => s.type === 'step' || s.type === 'jump'
+          ).length
+          handleVictory(diagnostics, moveStepCount)
         }
         return
       }
@@ -254,7 +327,7 @@ export default function PlayLevelPage({ params }: PlayPageProps) {
 
   // Apply single step event to visual board
   const applyStepEvent = (step: StepEvent) => {
-    if (step.type === 'step') {
+    if (step.type === 'step' || step.type === 'hazard') {
       setIsHeroMoving(true)
       setIsHeroJumping(false)
       if (step.data?.position) {
@@ -271,7 +344,6 @@ export default function PlayLevelPage({ params }: PlayPageProps) {
       }
     } else if (step.type === 'collect') {
       const pos = step.data?.position || heroPos
-      // Find entity at current hero position and mark its ID collected so it pops on the board
       const entity = level?.gridConfig.entities?.find(
         (e) => e.x === pos.x && e.y === pos.y
       )
@@ -284,22 +356,30 @@ export default function PlayLevelPage({ params }: PlayPageProps) {
       if (step.data?.direction) {
         setHeroDirection(step.data.direction)
       }
+    } else if (step.type === 'stack' && Array.isArray(step.data?.stack)) {
+      setLiveStack(step.data.stack)
+    } else if (step.type === 'pointer' && step.data?.pointers) {
+      setLivePointers(step.data.pointers)
+    } else if (step.type === 'hashmap' && step.data?.hashmap) {
+      setLiveMap(step.data.hashmap)
     }
 
-    // Auto-open gate when hero reaches or crosses gate at (2, 0)
-    if (level?.id === 'level-2-the-gatekeeper') {
+    // Auto-open gate/door when hero progresses on gated levels
+    if (
+      level?.id === 'level-2-the-gatekeeper' ||
+      level?.id === 'level-6-the-inventory-bag' ||
+      level?.id === 'level-9-the-ancient-tome'
+    ) {
       setGateOpen(true)
     }
 
-    // Animate Visualizers for Level 7 / Level 8
+    // Animate Visualizers for Levels 6, 7, 8, 9, 10
     if (level?.id === 'level-7-the-stone-pedestal') {
-      // Stack progression simulation
       setLiveStack((prev) => {
-        if (prev.length < 3) return [...prev, 'stone']
+        if (prev.length < 3) return ['stone', 'stone']
         return prev.slice(0, 2)
       })
     } else if (level?.id === 'level-8-the-dual-bridges') {
-      // Two-pointer progression simulation
       setLivePointers((prev) => {
         if (prev.left < prev.right) {
           return { left: prev.left + 1, right: prev.right - 1 }
@@ -308,23 +388,11 @@ export default function PlayLevelPage({ params }: PlayPageProps) {
       })
     } else if (level?.id === 'level-6-the-inventory-bag') {
       setAccessedIndex((prev) => (prev === null ? 0 : 2))
+    } else if (level?.id === 'level-9-the-ancient-tome') {
+      setLiveMap({ wind: 1, ice: 2, fire: 3 })
+    } else if (level?.id === 'level-10-the-crystal-archives') {
+      setLivePointers({ left: 0, right: 6, mid: 3 })
     }
-  }
-
-  // Level Clear Celebration
-  const handleVictory = () => {
-    if (!level) return
-    setIsLevelSolved(true)
-    setGateOpen(true)
-    completeLevel(level.id, 3, level.xp, code)
-
-    if (nextLevelId) {
-      unlockLevel(nextLevelId)
-    }
-
-    setTimeout(() => {
-      setIsVictoryOpen(true)
-    }, 600)
   }
 
   // Next level navigation
@@ -460,7 +528,11 @@ export default function PlayLevelPage({ params }: PlayPageProps) {
                     if (playbackTimerRef.current) clearInterval(playbackTimerRef.current)
                     setIsPlayingSteps(false)
                   } else {
-                    playStepSequence(recordedSteps, testResults.every((t) => t.passed))
+                    playStepSequence(
+                      recordedSteps,
+                      testResults.length > 0 && testResults.every((t) => t.passed),
+                      lintDiagnostics
+                    )
                   }
                 }}
                 onStepForward={() => {
@@ -493,6 +565,7 @@ export default function PlayLevelPage({ params }: PlayPageProps) {
                 livePointers={livePointers}
                 liveArray={liveArray}
                 accessedIndex={accessedIndex}
+                liveMap={liveMap}
               />
             )}
           </div>
@@ -513,11 +586,12 @@ export default function PlayLevelPage({ params }: PlayPageProps) {
             />
           </div>
 
-          {/* Bottom Half: Test Assertions & Output Console */}
+          {/* Bottom Half: Test Assertions, Ruff Code Quality & Output Console */}
           <div className="h-64 min-h-[220px]">
             <OutputConsole
               testResults={testResults}
               stdoutLogs={stdoutLogs}
+              lintDiagnostics={lintDiagnostics}
               error={executionError}
               errorDetails={errorDetails}
               executionTimeMs={executionTimeMs}
@@ -541,7 +615,8 @@ export default function PlayLevelPage({ params }: PlayPageProps) {
       <VictoryModal
         isOpen={isVictoryOpen}
         level={level}
-        stars={3}
+        stars={starEval?.stars ?? 3}
+        starEvaluation={starEval}
         xpAwarded={level.xp}
         nextLevelId={nextLevelId}
         onReplay={() => {

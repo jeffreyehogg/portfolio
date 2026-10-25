@@ -2,18 +2,21 @@ import { Level, World } from './types'
 import { WORLD_1, WORLD_1_LEVELS } from './world1-basics'
 import { WORLD_2, WORLD_2_LEVELS } from './world2-loops'
 import { WORLD_3, WORLD_3_LEVELS } from './world3-data'
+import { WORLD_4, WORLD_4_LEVELS } from './world4-algorithms'
 
 export * from './types'
 export { WORLD_1, WORLD_1_LEVELS } from './world1-basics'
 export { WORLD_2, WORLD_2_LEVELS } from './world2-loops'
 export { WORLD_3, WORLD_3_LEVELS } from './world3-data'
+export { WORLD_4, WORLD_4_LEVELS } from './world4-algorithms'
 
-export const WORLDS: World[] = [WORLD_1, WORLD_2, WORLD_3]
+export const WORLDS: World[] = [WORLD_1, WORLD_2, WORLD_3, WORLD_4]
 
 export const LEVELS: Level[] = [
   ...WORLD_1_LEVELS,
   ...WORLD_2_LEVELS,
   ...WORLD_3_LEVELS,
+  ...WORLD_4_LEVELS,
 ]
 
 export function getAllWorlds(): World[] {

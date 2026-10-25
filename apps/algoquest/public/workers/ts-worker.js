@@ -1,8 +1,8 @@
 /**
  * AlgoQuest TypeScript / JavaScript Execution Worker
- * Runs sandboxed JS/TS code with a 3-second timeout protection,
- * captures console output, simulates game hooks (step, jump, collect, at_goal),
- * and evaluates test assertions with step tracing.
+ * Runs sandboxed JS/TS code with timeout protection,
+ * captures console output, simulates game hooks (step, jump, collect, at_goal, turn, _aqEmit),
+ * enforces spatial hazard & boundary checks, and evaluates test assertions with step tracing.
  */
 
 // Execution state variables
@@ -14,31 +14,41 @@ let gameState = {
   inventory: [],
   goal: { x: 0, y: 0 },
   items: [],
+  tiles: [],
+  width: 0,
+  height: 0,
+  hazardHit: null,
 }
 
 /**
- * Lightweight TypeScript annotation stripper to allow running
- * standard typed code in the browser worker runtime without bundling compiler.
+ * Enhanced TypeScript annotation stripper to allow running typed code
+ * (including Record<K, V>, Array<T>, union types, and typed params) in the browser worker runtime.
  */
 function stripTypeScriptTypes(code) {
   let cleaned = code
 
   // Remove single line type / interface declarations
-  cleaned = cleaned.replace(/^\s*(?:export\s+)?(?:type|interface)\s+[A-Za-z0-9_<>, ]+\s*=\s*[^;]+;/gm, '')
+  cleaned = cleaned.replace(/^\s*(?:export\s+)?(?:type|interface)\s+[A-Za-z0-9_<>, ]+\s*=\s*[^;\n]+;?/gm, '')
   // Remove multi-line interface declarations
   cleaned = cleaned.replace(/^\s*(?:export\s+)?interface\s+[A-Za-z0-9_<>, ]+\s*\{[\s\S]*?\}/gm, '')
   // Remove type declarations with object shapes
   cleaned = cleaned.replace(/^\s*(?:export\s+)?type\s+[A-Za-z0-9_<>, ]+\s*=\s*\{[\s\S]*?\};?/gm, '')
-  // Remove return type annotations on functions, e.g. ): number { or ): void =>
-  cleaned = cleaned.replace(/\):\s*[A-Za-z0-9_<>[\]|& ]+\s*(?:=>|\{)/g, (match) => {
+  // Remove return type annotations on functions, e.g. ): number { or ): Record<string, number> =>
+  cleaned = cleaned.replace(/\):\s*[A-Za-z0-9_<>[\]|&, ]+\s*(?:=>|\{)/g, (match) => {
     return match.endsWith('{') ? ') {' : ') =>'
   })
-  // Remove variable type annotations: let x: number = 5; const str: string = 'a';
-  cleaned = cleaned.replace(/(\b(?:const|let|var)\s+[A-Za-z0-9_$]+)\s*:\s*[A-Za-z0-9_<>[\]|& ]+(\s*=)/g, '$1$2')
+  // Remove variable type annotations: let x: number = 5; const map: Record<string, number> = {};
+  cleaned = cleaned.replace(
+    /(\b(?:const|let|var)\s+[A-Za-z0-9_$]+)\s*:\s*(?:Record<[^>]+>|Array<[^>]+>|[A-Za-z0-9_<>[\]|& ]+)(\s*=)/g,
+    '$1$2'
+  )
   // Remove parameter type annotations in function headers: (a: number, b: string)
-  cleaned = cleaned.replace(/(\([A-Za-z0-9_$, ]*)\s*:\s*[A-Za-z0-9_<>[\]|& ]+([,)])/g, '$1$2')
+  cleaned = cleaned.replace(
+    /([,(]\s*[A-Za-z0-9_$]+)\s*\??:\s*(?:Record<[^>]+>|Array<[^>]+>|[A-Za-z0-9_<>[\]|& ]+)(?=\s*[,)=])/g,
+    '$1'
+  )
   // Remove 'as Type' assertions
-  cleaned = cleaned.replace(/\s+as\s+[A-Za-z0-9_<>[\]]+/g, '')
+  cleaned = cleaned.replace(/\s+as\s+(?:const|Record<[^>]+>|[A-Za-z0-9_<>[\]|&]+)/g, '')
 
   return cleaned
 }
@@ -52,7 +62,6 @@ function parseJavaScriptError(err) {
   let column = undefined
 
   if (err instanceof Error && err.stack) {
-    // Attempt to match stack frame: eval at handleExecute / <anonymous>:line:col
     const match = err.stack.match(/(?:<anonymous>|eval at [^,]+|Worker):\s*(\d+):(\d+)/i)
     if (match && match[1]) {
       line = parseInt(match[1], 10)
@@ -60,11 +69,60 @@ function parseJavaScriptError(err) {
     }
   }
 
+  let type = err instanceof Error ? err.name : 'RuntimeError'
+  if (message.startsWith('HazardError:')) {
+    type = 'HazardError'
+  } else if (message.startsWith('OutOfBoundsError:')) {
+    type = 'OutOfBoundsError'
+  }
+
   return {
-    type: err instanceof Error ? err.name : 'RuntimeError',
-    message,
+    type,
+    message: message.replace(/^(?:HazardError|OutOfBoundsError):\s*/, ''),
     line,
     column,
+  }
+}
+
+function evaluateProceduralTestCase(tc) {
+  const reachedGoal =
+    !gameState.hazardHit &&
+    gameState.position.x === gameState.goal.x &&
+    gameState.position.y === gameState.goal.y
+
+  if (tc.expected && typeof tc.expected === 'object') {
+    let passed = true
+    const actualSummary = {}
+
+    if ('atGoal' in tc.expected) {
+      if (reachedGoal !== tc.expected.atGoal) passed = false
+      actualSummary.atGoal = reachedGoal
+    }
+    if ('position' in tc.expected && tc.expected.position) {
+      const posMatch =
+        gameState.position.x === tc.expected.position.x &&
+        gameState.position.y === tc.expected.position.y
+      if (!posMatch) passed = false
+      actualSummary.position = { ...gameState.position }
+    }
+    if ('inventoryCount' in tc.expected) {
+      const countMatch = gameState.inventory.length >= tc.expected.inventoryCount
+      if (!countMatch) passed = false
+      actualSummary.inventoryCount = gameState.inventory.length
+    }
+    if ('noHazards' in tc.expected) {
+      const hazardFree = gameState.hazardHit === null
+      if (hazardFree !== tc.expected.noHazards) passed = false
+      actualSummary.noHazards = hazardFree
+    }
+
+    return { passed, actual: actualSummary }
+  }
+
+  const expectedBool = tc.expected !== undefined ? Boolean(tc.expected) : true
+  return {
+    passed: reachedGoal === expectedBool,
+    actual: gameState.hazardHit ? gameState.hazardHit.message : reachedGoal,
   }
 }
 
@@ -73,10 +131,14 @@ function parseJavaScriptError(err) {
  */
 async function handleExecute(request) {
   const startTime = performance.now()
-  const { requestId, code, testCases = [], initialState = {}, timeoutMs = 3000 } = request
+  const { requestId, code, rawUserCode, testCases = [], initialState = {}, timeoutMs = 3000 } = request
 
   currentStdout = []
   recordedSteps = []
+
+  const tiles = Array.isArray(initialState.tiles) ? initialState.tiles : []
+  const height = initialState.height || tiles.length || 0
+  const width = initialState.width || (tiles[0] ? tiles[0].length : 0)
 
   // Initialize game state
   gameState = {
@@ -85,6 +147,10 @@ async function handleExecute(request) {
     inventory: Array.isArray(initialState.inventory) ? [...initialState.inventory] : [],
     goal: { ...(initialState.goal || { x: 0, y: 0 }) },
     items: Array.isArray(initialState.items) ? [...initialState.items] : [],
+    tiles,
+    width,
+    height,
+    hazardHit: null,
   }
 
   // Infinite-loop protective timeout
@@ -99,6 +165,54 @@ async function handleExecute(request) {
       recordedSteps.push(stepEvent)
       if (shouldPost) {
         self.postMessage({ type: 'STEP', step: stepEvent })
+      }
+    }
+  }
+
+  function checkSpatialHazard() {
+    const { x, y } = gameState.position
+    if (gameState.width > 0 && gameState.height > 0) {
+      if (x < 0 || y < 0 || x >= gameState.width || y >= gameState.height) {
+        const msg = `OutOfBoundsError: Hero walked off the dungeon map at (${x}, ${y})!`
+        gameState.hazardHit = { type: 'out_of_bounds', x, y, message: msg }
+        recordStep(
+          {
+            type: 'hazard',
+            timestamp: Date.now(),
+            data: { position: { x, y }, tileType: 'out_of_bounds', message: msg },
+          },
+          true
+        )
+        throw new Error(msg)
+      }
+    }
+
+    if (Array.isArray(gameState.tiles) && gameState.tiles[y] && gameState.tiles[y][x]) {
+      const tile = gameState.tiles[y][x]
+      if (tile === 'lava') {
+        const msg = `HazardError: Hero stepped onto molten lava at (${x}, ${y})! Use jump() to clear lava traps.`
+        gameState.hazardHit = { type: 'lava', x, y, message: msg }
+        recordStep(
+          {
+            type: 'hazard',
+            timestamp: Date.now(),
+            data: { position: { x, y }, tileType: 'lava', message: msg },
+          },
+          true
+        )
+        throw new Error(msg)
+      } else if (tile === 'wall') {
+        const msg = `HazardError: Hero collided with a solid stone wall at (${x}, ${y})!`
+        gameState.hazardHit = { type: 'wall', x, y, message: msg }
+        recordStep(
+          {
+            type: 'hazard',
+            timestamp: Date.now(),
+            data: { position: { x, y }, tileType: 'wall', message: msg },
+          },
+          true
+        )
+        throw new Error(msg)
       }
     }
   }
@@ -125,6 +239,7 @@ async function handleExecute(request) {
       },
     }
     recordStep(stepEvent, true)
+    checkSpatialHazard()
     return { ...gameState.position }
   }
 
@@ -148,6 +263,7 @@ async function handleExecute(request) {
       },
     }
     recordStep(stepEvent, true)
+    checkSpatialHazard()
     return { ...gameState.position }
   }
 
@@ -170,7 +286,8 @@ async function handleExecute(request) {
 
   const at_goal = function () {
     const atGoal = Boolean(
-      gameState.goal &&
+      !gameState.hazardHit &&
+        gameState.goal &&
         gameState.position.x === gameState.goal.x &&
         gameState.position.y === gameState.goal.y
     )
@@ -203,6 +320,17 @@ async function handleExecute(request) {
     return { ...gameState.position }
   }
 
+  const _aqEmit = function (eventType, payload) {
+    recordStep(
+      {
+        type: String(eventType),
+        timestamp: Date.now(),
+        data: payload || {},
+      },
+      true
+    )
+  }
+
   // Custom Console capture
   const customConsole = {
     log: (...args) => {
@@ -232,10 +360,10 @@ async function handleExecute(request) {
       at_goal,
       turn,
       getPosition,
+      _aqEmit,
       console: customConsole,
     }
 
-    // Function constructor execution with sandboxed arguments
     const scopeKeys = Object.keys(sandboxScope)
     const scopeValues = Object.values(sandboxScope)
 
@@ -276,10 +404,9 @@ async function handleExecute(request) {
             actual = executionExport.solution(...inputArgs)
             passed = JSON.stringify(actual) === JSON.stringify(tc.expected)
           } else {
-            const reachedGoal =
-              gameState.position.x === gameState.goal.x && gameState.position.y === gameState.goal.y
-            passed = tc.expected !== undefined ? reachedGoal === tc.expected : reachedGoal
-            actual = reachedGoal
+            const evalRes = evaluateProceduralTestCase(tc)
+            passed = evalRes.passed
+            actual = evalRes.actual
           }
         } catch (err) {
           tcError = err instanceof Error ? err.message : String(err)
@@ -300,7 +427,10 @@ async function handleExecute(request) {
         })
       }
     } else {
-      const reached = gameState.position.x === gameState.goal.x && gameState.position.y === gameState.goal.y
+      const reached =
+        !gameState.hazardHit &&
+        gameState.position.x === gameState.goal.x &&
+        gameState.position.y === gameState.goal.y
       testResults.push({
         id: 'default-goal',
         name: 'Reach Quest Objective',
@@ -313,6 +443,10 @@ async function handleExecute(request) {
     }
 
     const executionTimeMs = Math.round(performance.now() - startTime)
+    const userSource = typeof rawUserCode === 'string' ? rawUserCode : code
+    const nonEmptyLines = (userSource || '')
+      .split('\n')
+      .filter((l) => l.trim().length > 0 && !l.trim().startsWith('//')).length
 
     const result = {
       requestId,
@@ -322,6 +456,10 @@ async function handleExecute(request) {
       testResults,
       allTestsPassed,
       executionTimeMs,
+      metrics: {
+        stepCount: recordedSteps.filter((s) => s.type === 'step' || s.type === 'jump').length,
+        lineCount: nonEmptyLines,
+      },
     }
 
     self.postMessage({ type: 'RESULT', payload: result })

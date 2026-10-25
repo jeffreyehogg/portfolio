@@ -3,14 +3,26 @@
 import React, { useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import confetti from 'canvas-confetti'
-import { Star, Sparkles, ArrowRight, RotateCcw, Map, Award, X } from 'lucide-react'
+import {
+  Star,
+  Sparkles,
+  ArrowRight,
+  RotateCcw,
+  Map,
+  Award,
+  X,
+  CheckCircle2,
+  Circle,
+} from 'lucide-react'
 import Link from 'next/link'
 import { Level } from '../../lib/quests/types'
+import { StarEvaluationResult } from '../../lib/engine/scoring'
 
 interface VictoryModalProps {
   isOpen: boolean
   level: Level
   stars?: number
+  starEvaluation?: StarEvaluationResult
   xpAwarded?: number
   nextLevelId?: string | null
   onReplay: () => void
@@ -22,6 +34,7 @@ export function VictoryModal({
   isOpen,
   level,
   stars = 3,
+  starEvaluation,
   xpAwarded = 100,
   nextLevelId,
   onReplay,
@@ -29,6 +42,7 @@ export function VictoryModal({
   onClose,
 }: VictoryModalProps) {
   const continueButtonRef = useRef<HTMLButtonElement | null>(null)
+  const displayStars = starEvaluation?.stars ?? stars
 
   // Fire celebratory confetti cannons and focus continue button
   useEffect(() => {
@@ -44,7 +58,6 @@ export function VictoryModal({
         // Safe fallback if canvas-confetti is unavailable
       }
 
-      // Blur background elements like CodeMirror and focus primary CTA
       if (document.activeElement instanceof HTMLElement) {
         document.activeElement.blur()
       }
@@ -133,24 +146,24 @@ export function VictoryModal({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.25 }}
-              className="text-xs font-mono text-slate-400 mt-1 mb-5"
+              className="text-xs font-mono text-slate-400 mt-1 mb-4"
             >
               Level {level.number}: {level.title} — {level.concept}
             </motion.p>
 
             {/* 3-Star Rating Animation */}
-            <div className="flex items-center justify-center gap-3 my-4">
+            <div className="flex items-center justify-center gap-3 my-3">
               {[1, 2, 3].map((starIdx) => (
                 <motion.div
                   key={`star-${starIdx}`}
                   initial={{ scale: 0, rotate: -30 }}
-                  animate={{ scale: starIdx <= stars ? 1 : 0.8, rotate: 0 }}
+                  animate={{ scale: starIdx <= displayStars ? 1 : 0.8, rotate: 0 }}
                   transition={{ delay: 0.3 + starIdx * 0.12, type: 'spring', stiffness: 300 }}
                   className="relative"
                 >
                   <Star
                     className={`w-9 h-9 transition-colors ${
-                      starIdx <= stars
+                      starIdx <= displayStars
                         ? 'text-amber-400 fill-amber-400 drop-shadow-[0_0_10px_rgba(251,191,36,0.6)]'
                         : 'text-slate-700 fill-slate-800'
                     }`}
@@ -159,19 +172,40 @@ export function VictoryModal({
               ))}
             </div>
 
+            {/* Dynamic Star Evaluation Criteria */}
+            {starEvaluation && (
+              <div className="my-3 p-3 rounded-2xl bg-slate-950/70 border border-white/[0.06] text-left space-y-1.5">
+                {starEvaluation.criteria.map((c, idx) => (
+                  <div key={idx} className="flex items-start gap-2 text-xs font-mono">
+                    {c.met ? (
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                    ) : (
+                      <Circle className="w-3.5 h-3.5 text-slate-600 shrink-0 mt-0.5" />
+                    )}
+                    <div>
+                      <div className={c.met ? 'text-slate-200 font-semibold' : 'text-slate-500'}>
+                        {c.label}
+                      </div>
+                      <div className="text-[10px] text-slate-400">{c.detail}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
             {/* Reward Pill */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.65 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-300 font-mono text-sm font-bold my-3 shadow-inner"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-300 font-mono text-sm font-bold my-2 shadow-inner"
             >
               <Award className="w-4 h-4 text-amber-400" />
               <span>+{xpAwarded} XP Earned</span>
             </motion.div>
 
             {/* Primary Action Buttons */}
-            <div className="flex flex-col gap-2.5 mt-6">
+            <div className="flex flex-col gap-2.5 mt-4">
               {nextLevelId ? (
                 <button
                   ref={continueButtonRef}

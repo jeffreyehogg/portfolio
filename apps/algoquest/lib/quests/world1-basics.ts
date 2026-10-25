@@ -291,6 +291,12 @@ export const WORLD_1_LEVELS: Level[] = [
         expected: true,
         description: 'Hero must jump over the lava tile at (1, 0) and land on (2, 0)',
       },
+      {
+        id: 'tc-2',
+        name: 'Clear hazard without stepping into lava',
+        expected: { atGoal: true, noHazards: true },
+        description: 'Hero must not step onto the lava fissure at (1, 0)',
+      },
     ],
     prepareCode: (userCode, language) => {
       if (language === 'python') {

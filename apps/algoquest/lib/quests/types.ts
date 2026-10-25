@@ -22,7 +22,7 @@ export interface GridEntity {
   collected?: boolean
 }
 
-export type VisualizerType = 'grid' | 'stack' | 'pointers' | 'array'
+export type VisualizerType = 'grid' | 'stack' | 'pointers' | 'array' | 'hashmap' | 'binary_search'
 
 export interface GridConfig {
   width: number
@@ -37,9 +37,12 @@ export interface GridConfig {
 export interface VisualizerConfig {
   type: VisualizerType
   initialStack?: string[]
-  initialPointers?: { left: number; right: number }
+  initialPointers?: { left: number; right: number; mid?: number }
   initialArray?: string[]
   targetStack?: string[]
+  initialMap?: Record<string, string | number>
+  targetMap?: Record<string, string | number>
+  searchTarget?: number
 }
 
 export interface Hint {
@@ -71,6 +74,7 @@ export interface Level {
   concept: string
   badge: string
   xp: number
+  optimalSteps?: number
   objective: string
   instructions: string[]
   availableActions?: AvailableAction[]

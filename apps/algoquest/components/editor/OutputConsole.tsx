@@ -1,12 +1,22 @@
 'use client'
 
 import React, { useState } from 'react'
-import { CheckCircle2, XCircle, Terminal, AlertCircle, Clock, ShieldCheck } from 'lucide-react'
-import { TestCaseResult, ErrorDetails } from '../../lib/engine/types'
+import {
+  CheckCircle2,
+  XCircle,
+  Terminal,
+  AlertCircle,
+  Clock,
+  ShieldCheck,
+  Sparkles,
+  FileCode2,
+} from 'lucide-react'
+import { TestCaseResult, ErrorDetails, LintDiagnostic } from '../../lib/engine/types'
 
 interface OutputConsoleProps {
   testResults: TestCaseResult[]
   stdoutLogs: string[]
+  lintDiagnostics?: LintDiagnostic[]
   error?: string
   errorDetails?: ErrorDetails
   executionTimeMs?: number
@@ -17,21 +27,23 @@ interface OutputConsoleProps {
 export function OutputConsole({
   testResults = [],
   stdoutLogs = [],
+  lintDiagnostics = [],
   error,
   errorDetails,
   executionTimeMs = 0,
   allTestsPassed = false,
   hasRun = false,
 }: OutputConsoleProps) {
-  const [activeTab, setActiveTab] = useState<'tests' | 'terminal'>('tests')
+  const [activeTab, setActiveTab] = useState<'tests' | 'terminal' | 'lint'>('tests')
 
   const totalTests = testResults.length
   const passedCount = testResults.filter((t) => t.passed).length
+  const warningCount = lintDiagnostics.filter((d) => d.severity === 'warning').length
 
   return (
     <div className="flex flex-col h-full rounded-2xl bg-slate-900/80 backdrop-blur-xl border border-white/[0.08] shadow-2xl overflow-hidden">
       {/* Console Header */}
-      <div className="flex items-center justify-between px-4 py-2 bg-slate-950/70 border-b border-white/[0.06]">
+      <div className="flex items-center justify-between px-4 py-2 bg-slate-950/70 border-b border-white/[0.06] overflow-x-auto">
         <div role="tablist" aria-label="Console Output Tabs" className="flex items-center gap-2">
           <button
             type="button"
@@ -40,7 +52,7 @@ export function OutputConsole({
             aria-selected={activeTab === 'tests'}
             aria-controls="panel-tests"
             onClick={() => setActiveTab('tests')}
-            className={`px-3 py-1 rounded-lg text-xs font-mono font-medium transition-all flex items-center gap-1.5 ${
+            className={`px-3 py-1 rounded-lg text-xs font-mono font-medium transition-all flex items-center gap-1.5 whitespace-nowrap ${
               activeTab === 'tests'
                 ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/40'
                 : 'text-slate-400 hover:text-white'
@@ -64,11 +76,39 @@ export function OutputConsole({
           <button
             type="button"
             role="tab"
+            id="tab-lint"
+            aria-selected={activeTab === 'lint'}
+            aria-controls="panel-lint"
+            onClick={() => setActiveTab('lint')}
+            className={`px-3 py-1 rounded-lg text-xs font-mono font-medium transition-all flex items-center gap-1.5 whitespace-nowrap ${
+              activeTab === 'lint'
+                ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
+                : 'text-slate-400 hover:text-white'
+            }`}
+          >
+            <FileCode2 className="w-3.5 h-3.5" />
+            <span>Ruff / Code Quality</span>
+            {hasRun && (
+              <span
+                className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
+                  warningCount === 0
+                    ? 'bg-emerald-500/20 text-emerald-300'
+                    : 'bg-amber-500/20 text-amber-300'
+                }`}
+              >
+                {lintDiagnostics.length === 0 ? 'Clean' : lintDiagnostics.length}
+              </span>
+            )}
+          </button>
+
+          <button
+            type="button"
+            role="tab"
             id="tab-terminal"
             aria-selected={activeTab === 'terminal'}
             aria-controls="panel-terminal"
             onClick={() => setActiveTab('terminal')}
-            className={`px-3 py-1 rounded-lg text-xs font-mono font-medium transition-all flex items-center gap-1.5 ${
+            className={`px-3 py-1 rounded-lg text-xs font-mono font-medium transition-all flex items-center gap-1.5 whitespace-nowrap ${
               activeTab === 'terminal'
                 ? 'bg-slate-800 text-white border border-slate-700'
                 : 'text-slate-400 hover:text-white'
@@ -85,7 +125,7 @@ export function OutputConsole({
         </div>
 
         {hasRun && (
-          <div className="flex items-center gap-1 text-[11px] font-mono text-slate-400">
+          <div className="flex items-center gap-1 text-[11px] font-mono text-slate-400 shrink-0 ml-2">
             <Clock className="w-3 h-3 text-slate-500" />
             <span>{executionTimeMs}ms</span>
           </div>
@@ -186,7 +226,50 @@ export function OutputConsole({
           </div>
         )}
 
-        {/* Tab 2: Terminal Output */}
+        {/* Tab 2: Ruff / Code Quality Diagnostics */}
+        {activeTab === 'lint' && (
+          <div className="space-y-2">
+            {!hasRun ? (
+              <div className="py-8 text-center text-slate-500 italic">
+                Run your code to execute AST &amp; Ruff-inspired static code analysis.
+              </div>
+            ) : lintDiagnostics.length === 0 ? (
+              <div className="p-4 rounded-xl bg-emerald-950/20 border border-emerald-500/30 flex items-center gap-3 text-emerald-200">
+                <Sparkles className="w-5 h-5 text-emerald-400 shrink-0" />
+                <div>
+                  <div className="font-bold text-white">Ruff &amp; Style Check Passed (0 warnings)</div>
+                  <div className="text-[11px] text-emerald-300/80 mt-0.5">
+                    Your solution adheres to clean syntax and PEP 8 / modern lint conventions.
+                  </div>
+                </div>
+              </div>
+            ) : (
+              lintDiagnostics.map((diag, idx) => (
+                <div
+                  key={`${diag.code}-${diag.line}-${idx}`}
+                  className="p-3 rounded-xl bg-amber-950/20 border border-amber-500/30 text-amber-200 flex items-start justify-between gap-3"
+                >
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2">
+                      <span className="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[10px] font-bold">
+                        {diag.rule}
+                      </span>
+                      {diag.line && (
+                        <span className="text-slate-400 text-[11px]">
+                          Line {diag.line}
+                          {diag.column ? `:${diag.column}` : ''}
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-slate-200 text-xs">{diag.message}</p>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        )}
+
+        {/* Tab 3: Terminal Output */}
         {activeTab === 'terminal' && (
           <div className="space-y-1">
             {stdoutLogs.length === 0 ? (

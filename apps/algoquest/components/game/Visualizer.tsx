@@ -2,15 +2,16 @@
 
 import React from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Layers, ArrowRight, ArrowDown, Database, Cpu } from 'lucide-react'
+import { Layers, ArrowRight, ArrowDown, Database, Cpu, KeyRound, Search } from 'lucide-react'
 import { VisualizerConfig } from '../../lib/quests/types'
 
 interface VisualizerProps {
   config?: VisualizerConfig
   liveStack?: string[]
-  livePointers?: { left: number; right: number }
+  livePointers?: { left: number; right: number; mid?: number }
   liveArray?: string[]
   accessedIndex?: number | null
+  liveMap?: Record<string, string | number>
 }
 
 export function Visualizer({
@@ -19,11 +20,13 @@ export function Visualizer({
   livePointers = { left: 0, right: 6 },
   liveArray = ['potion', 'shield', 'key'],
   accessedIndex = null,
+  liveMap,
 }: VisualizerProps) {
-  if (!config) return null
+  if (!config || config.type === 'grid') return null
 
-  const { type, initialStack = [] } = config
+  const { type, initialStack = [], initialMap = { wind: 1, ice: 2 }, searchTarget = 42 } = config
   const stackItems = liveStack.length > 0 ? liveStack : initialStack
+  const activeMap = liveMap && Object.keys(liveMap).length > 0 ? liveMap : initialMap
 
   return (
     <div className="w-full rounded-2xl bg-slate-900/60 backdrop-blur-xl border border-white/[0.08] p-4 mt-3 shadow-xl">
@@ -33,6 +36,10 @@ export function Visualizer({
             <Layers className="w-4 h-4 text-indigo-400" />
           ) : type === 'pointers' ? (
             <Cpu className="w-4 h-4 text-cyan-400" />
+          ) : type === 'hashmap' ? (
+            <KeyRound className="w-4 h-4 text-purple-400" />
+          ) : type === 'binary_search' ? (
+            <Search className="w-4 h-4 text-emerald-400" />
           ) : (
             <Database className="w-4 h-4 text-amber-400" />
           )}
@@ -41,7 +48,11 @@ export function Visualizer({
               ? 'Memory Stack Tower (LIFO)'
               : type === 'pointers'
                 ? 'Two-Pointer Memory Array'
-                : '0-Indexed Array Memory'}
+                : type === 'hashmap'
+                  ? 'Hash Map Dictionary O(1)'
+                  : type === 'binary_search'
+                    ? 'Binary Search O(log n) Vault'
+                    : '0-Indexed Array Memory'}
           </span>
         </div>
         <span className="text-[10px] px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700 font-mono">
@@ -98,7 +109,6 @@ export function Visualizer({
       {/* Mode 2: Two Pointers Array (Level 8) */}
       {type === 'pointers' && (
         <div className="flex flex-col items-center py-2">
-          {/* Pointers Row */}
           <div className="flex items-center justify-center gap-2 mb-1">
             {Array.from({ length: 7 }).map((_, idx) => {
               const isLeft = livePointers.left === idx
@@ -137,7 +147,6 @@ export function Visualizer({
             })}
           </div>
 
-          {/* Array Cells */}
           <div className="flex items-center justify-center gap-2">
             {Array.from({ length: 7 }).map((_, idx) => {
               const isLeft = livePointers.left === idx
@@ -206,6 +215,80 @@ export function Visualizer({
           </div>
           <div className="mt-2 text-[11px] font-mono text-slate-400">
             0-based indexing: First element is at index <span className="text-cyan-400 font-bold">0</span>, third is at <span className="text-cyan-400 font-bold">2</span>
+          </div>
+        </div>
+      )}
+
+      {/* Mode 4: Hash Map Dictionary (Level 9) */}
+      {type === 'hashmap' && (
+        <div className="flex flex-col items-center py-2">
+          <div className="grid grid-cols-3 gap-2.5 w-full max-w-md">
+            {Object.entries(activeMap).map(([key, val]) => {
+              const isFire = key === 'fire'
+              const isIce = key === 'ice'
+              return (
+                <motion.div
+                  key={`kv-${key}`}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className={`p-2.5 rounded-xl border flex flex-col items-center justify-center transition-all ${
+                    isFire
+                      ? 'bg-amber-500/15 border-amber-400/50 shadow-[0_0_12px_rgba(245,158,11,0.3)]'
+                      : isIce
+                        ? 'bg-cyan-500/15 border-cyan-400/50 shadow-[0_0_12px_rgba(34,211,238,0.25)]'
+                        : 'bg-slate-900/80 border-slate-800'
+                  }`}
+                >
+                  <span className="text-[10px] font-mono text-slate-400">
+                    runes[&quot;{key}&quot;]
+                  </span>
+                  <span className="text-sm font-mono font-bold text-white mt-0.5">{String(val)}</span>
+                </motion.div>
+              )
+            })}
+          </div>
+          <div className="mt-2.5 text-[11px] font-mono text-slate-400">
+            O(1) Constant-Time Hash Lookup: <span className="text-amber-300 font-semibold">runes[&quot;fire&quot;] = 3</span> &bull; <span className="text-cyan-300 font-semibold">runes[&quot;ice&quot;] &rarr; 2</span>
+          </div>
+        </div>
+      )}
+
+      {/* Mode 5: Binary Search (Level 10) */}
+      {type === 'binary_search' && (
+        <div className="flex flex-col items-center py-2">
+          <div className="flex items-center justify-center gap-1.5">
+            {(config.initialArray || ['10', '20', '30', '42', '50', '60', '70']).map((val, idx) => {
+              const midIdx = livePointers.mid ?? Math.floor((livePointers.left + livePointers.right) / 2)
+              const isMid = idx === midIdx
+              const inBounds = idx >= livePointers.left && idx <= livePointers.right
+
+              return (
+                <div
+                  key={`bs-${idx}`}
+                  className={`w-10 h-12 rounded-xl border flex flex-col items-center justify-center transition-all ${
+                    isMid && Number(val) === searchTarget
+                      ? 'bg-emerald-500/25 border-emerald-400 shadow-[0_0_14px_rgba(52,211,153,0.5)]'
+                      : isMid
+                        ? 'bg-amber-500/20 border-amber-400'
+                        : inBounds
+                          ? 'bg-slate-900/80 border-slate-700'
+                          : 'bg-slate-950/50 border-slate-900 opacity-40'
+                  }`}
+                >
+                  <span className="text-xs font-mono font-bold text-white">{val}</span>
+                  <span className="text-[9px] font-mono text-slate-400">[{idx}]</span>
+                </div>
+              )
+            })}
+          </div>
+          <div className="mt-2.5 text-[11px] font-mono text-slate-400 flex items-center gap-3">
+            <span className="text-cyan-400">low={livePointers.left}</span>
+            <span>&bull;</span>
+            <span className="text-emerald-400 font-bold">
+              mid={livePointers.mid ?? Math.floor((livePointers.left + livePointers.right) / 2)} (target: {searchTarget})
+            </span>
+            <span>&bull;</span>
+            <span className="text-purple-400">high={livePointers.right}</span>
           </div>
         </div>
       )}

@@ -191,6 +191,12 @@ export const WORLD_2_LEVELS: Level[] = [
         expected: true,
         description: 'Hero must step 5 times to reach coordinate (5, 0)',
       },
+      {
+        id: 'tc-2',
+        name: 'Harvest all 5 gems along the bridge',
+        expected: { atGoal: true, inventoryCount: 5 },
+        description: 'Hero must call collect() on all 5 bridge tiles',
+      },
     ],
     prepareCode: (userCode) => {
       return `${userCode}\n`

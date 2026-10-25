@@ -93,8 +93,8 @@ export default function HomePage() {
             transition={{ delay: 0.08 }}
             className="text-base sm:text-lg text-slate-300 max-w-xl mx-auto leading-relaxed mb-8"
           >
-            Eight interactive coding challenges. Write code to guide your hero across the dungeon,
-            manipulate stacks, and master algorithms with live visual feedback.
+            Ten interactive coding challenges. Write code to guide your hero across the dungeon,
+            manipulate stacks, query hash maps, and master binary search with live visual feedback.
           </motion.p>
 
           {/* Primary Action Button */}
@@ -158,7 +158,7 @@ export default function HomePage() {
             <h2 className="text-sm font-mono font-bold uppercase tracking-wider text-slate-400">
               Curriculum Challenges
             </h2>
-            <span className="text-xs font-mono text-slate-500">8 Progressive Puzzles</span>
+            <span className="text-xs font-mono text-slate-500">10 Progressive Puzzles</span>
           </div>
 
           {LEVELS.map((lvl) => {

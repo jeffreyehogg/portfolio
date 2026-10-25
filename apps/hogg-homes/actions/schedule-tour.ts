@@ -94,7 +94,7 @@ export async function scheduleTourAction(formData: FormData): Promise<TourBookin
     if (error instanceof z.ZodError) {
       return {
         success: false,
-        error: error.errors[0]?.message || 'Invalid form submission',
+        error: error.issues[0]?.message || 'Invalid form submission',
       }
     }
     if (error instanceof Error) {

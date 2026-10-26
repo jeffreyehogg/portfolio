@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRightIcon } from '@heroicons/react/24/outline'
+import { ArrowRightIcon, CodeBracketSquareIcon } from '@heroicons/react/24/outline'
 import { trustedCompaniesData } from '../../lib/data'
 
 export default function Trusted() {
@@ -41,17 +41,26 @@ export default function Trusted() {
 							className='group relative flex flex-col justify-between rounded-2xl bg-slate-900/65 border border-white/[0.08] p-6 sm:p-7 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] hover:border-white/[0.16] hover:bg-slate-900/90 transition-all duration-200'
 						>
 							<div>
-								{/* Top Row: Company Logo & Tenure */}
+								{/* Top Row: Company Logo / Identity & Tenure */}
 								<div className='flex items-center justify-between gap-4 pb-5 mb-5 border-b border-white/[0.06]'>
 									<div className='h-9 flex items-center opacity-85 group-hover:opacity-100 transition-opacity'>
-										<Image
-											width={company.width}
-											height={company.height}
-											src={company.imageUrl}
-											alt={company.name}
-											loading='lazy'
-											className='h-8 sm:h-9 w-auto object-contain'
-										/>
+										{company.organization && company.imageUrl ? (
+											<Image
+												width={company.width ?? 140}
+												height={company.height ?? 60}
+												src={company.imageUrl}
+												alt={company.name}
+												loading='lazy'
+												className='h-8 sm:h-9 w-auto object-contain'
+											/>
+										) : (
+											<div className='inline-flex items-center gap-2 text-slate-200 font-semibold text-sm'>
+												<div className='p-1.5 rounded-lg bg-indigo-500/10 border border-indigo-500/20 text-indigo-400'>
+													<CodeBracketSquareIcon className='w-5 h-5' />
+												</div>
+												<span>Independent / Freelance</span>
+											</div>
+										)}
 									</div>
 									<span className='inline-flex items-center gap-1.5 text-xs font-medium text-slate-400 bg-slate-950/70 border border-white/[0.07] px-2.5 py-1 rounded-full shrink-0'>
 										{idx === 0 && (
@@ -66,7 +75,13 @@ export default function Trusted() {
 									{company.badge}
 								</div>
 								<h3 className='text-lg font-bold text-white group-hover:text-indigo-200 transition-colors mb-2.5'>
-									{company.role} <span className='text-slate-500 font-normal'>@</span> {company.name}
+									{company.role}
+									{company.organization && (
+										<>
+											{' '}
+											<span className='text-slate-500 font-normal'>@</span> {company.organization}
+										</>
+									)}
 								</h3>
 
 								{/* Impact Description */}

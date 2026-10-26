@@ -42,9 +42,10 @@ export interface ServiceTier {
 
 export interface CompanyLogo {
 	name: string
-	imageUrl: string
-	width: number
-	height: number
+	organization?: string
+	imageUrl?: string
+	width?: number
+	height?: number
 	role: string
 	period: string
 	badge: string
@@ -420,6 +421,7 @@ export const educationData: EducationItem[] = [
 export const trustedCompaniesData: CompanyLogo[] = [
 	{
 		name: 'LGI Homes',
+		organization: 'LGI Homes',
 		imageUrl: '/images/logos/lgi-homes.svg',
 		width: 150,
 		height: 60,
@@ -430,26 +432,27 @@ export const trustedCompaniesData: CompanyLogo[] = [
 			'Modernizing legacy infrastructure with Docker/Nginx, GitHub Actions CI/CD, Node.js/TypeScript middleware, and distributed MS SQL & MySQL tuning.',
 	},
 	{
+		name: 'Freelance & Client Engineering',
+		imageUrl: '/images/logos/vision.webp',
+		width: 150,
+		height: 60,
+		role: 'Freelance Software Developer',
+		period: '2024 – 2026',
+		badge: 'Self-Employed • Full-Stack & ETL',
+		impact:
+			'Partnered directly with clients (including Vision Integrated Systems & Texas Tint Plus) to architect custom Next.js platforms, e-commerce workflows, and Python/SQL data migrations.',
+	},
+	{
 		name: 'Cisco',
+		organization: 'Cisco',
 		imageUrl: '/images/logos/cisco.webp',
 		width: 140,
 		height: 60,
 		role: 'Software Engineer',
-		period: '2013 – 2024',
+		period: '2021 – 2024',
 		badge: 'Webex Calling • Control Hub',
 		impact:
-			'Engineered enterprise administration features in Angular & TypeScript, Cypress E2E regression suites, Jenkins pipelines, and Kibana/PagerDuty operations.',
-	},
-	{
-		name: 'Vision Integrated Systems',
-		imageUrl: '/images/logos/vision.webp',
-		width: 160,
-		height: 60,
-		role: 'Freelance Software Developer',
-		period: '2024 – 2026',
-		badge: 'Client Architecture & ETL',
-		impact:
-			'Architected custom Next.js web platforms, commercial security data migration utilities (Python/SQL), and high-conversion client applications.',
+			'Engineered enterprise administration features in Angular & TypeScript, Cypress E2E regression suites, Jenkins pipelines, and Kibana/PagerDuty operations (at Cisco since 2013).',
 	},
 ]
 

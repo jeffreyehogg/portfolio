@@ -2,8 +2,9 @@
 
 import { Resend } from 'resend'
 import { z } from 'zod'
+import { env } from '../../lib/env'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+const resend = env.RESEND_API_KEY ? new Resend(env.RESEND_API_KEY) : null
 
 const contactSchema = z.object({
 	firstName: z
@@ -53,7 +54,7 @@ export async function sendEmail(
 
 	const { recaptchaToken, ...emailContent } = validatedFields.data
 
-	const recaptchaSecret = process.env.RECAPTCHA_SECRET_KEY
+	const recaptchaSecret = env.RECAPTCHA_SECRET_KEY
 	const recaptchaUrl = 'https://www.google.com/recaptcha/api/siteverify'
 
 	try {
@@ -78,10 +79,17 @@ export async function sendEmail(
 		return { status: 'error', message: 'reCAPTCHA service is unavailable.' }
 	}
 
+	if (!resend || !env.RESEND_EMAIL_TO) {
+		return {
+			status: 'error',
+			message: 'Email service is not configured.',
+		}
+	}
+
 	try {
 		await resend.emails.send({
 			from: 'Portfolio Contact <contact@jeffhogg.com>',
-			to: process.env.RESEND_EMAIL_TO!,
+			to: env.RESEND_EMAIL_TO,
 			subject: emailContent.subject,
 			text: `
         From: ${emailContent.firstName} ${emailContent.lastName}

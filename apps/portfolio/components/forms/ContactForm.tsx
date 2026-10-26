@@ -11,6 +11,7 @@ import {
 import { motion, AnimatePresence } from 'framer-motion'
 import MessageSent from '../ui/MessageSent'
 import { XCircleIcon } from '@heroicons/react/24/solid'
+import { env } from '../../lib/env'
 
 const initialState: FormState = { status: 'idle', message: '' }
 
@@ -301,7 +302,7 @@ function ContactFormInner() {
 }
 
 export default function ContactForm() {
-	const recaptchaKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
+	const recaptchaKey = env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
 
 	if (!recaptchaKey) {
 		return (

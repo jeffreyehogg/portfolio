@@ -50,7 +50,7 @@ export default function EngineeringPillars() {
 						return (
 							<div
 								key={pillar.id}
-								className='group relative rounded-2xl bg-slate-900/70 border border-white/[0.08] p-6 sm:p-7 hover:border-indigo-500/30 hover:bg-slate-900/90 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)] hover:shadow-xl hover:shadow-indigo-500/5 transition-colors duration-200 flex flex-col justify-between'
+								className='group relative rounded-2xl bg-slate-900/65 border border-white/[0.08] p-6 sm:p-7 hover:border-white/[0.16] hover:bg-slate-900/90 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] hover:shadow-xl hover:shadow-black/30 transition-all duration-200 flex flex-col justify-between'
 							>
 								{/* Subtle hover gradient glow */}
 								<div className='absolute inset-0 rounded-2xl bg-gradient-to-br from-indigo-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none' />
@@ -70,7 +70,7 @@ export default function EngineeringPillars() {
 										{pillar.title}
 									</h3>
 
-									<p className='text-slate-300 text-sm sm:text-base leading-relaxed mb-6 font-light'>
+									<p className='text-slate-300 text-sm sm:text-base leading-relaxed mb-6 font-light text-pretty'>
 										{pillar.description}
 									</p>
 								</div>

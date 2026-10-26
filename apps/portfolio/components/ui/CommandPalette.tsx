@@ -1,6 +1,6 @@
 'use client'
 
-import { Fragment, useState, useEffect } from 'react'
+import { Fragment, useState, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import { Dialog, Combobox, Transition } from '@headlessui/react'
 import {
@@ -12,20 +12,44 @@ import {
 	HomeIcon,
 	ArrowTopRightOnSquareIcon,
 	ServerStackIcon,
+	CpuChipIcon,
 } from '@heroicons/react/24/outline'
-import { githubUrl, linkedInUrl } from '../../lib/data'
+import { githubUrl, linkedInUrl, projectsData } from '../../lib/data'
 
 interface CommandItem {
 	id: string
 	title: string
-	category: 'Navigation' | 'Experience' | 'Actions'
+	subtitle?: string
+	category: 'Quick Actions' | 'Navigation' | 'Projects & Systems' | 'Experience'
 	href?: string
 	external?: boolean
 	icon: any
 	shortcut?: string
+	keywords?: string
 }
 
-const commandItems: CommandItem[] = [
+const baseCommandItems: CommandItem[] = [
+	{
+		id: 'act-contact',
+		title: 'Send a Message',
+		subtitle: 'Open contact & inquiry form',
+		category: 'Quick Actions',
+		href: '/contact',
+		icon: EnvelopeIcon,
+		shortcut: 'Form',
+		keywords: 'email message contact hire consultation inquiry',
+	},
+	{
+		id: 'act-resume',
+		title: 'Download Resume (PDF)',
+		subtitle: 'View or save full engineering resume',
+		category: 'Quick Actions',
+		href: '/Jeff_Hogg_Resume.pdf',
+		external: true,
+		icon: DocumentTextIcon,
+		shortcut: 'PDF',
+		keywords: 'cv resume pdf download',
+	},
 	{
 		id: 'nav-home',
 		title: 'Home',
@@ -35,72 +59,78 @@ const commandItems: CommandItem[] = [
 	},
 	{
 		id: 'nav-projects',
-		title: 'Systems & Projects',
+		title: 'Systems & Projects Directory',
 		category: 'Navigation',
 		href: '/portfolio',
 		icon: CommandLineIcon,
 	},
 	{
 		id: 'nav-about',
-		title: 'About Me & Background',
+		title: 'About & Career Timeline',
 		category: 'Navigation',
 		href: '/about',
 		icon: BriefcaseIcon,
 	},
 	{
-		id: 'nav-contact',
-		title: 'Contact & Inquiries',
-		category: 'Navigation',
-		href: '/contact',
-		icon: EnvelopeIcon,
-	},
-	{
 		id: 'exp-lgi',
 		title: 'LGI Homes — Full-Stack Developer',
+		subtitle: 'Docker, GitHub Actions CI/CD, Node.js, MS SQL & MySQL',
 		category: 'Experience',
 		href: '/about#experience',
 		icon: ServerStackIcon,
-	},
-	{
-		id: 'exp-freelance',
-		title: 'Freelance — Software Developer',
-		category: 'Experience',
-		href: '/about#experience',
-		icon: ServerStackIcon,
+		keywords: 'lgi homes devops sql docker nginx',
 	},
 	{
 		id: 'exp-cisco',
 		title: 'Cisco — Software Engineer',
+		subtitle: 'Webex Calling Control Hub, Angular, TypeScript, Cypress',
 		category: 'Experience',
 		href: '/about#experience',
 		icon: ServerStackIcon,
+		keywords: 'cisco webex angular cypress jenkins',
 	},
 	{
-		id: 'act-resume',
-		title: 'Download Resume (PDF)',
-		category: 'Actions',
-		href: '/Jeff_Hogg_Resume.pdf',
-		external: true,
-		icon: DocumentTextIcon,
-		shortcut: 'PDF',
+		id: 'exp-freelance',
+		title: 'Freelance — Software Developer',
+		subtitle: 'Next.js, Vercel, Python/SQL Data Migrations',
+		category: 'Experience',
+		href: '/about#experience',
+		icon: ServerStackIcon,
+		keywords: 'freelance nextjs python etl',
 	},
 	{
 		id: 'act-github',
 		title: 'GitHub Profile',
-		category: 'Actions',
+		category: 'Quick Actions',
 		href: githubUrl,
 		external: true,
 		icon: ArrowTopRightOnSquareIcon,
+		keywords: 'github source code repositories',
 	},
 	{
 		id: 'act-linkedin',
 		title: 'LinkedIn Profile',
-		category: 'Actions',
+		category: 'Quick Actions',
 		href: linkedInUrl,
 		external: true,
 		icon: ArrowTopRightOnSquareIcon,
+		keywords: 'linkedin social network connect',
 	},
 ]
+
+const projectCommandItems: CommandItem[] = projectsData.map((project) => ({
+	id: `proj-${project.title.toLowerCase().replace(/\s+/g, '-')}`,
+	title: project.title,
+	subtitle: project.tags.slice(0, 4).join(' • '),
+	category: 'Projects & Systems',
+	href: project.href,
+	external: true,
+	icon: CpuChipIcon,
+	shortcut: project.category === 'tools' ? 'System' : 'App',
+	keywords: `${project.tags.join(' ')} ${project.description} ${project.metrics ?? ''}`,
+}))
+
+const allCommandItems: CommandItem[] = [...baseCommandItems, ...projectCommandItems]
 
 interface CommandPaletteProps {
 	isOpen: boolean
@@ -111,26 +141,18 @@ export default function CommandPalette({ isOpen, setIsOpen }: CommandPaletteProp
 	const router = useRouter()
 	const [query, setQuery] = useState('')
 
-	// Global keyboard shortcut listener: Cmd+K / Ctrl+K
-	useEffect(() => {
-		const onKeyDown = (e: KeyboardEvent) => {
-			if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
-				e.preventDefault()
-				setIsOpen(!isOpen)
-			}
-		}
-		window.addEventListener('keydown', onKeyDown)
-		return () => window.removeEventListener('keydown', onKeyDown)
-	}, [isOpen, setIsOpen])
+	const filteredItems = useMemo(() => {
+		const trimmed = query.trim().toLowerCase()
+		if (!trimmed) return allCommandItems
 
-	const filteredItems =
-		query === ''
-			? commandItems
-			: commandItems.filter(
-					(item) =>
-						item.title.toLowerCase().includes(query.toLowerCase()) ||
-						item.category.toLowerCase().includes(query.toLowerCase())
-			  )
+		return allCommandItems.filter(
+			(item) =>
+				item.title.toLowerCase().includes(trimmed) ||
+				item.category.toLowerCase().includes(trimmed) ||
+				(item.subtitle && item.subtitle.toLowerCase().includes(trimmed)) ||
+				(item.keywords && item.keywords.toLowerCase().includes(trimmed))
+		)
+	}, [query])
 
 	const handleSelect = (item: CommandItem) => {
 		setIsOpen(false)
@@ -158,7 +180,7 @@ export default function CommandPalette({ isOpen, setIsOpen }: CommandPaletteProp
 					<div className='fixed inset-0 bg-slate-950/80 backdrop-blur-md transition-opacity' />
 				</Transition.Child>
 
-				<div className='fixed inset-0 z-10 overflow-y-auto p-4 sm:p-6 md:p-20 flex justify-center items-start pt-20 sm:pt-28'>
+				<div className='fixed inset-0 z-10 overflow-y-auto p-4 sm:p-6 md:p-20 flex justify-center items-start pt-20 sm:pt-24'>
 					<Transition.Child
 						as={Fragment}
 						enter='ease-out duration-200'
@@ -168,7 +190,7 @@ export default function CommandPalette({ isOpen, setIsOpen }: CommandPaletteProp
 						leaveFrom='opacity-100 scale-100'
 						leaveTo='opacity-0 scale-95'
 					>
-						<Dialog.Panel className='w-full max-w-xl transform divide-y divide-slate-800 overflow-hidden rounded-2xl bg-slate-900/95 border border-slate-700/80 shadow-2xl shadow-black/60 transition-all'>
+						<Dialog.Panel className='w-full max-w-xl transform divide-y divide-white/[0.08] overflow-hidden rounded-2xl bg-slate-900/95 border border-white/[0.1] shadow-2xl shadow-black/70 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] transition-all'>
 							<Combobox onChange={handleSelect}>
 								<div className='relative'>
 									<MagnifyingGlassIcon
@@ -176,12 +198,12 @@ export default function CommandPalette({ isOpen, setIsOpen }: CommandPaletteProp
 										aria-hidden='true'
 									/>
 									<Combobox.Input
-										className='h-12 w-full border-0 bg-transparent pl-11 pr-12 text-white placeholder:text-slate-400 focus:ring-0 sm:text-sm focus:outline-none'
-										placeholder='Search commands, pages, or actions... (⌘K)'
+										className='h-12 w-full border-0 bg-transparent pl-11 pr-14 text-white placeholder:text-slate-400 focus:ring-0 sm:text-sm focus:outline-none'
+										placeholder='Search projects, tech (MCP, WASM, Docker), or actions...'
 										onChange={(event) => setQuery(event.target.value)}
 										autoFocus
 									/>
-									<kbd className='absolute right-3.5 top-3.5 hidden sm:inline-flex items-center gap-0.5 px-2 py-0.5 text-[10px] font-mono text-slate-400 bg-slate-800 rounded border border-slate-700'>
+									<kbd className='absolute right-3.5 top-3.5 hidden sm:inline-flex items-center gap-0.5 px-2 py-0.5 text-[10px] font-mono text-slate-400 bg-slate-800/80 rounded border border-white/[0.08]'>
 										ESC
 									</kbd>
 								</div>
@@ -189,7 +211,7 @@ export default function CommandPalette({ isOpen, setIsOpen }: CommandPaletteProp
 								{filteredItems.length > 0 ? (
 									<Combobox.Options
 										static
-										className='max-h-80 scroll-py-2 overflow-y-auto p-2 focus:outline-none'
+										className='max-h-80 scroll-py-2 overflow-y-auto p-2 focus:outline-none space-y-0.5'
 									>
 										{filteredItems.map((item) => (
 											<Combobox.Option
@@ -198,26 +220,37 @@ export default function CommandPalette({ isOpen, setIsOpen }: CommandPaletteProp
 												className={({ active }) =>
 													`group flex cursor-pointer select-none items-center justify-between rounded-xl px-3.5 py-2.5 text-sm transition-colors ${
 														active
-															? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20'
+															? 'bg-indigo-600 text-white shadow-sm shadow-indigo-600/20'
 															: 'text-slate-300 hover:text-white'
 													}`
 												}
 											>
 												{({ active }) => (
 													<>
-														<div className='flex items-center gap-3'>
+														<div className='flex items-center gap-3 min-w-0 pr-3'>
 															<item.icon
-																className={`h-5 w-5 flex-shrink-0 ${
+																className={`h-4 w-4 flex-shrink-0 ${
 																	active ? 'text-white' : 'text-indigo-400'
 																}`}
 																aria-hidden='true'
 															/>
-															<span className='font-medium'>{item.title}</span>
+															<div className='truncate'>
+																<span className='font-medium'>{item.title}</span>
+																{item.subtitle && (
+																	<span
+																		className={`ml-2 text-xs font-normal ${
+																			active ? 'text-indigo-100' : 'text-slate-500'
+																		}`}
+																	>
+																		{item.subtitle}
+																	</span>
+																)}
+															</div>
 														</div>
-														<div className='flex items-center gap-2'>
+														<div className='flex items-center gap-2 shrink-0'>
 															<span
-																className={`text-xs font-normal ${
-																	active ? 'text-indigo-200' : 'text-slate-400'
+																className={`text-[11px] font-normal hidden sm:inline ${
+																	active ? 'text-indigo-200' : 'text-slate-500'
 																}`}
 															>
 																{item.category}
@@ -227,7 +260,7 @@ export default function CommandPalette({ isOpen, setIsOpen }: CommandPaletteProp
 																	className={`px-1.5 py-0.5 text-[10px] font-mono rounded ${
 																		active
 																			? 'bg-indigo-700 text-white'
-																			: 'bg-slate-800 text-slate-400 border border-slate-700'
+																			: 'bg-slate-800/80 text-slate-400 border border-white/[0.08]'
 																	}`}
 																>
 																	{item.shortcut}
@@ -243,20 +276,20 @@ export default function CommandPalette({ isOpen, setIsOpen }: CommandPaletteProp
 									<div className='py-12 px-6 text-center text-sm text-slate-400'>
 										<p>No results found for &ldquo;{query}&rdquo;.</p>
 										<p className='mt-1 text-xs text-slate-500'>
-											Try searching for &ldquo;projects&rdquo;, &ldquo;resume&rdquo;, or &ldquo;experience&rdquo;.
+											Try searching for &ldquo;AutoDBA&rdquo;, &ldquo;WASM&rdquo;, &ldquo;Docker&rdquo;, or &ldquo;resume&rdquo;.
 										</p>
 									</div>
 								)}
 
-								<div className='flex items-center justify-between px-4 py-2.5 text-xs text-slate-500 bg-slate-950/40 border-t border-slate-800/80 font-mono'>
-									<div className='flex items-center gap-2'>
-										<span>Navigate with</span>
-										<span className='px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-300'>↑</span>
-										<span className='px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-300'>↓</span>
+								<div className='flex items-center justify-between px-4 py-2.5 text-xs text-slate-400 bg-slate-950/50 border-t border-white/[0.06] font-mono'>
+									<div className='flex items-center gap-1.5'>
+										<span>Navigate</span>
+										<span className='px-1.5 py-0.5 rounded bg-slate-800 border border-white/[0.08] text-slate-300'>↑</span>
+										<span className='px-1.5 py-0.5 rounded bg-slate-800 border border-white/[0.08] text-slate-300'>↓</span>
 									</div>
 									<div className='flex items-center gap-1.5'>
-										<span>Select with</span>
-										<span className='px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-300'>↵</span>
+										<span>Open</span>
+										<span className='px-1.5 py-0.5 rounded bg-slate-800 border border-white/[0.08] text-slate-300'>↵</span>
 									</div>
 								</div>
 							</Combobox>

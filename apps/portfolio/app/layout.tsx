@@ -7,6 +7,7 @@ import ScrollToTop from '../components/ui/ScrollToTop'
 import StructuredData from '../components/seo/StructuredData'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import '../styles/globals.css'
 
 const inter = Inter({
@@ -83,7 +84,9 @@ export default function RootLayout({
 				<ScrollProgress />
 				<div className='flex flex-col min-h-screen'>
 					<Navbar />
-					<main id='main-content' className='flex-1 flex flex-col'>{children}</main>
+					<main id='main-content' className='flex-1 flex flex-col'>
+						<NuqsAdapter>{children}</NuqsAdapter>
+					</main>
 					<Footer />
 				</div>
 				<ScrollToTop />

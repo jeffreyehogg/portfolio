@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useMemo, useTransition } from 'react'
+import { useMemo, useTransition } from 'react'
+import { useQueryState, parseAsString, parseAsStringLiteral } from 'nuqs'
 import {
 	MagnifyingGlassIcon,
 	XMarkIcon,
@@ -11,11 +12,18 @@ import ProjectCard from '../ui/ProjectCard'
 import BackgroundBlobs from '../ui/BackgroundBlobs'
 import { cn } from '../../lib/utils'
 
-type CategoryFilter = 'all' | 'apps' | 'tools'
+const categoryOptions = ['all', 'apps', 'tools'] as const
+type CategoryFilter = (typeof categoryOptions)[number]
 
 export default function ProjectList() {
-	const [activeCategory, setActiveCategory] = useState<CategoryFilter>('all')
-	const [searchQuery, setSearchQuery] = useState('')
+	const [activeCategory, setActiveCategory] = useQueryState(
+		'category',
+		parseAsStringLiteral(categoryOptions).withDefault('all')
+	)
+	const [searchQuery, setSearchQuery] = useQueryState(
+		'q',
+		parseAsString.withDefault('')
+	)
 	const [, startTransition] = useTransition()
 
 	const categories = useMemo(
@@ -52,8 +60,8 @@ export default function ProjectList() {
 	}, [activeCategory, searchQuery])
 
 	const clearFilters = () => {
-		setActiveCategory('all')
-		setSearchQuery('')
+		void setActiveCategory('all')
+		void setSearchQuery('')
 	}
 
 	return (
@@ -87,7 +95,7 @@ export default function ProjectList() {
 								<button
 									key={cat.id}
 									type='button'
-									onClick={() => startTransition(() => setActiveCategory(cat.id))}
+									onClick={() => startTransition(() => { void setActiveCategory(cat.id) })}
 									className={cn(
 										'relative px-3.5 py-1.5 text-xs sm:text-sm font-medium rounded-lg transition-colors duration-200 cursor-pointer flex items-center gap-1.5 active:scale-[0.98]',
 										isActive

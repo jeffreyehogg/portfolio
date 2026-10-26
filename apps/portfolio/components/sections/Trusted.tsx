@@ -1,57 +1,86 @@
 import Image from 'next/image'
+import Link from 'next/link'
+import { ArrowRightIcon } from '@heroicons/react/24/outline'
 import { trustedCompaniesData } from '../../lib/data'
 
 export default function Trusted() {
-	// Duplicate logos for seamless CSS infinite scroll
-	const logos = [
-		...trustedCompaniesData,
-		...trustedCompaniesData,
-		...trustedCompaniesData,
-		...trustedCompaniesData,
-	]
-
 	return (
-		<section className='cv-auto py-16 sm:py-20 bg-slate-950 relative overflow-hidden'>
+		<section className='cv-auto py-20 sm:py-24 bg-slate-950 relative overflow-hidden'>
 			{/* Subtle top/bottom divider lines */}
 			<div className='absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/[0.08] to-transparent' />
 
 			<div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
-				<div className='max-w-2xl mx-auto text-center mb-12 sm:mb-14'>
-					<h2 className='text-2xl sm:text-3xl font-extrabold text-white tracking-tight'>
-						Companies I&apos;ve worked with
-					</h2>
-					<p className='mt-2.5 text-base text-slate-400'>
-						Production environments where I&apos;ve delivered scalable software and automated infrastructure.
-					</p>
+				<div className='flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-14 gap-4'>
+					<div>
+						<div className='inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-medium mb-3'>
+							Production experience
+						</div>
+						<h2 className='text-3xl sm:text-4xl font-extrabold text-white tracking-tight text-balance'>
+							Enterprise credentials & impact
+						</h2>
+						<p className='mt-2.5 text-base sm:text-lg text-slate-400 max-w-2xl text-pretty'>
+							Production environments where I&apos;ve architected full-stack applications, automated CI/CD pipelines, and administered distributed databases.
+						</p>
+					</div>
+
+					<Link
+						href='/about#experience'
+						className='inline-flex items-center gap-2 text-sm font-semibold text-indigo-400 hover:text-indigo-300 transition-colors group active:scale-[0.98]'
+					>
+						Full career timeline
+						<ArrowRightIcon className='w-4 h-4 group-hover:translate-x-1 transition-transform' />
+					</Link>
 				</div>
 
-				{/* Marquee Container — Pure CSS hardware-accelerated animation with reduced-motion fallback */}
-				<div className='relative'>
-					{/* Fade edges */}
-					<div className='absolute left-0 top-0 bottom-0 w-20 sm:w-28 bg-gradient-to-r from-slate-950 to-transparent z-10 pointer-events-none' />
-					<div className='absolute right-0 top-0 bottom-0 w-20 sm:w-28 bg-gradient-to-l from-slate-950 to-transparent z-10 pointer-events-none' />
-
-					<div className='overflow-hidden'>
-						<div className='flex items-center gap-16 w-max animate-marquee motion-reduce:animate-none motion-reduce:w-full motion-reduce:flex-wrap motion-reduce:justify-center'>
-							{logos.map((company, index) => (
-								<div
-									key={`${company.name}-${index}`}
-									className={`flex-shrink-0 flex justify-center items-center opacity-60 hover:opacity-100 transition-opacity duration-200 ${
-										index >= trustedCompaniesData.length ? 'motion-reduce:hidden' : ''
-									}`}
-								>
-									<Image
-										width={company.width}
-										height={company.height}
-										src={company.imageUrl}
-										alt={company.name}
-										loading='lazy'
-										className='h-10 sm:h-11 w-auto object-contain'
-									/>
+				{/* 3-Column Enterprise Credentials Grid */}
+				<div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
+					{trustedCompaniesData.map((company, idx) => (
+						<Link
+							key={company.name}
+							href='/about#experience'
+							className='group relative flex flex-col justify-between rounded-2xl bg-slate-900/65 border border-white/[0.08] p-6 sm:p-7 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] hover:border-white/[0.16] hover:bg-slate-900/90 transition-all duration-200'
+						>
+							<div>
+								{/* Top Row: Company Logo & Tenure */}
+								<div className='flex items-center justify-between gap-4 pb-5 mb-5 border-b border-white/[0.06]'>
+									<div className='h-9 flex items-center opacity-85 group-hover:opacity-100 transition-opacity'>
+										<Image
+											width={company.width}
+											height={company.height}
+											src={company.imageUrl}
+											alt={company.name}
+											loading='lazy'
+											className='h-8 sm:h-9 w-auto object-contain'
+										/>
+									</div>
+									<span className='inline-flex items-center gap-1.5 text-xs font-medium text-slate-400 bg-slate-950/70 border border-white/[0.07] px-2.5 py-1 rounded-full shrink-0'>
+										{idx === 0 && (
+											<span className='h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse' />
+										)}
+										{company.period}
+									</span>
 								</div>
-							))}
-						</div>
-					</div>
+
+								{/* Badge & Role Title */}
+								<div className='text-xs font-medium text-indigo-400 mb-1.5'>
+									{company.badge}
+								</div>
+								<h3 className='text-lg font-bold text-white group-hover:text-indigo-200 transition-colors mb-2.5'>
+									{company.role} <span className='text-slate-500 font-normal'>@</span> {company.name}
+								</h3>
+
+								{/* Impact Description */}
+								<p className='text-sm text-slate-400 leading-relaxed font-light text-pretty'>
+									{company.impact}
+								</p>
+							</div>
+
+							<div className='mt-6 pt-4 border-t border-white/[0.05] flex items-center justify-between text-xs font-medium text-slate-400 group-hover:text-indigo-300 transition-colors'>
+								<span>View role highlights</span>
+								<ArrowRightIcon className='w-3.5 h-3.5 group-hover:translate-x-1 transition-transform' />
+							</div>
+						</Link>
+					))}
 				</div>
 			</div>
 

@@ -1,4 +1,11 @@
+'use client'
+
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import {
+	EnvelopeIcon,
+	ArrowDownTrayIcon,
+} from '@heroicons/react/24/outline'
 import { githubUrl, linkedInUrl, twitterUrl } from '../../lib/data'
 
 const navigation = {
@@ -48,55 +55,88 @@ const navigation = {
 }
 
 export default function Footer() {
+	const pathname = usePathname()
+	const isContactPage = pathname === '/contact'
+
 	return (
-		<footer className='bg-slate-950 border-t border-slate-900 relative z-10'>
-			<div className='max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8'>
-				{/* Navigation Links */}
-				<nav
-					className='-mx-4 -my-2 flex flex-wrap justify-center mb-8'
-					aria-label='Footer'
-				>
-					{navigation.main.map((item) => (
-						<div key={item.name} className='px-4 py-2'>
+		<footer className='bg-slate-950 border-t border-white/[0.06] relative z-10'>
+			<div className='max-w-7xl mx-auto py-12 sm:py-16 px-4 sm:px-6 lg:px-8'>
+				{/* Sleek Pre-Footer CTA Card (hidden when already on /contact) */}
+				{!isContactPage && (
+					<div className='mb-14 rounded-2xl bg-slate-900/65 border border-white/[0.08] p-7 sm:p-10 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6'>
+						<div className='max-w-2xl'>
+							<div className='inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-950/80 border border-white/[0.08] text-xs font-medium text-slate-300 mb-3'>
+								<span className='h-2 w-2 rounded-full bg-emerald-400 animate-pulse' />
+								<span>Open to architecture &amp; full-stack engineering discussions</span>
+							</div>
+							<h2 className='text-2xl sm:text-3xl font-extrabold text-white tracking-tight text-balance'>
+								Ready to modernize legacy systems or build high-craft software?
+							</h2>
+							<p className='mt-2 text-sm sm:text-base text-slate-400 font-light text-pretty'>
+								Have a systems architecture challenge, CI/CD pipeline to automate, or custom web application in mind? Send a message directly through my secure contact form.
+							</p>
+						</div>
+
+						<div className='flex flex-wrap items-center gap-3 shrink-0'>
 							<Link
+								href='/contact'
+								className='inline-flex items-center gap-2 px-5 py-2.5 sm:py-3 rounded-xl text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-500 shadow-[0_0_20px_rgba(79,70,229,0.3)] transition-colors duration-200 active:scale-[0.98]'
+							>
+								<EnvelopeIcon className='w-4 h-4' />
+								Send a message
+							</Link>
+							<a
+								href='/Jeff_Hogg_Resume.pdf'
+								target='_blank'
+								rel='noopener noreferrer'
+								className='inline-flex items-center gap-2 px-4 py-2.5 sm:py-3 rounded-xl text-sm font-medium text-slate-300 bg-slate-950/70 hover:bg-slate-800/80 hover:text-white border border-white/[0.08] transition-colors duration-200 active:scale-[0.98]'
+							>
+								<ArrowDownTrayIcon className='w-4 h-4 text-slate-400' />
+								Resume PDF
+							</a>
+						</div>
+					</div>
+				)}
+
+				{/* Bottom Footer Bar */}
+				<div className='flex flex-col sm:flex-row items-center justify-between gap-6'>
+					{/* Navigation Links */}
+					<nav
+						className='flex flex-wrap justify-center sm:justify-start gap-x-6 gap-y-2'
+						aria-label='Footer'
+					>
+						{navigation.main.map((item) => (
+							<Link
+								key={item.name}
 								href={item.href}
-								className='text-sm text-slate-400 hover:text-indigo-400 transition-colors duration-200 font-medium'
+								className='text-sm text-slate-400 hover:text-white transition-colors duration-200 font-medium'
 							>
 								{item.name}
 							</Link>
-						</div>
-					))}
-				</nav>
+						))}
+					</nav>
 
-				{/* Social Icons */}
-				<div className='flex justify-center space-x-6'>
-					{navigation.social.map((item) => (
-						<a
-							key={item.name}
-							href={item.href}
-							aria-label={item.name}
-							target='_blank'
-							rel='noreferrer'
-							className='group relative p-3 rounded-full bg-slate-900 border border-slate-800 hover:border-indigo-500/50 hover:bg-slate-800 transition-all duration-300'
-						>
-							<item.icon
-								className='h-5 w-5 text-slate-400 group-hover:text-white transition-colors duration-300'
-								aria-hidden='true'
-							/>
-							{/* Subtle Glow effect on hover */}
-							<div className='absolute inset-0 rounded-full ring-2 ring-indigo-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm' />
-						</a>
-					))}
+					{/* Social Icons */}
+					<div className='flex items-center gap-3'>
+						{navigation.social.map((item) => (
+							<a
+								key={item.name}
+								href={item.href}
+								aria-label={item.name}
+								target='_blank'
+								rel='noreferrer'
+								className='p-2.5 rounded-full bg-slate-900/80 border border-white/[0.08] text-slate-400 hover:text-white hover:border-indigo-500/40 hover:bg-slate-800/80 transition-colors duration-200'
+							>
+								<item.icon className='h-4 w-4' aria-hidden='true' />
+							</a>
+						))}
+					</div>
 				</div>
 
 				{/* Copyright */}
-				<div className='mt-8 border-t border-slate-900 pt-8 flex flex-col items-center'>
-					<p className='text-center text-sm text-slate-500'>
-						&copy; {new Date().getFullYear()} Jeff Hogg.
-					</p>
-					<p className='text-center text-xs text-slate-600 mt-2'>
-						Built with Next.js, Tailwind & Precision.
-					</p>
+				<div className='mt-8 border-t border-white/[0.06] pt-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500'>
+					<p>&copy; {new Date().getFullYear()} Jeff Hogg. All rights reserved.</p>
+					<p>Built with Next.js, TypeScript &amp; Tailwind CSS.</p>
 				</div>
 			</div>
 		</footer>

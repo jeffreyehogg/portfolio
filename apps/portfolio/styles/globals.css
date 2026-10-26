@@ -122,9 +122,19 @@
 		contain-intrinsic-size: auto 640px;
 	}
 
-	/* Text balance for headings */
+	/* Text balance for headings and pretty wrapping for multi-line body copy (modern-web-guidance: improve-text-layout-and-legibility) */
 	.text-balance {
 		text-wrap: balance;
+	}
+
+	.text-pretty {
+		text-wrap: pretty;
+	}
+
+	/* Native modal dialog backdrop styling (modern-web-guidance: light-dismiss-a-dialog) */
+	dialog::backdrop {
+		background-color: rgba(2, 6, 23, 0.78);
+		backdrop-filter: blur(6px);
 	}
 
 	/* Grid background pattern */

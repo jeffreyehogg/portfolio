@@ -27,10 +27,10 @@ export default function Services() {
 						<div
 							key={tier.title}
 							className={cn(
-								'group relative flex flex-col rounded-2xl p-7 sm:p-8 transition-colors duration-200 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)]',
+								'group relative flex flex-col rounded-2xl p-7 sm:p-8 transition-colors duration-200 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]',
 								tier.mostPopular
 									? 'border border-indigo-500/40 bg-slate-900/85 shadow-xl shadow-indigo-500/10 ring-1 ring-indigo-500/30'
-									: 'border border-white/[0.08] bg-slate-900/70 hover:border-white/[0.14] hover:bg-slate-900/90'
+									: 'border border-white/[0.08] bg-slate-900/65 hover:border-white/[0.15] hover:bg-slate-900/90'
 							)}
 						>
 							{tier.mostPopular && (
@@ -42,7 +42,7 @@ export default function Services() {
 							)}
 
 							<h3 className='text-xl font-bold text-white mb-2'>{tier.title}</h3>
-							<p className='text-slate-400 text-sm leading-relaxed min-h-[50px] font-light'>
+							<p className='text-slate-400 text-sm leading-relaxed min-h-[50px] font-light text-pretty'>
 								{tier.description}
 							</p>
 

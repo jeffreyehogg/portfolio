@@ -11,30 +11,33 @@
   "dependencies": {
     "@headlessui/react": "^1.7.19",
     "@heroicons/react": "^2.2.0",
+    "@t3-oss/env-nextjs": "catalog:",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
-    "clsx": "^2.1.1",
-    "framer-motion": "^12.23.24",
-    "next": "^16.4.1",
-    "react": "latest",
-    "react-dom": "latest",
+    "clsx": "catalog:",
+    "framer-motion": "catalog:",
+    "next": "catalog:",
+    "nuqs": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
     "react-google-recaptcha-v3": "^1.11.0",
     "resend": "^6.30.0",
-    "tailwind-merge": "^3.4.0",
-    "zod": "^4.6.6"
+    "tailwind-merge": "catalog:",
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/forms": "^0.5.9",
     "@tailwindcss/typography": "^0.5.15",
     "@types/node": "^18.19.53",
-    "@types/react": "^19.2.2",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
     "autoprefixer": "^10.4.20",
     "eslint": "^8",
     "eslint-config-next": "^15.1.6",
-    "postcss": "^8.5.28",
+    "postcss": "catalog:",
     "tailwindcss": "^3.4.13",
-    "typescript": "^5.9.3"
+    "typescript": "catalog:"
   },
   "packageManager": "pnpm@10.21.0"
 }

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 import ProjectList from '../../components/sections/ProjectList'
 
 export const metadata: Metadata = {
@@ -20,5 +21,9 @@ export const metadata: Metadata = {
 }
 
 export default function Portfolio() {
-	return <ProjectList />
+	return (
+		<Suspense fallback={<div className='min-h-screen bg-slate-950' />}>
+			<ProjectList />
+		</Suspense>
+	)
 }

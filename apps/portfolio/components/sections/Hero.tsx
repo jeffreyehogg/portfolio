@@ -43,7 +43,7 @@ export default function Hero() {
 			<div className='relative z-10 px-4 sm:px-6 lg:px-8 text-center max-w-5xl mx-auto'>
 				<div className='animate-fade-up'>
 					{/* Status Badge */}
-					<div className='inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-slate-900/80 border border-white/[0.08] text-slate-300 text-xs sm:text-sm font-medium mb-6 shadow-sm'>
+					<div className='inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-slate-900/80 border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] text-slate-300 text-xs sm:text-sm font-medium mb-6'>
 						<span className='relative flex h-2 w-2'>
 							<span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75' />
 							<span className='relative inline-flex rounded-full h-2 w-2 bg-emerald-500' />
@@ -60,7 +60,7 @@ export default function Hero() {
 						</span>
 					</h1>
 
-					<p className='mt-4 text-base sm:text-lg text-slate-300 sm:max-w-2xl mx-auto leading-relaxed font-light text-balance'>
+					<p className='mt-4 text-base sm:text-lg text-slate-300 sm:max-w-2xl mx-auto leading-relaxed font-light text-pretty'>
 						{profileData.headline}
 					</p>
 				</div>
@@ -90,7 +90,7 @@ export default function Hero() {
 					{metrics.map((item) => (
 						<div
 							key={item.label}
-							className='flex flex-col items-center justify-center p-3.5 sm:p-4 rounded-2xl bg-slate-900/70 border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)] hover:border-indigo-500/30 hover:bg-slate-900/90 text-center transition-colors duration-200 group cursor-default'
+							className='flex flex-col items-center justify-center p-3.5 sm:p-4 rounded-2xl bg-slate-900/65 border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] hover:border-white/[0.16] hover:bg-slate-900/90 text-center transition-colors duration-200 group cursor-default'
 						>
 							<item.icon className='w-5 h-5 text-indigo-400 mb-1.5 group-hover:scale-110 group-hover:text-cyan-300 transition-transform duration-200' />
 							<div className='text-white font-semibold text-sm sm:text-base leading-tight group-hover:text-indigo-200 transition-colors'>

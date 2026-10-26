@@ -50,11 +50,11 @@ export default function Navbar() {
 					{({ open }) => (
 						<div
 							className={cn(
-								'mx-auto transition-[background-color,border-color,box-shadow,border-radius] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]',
+								'mx-auto transition-[background-color,border-color,box-shadow,border-radius] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]',
 								open ? 'rounded-2xl' : 'rounded-full',
 								scrolled
-									? 'bg-slate-900/90 backdrop-blur-xl border-slate-700/60 shadow-2xl shadow-black/30'
-									: 'bg-slate-900/75 backdrop-blur-md border-slate-800/80 shadow-lg shadow-black/15',
+									? 'bg-slate-900/90 backdrop-blur-xl border-white/[0.12] shadow-2xl shadow-black/40'
+									: 'bg-slate-900/75 backdrop-blur-md border-white/[0.08] shadow-lg shadow-black/20',
 								'border px-3 sm:px-5 py-2'
 							)}
 						>

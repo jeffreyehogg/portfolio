@@ -10,14 +10,14 @@
   },
   "dependencies": {
     "canvas-confetti": "^1.9.4",
-    "clsx": "^2.1.1",
-    "framer-motion": "^12.23.24",
+    "clsx": "catalog:",
+    "framer-motion": "catalog:",
     "lucide-react": "^1.48.0",
-    "next": "^16.4.1",
-    "react": "latest",
-    "react-dom": "latest",
-    "tailwind-merge": "^3.4.0",
-    "zod": "^4.6.6"
+    "next": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "tailwind-merge": "catalog:",
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
@@ -27,13 +27,13 @@
     "@tailwindcss/typography": "^0.5.15",
     "@types/canvas-confetti": "^1.9.0",
     "@types/node": "^20.8.3",
-    "@types/react": "^19.2.2",
-    "@types/react-dom": "^19.2.2",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
     "autoprefixer": "^10.4.20",
     "eslint": "^8",
     "eslint-config-next": "^15.1.6",
-    "postcss": "^8.5.28",
+    "postcss": "catalog:",
     "tailwindcss": "^3.4.13",
-    "typescript": "^5.9.3"
+    "typescript": "catalog:"
   }
 }

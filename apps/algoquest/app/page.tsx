@@ -6,6 +6,7 @@ import { motion } from 'framer-motion'
 import {
   Sparkles,
   Lock,
+  Unlock,
   CheckCircle2,
   Star,
   ArrowRight,
@@ -17,7 +18,7 @@ import {
   Zap,
   RotateCcw,
 } from 'lucide-react'
-import { LEVELS, Level } from '../lib/quests'
+import { LEVELS, WORLDS, Level } from '../lib/quests'
 import { useGameStore, useGameStoreHydration } from '../lib/store'
 import { UserProfileBadge } from '../components/auth/UserProfileBadge'
 
@@ -28,7 +29,10 @@ export default function HomePage() {
     completedLevels,
     totalXp,
     streakDays,
+    unlockAllLevels,
   } = useGameStore()
+
+  const allUnlocked = hasHydrated && unlockedLevels.length >= LEVELS.length
 
   const totalLevelsCount = LEVELS.length
   const completedCount = hasHydrated ? Object.keys(completedLevels).length : 0
@@ -152,140 +156,193 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Unified 8-Level Quest List (Clean, Linear & Minimal - No Worlds!) */}
-        <div className="w-full space-y-3 mb-16">
-          <div className="flex items-center justify-between px-1 mb-2">
-            <h2 className="text-sm font-mono font-bold uppercase tracking-wider text-slate-400">
-              Curriculum Challenges
-            </h2>
-            <span className="text-xs font-mono text-slate-500">10 Progressive Puzzles</span>
+        {/* World-Grouped 10-Level Curriculum */}
+        <div className="w-full space-y-8 mb-16">
+          <div className="flex flex-wrap items-center justify-between gap-2 px-1">
+            <div>
+              <h2 className="text-sm font-mono font-bold uppercase tracking-wider text-slate-300">
+                Curriculum Worlds &amp; Challenges
+              </h2>
+              <p className="text-xs font-mono text-slate-500">
+                4 Progressive Worlds • 10 Interactive Algorithmic Quests
+              </p>
+            </div>
+
+            {!allUnlocked ? (
+              <button
+                type="button"
+                onClick={unlockAllLevels}
+                className="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-indigo-500/30 text-indigo-300 hover:text-indigo-200 text-xs font-mono font-semibold transition-all flex items-center gap-1.5 active:scale-[0.98]"
+                title="Unlock all 10 quests immediately for portfolio review"
+              >
+                <Unlock className="w-3.5 h-3.5 text-indigo-400" />
+                <span>Unlock All Quests (Reviewer Mode)</span>
+              </button>
+            ) : (
+              <span className="px-3 py-1 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-mono font-semibold flex items-center gap-1.5">
+                <Unlock className="w-3.5 h-3.5 text-emerald-400" />
+                <span>All 10 Quests Unlocked</span>
+              </span>
+            )}
           </div>
 
-          {LEVELS.map((lvl) => {
-            const isCompleted = Boolean(completedLevels[lvl.id])
-            const isUnlocked =
-              unlockedLevels.includes(lvl.id) || lvl.id === 'level-1-first-step' || isCompleted
-            const completedInfo = completedLevels[lvl.id]
-            const stars = completedInfo?.stars || 3
-            const isNextUp = nextPlayableLevel.id === lvl.id && !isCompleted
+          {WORLDS.map((world) => {
+            const worldLevels = LEVELS.filter((l) => l.worldId === world.id)
+            const worldCompleted = worldLevels.filter((l) => Boolean(completedLevels[l.id])).length
 
             return (
               <div
-                key={lvl.id}
-                className={`w-full p-4 rounded-2xl border transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
-                  isNextUp
-                    ? 'bg-slate-900/95 border-emerald-500/60 shadow-[0_0_25px_rgba(16,185,129,0.2)] ring-1 ring-emerald-500/40'
-                    : isCompleted
-                      ? 'bg-slate-900/70 border-emerald-500/25 hover:border-emerald-500/40'
-                      : isUnlocked
-                        ? 'bg-slate-900/70 border-white/[0.08] hover:border-cyan-500/40'
-                        : 'bg-slate-950/40 border-white/[0.04] opacity-50'
-                }`}
+                key={world.id}
+                className="rounded-3xl bg-slate-900/35 border border-white/[0.07] p-4 sm:p-6 space-y-3"
               >
-                {/* Left: Status Icon, Number & Info */}
-                <div className="flex items-start sm:items-center gap-3.5 flex-1 min-w-0">
-                  {/* Status Indicator Icon */}
-                  <div className="mt-0.5 sm:mt-0 shrink-0">
-                    {isCompleted ? (
-                      <div className="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shadow-sm">
-                        <CheckCircle2 className="w-5 h-5" />
-                      </div>
-                    ) : isNextUp ? (
-                      <div className="w-9 h-9 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-300 shadow-[0_0_12px_rgba(16,185,129,0.3)] animate-pulse">
-                        <Play className="w-4 h-4 fill-current ml-0.5" />
-                      </div>
-                    ) : isUnlocked ? (
-                      <div className="w-9 h-9 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
-                        <Play className="w-4 h-4 fill-current ml-0.5" />
-                      </div>
-                    ) : (
-                      <div className="w-9 h-9 rounded-xl bg-slate-800/60 border border-slate-700/60 flex items-center justify-center text-slate-500">
-                        <Lock className="w-4 h-4" />
-                      </div>
-                    )}
+                <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-white/[0.06]">
+                  <div>
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-[11px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+                        World {world.number}
+                      </span>
+                      <span className="text-xs font-mono text-slate-400">{world.subtitle}</span>
+                    </div>
+                    <h3 className="text-lg font-extrabold text-white tracking-tight">
+                      {world.title}
+                    </h3>
+                    <p className="text-xs text-slate-400 mt-0.5">{world.description}</p>
                   </div>
 
-                  {/* Level Text Details */}
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-2 flex-wrap mb-1">
-                      <span className="text-xs font-mono font-bold text-slate-400">
-                        Level {lvl.number}
-                      </span>
-                      <span className="text-slate-600 font-mono">•</span>
-                      <span className="text-xs font-mono font-medium px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-white/[0.06]">
-                        {lvl.concept}
-                      </span>
-                      {isNextUp && (
-                        <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
-                          NEXT UP
-                        </span>
-                      )}
-                    </div>
-
-                    <h3 className="text-base font-bold text-white tracking-tight mb-0.5 truncate">
-                      {lvl.title}
-                    </h3>
-
-                    <p className="text-xs text-slate-400 leading-relaxed line-clamp-1">
-                      {lvl.objective}
-                    </p>
+                  <div className="text-xs font-mono text-slate-400 bg-slate-950/70 px-3 py-1.5 rounded-xl border border-white/[0.06]">
+                    <span className="text-white font-bold">{worldCompleted}</span> /{' '}
+                    {worldLevels.length} Solved
                   </div>
                 </div>
 
-                {/* Right: Stars / Reward & Action Button */}
-                <div className="flex items-center justify-between sm:justify-end gap-4 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-white/[0.06]">
-                  {/* Rewards / Stars */}
-                  <div>
-                    {isCompleted ? (
-                      <div className="flex items-center gap-0.5">
-                        {[1, 2, 3].map((s) => (
-                          <Star
-                            key={s}
-                            className={`w-3.5 h-3.5 ${
-                              s <= stars
-                                ? 'text-amber-400 fill-amber-400 drop-shadow-[0_0_6px_rgba(251,191,36,0.5)]'
-                                : 'text-slate-700'
-                            }`}
-                          />
-                        ))}
-                      </div>
-                    ) : (
-                      <span className="text-xs font-mono text-amber-400 font-semibold flex items-center gap-1">
-                        <Sparkles className="w-3.5 h-3.5" />+{lvl.xp} XP
-                      </span>
-                    )}
-                  </div>
+                <div className="space-y-2.5 pt-1">
+                  {worldLevels.map((lvl) => {
+                    const isCompleted = Boolean(completedLevels[lvl.id])
+                    const isUnlocked =
+                      unlockedLevels.includes(lvl.id) ||
+                      lvl.id === 'level-1-first-step' ||
+                      isCompleted
+                    const completedInfo = completedLevels[lvl.id]
+                    const stars = completedInfo?.stars || 3
+                    const isNextUp = nextPlayableLevel.id === lvl.id && !isCompleted
 
-                  {/* Action Link */}
-                  {isUnlocked ? (
-                    <Link
-                      href={`/play/${lvl.id}`}
-                      className={`px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-1.5 active:scale-[0.98] ${
-                        isNextUp
-                          ? 'bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-[0_0_15px_rgba(16,185,129,0.35)]'
-                          : isCompleted
-                            ? 'bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-white/[0.08]'
-                            : 'bg-emerald-600 hover:bg-emerald-500 text-white'
-                      }`}
-                    >
-                      {isCompleted ? (
-                        <>
-                          <RotateCcw className="w-3 h-3 text-slate-400" />
-                          <span>Replay</span>
-                        </>
-                      ) : (
-                        <>
-                          <span>Play</span>
-                          <ArrowRight className="w-3.5 h-3.5" />
-                        </>
-                      )}
-                    </Link>
-                  ) : (
-                    <div className="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-600 text-xs font-mono flex items-center gap-1.5">
-                      <Lock className="w-3 h-3" />
-                      <span>Locked</span>
-                    </div>
-                  )}
+                    return (
+                      <div
+                        key={lvl.id}
+                        className={`w-full p-4 rounded-2xl border transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
+                          isNextUp
+                            ? 'bg-slate-900/95 border-emerald-500/60 shadow-[0_0_25px_rgba(16,185,129,0.2)] ring-1 ring-emerald-500/40'
+                            : isCompleted
+                              ? 'bg-slate-900/70 border-emerald-500/25 hover:border-emerald-500/40'
+                              : isUnlocked
+                                ? 'bg-slate-900/70 border-white/[0.08] hover:border-cyan-500/40'
+                                : 'bg-slate-950/40 border-white/[0.04] opacity-50'
+                        }`}
+                      >
+                        {/* Left: Status Icon, Number & Info */}
+                        <div className="flex items-start sm:items-center gap-3.5 flex-1 min-w-0">
+                          <div className="mt-0.5 sm:mt-0 shrink-0">
+                            {isCompleted ? (
+                              <div className="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shadow-sm">
+                                <CheckCircle2 className="w-5 h-5" />
+                              </div>
+                            ) : isNextUp ? (
+                              <div className="w-9 h-9 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-300 shadow-[0_0_12px_rgba(16,185,129,0.3)] animate-pulse">
+                                <Play className="w-4 h-4 fill-current ml-0.5" />
+                              </div>
+                            ) : isUnlocked ? (
+                              <div className="w-9 h-9 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+                                <Play className="w-4 h-4 fill-current ml-0.5" />
+                              </div>
+                            ) : (
+                              <div className="w-9 h-9 rounded-xl bg-slate-800/60 border border-slate-700/60 flex items-center justify-center text-slate-500">
+                                <Lock className="w-4 h-4" />
+                              </div>
+                            )}
+                          </div>
+
+                          <div className="min-w-0 flex-1">
+                            <div className="flex items-center gap-2 flex-wrap mb-1">
+                              <span className="text-xs font-mono font-bold text-slate-400">
+                                Level {lvl.number}
+                              </span>
+                              <span className="text-slate-600 font-mono">•</span>
+                              <span className="text-xs font-mono font-medium px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-white/[0.06]">
+                                {lvl.concept}
+                              </span>
+                              {isNextUp && (
+                                <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+                                  NEXT UP
+                                </span>
+                              )}
+                            </div>
+
+                            <h4 className="text-base font-bold text-white tracking-tight mb-0.5 truncate">
+                              {lvl.title}
+                            </h4>
+
+                            <p className="text-xs text-slate-400 leading-relaxed line-clamp-1">
+                              {lvl.objective}
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Right: Stars / Reward & Action Button */}
+                        <div className="flex items-center justify-between sm:justify-end gap-4 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-white/[0.06]">
+                          <div>
+                            {isCompleted ? (
+                              <div className="flex items-center gap-0.5">
+                                {[1, 2, 3].map((s) => (
+                                  <Star
+                                    key={s}
+                                    className={`w-3.5 h-3.5 ${
+                                      s <= stars
+                                        ? 'text-amber-400 fill-amber-400 drop-shadow-[0_0_6px_rgba(251,191,36,0.5)]'
+                                        : 'text-slate-700'
+                                    }`}
+                                  />
+                                ))}
+                              </div>
+                            ) : (
+                              <span className="text-xs font-mono text-amber-400 font-semibold flex items-center gap-1">
+                                <Sparkles className="w-3.5 h-3.5" />+{lvl.xp} XP
+                              </span>
+                            )}
+                          </div>
+
+                          {isUnlocked ? (
+                            <Link
+                              href={`/play/${lvl.id}`}
+                              className={`px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-1.5 active:scale-[0.98] ${
+                                isNextUp
+                                  ? 'bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-[0_0_15px_rgba(16,185,129,0.35)]'
+                                  : isCompleted
+                                    ? 'bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-white/[0.08]'
+                                    : 'bg-emerald-600 hover:bg-emerald-500 text-white'
+                              }`}
+                            >
+                              {isCompleted ? (
+                                <>
+                                  <RotateCcw className="w-3 h-3 text-slate-400" />
+                                  <span>Replay</span>
+                                </>
+                              ) : (
+                                <>
+                                  <span>Play</span>
+                                  <ArrowRight className="w-3.5 h-3.5" />
+                                </>
+                              )}
+                            </Link>
+                          ) : (
+                            <div className="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-600 text-xs font-mono flex items-center gap-1.5">
+                              <Lock className="w-3 h-3" />
+                              <span>Locked</span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )
+                  })}
                 </div>
               </div>
             )
@@ -299,9 +356,9 @@ export default function HomePage() {
               <Code2 className="w-4 h-4" />
             </div>
             <div>
-              <h4 className="text-xs font-bold text-white mb-0.5">5 Modern Languages</h4>
+              <h4 className="text-xs font-bold text-white mb-0.5">6 Languages + Rust WASM</h4>
               <p className="text-[11px] text-slate-400 leading-relaxed">
-                Code in Python, JavaScript, TypeScript, Ruby, or Lua with instant client-side execution.
+                Code in Rust, Python, TypeScript, JavaScript, Ruby, or Lua with 100% client-side WebAssembly execution.
               </p>
             </div>
           </div>

@@ -27,35 +27,43 @@ QUEST_SPECS: list[QuestSpec] = [
         level_id="level-1-first-step",
         number=1,
         hero_start=(0, 0),
-        goal=(3, 0),
-        tiles=[["path", "path", "path", "chest"]],
+        goal=(3, 1),
+        tiles=[
+            ["path", "path", "path", "path"],
+            ["wall", "wall", "wall", "chest"],
+        ],
         starter_code="steps = 1\n",
         solution_code="steps = 3\n",
         wrapper_template=(
             "{code}\nif 'steps' in locals():\n    for _ in range(int(steps)):\n        step()\n"
+            '    turn("south")\n    step()\n'
         ),
     ),
     QuestSpec(
         level_id="level-2-the-gatekeeper",
         number=2,
         hero_start=(0, 0),
-        goal=(4, 0),
-        tiles=[["path", "path", "gate", "path", "chest"]],
+        goal=(4, 1),
+        tiles=[
+            ["path", "path", "gate", "wall", "wall"],
+            ["wall", "wall", "path", "path", "chest"],
+        ],
         starter_code='password = "closed"\n',
         solution_code='password = "open"\n',
         wrapper_template=(
             '{code}\nif "password" in locals() and password == "open":\n'
-            "    for _ in range(4):\n        step()\n"
+            '    step()\n    step()\n    turn("south")\n    step()\n'
+            '    turn("east")\n    step()\n    step()\n'
         ),
     ),
     QuestSpec(
         level_id="level-3-the-danger-tile",
         number=3,
         hero_start=(0, 0),
-        goal=(2, 0),
-        tiles=[["path", "lava", "chest"]],
+        goal=(3, 0),
+        tiles=[["path", "lava", "path", "chest"]],
         starter_code='if tile == "lava":\n    pass\nelse:\n    step()\n',
-        solution_code='if tile == "lava":\n    jump()\nelse:\n    step()\n',
+        solution_code='if tile == "lava":\n    jump()\n    step()\nelse:\n    step()\n',
         wrapper_template='tile = "lava"\n{code}\n',
     ),
     QuestSpec(
@@ -99,12 +107,16 @@ QUEST_SPECS: list[QuestSpec] = [
         hero_start=(0, 0),
         goal=(1, 0),
         tiles=[["path", "pedestal"]],
-        starter_code='stack = []\nstack.append("stone")\n',
-        solution_code=(
-            'stack = []\nstack.append("stone")\nstack.append("stone")\n'
-            'stack.append("stone")\nkey = stack.pop()\n'
+        starter_code=(
+            'stack = []\nstack.append("bronze")\nstack.append("silver")\nstack.append("cursed")\n'
         ),
-        wrapper_template="{code}\nif 'stack' in locals() and len(stack) == 2:\n    step()\n",
+        solution_code=(
+            'stack = []\nstack.append("bronze")\nstack.append("silver")\n'
+            'stack.append("cursed")\nkey = stack.pop()\n'
+        ),
+        wrapper_template=(
+            "{code}\nif 'stack' in locals() and stack == ['bronze', 'silver']:\n    step()\n"
+        ),
     ),
     QuestSpec(
         level_id="level-8-the-dual-bridges",
@@ -127,11 +139,11 @@ QUEST_SPECS: list[QuestSpec] = [
         goal=(3, 0),
         tiles=[["path", "stone", "door", "chest"]],
         starter_code='runes["fire"] = 0\npower = 0\n',
-        solution_code='runes["fire"] = 3\npower = runes["ice"]\n',
+        solution_code='runes["fire"] = 3\npower = runes["fire"] + runes["ice"]\n',
         wrapper_template=(
             'runes = {{"wind": 1, "ice": 2}}\n{code}\n'
             'if isinstance(runes, dict) and runes.get("fire") == 3 '
-            'and locals().get("power") == 2:\n'
+            'and locals().get("power") == 5:\n'
             "    for _ in range(3):\n        step()\n"
         ),
     ),
@@ -139,8 +151,8 @@ QUEST_SPECS: list[QuestSpec] = [
         level_id="level-10-the-crystal-archives",
         number=10,
         hero_start=(0, 0),
-        goal=(3, 0),
-        tiles=[["stone", "stone", "stone", "chest", "stone", "stone", "stone"]],
+        goal=(5, 0),
+        tiles=[["stone", "stone", "stone", "stone", "stone", "chest", "stone"]],
         starter_code="low = 0\nhigh = 6\nfound_index = -1\n",
         solution_code=(
             "low = 0\nhigh = 6\nfound_index = -1\n"
@@ -155,9 +167,9 @@ QUEST_SPECS: list[QuestSpec] = [
             "        high = mid - 1\n"
         ),
         wrapper_template=(
-            "crystals = [10, 20, 30, 42, 50, 60, 70]\ntarget = 42\n{code}\n"
-            "if locals().get('found_index') == 3:\n"
-            "    for _ in range(3):\n        step()\n"
+            "crystals = [10, 20, 30, 42, 50, 60, 70]\ntarget = 60\n{code}\n"
+            "if locals().get('found_index') == 5:\n"
+            "    for _ in range(5):\n        step()\n"
         ),
     ),
 ]

@@ -107,13 +107,15 @@ export const GridCanvas = React.memo(function GridCanvas({
                   className={`relative rounded-xl border transition-all duration-300 flex items-center justify-center overflow-hidden ${
                     tileType === 'lava'
                       ? 'bg-gradient-to-br from-amber-600/40 via-red-600/50 to-orange-700/60 border-orange-500/60 shadow-[0_0_15px_rgba(249,115,22,0.3)]'
-                      : tileType === 'bridge'
-                        ? 'bg-amber-950/40 border-amber-800/40'
-                        : tileType === 'stone'
-                          ? 'bg-slate-800/90 border-slate-700/60'
-                          : tileType === 'pedestal'
-                            ? 'bg-indigo-950/60 border-indigo-500/50 shadow-[0_0_12px_rgba(99,102,241,0.25)]'
-                            : 'bg-slate-900/80 border-slate-800/60 hover:border-slate-700/60'
+                      : tileType === 'wall'
+                        ? 'bg-slate-950 border-slate-800/90 shadow-inner opacity-75'
+                        : tileType === 'bridge'
+                          ? 'bg-amber-950/40 border-amber-800/40'
+                          : tileType === 'stone'
+                            ? 'bg-slate-800/90 border-slate-700/60'
+                            : tileType === 'pedestal'
+                              ? 'bg-indigo-950/60 border-indigo-500/50 shadow-[0_0_12px_rgba(99,102,241,0.25)]'
+                              : 'bg-slate-900/80 border-slate-800/60 hover:border-slate-700/60'
                   }`}
                   style={{ width: TILE_SIZE - 4, height: TILE_SIZE - 4 }}
                 >
@@ -134,6 +136,10 @@ export const GridCanvas = React.memo(function GridCanvas({
                   ) : tileType === 'pedestal' ? (
                     <div className="text-[10px] font-mono text-indigo-400 font-bold uppercase tracking-wider">
                       ALTAR
+                    </div>
+                  ) : tileType === 'wall' ? (
+                    <div className="text-[9px] font-mono text-slate-600 font-bold uppercase tracking-widest">
+                      WALL
                     </div>
                   ) : null}
 

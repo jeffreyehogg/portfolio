@@ -168,7 +168,9 @@ export function Visualizer({
                             : 'bg-slate-900/60 border-slate-800'
                   }`}
                 >
-                  <span className="text-xs font-mono font-bold text-white">{idx}</span>
+                  <span className="text-xs font-mono font-bold text-white">
+                    {config.initialArray?.[idx] ?? idx}
+                  </span>
                   <span className="text-[8px] font-mono text-slate-500">[{idx}]</span>
                 </div>
               )

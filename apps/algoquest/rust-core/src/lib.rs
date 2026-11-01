@@ -232,28 +232,28 @@ mod tests {
 
     #[test]
     fn test_option_b_worlds_1_to_4_rust_solutions() {
-        // Level 1: Variables
-        let l1 = "level-1\n0,0,east,3,0,4,1\npath,path,path,chest\n\n===RAW_CODE===\nlet steps: i32 = 3;\n===EXEC_CODE===\nlet steps: i32 = 3;\nfor i in 0..steps {\n    step();\n}\n";
+        // Level 1: Variables (2D 4x2 grid)
+        let l1 = "level-1\n0,0,east,3,1,4,2\npath,path,path,path;wall,wall,wall,chest\n\n===RAW_CODE===\nlet steps: i32 = 3;\n===EXEC_CODE===\nlet steps: i32 = 3;\nfor i in 0..steps {\n    step();\n}\nturn(\"south\");\nstep();\n";
         let res1 = execute_rust_payload(l1);
         assert!(res1.contains("\"reachedGoal\":true"), "Level 1 failed: {}", res1);
 
-        // Level 3: Conditionals & Lava Jump
-        let l3 = "level-3\n0,0,east,2,0,3,1\npath,lava,chest\n\n===RAW_CODE===\nif tile == \"lava\" {\n    jump();\n} else {\n    step();\n}\n===EXEC_CODE===\nlet tile = \"lava\";\nif tile == \"lava\" {\n    jump();\n} else {\n    step();\n}\n";
+        // Level 3: Conditionals & Lava Jump + Step
+        let l3 = "level-3\n0,0,east,3,0,4,1\npath,lava,path,chest\n\n===RAW_CODE===\nif tile == \"lava\" {\n    jump();\n    step();\n} else {\n    step();\n}\n===EXEC_CODE===\nlet tile = \"lava\";\nif tile == \"lava\" {\n    jump();\n    step();\n} else {\n    step();\n}\n";
         let res3 = execute_rust_payload(l3);
         assert!(res3.contains("\"reachedGoal\":true"), "Level 3 failed: {}", res3);
 
-        // Level 7: LIFO Stack Vec
-        let l7 = "level-7\n0,0,east,1,0,2,1\npath,pedestal\n\n===RAW_CODE===\nlet mut stack = Vec::new();\nstack.push(\"stone\");\nstack.push(\"stone\");\nstack.push(\"stone\");\nlet key = stack.pop();\n===EXEC_CODE===\nlet mut stack = Vec::new();\nstack.push(\"stone\");\nstack.push(\"stone\");\nstack.push(\"stone\");\nlet key = stack.pop();\nif stack.len() == 2 {\n    step();\n}\n";
+        // Level 7: LIFO Stack Vec (Cursed Rune Purification)
+        let l7 = "level-7\n0,0,east,1,0,2,1\npath,pedestal\n\n===RAW_CODE===\nlet mut stack = Vec::new();\nstack.push(\"bronze\");\nstack.push(\"silver\");\nstack.push(\"cursed\");\nlet key = stack.pop();\n===EXEC_CODE===\nlet mut stack = Vec::new();\nstack.push(\"bronze\");\nstack.push(\"silver\");\nstack.push(\"cursed\");\nlet key = stack.pop();\nif stack.len() == 2 && stack[0] == \"bronze\" && stack[1] == \"silver\" {\n    step();\n}\n";
         let res7 = execute_rust_payload(l7);
         assert!(res7.contains("\"reachedGoal\":true"), "Level 7 failed: {}", res7);
 
-        // Level 9: HashMap
-        let l9 = "level-9\n0,0,east,3,0,4,1\npath,stone,door,chest\n\n===RAW_CODE===\nrunes.insert(\"fire\", 3);\nlet power = runes[\"ice\"];\n===EXEC_CODE===\nlet mut runes = HashMap::from([(\"wind\", 1), (\"ice\", 2)]);\nrunes.insert(\"fire\", 3);\nlet power = runes[\"ice\"];\nif runes[\"fire\"] == 3 && power == 2 {\n    for i in 0..3 {\n        step();\n    }\n}\n";
+        // Level 9: HashMap Synthesis (power = runes["fire"] + runes["ice"] = 5)
+        let l9 = "level-9\n0,0,east,3,0,4,1\npath,stone,door,chest\n\n===RAW_CODE===\nrunes.insert(\"fire\", 3);\nlet power = runes[\"fire\"] + runes[\"ice\"];\n===EXEC_CODE===\nlet mut runes = HashMap::from([(\"wind\", 1), (\"ice\", 2)]);\nrunes.insert(\"fire\", 3);\nlet power = runes[\"fire\"] + runes[\"ice\"];\nif runes[\"fire\"] == 3 && power == 5 {\n    for i in 0..3 {\n        step();\n    }\n}\n";
         let res9 = execute_rust_payload(l9);
         assert!(res9.contains("\"reachedGoal\":true"), "Level 9 failed: {}", res9);
 
-        // Level 10: Binary Search
-        let l10 = "level-10\n0,0,east,3,0,7,1\nstone,stone,stone,chest,stone,stone,stone\n\n===RAW_CODE===\nlet mut low = 0;\n===EXEC_CODE===\nlet crystals = vec![10, 20, 30, 42, 50, 60, 70];\nlet target = 42;\nlet mut low = 0;\nlet mut high = 6;\nlet mut found_index = -1;\nwhile low <= high {\n    let mid = (low + high) / 2;\n    if crystals[mid] == target {\n        found_index = mid;\n        break;\n    } else if crystals[mid] < target {\n        low = mid + 1;\n    } else {\n        high = mid - 1;\n    }\n}\nif found_index == 3 {\n    for i in 0..3 {\n        step();\n    }\n}\n";
+        // Level 10: Binary Search (target = 60 at index 5)
+        let l10 = "level-10\n0,0,east,5,0,7,1\nstone,stone,stone,stone,stone,chest,stone\n\n===RAW_CODE===\nlet mut low = 0;\n===EXEC_CODE===\nlet crystals = vec![10, 20, 30, 42, 50, 60, 70];\nlet target = 60;\nlet mut low = 0;\nlet mut high = 6;\nlet mut found_index = -1;\nwhile low <= high {\n    let mid = (low + high) / 2;\n    if crystals[mid] == target {\n        found_index = mid;\n        break;\n    } else if crystals[mid] < target {\n        low = mid + 1;\n    } else {\n        high = mid - 1;\n    }\n}\nif found_index == 5 {\n    for i in 0..found_index {\n        step();\n    }\n}\n";
         let res10 = execute_rust_payload(l10);
         assert!(res10.contains("\"reachedGoal\":true"), "Level 10 failed: {}", res10);
     }

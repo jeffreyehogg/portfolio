@@ -362,10 +362,19 @@ export default function PlayLevelPage({ params }: PlayPageProps) {
       }
     } else if (step.type === 'stack' && Array.isArray(step.data?.stack)) {
       setLiveStack(step.data.stack)
-    } else if (step.type === 'pointer' && step.data?.pointers) {
+      return
+    } else if (
+      (step.type === 'pointer' || step.type === 'binary_search') &&
+      step.data?.pointers
+    ) {
       setLivePointers(step.data.pointers)
+      return
+    } else if (step.type === 'array' && typeof step.data?.accessedIndex === 'number') {
+      setAccessedIndex(step.data.accessedIndex)
+      return
     } else if (step.type === 'hashmap' && step.data?.hashmap) {
       setLiveMap(step.data.hashmap)
+      return
     }
 
     // Auto-open gate/door when hero progresses on gated levels
@@ -377,25 +386,21 @@ export default function PlayLevelPage({ params }: PlayPageProps) {
       setGateOpen(true)
     }
 
-    // Animate Visualizers for Levels 6, 7, 8, 9, 10
-    if (level?.id === 'level-7-the-stone-pedestal') {
-      setLiveStack((prev) => {
-        if (prev.length < 3) return ['stone', 'stone']
-        return prev.slice(0, 2)
-      })
-    } else if (level?.id === 'level-8-the-dual-bridges') {
-      setLivePointers((prev) => {
-        if (prev.left < prev.right) {
-          return { left: prev.left + 1, right: prev.right - 1 }
-        }
-        return prev
-      })
-    } else if (level?.id === 'level-6-the-inventory-bag') {
-      setAccessedIndex((prev) => (prev === null ? 0 : 2))
-    } else if (level?.id === 'level-9-the-ancient-tome') {
-      setLiveMap({ wind: 1, ice: 2, fire: 3 })
-    } else if (level?.id === 'level-10-the-crystal-archives') {
-      setLivePointers({ left: 0, right: 6, mid: 3 })
+    // Fallback visualizer sync for workers that only emit spatial step events
+    if (step.type === 'step') {
+      if (level?.id === 'level-7-the-stone-pedestal') {
+        setLiveStack((prev) => (prev.length === 0 ? ['bronze', 'silver'] : prev))
+      } else if (level?.id === 'level-8-the-dual-bridges') {
+        setLivePointers((prev) =>
+          prev.left < prev.right ? { left: prev.left + 1, right: prev.right - 1 } : prev
+        )
+      } else if (level?.id === 'level-6-the-inventory-bag') {
+        setAccessedIndex((prev) => (prev === null ? 0 : 2))
+      } else if (level?.id === 'level-9-the-ancient-tome') {
+        setLiveMap((prev) => ('fire' in prev ? prev : { wind: 1, ice: 2, fire: 3 }))
+      } else if (level?.id === 'level-10-the-crystal-archives') {
+        setLivePointers((prev) => (prev.mid === 5 ? prev : { left: 4, right: 6, mid: 5 }))
+      }
     }
   }
 

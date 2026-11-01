@@ -4,7 +4,7 @@ import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 import { useEffect, useState } from 'react'
 import { Language } from '../quests/types'
-import { getNextLevelId, WORLDS } from '../quests'
+import { getNextLevelId, LEVELS, WORLDS } from '../quests'
 
 export interface CompletedLevelInfo {
   stars: number
@@ -32,6 +32,7 @@ export interface GameState {
   setActiveLanguage: (lang: Language) => void
   setCurrentLevelId: (levelId: string) => void
   unlockLevel: (levelId: string) => void
+  unlockAllLevels: () => void
   completeLevel: (levelId: string, stars: number, xpAwarded: number, code?: string) => void
   saveDraft: (levelId: string, lang: Language, code: string) => void
   getDraft: (levelId: string, lang: Language) => string
@@ -74,6 +75,11 @@ export const useGameStore = create<GameState>()(
             unlockedLevels: [...state.unlockedLevels, levelId],
           }
         }),
+
+      unlockAllLevels: () =>
+        set(() => ({
+          unlockedLevels: LEVELS.map((l) => l.id),
+        })),
 
       completeLevel: (levelId: string, stars: number, xpAwarded: number, code?: string) =>
         set((state) => {

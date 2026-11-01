@@ -49,6 +49,7 @@ export const WORLD_1_LEVELS: Level[] = [
       typescript: "// The hero needs 3 steps to reach the treasure chest.\n// Assign the number 3 to the variable 'steps'.\nconst steps: number = 1;\n",
       ruby: "# The hero needs 3 steps to reach the treasure chest.\n# Assign the number 3 to the variable 'steps'.\nsteps = 1\n",
       lua: "-- The hero needs 3 steps to reach the treasure chest.\n-- Assign the number 3 to the variable 'steps'.\nsteps = 1\n",
+      rust: "// The hero needs 3 steps to reach the treasure chest.\n// Assign the number 3 to the immutable binding 'steps'.\nlet steps: i32 = 1;\n",
     },
     solutionCode: {
       python: 'steps = 3\n',
@@ -56,6 +57,7 @@ export const WORLD_1_LEVELS: Level[] = [
       typescript: 'const steps: number = 3;\n',
       ruby: 'steps = 3\n',
       lua: 'steps = 3\n',
+      rust: 'let steps: i32 = 3;\n',
     },
     hints: [
       {
@@ -73,6 +75,7 @@ export const WORLD_1_LEVELS: Level[] = [
           typescript: 'const steps = 3;',
           ruby: 'steps = 3',
           lua: 'steps = 3',
+          rust: 'let steps: i32 = 3;',
         },
       },
       {
@@ -85,6 +88,7 @@ export const WORLD_1_LEVELS: Level[] = [
           typescript: 'const steps = 3;',
           ruby: 'steps = 3',
           lua: 'steps = 3',
+          rust: 'let steps: i32 = 3;',
         },
       },
     ],
@@ -105,6 +109,9 @@ export const WORLD_1_LEVELS: Level[] = [
       }
       if (language === 'lua') {
         return `${userCode}\nif steps ~= nil then\n  for i = 1, tonumber(steps) do\n    step()\n  end\nend\n`
+      }
+      if (language === 'rust') {
+        return `${userCode}\nfor _i in 0..steps {\n    step();\n}\n`
       }
       return `${userCode}\nif (typeof steps !== 'undefined') {\n  for (let i = 0; i < Number(steps); i++) {\n    step();\n  }\n}\n`
     },
@@ -148,6 +155,7 @@ export const WORLD_1_LEVELS: Level[] = [
       typescript: '// The gatekeeper demands the secret password.\n// Change the string to "open" to lower the gate and cross.\nconst password = "closed";\n',
       ruby: '# The gatekeeper demands the secret password.\n# Change the string to "open" to lower the gate and cross.\npassword = "closed"\n',
       lua: '-- The gatekeeper demands the secret password.\n-- Change the string to "open" to lower the gate and cross.\npassword = "closed"\n',
+      rust: '// The gatekeeper demands the secret password.\n// Change the string slice to "open" to lower the gate and cross.\nlet password: &str = "closed";\n',
     },
     solutionCode: {
       python: 'password = "open"\n',
@@ -155,6 +163,7 @@ export const WORLD_1_LEVELS: Level[] = [
       typescript: 'const password = "open";\n',
       ruby: 'password = "open"\n',
       lua: 'password = "open"\n',
+      rust: 'let password: &str = "open";\n',
     },
     hints: [
       {
@@ -172,6 +181,7 @@ export const WORLD_1_LEVELS: Level[] = [
           typescript: 'const password = "open";',
           ruby: 'password = "open"',
           lua: 'password = "open"',
+          rust: 'let password: &str = "open";',
         },
       },
       {
@@ -184,6 +194,7 @@ export const WORLD_1_LEVELS: Level[] = [
           typescript: 'const password = "open";',
           ruby: 'password = "open"',
           lua: 'password = "open"',
+          rust: 'let password: &str = "open";',
         },
       },
     ],
@@ -204,6 +215,9 @@ export const WORLD_1_LEVELS: Level[] = [
       }
       if (language === 'lua') {
         return `${userCode}\nif password == "open" then\n  for i = 1, 4 do\n    step()\n  end\nend\n`
+      }
+      if (language === 'rust') {
+        return `${userCode}\nif password == "open" {\n    for _i in 0..4 {\n        step();\n    }\n}\n`
       }
       return `${userCode}\nif (typeof password !== 'undefined' && password === "open") {\n  for (let i = 0; i < 4; i++) {\n    step();\n  }\n}\n`
     },
@@ -245,6 +259,7 @@ export const WORLD_1_LEVELS: Level[] = [
       typescript: '// The sensor detects what tile lies ahead:\n// tile is set to "lava".\n// Built-in actions: jump() leaps 2 spaces forward, step() moves 1 space.\n\nif (tile === "lava") {\n  // Leap over the molten lava using jump()\n} else {\n  step();\n}\n',
       ruby: '# The sensor detects what tile lies ahead:\n# tile is set to "lava".\n# Built-in actions: jump leaps 2 spaces forward, step moves 1 space.\n\nif tile == "lava"\n  # Leap over the molten lava using jump\nelse\n  step\nend\n',
       lua: '-- The sensor detects what tile lies ahead:\n-- tile is set to "lava".\n-- Built-in actions: jump() leaps 2 spaces forward, step() moves 1 space.\n\nif tile == "lava" then\n  -- Leap over the molten lava using jump()\nelse\n  step()\nend\n',
+      rust: '// The sensor detects what tile lies ahead:\n// tile is set to "lava".\n// Built-in actions: jump() leaps 2 spaces forward, step() moves 1 space.\n\nif tile == "lava" {\n    // Leap over the molten lava using jump()\n} else {\n    step();\n}\n',
     },
     solutionCode: {
       python: 'if tile == "lava":\n    jump()\nelse:\n    step()\n',
@@ -252,6 +267,7 @@ export const WORLD_1_LEVELS: Level[] = [
       typescript: 'if (tile === "lava") {\n  jump();\n} else {\n  step();\n}\n',
       ruby: 'if tile == "lava"\n  jump\nelse\n  step\nend\n',
       lua: 'if tile == "lava" then\n  jump()\nelse\n  step()\nend\n',
+      rust: 'if tile == "lava" {\n    jump();\n} else {\n    step();\n}\n',
     },
     hints: [
       {
@@ -269,6 +285,7 @@ export const WORLD_1_LEVELS: Level[] = [
           typescript: 'if (tile === "lava") {\n  jump();\n}',
           ruby: 'if tile == "lava"\n  jump\nend',
           lua: 'if tile == "lava" then\n  jump()\nend',
+          rust: 'if tile == "lava" {\n    jump();\n}',
         },
       },
       {
@@ -281,6 +298,7 @@ export const WORLD_1_LEVELS: Level[] = [
           typescript: 'if (tile === "lava") {\n  jump();\n} else {\n  step();\n}',
           ruby: 'if tile == "lava"\n  jump\nelse\n  step\nend',
           lua: 'if tile == "lava" then\n  jump()\nelse\n  step()\nend',
+          rust: 'if tile == "lava" {\n    jump();\n} else {\n    step();\n}',
         },
       },
     ],
@@ -307,6 +325,9 @@ export const WORLD_1_LEVELS: Level[] = [
       }
       if (language === 'lua') {
         return `tile = "lava"\n${userCode}\n`
+      }
+      if (language === 'rust') {
+        return `let tile = "lava";\n${userCode}\n`
       }
       return `const tile = "lava";\n${userCode}\n`
     },

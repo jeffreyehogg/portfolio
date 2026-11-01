@@ -223,23 +223,23 @@ export const projectsData: Project[] = [
 		href: 'https://algoquest.jeffhogg.com',
 		githubUrl: 'https://github.com/jeffreyehogg/portfolio/tree/main/apps/algoquest',
 		description:
-			'An interactive, gamified algorithm and programming language learning quest built with in-browser Pyodide WebAssembly and TypeScript.',
+			'An interactive, gamified algorithm and programming language learning quest powered by a custom 138KB Rust WebAssembly engine, Pyodide WASM, and TypeScript.',
 		imageUrl: '/images/projects/algoquest.png',
 		tags: [
+			'Rust (WASM)',
 			'Next.js 16',
 			'React 19',
 			'Python WASM (Pyodide)',
 			'TypeScript',
 			'Web Workers',
 			'CodeMirror',
-			'Framer Motion',
 			'Clerk',
 		],
-		metrics: '100% In-Browser WASM • Zero-Server Cost • Multi-Language Quest',
+		metrics: '138KB Rust WASM Core • 6 Playable Languages • Zero-Server Cost',
 		highlights: [
-			'Executes untrusted Python and TypeScript code entirely client-side inside isolated Web Workers via Pyodide WebAssembly with zero backend compute cost.',
-			'Features a custom CodeMirror 6 IDE with real-time AST verification, unit test runners, and instant execution telemetry.',
-			'Persists user XP, streak progression, and completed algorithmic challenges across sessions with Clerk authentication and Zustand state.',
+			'Engineered a custom 138KB Rust (`wasm32-unknown-unknown`) core engine that executes a playable Rust track with `rustc[E0384]` borrow/mutability diagnostics, static Clippy linting, and 100k-iteration microsecond stress benchmarks.',
+			'Executes untrusted Rust, Python, TypeScript, JavaScript, Ruby, and Lua code entirely client-side inside isolated Web Workers with zero backend compute cost.',
+			'Features a custom CodeMirror 6 IDE with real-time AST verification, unit test runners, and Clerk/Zustand XP progression.',
 		],
 		featured: true,
 	},
@@ -399,7 +399,7 @@ export const projectsData: Project[] = [
 export const skillsData: SkillCategory[] = [
 	{
 		category: 'Languages & Frameworks',
-		list: 'TypeScript, JavaScript, Node.js, React, Next.js, Angular, Python, Tailwind CSS',
+		list: 'TypeScript, JavaScript, Rust (WebAssembly), Node.js, React, Next.js, Angular, Python, Tailwind CSS',
 	},
 	{
 		category: 'Databases & DevOps',

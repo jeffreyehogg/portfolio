@@ -1,4 +1,4 @@
-export type Language = 'python' | 'javascript' | 'typescript' | 'ruby' | 'lua'
+export type Language = 'python' | 'javascript' | 'typescript' | 'ruby' | 'lua' | 'rust'
 
 export type StepEventType =
   | 'step'
@@ -95,6 +95,15 @@ export interface ExecutionMetrics {
   lineCount: number
 }
 
+export interface WasmBenchmarkTelemetry {
+  engine: 'rust-wasm'
+  operationName: string
+  iterations: number
+  executionTimeUs: number
+  opsPerSecond: number
+  wasmBinarySizeKb: number
+}
+
 export interface ExecutionResult {
   requestId: string
   success: boolean
@@ -104,6 +113,7 @@ export interface ExecutionResult {
   allTestsPassed: boolean
   executionTimeMs: number
   lintDiagnostics?: LintDiagnostic[]
+  wasmBenchmark?: WasmBenchmarkTelemetry
   metrics?: ExecutionMetrics
   error?: string
   errorDetails?: ErrorDetails

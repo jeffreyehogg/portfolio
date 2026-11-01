@@ -179,6 +179,30 @@ export function analyzeCodeQuality(code: string, language: Language): LintDiagno
           message: 'Prefer strict equality `===` over loose equality `==`.',
         })
       }
+    } else if (language === 'rust') {
+      // Clippy bool_comparison
+      if (/==\s*(true|false)\b/.test(trimmed)) {
+        diagnostics.push({
+          line: lineNum,
+          column: 1,
+          code: 'clippy::bool_comparison',
+          rule: 'Clippy/bool_comparison',
+          severity: 'warning',
+          message: 'Equality checks against true/false are redundant; use the boolean expression or `!` directly.',
+        })
+      }
+
+      // rustc unused_parens
+      if (/^(if|while)\s+\(.*\)\s*\{/.test(trimmed)) {
+        diagnostics.push({
+          line: lineNum,
+          column: 1,
+          code: 'unused_parens',
+          rule: 'rustc/unused_parens',
+          severity: 'warning',
+          message: 'Unnecessary parentheses around `if` or `while` condition in Rust.',
+        })
+      }
     }
   }
 

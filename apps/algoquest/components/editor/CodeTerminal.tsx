@@ -4,6 +4,7 @@ import React, { useMemo } from 'react'
 import CodeMirror from '@uiw/react-codemirror'
 import { python } from '@codemirror/lang-python'
 import { javascript } from '@codemirror/lang-javascript'
+import { rust } from '@codemirror/lang-rust'
 import { StreamLanguage } from '@codemirror/language'
 import { ruby } from '@codemirror/legacy-modes/mode/ruby'
 import { lua } from '@codemirror/legacy-modes/mode/lua'
@@ -29,8 +30,9 @@ const LANGUAGES: Array<{
   activeClass: string
 }> = [
   { id: 'python', name: 'Python', icon: '🐍', activeClass: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40 shadow-sm' },
-  { id: 'javascript', name: 'JavaScript', icon: '💛', activeClass: 'bg-amber-500/20 text-amber-300 border-amber-500/40 shadow-sm' },
+  { id: 'rust', name: 'Rust', icon: '🦀', activeClass: 'bg-orange-500/20 text-orange-300 border-orange-500/40 shadow-sm' },
   { id: 'typescript', name: 'TypeScript', icon: '⚡', activeClass: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40 shadow-sm' },
+  { id: 'javascript', name: 'JavaScript', icon: '💛', activeClass: 'bg-amber-500/20 text-amber-300 border-amber-500/40 shadow-sm' },
   { id: 'ruby', name: 'Ruby', icon: '💎', activeClass: 'bg-rose-500/20 text-rose-300 border-rose-500/40 shadow-sm' },
   { id: 'lua', name: 'Lua', icon: '🌙', activeClass: 'bg-indigo-500/20 text-indigo-300 border-indigo-500/40 shadow-sm' },
 ]
@@ -53,6 +55,8 @@ export const CodeTerminal = React.memo(function CodeTerminal({
         return [javascript({ typescript: false })]
       case 'typescript':
         return [javascript({ typescript: true })]
+      case 'rust':
+        return [rust()]
       case 'ruby':
         return [StreamLanguage.define(ruby)]
       case 'lua':

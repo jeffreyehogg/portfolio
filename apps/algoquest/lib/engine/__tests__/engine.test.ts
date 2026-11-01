@@ -1,8 +1,10 @@
 import { describe, it, expect } from 'vitest'
+import fs from 'fs'
+import path from 'path'
 import { LEVELS, WORLDS, getLevelById, getNextLevelId, getPreviousLevelId, Language } from '../../quests'
 import { evaluateLevelStars, analyzeCodeQuality } from '../scoring'
 
-const LANGUAGES: Language[] = ['python', 'javascript', 'typescript', 'ruby', 'lua']
+const LANGUAGES: Language[] = ['python', 'javascript', 'typescript', 'ruby', 'lua', 'rust']
 
 describe('AlgoQuest 10-Level Curriculum & World Registry', () => {
   it('registers 4 worlds and 10 progressive levels', () => {
@@ -113,10 +115,82 @@ describe('Multi-Language Static Code Quality Analyzer (analyzeCodeQuality)', () 
     expect(diags.map((d) => d.code)).toContain('eqeqeq')
   })
 
+  it('flags clippy::bool_comparison and unused_parens in Rust code', () => {
+    const diags = analyzeCodeQuality('if (x == true) {\n    step();\n}\n', 'rust')
+    expect(diags.map((d) => d.code)).toContain('clippy::bool_comparison')
+    expect(diags.map((d) => d.code)).toContain('unused_parens')
+  })
+
   it('returns empty diagnostics for clean solution code across all levels', () => {
     for (const level of LEVELS) {
       expect(analyzeCodeQuality(level.solutionCode.python, 'python')).toEqual([])
       expect(analyzeCodeQuality(level.solutionCode.typescript, 'typescript')).toEqual([])
+      expect(analyzeCodeQuality(level.solutionCode.rust, 'rust')).toEqual([])
+    }
+  })
+})
+
+describe('Native Rust WebAssembly Core Engine (algoquest_core.wasm)', () => {
+  it('instantiates algoquest_core.wasm and solves all 10 levels in Rust with 100k stress benchmarks', async () => {
+    const wasmPath = path.resolve(__dirname, '../../../public/wasm/algoquest_core.wasm')
+    expect(fs.existsSync(wasmPath)).toBe(true)
+
+    const bytes = new Uint8Array(fs.readFileSync(wasmPath))
+    const instantiated = (await WebAssembly.instantiate(bytes, {})) as unknown as {
+      instance: WebAssembly.Instance
+    }
+    const exports = instantiated.instance.exports as {
+      memory: WebAssembly.Memory
+      // eslint-disable-next-line no-unused-vars
+      wasm_alloc: (len: number) => number
+      // eslint-disable-next-line no-unused-vars
+      wasm_dealloc: (ptr: number, len: number) => void
+      // eslint-disable-next-line no-unused-vars
+      execute_rust_quest_wasm: (ptr: number, len: number) => bigint
+    }
+
+    const encoder = new TextEncoder()
+    const decoder = new TextDecoder()
+
+    for (const level of LEVELS) {
+      const { heroStart, heroDirection, goal, tiles, width, height, entities } = level.gridConfig
+      const tilesLine = tiles.map((r) => r.join(',')).join(';')
+      const itemsLine = (entities || [])
+        .map((e) => `${e.id},${e.x},${e.y},${e.type}`)
+        .join(';')
+
+      const rawCode = level.solutionCode.rust
+      const execCode = level.prepareCode(rawCode, 'rust')
+
+      const envelope = [
+        level.id,
+        `${heroStart.x},${heroStart.y},${heroDirection},${goal.x},${goal.y},${width},${height}`,
+        tilesLine,
+        itemsLine,
+        '===RAW_CODE===',
+        rawCode,
+        '===EXEC_CODE===',
+        execCode,
+      ].join('\n')
+
+      const encoded = encoder.encode(envelope)
+      const inPtr = exports.wasm_alloc(encoded.length)
+      new Uint8Array(exports.memory.buffer, inPtr, encoded.length).set(encoded)
+
+      const packed = exports.execute_rust_quest_wasm(inPtr, encoded.length)
+      exports.wasm_dealloc(inPtr, encoded.length)
+
+      const packedBig = BigInt(packed)
+      const outPtr = Number((packedBig >> BigInt(32)) & BigInt(0xffffffff))
+      const outLen = Number(packedBig & BigInt(0xffffffff))
+      const jsonStr = decoder.decode(new Uint8Array(exports.memory.buffer, outPtr, outLen))
+      exports.wasm_dealloc(outPtr, outLen)
+
+      const parsed = JSON.parse(jsonStr)
+      expect(parsed.success, `${level.id} failed in Rust WASM: ${parsed.error}`).toBe(true)
+      expect(parsed.reachedGoal, `${level.id} did not reach goal in Rust WASM`).toBe(true)
+      expect(parsed.wasmBenchmark.engine).toBe('rust-wasm')
+      expect(parsed.wasmBenchmark.iterations).toBe(100000)
     }
   })
 })

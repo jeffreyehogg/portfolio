@@ -54,6 +54,7 @@ export const WORLD_3_LEVELS: Level[] = [
       typescript: '// The pedestal stack holds ancient weighted runes.\n// 1. Push 3 stones onto the stack using stack.push("stone")\n// 2. Pop the top stone using stack.pop() to reveal the key!\n\nconst stack: string[] = [];\n\n// Push 3 stones:\nstack.push("stone");\n\n// Pop the top stone:\n// const key = stack.pop();\n',
       ruby: '# The pedestal stack holds ancient weighted runes.\n# 1. Push 3 stones onto the stack using stack.push("stone")\n# 2. Pop the top stone using stack.pop to reveal the key!\n\nstack = []\n\n# Push 3 stones:\nstack.push("stone")\n\n# Pop the top stone:\n# key = stack.pop\n',
       lua: '-- The pedestal stack holds ancient weighted runes.\n-- 1. Push 3 stones onto the stack using table.insert(stack, "stone")\n-- 2. Pop the top stone using table.remove(stack) to reveal the key!\n\nstack = {}\n\n-- Push 3 stones:\ntable.insert(stack, "stone")\n\n-- Pop the top stone:\n-- key = table.remove(stack)\n',
+      rust: '// The pedestal stack holds ancient weighted runes.\n// 1. Push 3 stones onto the mutable Vec using stack.push("stone")\n// 2. Pop the top stone using stack.pop() to reveal the key!\n\nlet mut stack = Vec::new();\n\n// Push 3 stones:\nstack.push("stone");\n\n// Pop the top stone:\n// let key = stack.pop();\n',
     },
     solutionCode: {
       python: 'stack = []\nstack.append("stone")\nstack.append("stone")\nstack.append("stone")\nkey = stack.pop()\n',
@@ -61,6 +62,7 @@ export const WORLD_3_LEVELS: Level[] = [
       typescript: 'const stack: string[] = [];\nstack.push("stone");\nstack.push("stone");\nstack.push("stone");\nconst key = stack.pop();\n',
       ruby: 'stack = []\nstack.push("stone")\nstack.push("stone")\nstack.push("stone")\nkey = stack.pop\n',
       lua: 'stack = {}\ntable.insert(stack, "stone")\ntable.insert(stack, "stone")\ntable.insert(stack, "stone")\nkey = table.remove(stack)\n',
+      rust: 'let mut stack = Vec::new();\nstack.push("stone");\nstack.push("stone");\nstack.push("stone");\nlet key = stack.pop();\n',
     },
     hints: [
       {
@@ -79,6 +81,7 @@ export const WORLD_3_LEVELS: Level[] = [
           typescript: 'const key = stack.pop();',
           ruby: 'key = stack.pop',
           lua: 'key = table.remove(stack)',
+          rust: 'let key = stack.pop();',
         },
       },
       {
@@ -96,6 +99,8 @@ export const WORLD_3_LEVELS: Level[] = [
             'stack = []\nstack.push("stone")\nstack.push("stone")\nstack.push("stone")\nkey = stack.pop',
           lua:
             'stack = {}\ntable.insert(stack, "stone")\ntable.insert(stack, "stone")\ntable.insert(stack, "stone")\nkey = table.remove(stack)',
+          rust:
+            'let mut stack = Vec::new();\nstack.push("stone");\nstack.push("stone");\nstack.push("stone");\nlet key = stack.pop();',
         },
       },
     ],
@@ -116,6 +121,9 @@ export const WORLD_3_LEVELS: Level[] = [
       }
       if (language === 'lua') {
         return `${userCode}\nif stack ~= nil and #stack == 2 then\n  step()\nend\n`
+      }
+      if (language === 'rust') {
+        return `${userCode}\nif stack.len() == 2 {\n    step();\n}\n`
       }
       return `${userCode}\nif (typeof stack !== 'undefined' && Array.isArray(stack) && stack.length === 2) {\n  step();\n}\n`
     },
@@ -160,6 +168,7 @@ export const WORLD_3_LEVELS: Level[] = [
       typescript: '// The bridge extends from index 0 to index 6.\n// Use two pointers converging toward each other.\nlet left = 0;\nlet right = 6;\n\nwhile (left < right) {\n  // Advance left pointer inward\n  // Advance right pointer inward\n}\n',
       ruby: '# The bridge extends from index 0 to index 6.\n# Use two pointers converging toward each other.\nleft = 0\nright = 6\n\nwhile left < right\n  # Advance left pointer inward\n  # Advance right pointer inward\nend\n',
       lua: '-- The bridge extends from index 0 to index 6.\n-- Use two pointers converging toward each other.\nleft = 0\nright = 6\n\nwhile left < right do\n  -- Advance left pointer inward\n  -- Advance right pointer inward\nend\n',
+      rust: '// The bridge extends from index 0 to index 6.\n// Use two mutable pointers converging toward each other.\nlet mut left = 0;\nlet mut right = 6;\n\nwhile left < right {\n    // Advance left pointer inward\n    // Advance right pointer inward\n}\n',
     },
     solutionCode: {
       python: 'left = 0\nright = 6\n\nwhile left < right:\n    left += 1\n    right -= 1\n',
@@ -167,6 +176,7 @@ export const WORLD_3_LEVELS: Level[] = [
       typescript: 'let left = 0;\nlet right = 6;\n\nwhile (left < right) {\n  left += 1;\n  right -= 1;\n}\n',
       ruby: 'left = 0\nright = 6\n\nwhile left < right\n  left += 1\n  right -= 1\nend\n',
       lua: 'left = 0\nright = 6\n\nwhile left < right do\n  left = left + 1\n  right = right - 1\nend\n',
+      rust: 'let mut left = 0;\nlet mut right = 6;\n\nwhile left < right {\n    left += 1;\n    right -= 1;\n}\n',
     },
     hints: [
       {
@@ -186,6 +196,7 @@ export const WORLD_3_LEVELS: Level[] = [
           typescript: 'while (left < right) {\n  left += 1;\n  right -= 1;\n}',
           ruby: 'while left < right\n  left += 1\n  right -= 1\nend',
           lua: 'while left < right do\n  left = left + 1\n  right = right - 1\nend',
+          rust: 'while left < right {\n    left += 1;\n    right -= 1;\n}',
         },
       },
       {
@@ -198,6 +209,7 @@ export const WORLD_3_LEVELS: Level[] = [
           typescript: 'let left = 0;\nlet right = 6;\nwhile (left < right) {\n  left += 1;\n  right -= 1;\n}',
           ruby: 'left = 0\nright = 6\nwhile left < right\n  left += 1\n  right -= 1\nend',
           lua: 'left = 0\nright = 6\nwhile left < right do\n  left = left + 1\n  right = right - 1\nend',
+          rust: 'let mut left = 0;\nlet mut right = 6;\nwhile left < right {\n    left += 1;\n    right -= 1;\n}',
         },
       },
     ],
@@ -218,6 +230,9 @@ export const WORLD_3_LEVELS: Level[] = [
       }
       if (language === 'lua') {
         return `${userCode}\nif left == 3 and right == 3 then\n  if not at_goal() then\n    for i = 1, 3 do step() end\n  end\nend\n`
+      }
+      if (language === 'rust') {
+        return `${userCode}\nif left == 3 && right == 3 {\n    if !at_goal() {\n        for _i in 0..3 {\n            step();\n        }\n    }\n}\n`
       }
       return `${userCode}\nif (typeof left !== 'undefined' && typeof right !== 'undefined' && left === 3 && right === 3) {\n  if (!at_goal()) {\n    for (let i = 0; i < 3; i++) {\n      step();\n    }\n  }\n}\n`
     },

@@ -50,6 +50,7 @@ export const WORLD_2_LEVELS: Level[] = [
       typescript: '// Keep walking forward until the hero reaches the goal.\n// Built-in actions: at_goal() checks position, step() moves forward 1 tile.\n\nwhile (!at_goal()) {\n  // Take a step forward using step()\n}\n',
       ruby: '# Keep walking forward until the hero reaches the goal.\n# Built-in actions: at_goal checks position, step moves forward 1 tile.\n\nwhile !at_goal\n  # Take a step forward using step\nend\n',
       lua: '-- Keep walking forward until the hero reaches the goal.\n-- Built-in actions: at_goal() checks position, step() moves forward 1 tile.\n\nwhile not at_goal() do\n  -- Take a step forward using step()\nend\n',
+      rust: '// Keep walking forward until the hero reaches the goal.\n// Built-in actions: at_goal() checks position, step() moves forward 1 tile.\n\nwhile !at_goal() {\n    // Take a step forward using step()\n}\n',
     },
     solutionCode: {
       python: 'while not at_goal():\n    step()\n',
@@ -57,6 +58,7 @@ export const WORLD_2_LEVELS: Level[] = [
       typescript: 'while (!at_goal()) {\n  step();\n}\n',
       ruby: 'while !at_goal\n  step\nend\n',
       lua: 'while not at_goal() do\n  step()\nend\n',
+      rust: 'while !at_goal() {\n    step();\n}\n',
     },
     hints: [
       {
@@ -74,6 +76,7 @@ export const WORLD_2_LEVELS: Level[] = [
           typescript: 'while (!at_goal()) {\n  step();\n}',
           ruby: 'while !at_goal\n  step\nend',
           lua: 'while not at_goal() do\n  step()\nend',
+          rust: 'while !at_goal() {\n    step();\n}',
         },
       },
       {
@@ -86,6 +89,7 @@ export const WORLD_2_LEVELS: Level[] = [
           typescript: 'while (!at_goal()) {\n  step();\n}',
           ruby: 'while !at_goal\n  step\nend',
           lua: 'while not at_goal() do\n  step()\nend',
+          rust: 'while !at_goal() {\n    step();\n}',
         },
       },
     ],
@@ -144,6 +148,7 @@ export const WORLD_2_LEVELS: Level[] = [
       typescript: '// Cross the 5-tile bridge and harvest every gem!\n// Built-in actions: step() moves forward 1 tile, collect() gathers the gem.\n\nfor (let i = 0; i < 5; i++) {\n  // Step onto the next tile (use step())\n  // Collect the gem (use collect())\n}\n',
       ruby: '# Cross the 5-tile bridge and harvest every gem!\n# Built-in actions: step moves forward 1 tile, collect gathers the gem.\n\n5.times do\n  # Step onto the next tile (use step)\n  # Collect the gem (use collect)\nend\n',
       lua: '-- Cross the 5-tile bridge and harvest every gem!\n-- Built-in actions: step() moves forward 1 tile, collect() gathers the gem.\n\nfor i = 1, 5 do\n  -- Step onto the next tile (use step())\n  -- Collect the gem (use collect())\nend\n',
+      rust: '// Cross the 5-tile bridge and harvest every gem!\n// Built-in actions: step() moves forward 1 tile, collect() gathers the gem.\n\nfor i in 0..5 {\n    // Step onto the next tile (use step())\n    // Collect the gem (use collect())\n}\n',
     },
     solutionCode: {
       python: 'for i in range(5):\n    step()\n    collect()\n',
@@ -151,6 +156,7 @@ export const WORLD_2_LEVELS: Level[] = [
       typescript: 'for (let i = 0; i < 5; i++) {\n  step();\n  collect();\n}\n',
       ruby: '5.times do\n  step\n  collect\nend\n',
       lua: 'for i = 1, 5 do\n  step()\n  collect()\nend\n',
+      rust: 'for i in 0..5 {\n    step();\n    collect();\n}\n',
     },
     hints: [
       {
@@ -169,6 +175,7 @@ export const WORLD_2_LEVELS: Level[] = [
           typescript: 'for (let i = 0; i < 5; i++) {\n  step();\n  collect();\n}',
           ruby: '5.times do\n  step\n  collect\nend',
           lua: 'for i = 1, 5 do\n  step()\n  collect()\nend',
+          rust: 'for i in 0..5 {\n    step();\n    collect();\n}',
         },
       },
       {
@@ -181,6 +188,7 @@ export const WORLD_2_LEVELS: Level[] = [
           typescript: 'for (let i = 0; i < 5; i++) {\n  step();\n  collect();\n}',
           ruby: '5.times do\n  step\n  collect\nend',
           lua: 'for i = 1, 5 do\n  step()\n  collect()\nend',
+          rust: 'for i in 0..5 {\n    step();\n    collect();\n}',
         },
       },
     ],
@@ -243,6 +251,7 @@ export const WORLD_2_LEVELS: Level[] = [
       typescript: '// items = ["potion", "shield", "key"] is in your inventory.\n// Access the 1st item (index 0) for your health potion\n// and the 3rd item (index 2) for the bronze key.\n\nconst potion = items[0];\nconst key = items[0]; // Fix this index to get the key!\n',
       ruby: '# items = ["potion", "shield", "key"] is in your inventory.\n# Access the 1st item (index 0) for your health potion\n# and the 3rd item (index 2) for the bronze key.\n\npotion = items[0]\nkey = items[0]  # Fix this index to get the key!\n',
       lua: '-- items = {"potion", "shield", "key"} is in your inventory.\n-- Access the potion and the bronze key.\n\npotion = items[0]\nkey = items[0]  -- Fix this index to get the key!\n',
+      rust: '// items = vec!["potion", "shield", "key"] is in your inventory.\n// Access the 1st item (index 0) for your health potion\n// and the 3rd item (index 2) for the bronze key.\n\nlet potion = items[0];\nlet key = items[0]; // Fix this index to get the key!\n',
     },
     solutionCode: {
       python: 'potion = items[0]\nkey = items[2]\n',
@@ -250,6 +259,7 @@ export const WORLD_2_LEVELS: Level[] = [
       typescript: 'const potion = items[0];\nconst key = items[2];\n',
       ruby: 'potion = items[0]\nkey = items[2]\n',
       lua: 'potion = items[0]\nkey = items[2]\n',
+      rust: 'let potion = items[0];\nlet key = items[2];\n',
     },
     hints: [
       {
@@ -268,6 +278,7 @@ export const WORLD_2_LEVELS: Level[] = [
           typescript: 'const key = items[2];',
           ruby: 'key = items[2]',
           lua: 'key = items[2]',
+          rust: 'let key = items[2];',
         },
       },
       {
@@ -280,6 +291,7 @@ export const WORLD_2_LEVELS: Level[] = [
           typescript: 'const potion = items[0];\nconst key = items[2];',
           ruby: 'potion = items[0]\nkey = items[2]',
           lua: 'potion = items[0]\nkey = items[2]',
+          rust: 'let potion = items[0];\nlet key = items[2];',
         },
       },
     ],
@@ -300,6 +312,9 @@ export const WORLD_2_LEVELS: Level[] = [
       }
       if (language === 'lua') {
         return `items = { [0] = "potion", [1] = "shield", [2] = "key", "potion", "shield", "key" }\n${userCode}\nif (potion == "potion") and (key == "key") then\n  for i = 1, 3 do step() end\nend\n`
+      }
+      if (language === 'rust') {
+        return `let items = vec!["potion", "shield", "key"];\n${userCode}\nif potion == "potion" && key == "key" {\n    for _i in 0..3 {\n        step();\n    }\n}\n`
       }
       return `const items = ["potion", "shield", "key"];\n${userCode}\nif (typeof potion !== 'undefined' && typeof key !== 'undefined' && potion === items[0] && key === items[2]) {\n  for (let i = 0; i < 3; i++) {\n    step();\n  }\n}\n`
     },

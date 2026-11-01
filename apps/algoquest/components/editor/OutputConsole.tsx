@@ -10,13 +10,20 @@ import {
   ShieldCheck,
   Sparkles,
   FileCode2,
+  Cpu,
 } from 'lucide-react'
-import { TestCaseResult, ErrorDetails, LintDiagnostic } from '../../lib/engine/types'
+import {
+  TestCaseResult,
+  ErrorDetails,
+  LintDiagnostic,
+  WasmBenchmarkTelemetry,
+} from '../../lib/engine/types'
 
 interface OutputConsoleProps {
   testResults: TestCaseResult[]
   stdoutLogs: string[]
   lintDiagnostics?: LintDiagnostic[]
+  wasmBenchmark?: WasmBenchmarkTelemetry
   error?: string
   errorDetails?: ErrorDetails
   executionTimeMs?: number
@@ -28,6 +35,7 @@ export function OutputConsole({
   testResults = [],
   stdoutLogs = [],
   lintDiagnostics = [],
+  wasmBenchmark,
   error,
   errorDetails,
   executionTimeMs = 0,
@@ -87,7 +95,7 @@ export function OutputConsole({
             }`}
           >
             <FileCode2 className="w-3.5 h-3.5" />
-            <span>Ruff / Code Quality</span>
+            <span>Ruff / Clippy</span>
             {hasRun && (
               <span
                 className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
@@ -125,9 +133,22 @@ export function OutputConsole({
         </div>
 
         {hasRun && (
-          <div className="flex items-center gap-1 text-[11px] font-mono text-slate-400 shrink-0 ml-2">
-            <Clock className="w-3 h-3 text-slate-500" />
-            <span>{executionTimeMs}ms</span>
+          <div className="flex items-center gap-2 text-[11px] font-mono text-slate-400 shrink-0 ml-2">
+            {wasmBenchmark && (
+              <span
+                className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-orange-500/15 border border-orange-500/30 text-orange-300 text-[10px]"
+                title={`Native Rust WASM Benchmark: ${wasmBenchmark.operationName} (${wasmBenchmark.wasmBinarySizeKb}KB binary)`}
+              >
+                <Cpu className="w-3 h-3 text-orange-400" />
+                <span>
+                  🦀 WASM 100k: <strong>{wasmBenchmark.executionTimeUs}µs</strong>
+                </span>
+              </span>
+            )}
+            <span className="inline-flex items-center gap-1">
+              <Clock className="w-3 h-3 text-slate-500" />
+              <span>{executionTimeMs}ms</span>
+            </span>
           </div>
         )}
       </div>
@@ -152,6 +173,29 @@ export function OutputConsole({
                 </div>
                 <div className="text-rose-200/90 mt-1 whitespace-pre-wrap">{error}</div>
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* Option A: Native Rust WASM Stress Benchmark Telemetry Strip */}
+        {hasRun && wasmBenchmark && (
+          <div className="mb-3 rounded-xl bg-orange-950/20 border border-orange-500/25 px-3 py-2 flex flex-wrap items-center justify-between gap-2 text-[11px]">
+            <div className="flex items-center gap-2 text-orange-200">
+              <span className="px-1.5 py-0.5 rounded bg-orange-500/20 text-orange-300 border border-orange-500/30 font-bold text-[10px]">
+                🦀 RUST WASM CORE ({wasmBenchmark.wasmBinarySizeKb}KB)
+              </span>
+              <span className="text-slate-300">{wasmBenchmark.operationName}</span>
+            </div>
+            <div className="flex items-center gap-3 text-slate-400">
+              <span>
+                Time: <strong className="text-orange-300">{wasmBenchmark.executionTimeUs}µs</strong>
+              </span>
+              <span>
+                Throughput:{' '}
+                <strong className="text-emerald-300">
+                  {(wasmBenchmark.opsPerSecond / 1_000_000).toFixed(1)}M ops/s
+                </strong>
+              </span>
             </div>
           </div>
         )}

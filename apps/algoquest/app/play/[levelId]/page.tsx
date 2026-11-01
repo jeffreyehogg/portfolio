@@ -22,6 +22,7 @@ import {
   TestCaseResult,
   ErrorDetails,
   LintDiagnostic,
+  WasmBenchmarkTelemetry,
 } from '../../../lib/engine/types'
 import { GridCanvas } from '../../../components/game/GridCanvas'
 import { Visualizer } from '../../../components/game/Visualizer'
@@ -97,6 +98,7 @@ export default function PlayLevelPage({ params }: PlayPageProps) {
   const [testResults, setTestResults] = useState<TestCaseResult[]>([])
   const [stdoutLogs, setStdoutLogs] = useState<string[]>([])
   const [lintDiagnostics, setLintDiagnostics] = useState<LintDiagnostic[]>([])
+  const [wasmBenchmark, setWasmBenchmark] = useState<WasmBenchmarkTelemetry | undefined>()
   const [executionError, setExecutionError] = useState<string | undefined>()
   const [errorDetails, setErrorDetails] = useState<ErrorDetails | undefined>()
   const [executionTimeMs, setExecutionTimeMs] = useState<number>(0)
@@ -245,6 +247,7 @@ export default function PlayLevelPage({ params }: PlayPageProps) {
             tiles: level.gridConfig.tiles,
             width: level.gridConfig.width,
             height: level.gridConfig.height,
+            items: level.gridConfig.entities,
           },
           timeoutMs: 4000,
         },
@@ -264,6 +267,7 @@ export default function PlayLevelPage({ params }: PlayPageProps) {
       setIsRunning(false)
       setTestResults(result.testResults)
       setLintDiagnostics(combinedDiagnostics)
+      setWasmBenchmark(result.wasmBenchmark)
       setExecutionTimeMs(result.executionTimeMs)
       setStdoutLogs(result.output)
 
@@ -592,6 +596,7 @@ export default function PlayLevelPage({ params }: PlayPageProps) {
               testResults={testResults}
               stdoutLogs={stdoutLogs}
               lintDiagnostics={lintDiagnostics}
+              wasmBenchmark={wasmBenchmark}
               error={executionError}
               errorDetails={errorDetails}
               executionTimeMs={executionTimeMs}

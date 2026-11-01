@@ -1,4 +1,4 @@
-export type Language = 'python' | 'javascript' | 'typescript' | 'ruby' | 'lua'
+export type Language = 'python' | 'javascript' | 'typescript' | 'ruby' | 'lua' | 'rust'
 
 export type TileType =
   | 'path'

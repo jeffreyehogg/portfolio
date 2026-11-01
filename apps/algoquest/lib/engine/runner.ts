@@ -5,7 +5,69 @@ import {
   StepEvent,
   WorkerOutMessage,
   ErrorDetails,
+  WasmBenchmarkTelemetry,
 } from './types'
+
+interface AlgoQuestWasmExports extends WebAssembly.Exports {
+  memory: WebAssembly.Memory
+  // eslint-disable-next-line no-unused-vars
+  wasm_alloc: (len: number) => number
+  // eslint-disable-next-line no-unused-vars
+  wasm_dealloc: (ptr: number, len: number) => void
+  // eslint-disable-next-line no-unused-vars
+  run_stress_benchmark_wasm: (ptr: number, len: number) => bigint
+}
+
+let cachedWasmExports: AlgoQuestWasmExports | null = null
+let cachedWasmSizeKb = 138
+
+async function runClientRustWasmBenchmark(
+  levelHint: string
+): Promise<WasmBenchmarkTelemetry | undefined> {
+  if (typeof window === 'undefined' || typeof WebAssembly === 'undefined') {
+    return undefined
+  }
+  try {
+    if (!cachedWasmExports) {
+      const res = await fetch('/wasm/algoquest_core.wasm')
+      const bytes = await res.arrayBuffer()
+      cachedWasmSizeKb = Math.round(bytes.byteLength / 1024)
+      const instantiated = (await WebAssembly.instantiate(bytes, {})) as unknown as {
+        instance: WebAssembly.Instance
+      }
+      cachedWasmExports = instantiated.instance.exports as AlgoQuestWasmExports
+    }
+    const exports = cachedWasmExports
+    const encoder = new TextEncoder()
+    const decoder = new TextDecoder()
+    const encoded = encoder.encode(levelHint)
+    const inPtr = exports.wasm_alloc(encoded.length)
+    new Uint8Array(exports.memory.buffer, inPtr, encoded.length).set(encoded)
+
+    const t0 = performance.now()
+    const packed = exports.run_stress_benchmark_wasm(inPtr, encoded.length)
+    const elapsedUs = Math.max(12, Math.round((performance.now() - t0) * 1000))
+    exports.wasm_dealloc(inPtr, encoded.length)
+
+    const packedBig = BigInt(packed)
+    const outPtr = Number((packedBig >> BigInt(32)) & BigInt(0xffffffff))
+    const outLen = Number(packedBig & BigInt(0xffffffff))
+    const jsonStr = decoder.decode(new Uint8Array(exports.memory.buffer, outPtr, outLen))
+    exports.wasm_dealloc(outPtr, outLen)
+
+    const parsed = JSON.parse(jsonStr)
+    return {
+      engine: 'rust-wasm',
+      operationName: parsed.operationName || 'Spatial Grid Collision & Path Sim (100k Steps)',
+      iterations: parsed.iterations || 100000,
+      executionTimeUs: elapsedUs,
+      opsPerSecond: Math.round(((parsed.iterations || 100000) / elapsedUs) * 1_000_000),
+      wasmBinarySizeKb: cachedWasmSizeKb,
+    }
+  } catch {
+    return undefined
+  }
+}
 
 /* eslint-disable no-unused-vars */
 export interface RunnerCallbacks {
@@ -80,6 +142,21 @@ function cleanErrorMessage(rawError: string, language: Language): ErrorDetails {
       message,
       line,
     }
+  } else if (language === 'rust') {
+    let errorType = 'rustc[Error]'
+    let message = rawError
+    const colonIdx = rawError.indexOf(':')
+    if (colonIdx > 0 && !rawError.startsWith(' ')) {
+      errorType = rawError.slice(0, colonIdx).trim()
+      message = rawError.slice(colonIdx + 1).trim()
+    }
+    const lineMatch = rawError.match(/line\s+(\d+)/i)
+    const line = lineMatch && lineMatch[1] ? parseInt(lineMatch[1], 10) : undefined
+    return {
+      type: errorType,
+      message,
+      line,
+    }
   } else {
     // JavaScript / TypeScript error cleaning
     let message = rawError
@@ -126,6 +203,8 @@ export class ExecutionRunner {
           ? '/workers/ruby-worker.js'
           : language === 'lua'
           ? '/workers/lua-worker.js'
+          : language === 'rust'
+          ? '/workers/rust-worker.js'
           : '/workers/ts-worker.js'
 
       worker = new Worker(workerUrl)
@@ -242,7 +321,16 @@ export class ExecutionRunner {
           case 'RESULT':
             if (data.payload.requestId === request.requestId) {
               cleanup()
-              resolve(data.payload)
+              if (!data.payload.wasmBenchmark) {
+                runClientRustWasmBenchmark(request.requestId)
+                  .then((bench) => {
+                    if (bench) data.payload.wasmBenchmark = bench
+                    resolve(data.payload)
+                  })
+                  .catch(() => resolve(data.payload))
+              } else {
+                resolve(data.payload)
+              }
             }
             break
 

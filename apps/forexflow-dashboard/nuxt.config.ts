@@ -1,31 +1,38 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  srcDir: '.',
+  dir: {
+    app: '.'
+  },
   telemetry: false,
-  devtools: { enabled: process.env.NODE_ENV !== 'production' },
+  devtools: { enabled: false },
 
-  // UI library and typography
-  modules: ['@nuxt/ui', '@nuxtjs/google-fonts'],
+  // Tailwind CSS (zero @nuxt/ui or @nuxtjs/google-fonts dependencies)
+  modules: ['@nuxtjs/tailwindcss'],
 
-  googleFonts: {
-    families: {
-      Inter: [400, 500, 600, 700],
-      'JetBrains Mono': [400, 500, 600, 700]
-    },
-    display: 'swap',
-    prefetch: true,
-    preconnect: true,
-    preload: true,
-    download: true
+  postcss: {
+    plugins: {
+      tailwindcss: {},
+      autoprefixer: {}
+    }
   },
 
-  colorMode: {
-    preference: 'dark',
-    fallback: 'dark'
+  tailwindcss: {
+    config: {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'monospace']
+          }
+        }
+      }
+    }
   },
 
   app: {
     head: {
-      htmlAttrs: { lang: 'en' },
+      htmlAttrs: { lang: 'en', class: 'dark' },
       charset: 'utf-8',
       viewport: 'width=device-width, initial-scale=1, maximum-scale=5',
       meta: [
@@ -33,7 +40,13 @@ export default defineNuxtConfig({
         { name: 'format-detection', content: 'telephone=no' }
       ],
       link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+        { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
+        {
+          rel: 'stylesheet',
+          href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap'
+        }
       ]
     }
   },

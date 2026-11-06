@@ -25,18 +25,18 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
 	metadataBase: new URL('https://www.jeffhogg.com'),
 	title: {
-		default: 'Jeff Hogg | Full-Stack Developer & Systems Architect',
+		default: 'Jeff Hogg | Software Engineer & Systems Architect',
 		template: '%s | Jeff Hogg',
 	},
 	description:
-		'Full-Stack Developer at LGI Homes specializing in DevOps automation, system architecture, API middleware, and modern database tuning.',
+		'Software Engineer specializing in DevOps automation, system architecture, API middleware, modern web platforms, and native iOS applications.',
 	alternates: {
 		canonical: '/',
 	},
 	openGraph: {
-		title: 'Jeff Hogg | Full-Stack Developer & Systems Architect',
+		title: 'Jeff Hogg | Software Engineer & Systems Architect',
 		description:
-			'Full-Stack Developer at LGI Homes specializing in DevOps automation, system architecture, API middleware, and modern database tuning.',
+			'Software Engineer specializing in DevOps automation, system architecture, API middleware, modern web platforms, and native iOS applications.',
 		url: 'https://www.jeffhogg.com/',
 		siteName: 'Jeff Hogg',
 		type: 'website',
@@ -44,9 +44,9 @@ export const metadata: Metadata = {
 	},
 	twitter: {
 		card: 'summary_large_image',
-		title: 'Jeff Hogg | Full-Stack Developer & Systems Architect',
+		title: 'Jeff Hogg | Software Engineer & Systems Architect',
 		description:
-			'Full-Stack Developer at LGI Homes specializing in DevOps automation, system architecture, API middleware, and modern database tuning.',
+			'Software Engineer specializing in DevOps automation, system architecture, API middleware, modern web platforms, and native iOS applications.',
 		creator: '@jeffehogg',
 	},
 	robots: {

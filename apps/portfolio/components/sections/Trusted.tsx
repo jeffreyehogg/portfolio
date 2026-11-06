@@ -34,7 +34,7 @@ export default function Trusted() {
 
 				{/* 3-Column Enterprise Credentials Grid */}
 				<div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
-					{trustedCompaniesData.map((company, idx) => (
+					{trustedCompaniesData.map((company) => (
 						<Link
 							key={company.name}
 							href='/about#experience'
@@ -63,7 +63,7 @@ export default function Trusted() {
 										)}
 									</div>
 									<span className='inline-flex items-center gap-1.5 text-xs font-medium text-slate-400 bg-slate-950/70 border border-white/[0.07] px-2.5 py-1 rounded-full shrink-0'>
-										{idx === 0 && (
+										{company.current && (
 											<span className='h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse' />
 										)}
 										{company.period}

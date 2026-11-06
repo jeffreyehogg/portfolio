@@ -86,7 +86,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
 				<div className='absolute top-3.5 inset-x-4 flex items-center justify-between z-10'>
 					<span className='inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium bg-slate-950/85 text-indigo-300 border border-white/[0.12] backdrop-blur-md'>
 						<CpuChipIcon className='w-3.5 h-3.5 text-indigo-400' />
-						{project.category === 'tools' ? 'System & Developer Tool' : 'Web Application'}
+						{project.badge ?? (project.category === 'tools' ? 'System & Developer Tool' : 'Web Application')}
 					</span>
 
 					<button
@@ -194,7 +194,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
 						rel='noopener noreferrer'
 						className='inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-500 shadow-sm shadow-indigo-600/25 transition-colors active:scale-[0.98]'
 					>
-						Visit live project
+						{project.appStoreUrl ? 'View on App Store' : 'Visit live project'}
 						<ArrowTopRightOnSquareIcon className='w-3.5 h-3.5' />
 					</a>
 				</div>

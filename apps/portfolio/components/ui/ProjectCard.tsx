@@ -55,17 +55,17 @@ export default function ProjectCard({ project, priorityImage = false }: ProjectC
 						{/* Hover Overlay */}
 						<div className='absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-20 bg-slate-950/45'>
 							<span className='px-3.5 py-1.5 rounded-full text-xs font-medium text-white bg-slate-900/95 border border-white/[0.14] flex items-center gap-1.5 shadow-lg'>
-								Visit live project
+								{project.appStoreUrl ? 'View on App Store' : 'Visit live project'}
 								<ArrowTopRightOnSquareIcon className='w-3.5 h-3.5 text-indigo-400' />
 							</span>
 						</div>
 					</Link>
 
 					{/* Top-left Category Badge */}
-					{project.category && (
+					{(project.badge || project.category) && (
 						<div className='absolute top-3 left-3 z-10 pointer-events-none'>
-							<span className='inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-slate-950/85 text-slate-300 border border-white/[0.1] backdrop-blur-md'>
-								{project.category === 'tools' ? 'System & Tool' : 'Web App'}
+							<span className='inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-slate-950/85 text-slate-200 border border-white/[0.12] backdrop-blur-md'>
+								{project.badge ?? (project.category === 'tools' ? 'System & Tool' : 'Web App')}
 							</span>
 						</div>
 					)}

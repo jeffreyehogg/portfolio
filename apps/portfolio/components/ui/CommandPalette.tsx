@@ -73,7 +73,7 @@ const baseCommandItems: CommandItem[] = [
 	},
 	{
 		id: 'exp-lgi',
-		title: 'LGI Homes — Full-Stack Developer',
+		title: 'LGI Homes — Software Engineer',
 		subtitle: 'Docker, GitHub Actions CI/CD, Node.js, MS SQL & MySQL',
 		category: 'Experience',
 		href: '/about#experience',
@@ -91,7 +91,7 @@ const baseCommandItems: CommandItem[] = [
 	},
 	{
 		id: 'exp-freelance',
-		title: 'Freelance — Software Developer',
+		title: 'Freelance — Software Engineer',
 		subtitle: 'Next.js, Vercel, Python/SQL Data Migrations',
 		category: 'Experience',
 		href: '/about#experience',

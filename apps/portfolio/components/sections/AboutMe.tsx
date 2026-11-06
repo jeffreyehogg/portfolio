@@ -22,7 +22,7 @@ const coreCapabilities = [
 	'Custom Node.js/TypeScript API & middleware engineering',
 	'Distributed Microsoft SQL Server & MySQL database tuning (MCP tooling)',
 	'Docker containerization, Nginx, and automated SSL/DNS operations',
-	'Enterprise frontend architectures (React, Next.js, Angular)',
+	'Web & native mobile architectures (React, Next.js, SwiftUI, Angular)',
 	'High-velocity delivery using agentic IDE workflows & MCP',
 ]
 
@@ -67,10 +67,10 @@ export default function AboutMe() {
 							{/* Scannable Executive Summary */}
 							<div className='space-y-4 text-sm sm:text-base text-slate-300 leading-relaxed font-light'>
 								<p>
-									Full-stack developer at <strong className='text-white font-medium'>LGI Homes</strong>, leading legacy infrastructure modernization, Docker/Nginx containerization, automated GitHub Actions CI/CD pipelines, and high-throughput Node.js/TypeScript middleware for distributed MS SQL Server and MySQL databases.
+									Software Engineer specializing in modern web and native iOS applications, automated CI/CD infrastructure, and distributed relational databases. Most recently at <strong className='text-white font-medium'>LGI Homes</strong>, led legacy infrastructure modernization with Docker/Nginx containerization, GitHub Actions CI/CD, and Node.js/TypeScript API middleware for MS SQL Server and MySQL.
 								</p>
 								<p>
-									Previously engineered enterprise administration features for Webex Calling at <strong className='text-white font-medium'>Cisco</strong> (Control Hub) with TypeScript, Angular, and Cypress end-to-end regression suites.
+									Previously engineered enterprise administration features for Webex Calling at <strong className='text-white font-medium'>Cisco</strong> (Control Hub) with TypeScript, Angular, and Cypress end-to-end regression suites, and recently shipped <strong className='text-white font-medium'>Aura</strong>, a native Swift 6 iOS audiobook and podcast app, to the Apple App Store.
 								</p>
 
 								{/* Progressive Disclosure: Deep Architectural Details */}

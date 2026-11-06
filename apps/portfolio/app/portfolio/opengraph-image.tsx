@@ -134,11 +134,11 @@ export default async function Image() {
 				{/* Bottom Highlight Pills */}
 				<div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap' }}>
 					{[
-						'Legacy Link (Data Migration)',
+						'Aura (iOS App Store)',
+						'AlgoQuest (Rust WASM)',
+						'AutoDBA (MCP Server)',
 						'Kingdom Connect (Postgres)',
 						'Webex Control Hub (Cisco)',
-						'ForexFlow (Streaming Nuxt)',
-						'Turborepo 4-App Monorepo',
 					].map((proj) => (
 						<div
 							key={proj}

@@ -12,9 +12,9 @@ import { profileData } from '../../lib/data'
 
 const metrics = [
 	{ label: 'Software engineering', value: '5+ Years', icon: BriefcaseIcon },
+	{ label: 'Web & native iOS', value: 'TypeScript & Swift', icon: CodeBracketIcon },
 	{ label: 'Automated infrastructure', value: 'Docker & CI/CD', icon: ServerStackIcon },
 	{ label: 'Database administration', value: 'MS SQL & MySQL', icon: CircleStackIcon },
-	{ label: 'Backend middleware', value: 'Node.js & TypeScript', icon: CodeBracketIcon },
 ]
 
 export default function Hero() {
@@ -42,19 +42,8 @@ export default function Hero() {
 			{/* Main Content — Server-rendered at opacity:1 for instant mobile FCP/LCP */}
 			<div className='relative z-10 px-4 sm:px-6 lg:px-8 text-center max-w-5xl mx-auto'>
 				<div className='animate-fade-up'>
-					{/* Status Badge */}
-					<div className='inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-slate-900/80 border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] text-slate-300 text-xs sm:text-sm font-medium mb-6'>
-						<span className='relative flex h-2 w-2'>
-							<span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75' />
-							<span className='relative inline-flex rounded-full h-2 w-2 bg-emerald-500' />
-						</span>
-						<span className='text-emerald-400 font-semibold'>{profileData.status}</span>
-						<span className='text-slate-600'>•</span>
-						<span className='text-slate-400'>{profileData.location}</span>
-					</div>
-
 					<h1 className='text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl mb-5 text-white text-balance'>
-						<span className='block mb-2 sm:mb-3'>Full-stack developer</span>
+						<span className='block mb-2 sm:mb-3'>Software Engineer</span>
 						<span className='text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-cyan-300 to-indigo-300'>
 							DevOps & system architecture
 						</span>

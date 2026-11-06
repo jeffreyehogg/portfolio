@@ -37,7 +37,7 @@ export default function EngineeringPillars() {
 						Architecting resilient systems & modern automation
 					</h2>
 					<p className='mt-3.5 text-base sm:text-lg text-slate-400 leading-relaxed'>
-						Full-stack engineering at LGI Homes across web applications,
+						Software engineering across web and native iOS applications,
 						distributed database administration, and automated CI/CD DevOps.
 					</p>
 				</div>

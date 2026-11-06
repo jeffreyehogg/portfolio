@@ -5,19 +5,17 @@ export default function StructuredData() {
 		'@context': 'https://schema.org',
 		'@type': 'Person',
 		name: 'Jeff Hogg',
-		jobTitle: 'Full-Stack Developer',
-		worksFor: {
-			'@type': 'Organization',
-			name: 'LGI Homes',
-			url: 'https://www.lgihomes.com',
-		},
+		jobTitle: 'Software Engineer',
 		url: 'https://www.jeffhogg.com',
 		image: 'https://www.jeffhogg.com/images/headshots/me.jpg',
 		sameAs: [githubUrl, linkedInUrl, twitterUrl],
 		knowsAbout: [
-			'Full-Stack Development',
+			'Software Engineering',
 			'TypeScript',
 			'JavaScript',
+			'Swift',
+			'SwiftUI',
+			'iOS Development',
 			'React',
 			'Next.js',
 			'Node.js',
@@ -42,7 +40,7 @@ export default function StructuredData() {
 		name: 'Jeff Hogg Portfolio',
 		url: 'https://www.jeffhogg.com',
 		description:
-			'Full-Stack Developer specializing in DevOps automation, system architecture, API middleware, and distributed databases.',
+			'Software Engineer specializing in DevOps automation, system architecture, API middleware, full-stack web, and native iOS applications.',
 		publisher: {
 			'@type': 'Person',
 			name: 'Jeff Hogg',

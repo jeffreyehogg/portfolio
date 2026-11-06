@@ -31,7 +31,7 @@ export default function ProjectList() {
 			{ id: 'all' as CategoryFilter, label: 'All', count: projectsData.length },
 			{
 				id: 'apps' as CategoryFilter,
-				label: 'Web applications',
+				label: 'Web & mobile apps',
 				count: projectsData.filter((p) => p.category === 'apps').length,
 			},
 			{
@@ -81,7 +81,7 @@ export default function ProjectList() {
 						Systems & applications
 					</h1>
 					<p className='mt-3.5 text-base sm:text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed'>
-						Production web platforms, API middleware services, and database utilities architected for enterprise and client scale.
+						Production web platforms, native iOS apps, API middleware services, and database utilities architected for enterprise and client scale.
 					</p>
 				</div>
 
@@ -126,7 +126,7 @@ export default function ProjectList() {
 							type='text'
 							value={searchQuery}
 							onChange={(e) => setSearchQuery(e.target.value)}
-							placeholder='Search projects or tech (e.g. Next.js, Docker, SQL)...'
+							placeholder='Search projects or tech (e.g. Swift, Next.js, Docker, SQL)...'
 							aria-label='Search projects or technologies'
 							className='w-full pl-9 pr-9 py-2 rounded-xl bg-slate-900/80 border border-white/[0.08] text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-indigo-500/60 focus:ring-1 focus:ring-indigo-500/40 transition-colors'
 						/>

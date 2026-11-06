@@ -2,6 +2,8 @@ export interface Project {
 	title: string
 	href: string
 	githubUrl?: string
+	appStoreUrl?: string
+	badge?: string
 	description: string
 	imageUrl: string
 	tags: string[]
@@ -50,6 +52,7 @@ export interface CompanyLogo {
 	period: string
 	badge: string
 	impact: string
+	current?: boolean
 }
 
 export interface SkillCategory {
@@ -69,14 +72,14 @@ export const xUrl = twitterUrl
 
 export const profileData = {
 	name: 'Jeff Hogg',
-	role: 'Full-Stack Developer',
+	role: 'Software Engineer',
 	specialization: 'DevOps, System Architecture & API Integration',
 	location: 'The Woodlands, TX',
-	status: 'Full-Stack Developer @ LGI Homes',
+	status: 'Software Engineer',
 	headline:
-		'Engineering scalable React and Node.js applications, dedicated API middleware, and automated CI/CD pipelines — modernizing enterprise systems from the ground up.',
+		'Engineering scalable web and native iOS applications, dedicated API middleware, and automated CI/CD pipelines — modernizing enterprise systems from the ground up.',
 	bio:
-		'Full-Stack Developer with enterprise engineering experience across modern React/Node.js applications, legacy system migrations, and relational databases. Extensive background leading end-to-end delivery: building dedicated API middleware, automating CI/CD pipelines, and leveraging AI-assisted developer tooling to optimize SQL stored procedures.',
+		'Software Engineer with enterprise engineering experience across modern React/Node.js and native iOS applications, legacy system migrations, and relational databases. Extensive background leading end-to-end delivery: building dedicated API middleware, automating CI/CD pipelines, and leveraging AI-assisted developer tooling to optimize SQL stored procedures.',
 }
 
 export const engineeringPillars: EngineeringPillar[] = [
@@ -121,15 +124,15 @@ export const engineeringPillars: EngineeringPillar[] = [
 export const experienceData: ExperienceItem[] = [
 	{
 		company: 'LGI Homes',
-		role: 'Full-Stack Developer (Web & Data Administrator)',
-		period: 'March 2026 - Present',
+		role: 'Software Engineer (Web & Data Administrator)',
+		period: 'March 2026 - November 2026',
 		location: 'The Woodlands, TX',
-		current: true,
+		current: false,
 		summary:
-			'Leading legacy infrastructure modernization, API middleware engineering, and distributed database administration.',
+			'Led legacy infrastructure modernization, API middleware engineering, and distributed database administration.',
 		highlights: [
 			'DevOps & CI/CD: Modernized legacy infrastructure via Git and GitHub Actions CI/CD; architected Docker/Nginx container environments with automated SSL and external DNS management.',
-			'Full-Stack Feature Development: Engineered full-stack feature releases for internal business applications with modernized frontends.',
+			'Application Development: Engineered full-stack feature releases for internal business applications with modernized frontends.',
 			'API & Middleware Engineering: Developed custom Node.js and TypeScript middleware to integrate third-party APIs with on-premise Microsoft SQL Server databases.',
 			'Database Administration & Tuning: Administered Microsoft SQL Server and MySQL databases, leveraging MCP tooling to profile queries and refactor stored procedures.',
 		],
@@ -149,14 +152,14 @@ export const experienceData: ExperienceItem[] = [
 	},
 	{
 		company: 'Freelance',
-		role: 'Software Developer',
+		role: 'Software Engineer',
 		period: 'July 2024 - February 2026',
 		location: 'The Woodlands, TX',
 		current: false,
 		summary:
 			'Partnered directly with enterprise clients to architect custom web applications, launch e-commerce solutions, and execute legacy data migrations.',
 		highlights: [
-			'Full-Stack Web Development: Architected and deployed custom web apps using Next.js and Vercel for serverless CI/CD and production hosting.',
+			'Web Application Engineering: Architected and deployed custom web apps using Next.js and Vercel for serverless CI/CD and production hosting.',
 			'E-Commerce Engineering: Built and launched a Shopify store, customizing frontend architecture to improve user checkout workflows.',
 			'Data Migration & ETL: Engineered custom Python and SQL data migration scripts to extract, format, and load legacy data into modern systems.',
 		],
@@ -217,6 +220,32 @@ export const experienceData: ExperienceItem[] = [
 ]
 
 export const projectsData: Project[] = [
+	{
+		title: 'Aura — Audiobooks & Podcasts',
+		category: 'apps',
+		badge: 'iOS App • App Store',
+		href: 'https://apps.apple.com/app/aura-audiobooks-podcasts/id6823766817',
+		appStoreUrl: 'https://apps.apple.com/app/aura-audiobooks-podcasts/id6823766817',
+		githubUrl: 'https://github.com/jeffreyehogg/aura',
+		description:
+			'Native iOS audio player for public-domain literature and podcasts, featuring dynamic cover-derived ambient lighting, tactile haptic scrubbing, and SwiftData persistence with zero logins or paywalls.',
+		imageUrl: '/images/projects/aura.png',
+		tags: [
+			'Swift 6',
+			'SwiftUI',
+			'SwiftData',
+			'AVFoundation',
+			'iOS 17+',
+			'LibriVox & RSS',
+		],
+		metrics: 'Live on App Store • Swift 6 Strict Concurrency • 18,000+ Free Audiobooks',
+		highlights: [
+			'Published on the Apple App Store (v1.1) — architected natively in Swift 6 and SwiftUI with strict concurrency and zero external third-party SDK dependencies.',
+			'Streams 18,000+ LibriVox public-domain audiobooks and 16 curated podcast categories with 6-hour RSS sync, dynamic cover-art ambient lighting, and a custom tactile haptic scrubber.',
+			'Integrates AVPlayer, MPNowPlayingInfoCenter, Lock Screen / Dynamic Island controls, AirPods remote commands, Smart Rewind, and 20-second fadeout sleep timers backed by on-device SwiftData.',
+		],
+		featured: true,
+	},
 	{
 		title: 'AlgoQuest',
 		category: 'apps',
@@ -292,7 +321,7 @@ export const projectsData: Project[] = [
 			'Automates multi-vendor physical access control system (PACS) schema mapping, deduplication, and validation before cutover.',
 			'Reduces manual enterprise security badge migrations from days of spreadsheet cleanup to a guided, auditable workflow.',
 		],
-		featured: true,
+		featured: false,
 	},
 	{
 		title: 'ForexFlow FX Dashboard',
@@ -399,15 +428,15 @@ export const projectsData: Project[] = [
 export const skillsData: SkillCategory[] = [
 	{
 		category: 'Languages & Frameworks',
-		list: 'TypeScript, JavaScript, Rust (WebAssembly), Node.js, React, Next.js, Angular, Python, Tailwind CSS',
+		list: 'TypeScript, JavaScript, Swift 6 (SwiftUI / SwiftData), Rust (WebAssembly), Node.js, React, Next.js, Angular, Python, Tailwind CSS',
 	},
 	{
 		category: 'Databases & DevOps',
-		list: 'Microsoft SQL Server, MySQL, Docker, Nginx, GitHub Actions, CI/CD, Git, Vercel',
+		list: 'Microsoft SQL Server, MySQL, PostgreSQL, Docker, Nginx, GitHub Actions, CI/CD, Git, Vercel',
 	},
 	{
 		category: 'Tools & Practices',
-		list: 'REST APIs, Model Context Protocol (MCP), Cypress, Kibana, Jenkins, PagerDuty, Agile/Scrum',
+		list: 'REST APIs, Model Context Protocol (MCP), iOS / App Store Connect, Cypress, Kibana, Jenkins, PagerDuty, Agile/Scrum',
 	},
 ]
 
@@ -425,20 +454,20 @@ export const trustedCompaniesData: CompanyLogo[] = [
 		imageUrl: '/images/logos/lgi-homes.svg',
 		width: 150,
 		height: 60,
-		role: 'Full-Stack Developer',
-		period: '2026 – Present',
-		badge: 'Current • Enterprise Systems',
+		role: 'Software Engineer',
+		period: '2026',
+		badge: 'Enterprise Systems & DevOps',
 		impact:
-			'Modernizing legacy infrastructure with Docker/Nginx, GitHub Actions CI/CD, Node.js/TypeScript middleware, and distributed MS SQL & MySQL tuning.',
+			'Modernized legacy infrastructure with Docker/Nginx, GitHub Actions CI/CD, Node.js/TypeScript middleware, and distributed MS SQL & MySQL tuning.',
 	},
 	{
 		name: 'Freelance & Client Engineering',
 		imageUrl: '/images/logos/vision.webp',
 		width: 150,
 		height: 60,
-		role: 'Freelance Software Developer',
+		role: 'Independent Software Engineer',
 		period: '2024 – 2026',
-		badge: 'Self-Employed • Full-Stack & ETL',
+		badge: 'Self-Employed • Web, Mobile & ETL',
 		impact:
 			'Partnered directly with clients (including Vision Integrated Systems & Texas Tint Plus) to architect custom Next.js platforms, e-commerce workflows, and Python/SQL data migrations.',
 	},

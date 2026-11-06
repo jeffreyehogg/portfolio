@@ -67,7 +67,7 @@ export default function Footer() {
 						<div className='max-w-2xl'>
 							<div className='inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-950/80 border border-white/[0.08] text-xs font-medium text-slate-300 mb-3'>
 								<span className='h-2 w-2 rounded-full bg-emerald-400 animate-pulse' />
-								<span>Open to architecture &amp; full-stack engineering discussions</span>
+								<span>Open to software engineering &amp; architecture discussions</span>
 							</div>
 							<h2 className='text-2xl sm:text-3xl font-extrabold text-white tracking-tight text-balance'>
 								Ready to modernize legacy systems or build high-craft software?

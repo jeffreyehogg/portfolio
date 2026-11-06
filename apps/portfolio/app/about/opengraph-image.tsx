@@ -97,7 +97,7 @@ export default async function Image() {
 								background: '#10b981',
 							}}
 						/>
-						<span>Full-Stack Developer @ LGI Homes</span>
+						<span>Software Engineer • The Woodlands, TX</span>
 					</div>
 				</div>
 
@@ -124,7 +124,7 @@ export default async function Image() {
 							letterSpacing: '-0.01em',
 						}}
 					>
-						From Enterprise Systems at Cisco to Full-Stack Operations at LGI Homes
+						Enterprise Systems, DevOps & Full-Lifecycle Engineering
 					</p>
 					<p
 						style={{

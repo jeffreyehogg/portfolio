@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import BackgroundBlobs from "../../components/ui/BackgroundBlobs";
 
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
     description:
       "A serene, native iOS player for timeless public domain classics and open podcasts. Free, zero paywalls, no login required.",
     url: "https://www.jeffhogg.com/aura",
+    images: ["/images/projects/aura.png"],
   },
 };
 
@@ -24,9 +26,9 @@ export default function AuraPage() {
 
       <div className="max-w-4xl mx-auto relative z-10 text-slate-300">
         {/* Hero Section */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-medium mb-4">
-            iOS Application • Audiobooks &amp; Podcasts
+            iOS Application • Live on the App Store
           </div>
           <h1 className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
             Aura
@@ -50,20 +52,42 @@ export default function AuraPage() {
               </svg>
               Download on the App Store
             </a>
+            <a
+              href="https://github.com/jeffreyehogg/aura"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-slate-900/80 border border-white/[0.1] hover:border-white/[0.2] text-slate-200 hover:text-white text-sm font-medium transition-colors"
+            >
+              Source on GitHub ↗
+            </a>
+          </div>
+          <div className="mt-5 flex items-center justify-center gap-4">
             <Link
               href="/aura/privacy"
-              className="text-sm font-medium text-indigo-400 hover:text-indigo-300 underline underline-offset-4"
+              className="text-xs font-medium text-indigo-400 hover:text-indigo-300 underline underline-offset-4"
             >
               Privacy Policy
             </Link>
             <span className="text-slate-600">•</span>
             <Link
               href="/aura/support"
-              className="text-sm font-medium text-indigo-400 hover:text-indigo-300 underline underline-offset-4"
+              className="text-xs font-medium text-indigo-400 hover:text-indigo-300 underline underline-offset-4"
             >
               Support &amp; FAQ
             </Link>
           </div>
+        </div>
+
+        {/* App Store Preview Showcase */}
+        <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden border border-white/[0.1] shadow-2xl shadow-black/60 mb-14 bg-slate-950">
+          <Image
+            src="/images/projects/aura.png"
+            alt="Aura iOS App Store screens — Discover, Podcast Detail, and Now Playing"
+            fill
+            priority
+            className="object-cover"
+            sizes="(max-width: 896px) 100vw, 896px"
+          />
         </div>
 
         {/* Feature Grid */}

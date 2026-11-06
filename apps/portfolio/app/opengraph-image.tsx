@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og'
 
 export const runtime = 'nodejs'
-export const alt = 'Jeff Hogg | Full-Stack Developer & Systems Architect'
+export const alt = 'Jeff Hogg | Software Engineer & Systems Architect'
 export const size = {
 	width: 1200,
 	height: 630,
@@ -98,7 +98,7 @@ export default async function Image() {
 								background: '#10b981',
 							}}
 						/>
-						<span>Full-Stack Developer @ LGI Homes</span>
+						<span>Software Engineer • The Woodlands, TX</span>
 					</div>
 				</div>
 
@@ -125,7 +125,7 @@ export default async function Image() {
 							letterSpacing: '-0.01em',
 						}}
 					>
-						Full-Stack Developer & Systems Architect
+						Software Engineer & Systems Architect
 					</p>
 					<p
 						style={{

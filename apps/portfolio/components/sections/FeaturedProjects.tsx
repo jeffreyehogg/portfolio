@@ -18,7 +18,7 @@ export default function FeaturedProjects() {
 							Selected projects
 						</h2>
 						<p className='mt-2.5 text-base sm:text-lg text-slate-400 max-w-2xl'>
-							Real-world web applications and software tools built for enterprise systems and clients.
+							Production web platforms, native iOS applications, and developer tools built for scale.
 						</p>
 					</div>
 

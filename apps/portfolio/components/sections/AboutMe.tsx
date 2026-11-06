@@ -18,12 +18,12 @@ import {
 } from '@heroicons/react/24/outline'
 
 const coreCapabilities = [
-	'Modernizing legacy infrastructure to Git & automated CI/CD',
-	'Custom Node.js/TypeScript API & middleware engineering',
-	'Distributed Microsoft SQL Server & MySQL database tuning (MCP tooling)',
-	'Docker containerization, Nginx, and automated SSL/DNS operations',
-	'Web & native mobile architectures (React, Next.js, SwiftUI, Angular)',
-	'High-velocity delivery using agentic IDE workflows & MCP',
+	'Frontend & backend web application engineering (React, Next.js, Node.js, TypeScript)',
+	'Custom Node.js/TypeScript API & middleware architecture',
+	'Custom Claude MCP extensions, connectors & AI developer workflows',
+	'Microsoft SQL Server & MySQL DBA (query profiling & stored procedures)',
+	'Docker containerization, Nginx, and automated GitHub Actions CI/CD',
+	'Native iOS application engineering (Swift 6, SwiftUI, SwiftData)',
 ]
 
 export default function AboutMe() {
@@ -67,7 +67,7 @@ export default function AboutMe() {
 							{/* Scannable Executive Summary */}
 							<div className='space-y-4 text-sm sm:text-base text-slate-300 leading-relaxed font-light'>
 								<p>
-									Software Engineer specializing in modern web and native iOS applications, automated CI/CD infrastructure, and distributed relational databases. Most recently at <strong className='text-white font-medium'>LGI Homes</strong>, led legacy infrastructure modernization with Docker/Nginx containerization, GitHub Actions CI/CD, and Node.js/TypeScript API middleware for MS SQL Server and MySQL.
+									Software Engineer specializing in modern web and native iOS applications, API middleware, and relational databases. Most recently at <strong className='text-white font-medium'>LGI Homes</strong> as <strong className='text-white font-medium'>Software Engineer - Web &amp; Data</strong>, engineered frontend/backend web apps, Node.js/TypeScript middleware, custom Claude MCP extensions and connectors, Docker/GitHub Actions CI/CD, and MS SQL Server DBA operations.
 								</p>
 								<p>
 									Previously engineered enterprise administration features for Webex Calling at <strong className='text-white font-medium'>Cisco</strong> (Control Hub) with TypeScript, Angular, and Cypress end-to-end regression suites, and recently shipped <strong className='text-white font-medium'>Aura</strong>, a native Swift 6 iOS audiobook and podcast app, to the Apple App Store.

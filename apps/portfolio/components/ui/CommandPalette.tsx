@@ -73,12 +73,12 @@ const baseCommandItems: CommandItem[] = [
 	},
 	{
 		id: 'exp-lgi',
-		title: 'LGI Homes — Software Engineer',
-		subtitle: 'Docker, GitHub Actions CI/CD, Node.js, MS SQL & MySQL',
+		title: 'LGI Homes — Software Engineer - Web & Data',
+		subtitle: 'Web Apps, Node.js Middleware, Claude MCP Connectors & SQL Server DBA',
 		category: 'Experience',
 		href: '/about#experience',
 		icon: ServerStackIcon,
-		keywords: 'lgi homes devops sql docker nginx',
+		keywords: 'lgi homes devops sql docker nginx claude mcp connectors middleware',
 	},
 	{
 		id: 'exp-cisco',

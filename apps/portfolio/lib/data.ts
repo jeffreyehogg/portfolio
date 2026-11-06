@@ -112,42 +112,42 @@ export const engineeringPillars: EngineeringPillar[] = [
 	},
 	{
 		id: 'agentic-engineering',
-		title: 'AI Tooling & MCP Protocols',
-		badge: 'Velocity',
+		title: 'Claude MCP Extensions & Connectors',
+		badge: 'AI & Velocity',
 		description:
-			'Pioneering Model Context Protocol (MCP) tooling and AI-assisted developer methodologies to accelerate stored procedure optimization, complex query debugging, refactoring, and QA.',
-		stats: '10x Engineering Velocity',
-		technologies: ['Model Context Protocol (MCP)', 'Prompt Architecture', 'Code Refactoring', 'Automated QA'],
+			'Building custom Claude Model Context Protocol (MCP) extensions and connectors to integrate internal databases, accelerate stored procedure optimization, and automate engineering workflows.',
+		stats: 'Custom MCP Connectors',
+		technologies: ['Claude MCP', 'Custom Connectors', 'TypeScript', 'Python', 'Automated QA'],
 	},
 ]
 
 export const experienceData: ExperienceItem[] = [
 	{
 		company: 'LGI Homes',
-		role: 'Software Engineer (Web & Data Administrator)',
+		role: 'Software Engineer - Web & Data',
 		period: 'March 2026 - November 2026',
 		location: 'The Woodlands, TX',
 		current: false,
 		summary:
-			'Led legacy infrastructure modernization, API middleware engineering, and distributed database administration.',
+			'Engineered frontend and backend web applications, custom Node.js/TypeScript middleware, Claude MCP extensions and connectors, and SQL Server database administration.',
 		highlights: [
-			'DevOps & CI/CD: Modernized legacy infrastructure via Git and GitHub Actions CI/CD; architected Docker/Nginx container environments with automated SSL and external DNS management.',
-			'Application Development: Engineered full-stack feature releases for internal business applications with modernized frontends.',
-			'API & Middleware Engineering: Developed custom Node.js and TypeScript middleware to integrate third-party APIs with on-premise Microsoft SQL Server databases.',
-			'Database Administration & Tuning: Administered Microsoft SQL Server and MySQL databases, leveraging MCP tooling to profile queries and refactor stored procedures.',
+			'Frontend & Backend Web Development: Engineered end-to-end feature releases across internal and customer-facing web applications with modernized frontends and backend services.',
+			'API & Middleware Engineering: Developed custom Node.js and TypeScript middleware to integrate third-party APIs with on-premise Microsoft SQL Server and MySQL databases.',
+			'Claude MCP Extensions & Connectors: Built custom Claude Model Context Protocol (MCP) extensions and data connectors to streamline engineering workflows, query profiling, and internal tool integration.',
+			'SQL Server DBA & DevOps: Administered Microsoft SQL Server and MySQL databases (refactoring stored procedures and tuning queries) while modernizing legacy deployments with Docker, Nginx, and GitHub Actions CI/CD.',
 		],
 		technologies: [
 			'TypeScript',
 			'JavaScript',
 			'Node.js',
+			'Claude MCP',
+			'MS SQL Server',
+			'MySQL',
 			'Docker',
 			'Nginx',
 			'GitHub Actions',
 			'CI/CD',
-			'MS SQL Server',
-			'MySQL',
 			'REST APIs',
-			'MCP Tooling',
 		],
 	},
 	{
@@ -454,11 +454,11 @@ export const trustedCompaniesData: CompanyLogo[] = [
 		imageUrl: '/images/logos/lgi-homes.svg',
 		width: 150,
 		height: 60,
-		role: 'Software Engineer',
+		role: 'Software Engineer - Web & Data',
 		period: '2026',
-		badge: 'Enterprise Systems & DevOps',
+		badge: 'Web, Middleware, MCP & SQL DBA',
 		impact:
-			'Modernized legacy infrastructure with Docker/Nginx, GitHub Actions CI/CD, Node.js/TypeScript middleware, and distributed MS SQL & MySQL tuning.',
+			'Engineered frontend/backend web apps, Node.js/TypeScript middleware, custom Claude MCP extensions & connectors, Docker/GitHub Actions CI/CD, and MS SQL Server DBA operations.',
 	},
 	{
 		name: 'Freelance & Client Engineering',

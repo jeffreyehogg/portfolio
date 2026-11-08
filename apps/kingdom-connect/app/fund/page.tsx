@@ -1,5 +1,5 @@
 import { Navbar } from "@/app/components/Navbar";
-import { db } from "@/lib/db";
+import { db, hasDatabaseUrl } from "@/lib/db";
 import { funds } from "@/db/schema";
 import { DollarSign, TrendingUp, ShieldCheck, HeartHandshake, Eye, Sparkles } from "lucide-react";
 import { DonationButton } from "./donation-button";
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 };
 
 export default async function KingdomFundPage() {
-  const fundList = await db.select().from(funds);
+  const fundList = hasDatabaseUrl ? await db.select().from(funds) : [];
 
   // Schema.org DonateAction structured data
   const donateSchemas = fundList.map((fund) => ({

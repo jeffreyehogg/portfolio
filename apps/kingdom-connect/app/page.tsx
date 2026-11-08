@@ -15,30 +15,35 @@ import {
   TrendingUp,
   Compass,
 } from "lucide-react";
-import { db } from "@/lib/db";
+import { db, hasDatabaseUrl } from "@/lib/db";
 import { events, funds } from "@/db/schema";
 import { desc, gt, sql } from "drizzle-orm";
 
 export default async function Home() {
-  // Fetch upcoming future events
-  const upcomingEvents = await db
-    .select()
-    .from(events)
-    .where(gt(events.date, new Date()))
-    .orderBy(events.date)
-    .limit(3);
+  let displayEvents: (typeof events.$inferSelect)[] = [];
+  let totalRaised = 0;
 
-  // Fallback to all latest events if none in the future
-  const displayEvents =
-    upcomingEvents.length > 0
-      ? upcomingEvents
-      : await db.select().from(events).orderBy(desc(events.date)).limit(3);
+  if (hasDatabaseUrl) {
+    // Fetch upcoming future events
+    const upcomingEvents = await db
+      .select()
+      .from(events)
+      .where(gt(events.date, new Date()))
+      .orderBy(events.date)
+      .limit(3);
 
-  // Community total raised
-  const fundTotals = await db
-    .select({ total: sql<number>`sum(${funds.raised})` })
-    .from(funds);
-  const totalRaised = Number(fundTotals[0]?.total || 0);
+    // Fallback to all latest events if none in the future
+    displayEvents =
+      upcomingEvents.length > 0
+        ? upcomingEvents
+        : await db.select().from(events).orderBy(desc(events.date)).limit(3);
+
+    // Community total raised
+    const fundTotals = await db
+      .select({ total: sql<number>`sum(${funds.raised})` })
+      .from(funds);
+    totalRaised = Number(fundTotals[0]?.total || 0);
+  }
 
   // Schema.org Event structured data
   const eventSchemas = displayEvents.map((event) => ({

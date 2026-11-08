@@ -35,11 +35,8 @@ export function StoredProcModal({
   // Selected SQL string
   const activeSql = (source === "optimized" && hasOptimized ? optimizedSql : originalSql) || "";
 
-  const [activeDialect, setActiveDialect] = useState<Dialect>(dialect);
-
-  useEffect(() => {
-    setActiveDialect(dialect);
-  }, [dialect]);
+  const [customDialect, setCustomDialect] = useState<Dialect | null>(null);
+  const activeDialect = customDialect ?? dialect;
 
   // Database settings with localStorage persistence
   const [databaseName, setDatabaseName] = useState(() => {
@@ -73,6 +70,7 @@ export function StoredProcModal({
 
   const handleClose = () => {
     setSelectedSource(null);
+    setCustomDialect(null);
     setCustomProcedureName(null);
     onClose();
   };
@@ -223,7 +221,7 @@ export function StoredProcModal({
             <select
               id="sp-dialect"
               value={activeDialect}
-              onChange={(e) => setActiveDialect(e.target.value as Dialect)}
+              onChange={(e) => setCustomDialect(e.target.value as Dialect)}
               className="w-full bg-slate-900/90 border border-white/[0.08] rounded-lg px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:ring-1 focus:ring-indigo-500 font-mono"
             >
               <option value="tsql">T-SQL (SQL Server)</option>

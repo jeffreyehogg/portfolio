@@ -1,0 +1,146 @@
+name: Monorepo CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # 1. Secret Scanning (TruffleHog OSS)
+  secret-scan:
+    name: Secret Scan (TruffleHog)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run TruffleHog OSS
+        uses: trufflesecurity/trufflehog@main
+        with:
+          extra_args: --only-verified
+
+  # 2. Monorepo Lint, Typecheck & Build (pnpm + setup-node + Turborepo cache)
+  build-and-lint:
+    name: Lint & Build (Turborepo)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js & cache pnpm store
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: Cache Turborepo outputs
+        uses: actions/cache@v4
+        with:
+          path: .turbo
+          key: ${{ runner.os }}-turbo-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run Monorepo Lint
+        run: pnpm lint
+
+      - name: Run Monorepo Build
+        env:
+          # Fallback publishable key so Clerk static prerendering succeeds in CI and on Dependabot PRs
+          NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || 'pk_test_Y2xlcmsuZXhhbXBsZS5jb20k' }}
+        run: pnpm build
+
+  # 3. Automated PR Scope Summary (actions/github-script)
+  pr-scope-summary:
+    name: PR Monorepo Impact Summary
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: read
+    steps:
+      - name: Analyze affected monorepo workspaces
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const files = await github.paginate(github.rest.pulls.listFiles, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+              per_page: 100,
+            });
+
+            const apps = [
+              'apps/portfolio',
+              'apps/hogg-homes',
+              'apps/kingdom-connect',
+              'apps/algoquest',
+              'apps/autodba',
+              'apps/legacy-link',
+              'apps/forexflow-dashboard',
+            ];
+
+            const changedFilenames = files.map((f) => f.filename);
+            const sharedChanged = changedFilenames.some((f) => f.startsWith('packages/'));
+
+            const rows = apps.map((app) => {
+              const appChanged = changedFilenames.some((f) => f.startsWith(`${app}/`));
+              const willDeploy = appChanged || sharedChanged;
+              const status = willDeploy ? '⚡ Rebuild & Deploy' : '✓ Skipped (Cached)';
+              const reason = appChanged
+                ? 'Direct changes'
+                : sharedChanged
+                  ? 'Shared `packages/*` modified'
+                  : 'No changes';
+              return `| \`${app}\` | ${status} | ${reason} |`;
+            });
+
+            const marker = '<!-- monorepo-pr-scope-summary -->';
+            const body = [
+              marker,
+              '### 📦 Monorepo PR Impact Summary',
+              '',
+              `Changed files in this PR: **${changedFilenames.length}**`,
+              '',
+              '| Workspace | Vercel / Turbo Status | Reason |',
+              '| :--- | :--- | :--- |',
+              ...rows,
+            ].join('\n');
+
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+
+            const existing = comments.find((c) => c.body && c.body.includes(marker));
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body,
+              });
+            }

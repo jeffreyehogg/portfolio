@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 80" fill="none" role="img" aria-label="TWFG Insurance">
+  <defs>
+    <linearGradient id="twfgShield" x1="8" y1="10" x2="64" y2="70" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#489C9B"/>
+      <stop offset="100%" stop-color="#2F7574"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Teal emblem tile with three architectural columns -->
+  <rect x="6" y="10" width="60" height="60" rx="12" fill="url(#twfgShield)"/>
+  <rect x="6.75" y="10.75" width="58.5" height="58.5" rx="11.25" stroke="#7ED0CE" stroke-opacity="0.35" stroke-width="1.5"/>
+
+  <!-- Architectural roof/lintel & base -->
+  <rect x="17" y="21" width="38" height="3.5" rx="1" fill="#FFFFFF"/>
+  <rect x="17" y="55.5" width="38" height="3.5" rx="1" fill="#FFFFFF"/>
+
+  <!-- Three columns -->
+  <rect x="20.5" y="26.5" width="6.5" height="27" rx="1" fill="#FFFFFF"/>
+  <rect x="32.75" y="26.5" width="6.5" height="27" rx="1" fill="#FFFFFF"/>
+  <rect x="45" y="26.5" width="6.5" height="27" rx="1" fill="#FFFFFF"/>
+
+  <!-- Wordmark -->
+  <text
+    x="80"
+    y="44"
+    fill="#FFFFFF"
+    font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
+    font-size="31"
+    font-weight="800"
+    letter-spacing="2"
+  >TWFG</text>
+  <text
+    x="81"
+    y="61"
+    fill="#7DD3D1"
+    font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
+    font-size="11.5"
+    font-weight="700"
+    letter-spacing="4.2"
+  >INSURANCE</text>
+</svg>

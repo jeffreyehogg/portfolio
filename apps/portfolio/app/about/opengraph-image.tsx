@@ -142,9 +142,9 @@ export default async function Image() {
 				{/* Bottom Highlight Pills */}
 				<div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap' }}>
 					{[
+						'TWFG Insurance (Software Engineer)',
 						'LGI Homes (Web & Data)',
 						'Cisco (Webex Calling SaaS)',
-						'Freelance Engineering (5+ Apps)',
 						'Distributed MS SQL & MySQL',
 						'Docker & Nginx Containerization',
 					].map((item) => (

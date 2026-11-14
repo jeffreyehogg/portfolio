@@ -123,6 +123,30 @@ export const engineeringPillars: EngineeringPillar[] = [
 
 export const experienceData: ExperienceItem[] = [
 	{
+		company: 'TWFG Insurance (The Woodlands Financial Group)',
+		role: 'Software Engineer',
+		period: 'November 2026 - Present',
+		location: 'The Woodlands, TX',
+		current: true,
+		summary:
+			'Engineering full-stack enterprise insurance platforms, internal web applications, API integrations, and relational database systems.',
+		highlights: [
+			'Full-Stack Application Engineering: Designing and developing modern enterprise web applications and internal software systems supporting nationwide insurance operations.',
+			'API & System Integration: Building and maintaining backend services, RESTful APIs, and data pipelines connecting core policy, agency, and carrier platforms.',
+			'Database & DevOps Workflows: Collaborating across engineering teams to optimize relational database performance, streamline CI/CD delivery, and modernize enterprise workflows.',
+		],
+		technologies: [
+			'TypeScript',
+			'JavaScript',
+			'React',
+			'Node.js',
+			'SQL',
+			'REST APIs',
+			'CI/CD',
+			'Git',
+		],
+	},
+	{
 		company: 'LGI Homes',
 		role: 'Software Engineer - Web & Data',
 		period: 'March 2026 - November 2026',
@@ -450,6 +474,19 @@ export const educationData: EducationItem[] = [
 
 export const trustedCompaniesData: CompanyLogo[] = [
 	{
+		name: 'TWFG Insurance',
+		organization: 'TWFG Insurance',
+		imageUrl: '/images/logos/twfg.svg',
+		width: 150,
+		height: 60,
+		role: 'Software Engineer',
+		period: '2026 – Present',
+		badge: 'Enterprise Insurance Systems & Web',
+		impact:
+			'Engineering full-stack enterprise web applications, backend API integrations, and relational database systems for The Woodlands Financial Group.',
+		current: true,
+	},
+	{
 		name: 'LGI Homes',
 		organization: 'LGI Homes',
 		imageUrl: '/images/logos/lgi-homes.svg',
@@ -460,17 +497,7 @@ export const trustedCompaniesData: CompanyLogo[] = [
 		badge: 'Web, Middleware, MCP & SQL DBA',
 		impact:
 			'Engineered frontend/backend web apps, Node.js/TypeScript middleware, custom Claude MCP extensions & connectors, Docker/GitHub Actions CI/CD, and MS SQL Server DBA operations.',
-	},
-	{
-		name: 'Freelance & Client Engineering',
-		imageUrl: '/images/logos/vision.webp',
-		width: 150,
-		height: 60,
-		role: 'Independent Software Engineer',
-		period: '2024 – 2026',
-		badge: 'Self-Employed • Web, Mobile & ETL',
-		impact:
-			'Partnered directly with clients (including Vision Integrated Systems & Texas Tint Plus) to architect custom Next.js platforms, e-commerce workflows, and Python/SQL data migrations.',
+		current: false,
 	},
 	{
 		name: 'Cisco',
@@ -483,6 +510,7 @@ export const trustedCompaniesData: CompanyLogo[] = [
 		badge: 'Webex Calling • Control Hub',
 		impact:
 			'Engineered enterprise administration features in Angular & TypeScript, Cypress E2E regression suites, Jenkins pipelines, and Kibana/PagerDuty operations (at Cisco since 2013).',
+		current: false,
 	},
 ]
 

@@ -67,10 +67,10 @@ export default function AboutMe() {
 							{/* Scannable Executive Summary */}
 							<div className='space-y-4 text-sm sm:text-base text-slate-300 leading-relaxed font-light'>
 								<p>
-									Software Engineer specializing in modern web and native iOS applications, API middleware, and relational databases. Most recently at <strong className='text-white font-medium'>LGI Homes</strong> as <strong className='text-white font-medium'>Software Engineer - Web &amp; Data</strong>, engineered frontend/backend web apps, Node.js/TypeScript middleware, custom Claude MCP extensions and connectors, Docker/GitHub Actions CI/CD, and MS SQL Server DBA operations.
+									Software Engineer at <strong className='text-white font-medium'>TWFG Insurance (The Woodlands Financial Group)</strong>, specializing in modern full-stack web applications, API integrations, and relational databases. Previously at <strong className='text-white font-medium'>LGI Homes</strong> as <strong className='text-white font-medium'>Software Engineer - Web &amp; Data</strong>, engineered frontend/backend web apps, Node.js/TypeScript middleware, custom Claude MCP extensions and connectors, Docker/GitHub Actions CI/CD, and MS SQL Server DBA operations.
 								</p>
 								<p>
-									Previously engineered enterprise administration features for Webex Calling at <strong className='text-white font-medium'>Cisco</strong> (Control Hub) with TypeScript, Angular, and Cypress end-to-end regression suites, and recently shipped <strong className='text-white font-medium'>Aura</strong>, a native Swift 6 iOS audiobook and podcast app, to the Apple App Store.
+									Earlier, engineered enterprise administration features for Webex Calling at <strong className='text-white font-medium'>Cisco</strong> (Control Hub) with TypeScript, Angular, and Cypress end-to-end regression suites, and independently shipped <strong className='text-white font-medium'>Aura</strong>, a native Swift 6 iOS audiobook and podcast app, to the Apple App Store.
 								</p>
 
 								{/* Progressive Disclosure: Deep Architectural Details */}

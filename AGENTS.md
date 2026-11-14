@@ -83,6 +83,7 @@ pnpm add <package> --filter <app-name>
 ### Design & Aesthetic Preferences
 - **Core Focus**: 100% Software Engineering / Senior Software Engineer.
 - **Identity & Positioning**: Software Engineer | DevOps, System Architecture, Web & Native iOS.
+  - *Software Engineer @ TWFG Insurance (The Woodlands Financial Group) (November 2026 – Present)*: Engineering full-stack enterprise insurance platforms, internal web applications, API integrations, and relational database systems.
   - *Software Engineer @ LGI Homes (March 2026 – November 2026)*: Modernized legacy systems, Docker/Nginx containerization, automated CI/CD (GitHub Actions + self-hosted runners), Node.js/TypeScript middleware, distributed MS SQL & MySQL, and agentic workflows.
   - *Enterprise Software Engineer @ Cisco (Webex Calling)*: Enterprise frontend (Control Hub), Cypress E2E, Jenkins, Kibana/PagerDuty production operations.
   - *Independent Software Engineer*: Native iOS App Store apps (`Aura` in Swift 6 / SwiftUI / SwiftData), Next.js full-stack apps on Vercel, and enterprise data migrations (Python/SQL).

@@ -72,6 +72,15 @@ const baseCommandItems: CommandItem[] = [
 		icon: BriefcaseIcon,
 	},
 	{
+		id: 'exp-twfg',
+		title: 'TWFG Insurance — Software Engineer',
+		subtitle: 'Enterprise Insurance Systems, Full-Stack Web, APIs & SQL',
+		category: 'Experience',
+		href: '/about#experience',
+		icon: ServerStackIcon,
+		keywords: 'twfg insurance woodlands financial group software engineer react typescript node sql apis',
+	},
+	{
 		id: 'exp-lgi',
 		title: 'LGI Homes — Software Engineer - Web & Data',
 		subtitle: 'Web Apps, Node.js Middleware, Claude MCP Connectors & SQL Server DBA',

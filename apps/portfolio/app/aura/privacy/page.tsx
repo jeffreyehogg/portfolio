@@ -4,7 +4,7 @@ import BackgroundBlobs from "../../../components/ui/BackgroundBlobs";
 
 export const metadata: Metadata = {
   title: "Aura Privacy Policy",
-  description: "Privacy policy for Aura — Spoken Literature in Pure Light iOS application.",
+  description: "Privacy policy for Aura — Audiobooks & Podcasts iOS and watchOS application.",
   alternates: { canonical: "/aura/privacy" },
 };
 
@@ -20,7 +20,7 @@ export default function AuraPrivacy() {
         <div className="mb-8">
           <Link
             href="/aura"
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-medium hover:bg-indigo-500/20 transition-colors"
+            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/25 text-amber-400 text-xs font-medium hover:bg-amber-500/20 transition-colors"
           >
             ← Back to Aura
           </Link>
@@ -28,16 +28,16 @@ export default function AuraPrivacy() {
             Privacy Policy for Aura
           </h1>
           <p className="mt-2 text-sm text-slate-400">
-            Effective Date: October 16, 2026 • Last updated: October 16, 2026
+            Effective Date: October 16, 2026 • Last updated: November 13, 2026
           </p>
         </div>
 
         {/* Content */}
         <div className="space-y-8 bg-slate-900/60 border border-slate-800 rounded-2xl p-6 sm:p-8 backdrop-blur-sm">
           <section>
-            <h2 className="text-xl font-semibold text-white mb-3">1. Overview & Core Philosophy</h2>
+            <h2 className="text-xl font-semibold text-white mb-3">1. Overview &amp; Core Philosophy</h2>
             <p className="leading-relaxed">
-              <strong>Aura</strong> (&ldquo;we&rdquo;, &ldquo;our&rdquo;, or &ldquo;the app&rdquo;) is built on a principle of total privacy. We believe that enjoying great public-domain literature should not come at the expense of your personal data.
+              <strong>Aura</strong> (&ldquo;we&rdquo;, &ldquo;our&rdquo;, or &ldquo;the app&rdquo;) is built on a principle of total privacy. We believe that enjoying great public-domain literature and podcasts should not come at the expense of your personal data.
             </p>
             <p className="mt-3 leading-relaxed">
               Aura requires <strong>no account creation</strong>, no email registration, and does not track you across apps or websites.
@@ -58,37 +58,39 @@ export default function AuraPrivacy() {
           <section>
             <h2 className="text-xl font-semibold text-white mb-3">3. On-Device Local Data Storage</h2>
             <p className="leading-relaxed">
-              To provide a seamless listening experience, Aura stores your personal reading progress locally on your Apple device using Apple&apos;s SwiftData framework:
+              To provide a seamless listening experience across iPhone, Apple Watch, CarPlay, and Widgets, Aura stores your personal library and listening state locally on your Apple devices using Apple&apos;s SwiftData and App Group frameworks:
             </p>
             <ul className="list-disc pl-5 mt-2 space-y-1.5 text-slate-300">
-              <li>Your saved books and shelves.</li>
-              <li>Playback timestamps down to the second (for resume capability).</li>
+              <li>Your saved audiobooks, followed podcasts, and Continue Listening queue.</li>
+              <li>Playback timestamps down to the second and episode completion states.</li>
               <li>User-created bookmarks and notes.</li>
               <li>Player preferences (playback speed, sleep timer settings).</li>
+              <li>Offline downloaded audio files cached locally on-device (excluded from cloud backup and automatically cleaned up upon completion).</li>
+              <li>On-device local podcast episode notification subscriptions (scheduled via Apple&apos;s <code className="text-amber-300">UNUserNotificationCenter</code> without external push servers).</li>
             </ul>
             <p className="mt-3 leading-relaxed text-sm text-slate-400">
-              This data resides exclusively on your local device. It is never uploaded to external servers or accessible by third parties. You can delete this data at any time by removing books from your library or uninstalling the app.
+              This data resides exclusively on your local devices and syncs directly between your paired iPhone and Apple Watch via Apple&apos;s <code className="text-amber-300">WatchConnectivity</code>. It is never uploaded to external servers or accessible by third parties, and you can delete it at any time by removing items from your library or uninstalling the app.
             </p>
           </section>
 
           <section>
             <h2 className="text-xl font-semibold text-white mb-3">4. Third-Party Content Services</h2>
             <p className="leading-relaxed">
-              Aura streams public domain audio and metadata directly from open catalogs:
+              Aura streams public-domain audio and metadata directly from open catalogs:
             </p>
             <ul className="list-disc pl-5 mt-2 space-y-1.5 text-slate-300">
               <li>
                 <strong>LibriVox API:</strong> Used for catalog searches and chapter metadata for public-domain audiobooks.
               </li>
               <li>
-                <strong>Internet Archive:</strong> Hosts public domain audio recordings and cover imagery.
+                <strong>Internet Archive:</strong> Hosts public-domain audio recordings and cover imagery.
               </li>
               <li>
                 <strong>Apple iTunes Search API &amp; Podcast RSS Feeds:</strong> Used for discovering and streaming publicly accessible podcast episodes directly from creators&apos; feeds.
               </li>
             </ul>
             <p className="mt-3 leading-relaxed text-sm text-slate-400">
-              When querying or streaming audio, your device establishes a standard HTTPS connection with these open services. We do not transmit any personal identifiers or analytics to these services.
+              When querying, downloading, or streaming audio, your device establishes a standard HTTPS connection with these open services. We do not transmit any personal identifiers or analytics to these services.
             </p>
           </section>
 
@@ -100,7 +102,7 @@ export default function AuraPrivacy() {
           </section>
 
           <section>
-            <h2 className="text-xl font-semibold text-white mb-3">6. Contact & Inquiries</h2>
+            <h2 className="text-xl font-semibold text-white mb-3">6. Contact &amp; Inquiries</h2>
             <p className="leading-relaxed">
               If you have any questions or feedback regarding this Privacy Policy, please contact:
             </p>
@@ -108,7 +110,7 @@ export default function AuraPrivacy() {
               <p className="font-medium text-white">Jeff Hogg</p>
               <p className="text-slate-400 mt-1">
                 Developer of Aura •{" "}
-                <Link href="/contact" className="text-indigo-400 hover:text-indigo-300 underline underline-offset-2">
+                <Link href="/contact" className="text-amber-400 hover:text-amber-300 underline underline-offset-2">
                   jeffhogg.com/contact
                 </Link>
               </p>

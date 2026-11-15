@@ -87,12 +87,9 @@ jobs:
 
             const apps = [
               'apps/portfolio',
-              'apps/hogg-homes',
               'apps/kingdom-connect',
               'apps/algoquest',
               'apps/autodba',
-              'apps/legacy-link',
-              'apps/forexflow-dashboard',
             ];
 
             const changedFilenames = files.map((f) => f.filename);

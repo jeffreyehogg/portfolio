@@ -9,7 +9,7 @@ description: >-
 
 # Next.js App Router & Full-Stack Craft Skill
 
-This skill standardizes patterns across Next.js 15/16 applications (`apps/portfolio`, `apps/kingdom-connect`, `apps/legacy-link`).
+This skill standardizes patterns across Next.js 15/16 applications (`apps/portfolio`, `apps/kingdom-connect`).
 
 ---
 

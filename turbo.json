@@ -6,7 +6,7 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**", ".output/**", ".nuxt/**"],
+      "outputs": [".next/**", "!.next/cache/**"],
       "env": [
         "DATABASE_URL",
         "POSTGRES_URL",
@@ -37,8 +37,6 @@
         "RESEND_EMAIL_TO",
         "UPLOADTHING_TOKEN",
         "VERCEL_URL",
-        "NUXT_CURRENCY_API_KEY",
-        "CURRENCY_API_KEY",
         "GEMINI_API_KEY",
         "GEMINI_MODEL"
       ]

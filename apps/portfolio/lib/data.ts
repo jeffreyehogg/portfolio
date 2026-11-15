@@ -332,40 +332,6 @@ export const projectsData: Project[] = [
 		featured: true,
 	},
 	{
-		title: 'ForexFlow FX Dashboard',
-		category: 'apps',
-		href: 'https://forexflow-dashboard.vercel.app/',
-		githubUrl: 'https://github.com/jeffreyehogg/portfolio/tree/main/apps/forexflow-dashboard',
-		description:
-			'Real-time foreign exchange dashboard displaying live currency exchange rates, interactive trend charts, and market depth.',
-		imageUrl: '/images/projects/forexflow.png',
-		tags: ['Nuxt 3', 'Vue 3', 'TypeScript', 'Chart.js', 'Nitro SWR'],
-		metrics: 'Multi-Tier Edge Caching • WCAG 2.1 AA Canvas • Live FX Telemetry',
-		highlights: [
-			'Built with Nuxt 3 and Nitro `defineCachedEventHandler` SWR edge caching to deliver sub-50ms FX rate responses.',
-			'Implements a 3-tier resilient fallback pipeline (Primary FX API → Open Public API → Stochastic micro-drift engine) for 100% uptime.',
-			'Pairs HTML5 Chart.js `<canvas>` visualizations with screen-reader accessible `sr-only` time-series data tables.',
-		],
-		featured: false,
-	},
-	{
-		title: 'Hogg Homes',
-		category: 'apps',
-		href: 'https://homes.jeffhogg.com',
-		githubUrl: 'https://github.com/jeffreyehogg/portfolio/tree/main/apps/hogg-homes',
-		description:
-			'Modern real estate platform for homebuilders, featuring searchable communities, interactive architectural elevations, and tour scheduling.',
-		imageUrl: '/images/projects/hogg-homes.png',
-		tags: ['Next.js 16', 'React 19', 'Tailwind CSS', 'Framer Motion', 'Zod'],
-		metrics: 'Interactive Floor Plans • Server Action Booking • Dynamic Filtering',
-		highlights: [
-			'Features instant multi-criteria filtering across communities, square footage, pricing tiers, and move-in readiness.',
-			'Includes interactive architectural elevation switchers, mortgage payment estimators, and Zod-validated tour scheduling.',
-			'Optimized for Core Web Vitals with responsive Next.js image priority loading and smooth Framer Motion layout transitions.',
-		],
-		featured: false,
-	},
-	{
 		title: 'Texas Tint Plus',
 		category: 'apps',
 		href: 'https://texastint.com',
@@ -407,9 +373,9 @@ export const projectsData: Project[] = [
 			'The multi-project codebase behind this portfolio, uniting several web applications into a single shared repository with automated deployment.',
 		imageUrl: '/images/projects/portfolio.png',
 		tags: ['Turborepo', 'Next.js', 'TypeScript', 'Tailwind CSS', 'pnpm'],
-		metrics: '6 Production Apps • Path-Filtered CI/CD • Shared Config Packages',
+		metrics: '3 Production Apps • Path-Filtered CI/CD • Shared Config Packages',
 		highlights: [
-			'Orchestrates 6 independent Next.js and Nuxt applications inside a unified Turborepo and pnpm workspaces monorepo.',
+			'Orchestrates 3 independent Next.js applications inside a unified Turborepo and pnpm workspaces monorepo.',
 			'Uses custom path-filtered Vercel ignore scripts (`ignore-build-step.sh`) so commits only trigger builds for affected applications.',
 			'Shares strict TypeScript and ESLint configurations across workspaces while maintaining isolated per-app deployments.',
 		],

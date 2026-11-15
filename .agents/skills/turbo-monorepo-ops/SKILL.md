@@ -19,8 +19,6 @@ This skill defines the operational protocols and troubleshooting runbooks for ma
 - **Applications**:
   - `apps/portfolio`: Next.js 15/16 App Router, React 19, Tailwind CSS v3
   - `apps/kingdom-connect`: Next.js 16 (Turbopack), React 19, Tailwind CSS v4, Clerk, Drizzle, Neon
-  - `apps/legacy-link`: Next.js 16, TypeScript, Clerk
-  - `apps/forexflow-dashboard`: Nuxt 3, Vue, Chart.js, Tailwind CSS v3
 - **Shared Packages**:
   - `packages/typescript-config`: Shared `tsconfig` base definitions
   - `packages/eslint-config`: Shared ESLint rules
@@ -54,13 +52,7 @@ pnpm install
 
 ---
 
-## 3. Package Hoisting & Cross-Framework Gotchas
-
-### Nuxt 3 vs. Next.js Tailwind Version Conflicts
-- `apps/kingdom-connect` uses Tailwind CSS v4.
-- `apps/forexflow-dashboard` uses Nuxt UI, which requires Tailwind CSS v3.
-- If Tailwind v4 is hoisted to the root `node_modules`, Nuxt's PostCSS loader will fail.
-- **Rule**: Always keep `tailwindcss: "^3.4.x"` explicitly pinned in `apps/forexflow-dashboard/package.json`.
+## 3. Package Hoisting & Lockfile Strictness
 
 ### Pnpm Lockfile Strictness (`ERR_PNPM_OUTDATED_LOCKFILE`)
 - Vercel CI executes `pnpm install --frozen-lockfile`.

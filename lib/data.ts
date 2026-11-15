@@ -315,22 +315,6 @@ export const projectsData: Project[] = [
 		featured: true,
 	},
 	{
-		title: 'Kingdom Connect',
-		category: 'apps',
-		href: 'https://kingdom.jeffhogg.com',
-		description:
-			'Community engagement platform featuring a volunteer signup board, transparent mission funding, and a shared community prayer wall.',
-		imageUrl: '/images/projects/kingdom-connect.png',
-		tags: ['Next.js 16', 'React 19', 'PostgreSQL', 'Drizzle ORM', 'Clerk', 'Tailwind CSS'],
-		metrics: 'Serverless Postgres • Real-Time Community Wall • Role-Based Auth',
-		highlights: [
-			'Architected with Next.js 16 App Router, React 19 Server Actions, and Zod schema validation for end-to-end type safety.',
-			'Backed by Neon serverless PostgreSQL and Drizzle ORM with optimistic UI updates across volunteer shifts and mission funding.',
-			'Includes both a public Community Prayer Wall and an encrypted Personal Prayer Journal gated by Clerk authentication.',
-		],
-		featured: true,
-	},
-	{
 		title: 'Texas Tint Plus',
 		category: 'apps',
 		href: 'https://texastint.com',

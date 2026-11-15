@@ -137,7 +137,6 @@ export default async function Image() {
 						'Aura (iOS App Store)',
 						'AlgoQuest (Rust WASM)',
 						'AutoDBA (MCP Server)',
-						'Kingdom Connect (Postgres)',
 						'Webex Control Hub (Cisco)',
 					].map((proj) => (
 						<div

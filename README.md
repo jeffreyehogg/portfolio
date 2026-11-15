@@ -1,21 +1,27 @@
-# Portfolio
+# Jeff Hogg Portfolio
 
-## Introduction
+Personal software engineering portfolio built with Next.js, React, TypeScript, Tailwind CSS, and Framer Motion, deployed on Vercel.
 
-A portfolio website built with React and Next.js, and deployed with Vercel. Take a look at the some of the projects I've worked on.
+## Development
 
-## Credits
+```bash
+pnpm install
+pnpm dev
+```
 
-This portfolio was built with [React](https://reactjs.org/), [Next.js](https://nextjs.org/), [Vercel](https://vercel.com/), and [TailwindCSS](https://tailwindcss.com/).
+## Verification
+
+```bash
+pnpm lint
+pnpm typecheck
+pnpm build
+```
+
+## Links
+
+- Live Site: [www.jeffhogg.com](https://www.jeffhogg.com)
+- Repository: [github.com/jeffreyehogg/portfolio](https://github.com/jeffreyehogg/portfolio)
 
 ## License
 
 This project is licensed under the MIT License.
-
-## Links
-
-[jeffhogg.com](https://www.jeffhogg.com)
-
-[GitHub Repo](https://github.com/jeffreyehogg/portfolio-old)
-
-![Screenshot](/client/public/images/portfolio.png)

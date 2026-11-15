@@ -6,38 +6,28 @@ This file is automatically loaded by Antigravity as the primary context and oper
 
 ## 1. Project Overview & Architecture
 
-- **Architecture**: Turborepo + pnpm workspaces monorepo
-- **Apps**:
-  - `apps/portfolio`: Next.js 15 (App Router), React 19, Tailwind CSS v3, Framer Motion
-  - `apps/kingdom-connect`: Next.js 16 (Turbopack), React 19, Tailwind CSS v4, Clerk, Drizzle, Neon (Unified faith platform with Volunteer Board, Kingdom Fund, Community Prayer Wall, and Personal Prayer Journal)
-  - `apps/algoquest`: Next.js 16 (Turbopack), React 19, Tailwind CSS v3, Rust (`wasm32-unknown-unknown` core engine), Pyodide WASM, CodeMirror 6, Zustand, Framer Motion, Clerk (Interactive algorithmic coding quest in Rust, Python, TypeScript, JS, Ruby & Lua)
-- **Shared Packages**:
-  - `packages/typescript-config`: Shared `tsconfig` definitions
-  - `packages/eslint-config`: Shared ESLint rules
+- **Architecture**: Standalone Next.js App Router application (`pnpm`)
+- **Stack**: Next.js 16 (Turbopack), React 19, TypeScript, Tailwind CSS v3, Framer Motion, Resend, Google reCAPTCHA v3
 - **Package Manager**: `pnpm` (version `10.21.0`)
-- **Data & Content (Portfolio)**: Centralized in `apps/portfolio/lib/data.ts`
+- **Data & Content**: Centralized in `lib/data.ts`
 
 ---
 
 ## 2. Development Commands & Workflow
 
-This project uses **Turborepo** to orchestrate tasks across the monorepo. Run these from the root directory:
+Run these from the root directory:
 
 ```bash
-# Start all local dev servers in parallel
+# Start local dev server
 pnpm dev
 
-# Start a specific app's dev server
-npx turbo dev --filter=portfolio
-
-# Typecheck and build all apps (utilizes remote caching)
+# Lint, typecheck, and build
+pnpm lint
+pnpm typecheck
 pnpm build
 
-# Install dependencies (ALWAYS run from the root workspace)
+# Install dependencies
 pnpm install
-
-# Add a dependency to a specific app
-pnpm add <package> --filter <app-name>
 ```
 
 ---
@@ -94,11 +84,7 @@ pnpm add <package> --filter <app-name>
 
 ### Known Gotchas & Solutions
 - **Next.js HMR Image Imports**: Avoid relative imports from `public/` (e.g. `import img from '../../public/...'`) inside client components, as Webpack's image loader can cause chunk module ID mismatches during HMR (`TypeError: __webpack_modules__[moduleId] is not a function`). Use standard string paths (`src='/images/...'`).
-- **Turborepo Strict Environment Variables**: Turborepo scrubs environment variables during the `build` task. If a build fails claiming a database URL or API key is missing, you must explicitly declare that variable in `turbo.json` under `tasks.build.env`.
-- **Vercel Monorepo Deployment**: Use path-specific ignored build steps via `scripts/ignore-build-step.sh` configured in each app's `vercel.json` (`"ignoreCommand": "bash ../../scripts/ignore-build-step.sh apps/<app>"`). This prevents root lockfile changes or commits to other apps from triggering heavy builds across all projects.
-- **Vercel CLI Monorepo Linking & Single-App Deployments**: In this monorepo, each app is connected to its own Vercel project under team `team_ISNx0N17TdbxTMLDp3JbB8fa` / `hogg`. For apps whose Vercel project settings have Root Directory set to `apps/<app>` (e.g., `kingdom-connect`), deploy directly from the monorepo root using `vercel deploy . --project <project-name> --prod --yes`. This uploads root lockfiles while targeting strictly that single project without triggering builds or webhooks across other apps.
 - **Next.js 16 CLI Linting**: In Next.js 16 (Turbopack), `next lint` is no longer a Next CLI command (`next [dir] [cmd]` parses `lint` as a directory name). Always configure `"lint": "eslint ."` in `package.json`.
-- **Serverless Postgres Connection Pooling**: In Next.js App Router API routes and Server Components using `postgres.js`, cache the connection on `globalThis._postgresSql` with a defensive fallback for build time/offline execution to prevent serverless connection exhaustion (`too many clients already`).
 - **PACS Data Normalization**: In physical security migrations, credentials and facility codes must remain immutable strings throughout ingestion and transformation to avoid Excel's automatic coercion of 37-bit IDs into scientific notation or stripping of leading zeros.
 - **Nitro Edge Caching & Multi-Tier Fallback**: In edge-rendered API endpoints consuming rate-limited third-party APIs, pair Nitro's `defineCachedEventHandler` (SWR caching) with a multi-tier fallback architecture (Primary API -> High-availability open public API -> Synthetic stochastic micro-drift simulator) to guarantee 0% downtime and prevent 500 error cascades when API keys are absent or rate limits are exceeded during CI/CD prerendering.
 - **Accessible HTML5 Canvas Telemetry (WCAG 2.1 AA)**: HTML5 `<canvas>` elements cannot be read by screen readers. Wrap the canvas with `role="img"` and a dynamic `aria-label`, and supply an accessible, hidden `table.sr-only` summarizing recent time-series data points so assistive technologies can parse financial charts.
@@ -110,5 +96,4 @@ pnpm add <package> --filter <app-name>
 The following modular skills are checked into the repository and loaded on demand by Antigravity:
 - **`high-craft-ui`**: Expert guidelines and design patterns for building high-craft, modern, visually stunning web user interfaces (layered surfaces, ambient radial glows, Framer Motion springs, and developer telemetry).
 - **`nextjs-app-router-craft`**: Architecture patterns and conventions for Next.js 15/16 App Router, React 19, RSC boundaries, Server Actions with Zod validation, Clerk auth, and Drizzle/Neon database workflows.
-- **`turbo-monorepo-ops`**: Standard operating procedures for Turborepo and pnpm workspaces monorepo management, Vercel CI/CD, lockfile integrity, and multi-app builds.
 - **`seo-cwv-performance`**: Technical guidelines for Core Web Vitals optimization (LCP, CLS, INP), metadata, dynamic OpenGraph images, and JSON-LD structured data schemas for search engines.

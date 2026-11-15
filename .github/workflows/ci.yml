@@ -60,9 +60,6 @@ jobs:
         run: pnpm lint
 
       - name: Run Monorepo Build
-        env:
-          # Fallback publishable key so Clerk static prerendering succeeds in CI and on Dependabot PRs
-          NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || 'pk_test_Y2xlcmsuZXhhbXBsZS5jb20k' }}
         run: pnpm build
 
   # 3. Automated PR Scope Summary (actions/github-script)
@@ -87,9 +84,6 @@ jobs:
 
             const apps = [
               'apps/portfolio',
-              'apps/kingdom-connect',
-              'apps/algoquest',
-              'apps/autodba',
             ];
 
             const changedFilenames = files.map((f) => f.filename);

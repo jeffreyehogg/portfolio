@@ -275,7 +275,7 @@ export const projectsData: Project[] = [
 		title: 'AlgoQuest',
 		category: 'apps',
 		href: 'https://algoquest.jeffhogg.com',
-		githubUrl: 'https://github.com/jeffreyehogg/portfolio/tree/main/apps/algoquest',
+		githubUrl: 'https://github.com/jeffreyehogg/algoquest',
 		description:
 			'An interactive, gamified algorithm and programming language learning quest powered by a custom 138KB Rust WebAssembly engine, Pyodide WASM, and TypeScript.',
 		imageUrl: '/images/projects/algoquest.png',
@@ -318,7 +318,6 @@ export const projectsData: Project[] = [
 		title: 'Kingdom Connect',
 		category: 'apps',
 		href: 'https://kingdom.jeffhogg.com',
-		githubUrl: 'https://github.com/jeffreyehogg/portfolio/tree/main/apps/kingdom-connect',
 		description:
 			'Community engagement platform featuring a volunteer signup board, transparent mission funding, and a shared community prayer wall.',
 		imageUrl: '/images/projects/kingdom-connect.png',

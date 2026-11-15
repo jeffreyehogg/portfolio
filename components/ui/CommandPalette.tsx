@@ -2,7 +2,16 @@
 
 import { Fragment, useState, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
-import { Dialog, Combobox, Transition } from '@headlessui/react'
+import {
+	Dialog,
+	DialogPanel,
+	Combobox,
+	ComboboxInput,
+	ComboboxOptions,
+	ComboboxOption,
+	Transition,
+	TransitionChild,
+} from '@headlessui/react'
 import {
 	MagnifyingGlassIcon,
 	CommandLineIcon,
@@ -163,9 +172,9 @@ export default function CommandPalette({ isOpen, setIsOpen }: CommandPaletteProp
 		)
 	}, [query])
 
-	const handleSelect = (item: CommandItem) => {
+	const handleSelect = (item: CommandItem | null) => {
 		setIsOpen(false)
-		if (!item.href) return
+		if (!item?.href) return
 
 		if (item.external) {
 			window.open(item.href, '_blank', 'noopener,noreferrer')
@@ -175,9 +184,9 @@ export default function CommandPalette({ isOpen, setIsOpen }: CommandPaletteProp
 	}
 
 	return (
-		<Transition.Root show={isOpen} as={Fragment} afterLeave={() => setQuery('')}>
+		<Transition show={isOpen} as={Fragment} afterLeave={() => setQuery('')}>
 			<Dialog as='div' className='relative z-50' onClose={setIsOpen}>
-				<Transition.Child
+				<TransitionChild
 					as={Fragment}
 					enter='ease-out duration-200'
 					enterFrom='opacity-0'
@@ -187,10 +196,10 @@ export default function CommandPalette({ isOpen, setIsOpen }: CommandPaletteProp
 					leaveTo='opacity-0'
 				>
 					<div className='fixed inset-0 bg-slate-950/80 backdrop-blur-md transition-opacity' />
-				</Transition.Child>
+				</TransitionChild>
 
 				<div className='fixed inset-0 z-10 overflow-y-auto p-4 sm:p-6 md:p-20 flex justify-center items-start pt-20 sm:pt-24'>
-					<Transition.Child
+					<TransitionChild
 						as={Fragment}
 						enter='ease-out duration-200'
 						enterFrom='opacity-0 scale-95'
@@ -199,14 +208,14 @@ export default function CommandPalette({ isOpen, setIsOpen }: CommandPaletteProp
 						leaveFrom='opacity-100 scale-100'
 						leaveTo='opacity-0 scale-95'
 					>
-						<Dialog.Panel className='w-full max-w-xl transform divide-y divide-white/[0.08] overflow-hidden rounded-2xl bg-slate-900/95 border border-white/[0.1] shadow-2xl shadow-black/70 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] transition-all'>
+						<DialogPanel className='w-full max-w-xl transform divide-y divide-white/[0.08] overflow-hidden rounded-2xl bg-slate-900/95 border border-white/[0.1] shadow-2xl shadow-black/70 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] transition-all'>
 							<Combobox onChange={handleSelect}>
 								<div className='relative'>
 									<MagnifyingGlassIcon
 										className='pointer-events-none absolute left-4 top-3.5 h-5 w-5 text-indigo-400'
 										aria-hidden='true'
 									/>
-									<Combobox.Input
+									<ComboboxInput
 										className='h-12 w-full border-0 bg-transparent pl-11 pr-14 text-white placeholder:text-slate-400 focus:ring-0 sm:text-sm focus:outline-none'
 										placeholder='Search projects, tech (MCP, WASM, Docker), or actions...'
 										onChange={(event) => setQuery(event.target.value)}
@@ -218,28 +227,28 @@ export default function CommandPalette({ isOpen, setIsOpen }: CommandPaletteProp
 								</div>
 
 								{filteredItems.length > 0 ? (
-									<Combobox.Options
+									<ComboboxOptions
 										static
 										className='max-h-80 scroll-py-2 overflow-y-auto p-2 focus:outline-none space-y-0.5'
 									>
 										{filteredItems.map((item) => (
-											<Combobox.Option
+											<ComboboxOption
 												key={item.id}
 												value={item}
-												className={({ active }) =>
+												className={({ focus }) =>
 													`group flex cursor-pointer select-none items-center justify-between rounded-xl px-3.5 py-2.5 text-sm transition-colors ${
-														active
+														focus
 															? 'bg-indigo-600 text-white shadow-sm shadow-indigo-600/20'
 															: 'text-slate-300 hover:text-white'
 													}`
 												}
 											>
-												{({ active }) => (
+												{({ focus }) => (
 													<>
 														<div className='flex items-center gap-3 min-w-0 pr-3'>
 															<item.icon
 																className={`h-4 w-4 flex-shrink-0 ${
-																	active ? 'text-white' : 'text-indigo-400'
+																	focus ? 'text-white' : 'text-indigo-400'
 																}`}
 																aria-hidden='true'
 															/>
@@ -248,7 +257,7 @@ export default function CommandPalette({ isOpen, setIsOpen }: CommandPaletteProp
 																{item.subtitle && (
 																	<span
 																		className={`ml-2 text-xs font-normal ${
-																			active ? 'text-indigo-100' : 'text-slate-500'
+																			focus ? 'text-indigo-100' : 'text-slate-500'
 																		}`}
 																	>
 																		{item.subtitle}
@@ -259,7 +268,7 @@ export default function CommandPalette({ isOpen, setIsOpen }: CommandPaletteProp
 														<div className='flex items-center gap-2 shrink-0'>
 															<span
 																className={`text-[11px] font-normal hidden sm:inline ${
-																	active ? 'text-indigo-200' : 'text-slate-500'
+																	focus ? 'text-indigo-200' : 'text-slate-500'
 																}`}
 															>
 																{item.category}
@@ -267,7 +276,7 @@ export default function CommandPalette({ isOpen, setIsOpen }: CommandPaletteProp
 															{item.shortcut && (
 																<kbd
 																	className={`px-1.5 py-0.5 text-[10px] font-mono rounded ${
-																		active
+																		focus
 																			? 'bg-indigo-700 text-white'
 																			: 'bg-slate-800/80 text-slate-400 border border-white/[0.08]'
 																	}`}
@@ -278,9 +287,9 @@ export default function CommandPalette({ isOpen, setIsOpen }: CommandPaletteProp
 														</div>
 													</>
 												)}
-											</Combobox.Option>
+											</ComboboxOption>
 										))}
-									</Combobox.Options>
+									</ComboboxOptions>
 								) : (
 									<div className='py-12 px-6 text-center text-sm text-slate-400'>
 										<p>No results found for &ldquo;{query}&rdquo;.</p>
@@ -302,10 +311,10 @@ export default function CommandPalette({ isOpen, setIsOpen }: CommandPaletteProp
 									</div>
 								</div>
 							</Combobox>
-						</Dialog.Panel>
-					</Transition.Child>
+						</DialogPanel>
+					</TransitionChild>
 				</div>
 			</Dialog>
-		</Transition.Root>
+		</Transition>
 	)
 }

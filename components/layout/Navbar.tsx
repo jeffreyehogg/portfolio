@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
-import { Disclosure } from '@headlessui/react'
+import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 import Avatar from '../ui/Avatar'
 import { githubUrl, linkedInUrl } from '../../lib/data'
@@ -151,20 +151,20 @@ export default function Navbar() {
 
 									{/* Mobile Menu Button */}
 									<div className='flex md:hidden'>
-										<Disclosure.Button className='inline-flex items-center justify-center p-1.5 rounded-full text-slate-400 hover:text-white hover:bg-white/10 focus:outline-none'>
+										<DisclosureButton className='inline-flex items-center justify-center p-1.5 rounded-full text-slate-400 hover:text-white hover:bg-white/10 focus:outline-none'>
 											<span className='sr-only'>Open main menu</span>
 											{open ? (
 												<XMarkIcon className='block h-5 w-5' aria-hidden='true' />
 											) : (
 												<Bars3Icon className='block h-5 w-5' aria-hidden='true' />
 											)}
-										</Disclosure.Button>
+										</DisclosureButton>
 									</div>
 								</div>
 							</div>
 
 							{/* Mobile Menu Panel */}
-							<Disclosure.Panel className='md:hidden border-t border-slate-800/80 mt-3 pt-3'>
+							<DisclosurePanel className='md:hidden border-t border-slate-800/80 mt-3 pt-3'>
 								<div className='space-y-1 pb-2'>
 									{navigation.map((item) => {
 										const isCurrent =
@@ -173,7 +173,7 @@ export default function Navbar() {
 												: pathname.startsWith(item.href)
 
 										return (
-											<Disclosure.Button
+											<DisclosureButton
 												key={item.name}
 												as={Link}
 												href={item.href}
@@ -186,7 +186,7 @@ export default function Navbar() {
 												aria-current={isCurrent ? 'page' : undefined}
 											>
 												{item.name}
-											</Disclosure.Button>
+											</DisclosureButton>
 										)
 									})}
 								</div>
@@ -208,7 +208,7 @@ export default function Navbar() {
 										LinkedIn ↗
 									</a>
 								</div>
-							</Disclosure.Panel>
+							</DisclosurePanel>
 						</div>
 					)}
 				</Disclosure>

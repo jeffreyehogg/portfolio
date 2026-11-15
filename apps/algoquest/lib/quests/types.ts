@@ -55,6 +55,8 @@ export interface Hint {
 export interface AvailableAction {
   name: string
   signature: string
+  signatures?: Partial<Record<Language, string>>
+  kind?: 'command' | 'variable'
   description: string
 }
 
@@ -77,6 +79,8 @@ export interface Level {
   optimalSteps?: number
   objective: string
   instructions: string[]
+  howItWorks?: string
+  preloadedContext?: Partial<Record<Language, string>>
   availableActions?: AvailableAction[]
   gridConfig: GridConfig
   visualizerConfig?: VisualizerConfig

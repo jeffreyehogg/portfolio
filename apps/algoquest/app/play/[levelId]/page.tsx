@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useMemo, useRef, useCallback, use } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { Compass, BookOpen, Lightbulb, Zap } from 'lucide-react'
+import { Compass, BookOpen, Lightbulb, Zap, CheckCircle2, Terminal } from 'lucide-react'
 import {
   getLevelById,
   getNextLevelId,
@@ -457,44 +457,81 @@ export default function PlayLevelPage({ params }: PlayPageProps) {
                 Reward: +{level.xp} XP
               </span>
             </div>
-            <h1 className="text-lg font-bold text-white mb-1.5">{level.title}</h1>
+            <h1 className="text-lg font-bold text-white mb-1">{level.title}</h1>
             <p className="text-xs text-slate-300 leading-relaxed mb-3">{level.objective}</p>
 
-            <div className="bg-slate-950/60 rounded-xl p-3 border border-white/[0.04]">
-              <div className="text-[11px] font-mono text-slate-400 font-semibold mb-1 flex items-center gap-1.5">
+            {/* Step-by-Step Instructions */}
+            <div className="bg-slate-950/60 rounded-xl p-3 border border-white/[0.05]">
+              <div className="text-[11px] font-mono text-slate-400 font-semibold mb-1.5 flex items-center gap-1.5">
                 <BookOpen className="w-3.5 h-3.5 text-cyan-400" />
-                <span>Instructions:</span>
+                <span>What to do:</span>
               </div>
-              <ul className="space-y-1">
+              <ol className="space-y-1.5">
                 {level.instructions.map((inst, i) => (
-                  <li key={i} className="text-xs text-slate-300 flex items-start gap-1.5">
-                    <span className="text-cyan-400 select-none">•</span>
-                    <span>{inst}</span>
+                  <li key={i} className="text-xs text-slate-300 flex items-start gap-2">
+                    <span className="text-[10px] font-mono font-bold text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 rounded px-1.5 py-0.5 select-none shrink-0 mt-0.5">
+                      {i + 1}
+                    </span>
+                    <span className="leading-relaxed">{inst}</span>
                   </li>
                 ))}
-              </ul>
+              </ol>
             </div>
 
-            {/* Built-in Hero Actions / Commands */}
+            {/* Pre-loaded Variables in Scope */}
+            {level.preloadedContext?.[activeLanguage] && (
+              <div className="mt-2.5 bg-slate-950/60 rounded-xl p-3 border border-white/[0.05]">
+                <div className="text-[11px] font-mono text-slate-400 font-semibold mb-1.5 flex items-center justify-between">
+                  <span className="flex items-center gap-1.5">
+                    <Terminal className="w-3.5 h-3.5 text-purple-400" />
+                    <span>Already loaded in scope:</span>
+                  </span>
+                  <span className="text-[10px] text-slate-500 uppercase">{activeLanguage}</span>
+                </div>
+                <pre className="text-[11px] font-mono text-purple-200 bg-purple-950/30 border border-purple-500/20 rounded-lg px-2.5 py-1.5 overflow-x-auto leading-relaxed">
+                  {level.preloadedContext[activeLanguage]}
+                </pre>
+              </div>
+            )}
+
+            {/* Built-in Hero Actions & Goal Variables (Language-Aware) */}
             {level.availableActions && level.availableActions.length > 0 && (
-              <div className="mt-3 bg-slate-950/60 rounded-xl p-3 border border-white/[0.04]">
+              <div className="mt-2.5 bg-slate-950/60 rounded-xl p-3 border border-white/[0.05]">
                 <div className="text-[11px] font-mono text-slate-400 font-semibold mb-1.5 flex items-center gap-1.5">
                   <Zap className="w-3.5 h-3.5 text-amber-400" />
-                  <span>Available Actions / Commands:</span>
+                  <span>Commands & Variables ({activeLanguage}):</span>
                 </div>
                 <div className="flex flex-col gap-1.5">
-                  {level.availableActions.map((action) => (
-                    <div
-                      key={action.name}
-                      className="flex items-baseline gap-2 text-xs"
-                    >
-                      <code className="text-emerald-300 font-mono font-bold bg-emerald-950/50 border border-emerald-500/30 px-1.5 py-0.5 rounded text-[11px]">
-                        {action.signature}
-                      </code>
-                      <span className="text-slate-300 text-xs">— {action.description}</span>
-                    </div>
-                  ))}
+                  {level.availableActions.map((action) => {
+                    const sig = action.signatures?.[activeLanguage] || action.signature
+                    const isVar = action.kind === 'variable'
+                    return (
+                      <div key={action.name} className="flex items-baseline gap-2 text-xs flex-wrap">
+                        <code
+                          className={`font-mono font-bold px-1.5 py-0.5 rounded text-[11px] border ${
+                            isVar
+                              ? 'text-cyan-300 bg-cyan-950/50 border-cyan-500/30'
+                              : 'text-emerald-300 bg-emerald-950/50 border-emerald-500/30'
+                          }`}
+                        >
+                          {sig}
+                        </code>
+                        <span className="text-slate-300 text-xs">— {action.description}</span>
+                      </div>
+                    )
+                  })}
                 </div>
+              </div>
+            )}
+
+            {/* How You Pass Callout */}
+            {level.howItWorks && (
+              <div className="mt-2.5 flex items-start gap-2 rounded-xl bg-emerald-500/[0.06] border border-emerald-500/20 px-3 py-2">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                <p className="text-[11px] text-emerald-200/90 leading-relaxed">
+                  <span className="font-semibold text-emerald-300">How you pass: </span>
+                  {level.howItWorks}
+                </p>
               </div>
             )}
 

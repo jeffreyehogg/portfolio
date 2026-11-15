@@ -24,17 +24,50 @@ export const WORLD_4_LEVELS: Level[] = [
     xp: 350,
     optimalSteps: 4,
     objective:
-      'Inscribe runes["fire"] = 3 into the tome dictionary and compute power = runes["fire"] + runes["ice"] (5) to unseal the sanctum door.',
+      'Add "fire" with value 3 to the runes map, then set power to the sum of "fire" and "ice" (5).',
     instructions: [
-      'A Hash Map (or dictionary) stores key-value pairs for instant O(1) constant-time insertion and lookup.',
-      'The ancient tome begins with runes = {"wind": 1, "ice": 2}.',
-      'First, inscribe the key "fire" with value 3 into runes. Then combine runes["fire"] + runes["ice"] into power (3 + 2 = 5) to open the sanctum door!',
+      'A Hash Map (dictionary) stores key-value pairs for instant O(1) lookup and insertion.',
+      'Insert the key "fire" with value 3 into runes.',
+      'Compute power by adding runes["fire"] and runes["ice"] together (3 + 2 = 5).',
     ],
+    howItWorks:
+      'Once runes["fire"] == 3 and power == 5, the sanctum door unseals and your hero automatically walks to the chest.',
+    preloadedContext: {
+      python: 'runes = {"wind": 1, "ice": 2}',
+      javascript: 'const runes = { wind: 1, ice: 2 };',
+      typescript: 'const runes: Record<string, number> = { wind: 1, ice: 2 };',
+      ruby: 'runes = { "wind" => 1, "ice" => 2 }',
+      lua: 'runes = { wind = 1, ice = 2 }',
+      rust: 'let mut runes = HashMap::from([("wind", 1), ("ice", 2)]);',
+    },
     availableActions: [
       {
-        name: 'runes[key]',
-        signature: 'runes["fire"] = 3 / runes.insert("fire", 3)',
-        description: 'Inserts or looks up a rune power in O(1) constant time',
+        name: 'insert',
+        kind: 'command',
+        signature: 'runes[key] = value',
+        signatures: {
+          python: 'runes["<key>"] = <value>',
+          javascript: 'runes["<key>"] = <value>;',
+          typescript: 'runes["<key>"] = <value>;',
+          ruby: 'runes["<key>"] = <value>',
+          lua: 'runes["<key>"] = <value>',
+          rust: 'runes.insert("<key>", <value>);',
+        },
+        description: 'Inserts or updates a key-value pair in O(1) time',
+      },
+      {
+        name: 'power',
+        kind: 'variable',
+        signature: 'power = runes["fire"] + runes["ice"]',
+        signatures: {
+          python: 'power = runes["fire"] + runes["ice"]',
+          javascript: 'let power = runes["fire"] + runes["ice"];',
+          typescript: 'const power: number = runes["fire"] + runes["ice"];',
+          ruby: 'power = runes["fire"] + runes["ice"]',
+          lua: 'power = runes["fire"] + runes["ice"]',
+          rust: 'let power = runes["fire"] + runes["ice"];',
+        },
+        description: 'Must equal 5 to unseal the sanctum door',
       },
     ],
     gridConfig: {
@@ -56,17 +89,17 @@ export const WORLD_4_LEVELS: Level[] = [
     },
     starterCode: {
       python:
-        '# runes = {"wind": 1, "ice": 2} is inscribed in the tome.\n# 1. Add the key "fire" with value 3 to runes\n# 2. Set power = runes["fire"] + runes["ice"] (5)\n\nrunes["fire"] = 0\npower = 0\n',
+        '# TODO 1: Replace 0 with 3 to add "fire": 3 to runes\nrunes["fire"] = 0\n\n# TODO 2: Replace 0 with runes["fire"] + runes["ice"]\npower = 0\n',
       javascript:
-        '// runes = { wind: 1, ice: 2 } is inscribed in the tome.\n// 1. Add the key "fire" with value 3 to runes\n// 2. Set power = runes["fire"] + runes["ice"] (5)\n\nrunes["fire"] = 0;\nlet power = 0;\n',
+        '// TODO 1: Replace 0 with 3 to add "fire": 3 to runes\nrunes["fire"] = 0;\n\n// TODO 2: Replace 0 with runes["fire"] + runes["ice"]\nlet power = 0;\n',
       typescript:
-        '// runes = { wind: 1, ice: 2 } is inscribed in the tome.\n// 1. Add the key "fire" with value 3 to runes\n// 2. Set power = runes["fire"] + runes["ice"] (5)\n\nrunes["fire"] = 0;\nconst power: number = 0;\n',
+        '// TODO 1: Replace 0 with 3 to add "fire": 3 to runes\nrunes["fire"] = 0;\n\n// TODO 2: Replace 0 with runes["fire"] + runes["ice"]\nconst power: number = 0;\n',
       ruby:
-        '# runes = { "wind" => 1, "ice" => 2 } is inscribed in the tome.\n# 1. Add the key "fire" with value 3 to runes\n# 2. Set power = runes["fire"] + runes["ice"] (5)\n\nrunes["fire"] = 0\npower = 0\n',
+        '# TODO 1: Replace 0 with 3 to add "fire" => 3 to runes\nrunes["fire"] = 0\n\n# TODO 2: Replace 0 with runes["fire"] + runes["ice"]\npower = 0\n',
       lua:
-        '-- runes = { wind = 1, ice = 2 } is inscribed in the tome.\n-- 1. Add the key "fire" with value 3 to runes\n-- 2. Set power = runes["fire"] + runes["ice"] (5)\n\nrunes["fire"] = 0\npower = 0\n',
+        '-- TODO 1: Replace 0 with 3 to add fire = 3 to runes\nrunes["fire"] = 0\n\n-- TODO 2: Replace 0 with runes["fire"] + runes["ice"]\npower = 0\n',
       rust:
-        '// runes = HashMap::from([("wind", 1), ("ice", 2)]) is inscribed in the tome.\n// 1. Insert the key "fire" with value 3 into runes\n// 2. Set power = runes["fire"] + runes["ice"] (5)\n\nrunes.insert("fire", 0);\nlet power = 0;\n',
+        '// TODO 1: Replace 0 with 3 to insert ("fire", 3) into runes\nrunes.insert("fire", 0);\n\n// TODO 2: Replace 0 with runes["fire"] + runes["ice"]\nlet power = 0;\n',
     },
     solutionCode: {
       python: 'runes["fire"] = 3\npower = runes["fire"] + runes["ice"]\n',
@@ -147,23 +180,50 @@ export const WORLD_4_LEVELS: Level[] = [
     xp: 400,
     optimalSteps: 6,
     objective:
-      'Complete the binary search loop to locate crystal 60 at index 5 in the sorted vault [10, 20, 30, 42, 50, 60, 70].',
+      'Fix the two bugs in the binary search loop to find crystal 60 at index 5 in O(log n) time.',
     instructions: [
-      'Binary Search locates a target in a sorted array in O(log n) time by halving the search interval [low, high] on every step.',
-      'The sorted vault is crystals = [10, 20, 30, 42, 50, 60, 70] and target = 60 (located at index 5).',
-      '1. Compute mid = (low + high) // 2 (or Math.floor((low + high) / 2) in JS/TS).',
-      '2. When crystals[mid] < target (at mid=3, 42 < 60), advance the lower bound: low = mid + 1 so the next iteration checks mid=5 (60)!',
+      'Binary Search halves the search range [low, high] on each step.',
+      'Fix mid so it computes the midpoint between low and high instead of 0.',
+      'Fix the right-half update so low moves to mid + 1 (not high + 1) when crystals[mid] < target.',
     ],
+    howItWorks:
+      'When your loop sets found_index = 5, the vault opens and your hero automatically walks to the chest at (5, 0).',
+    preloadedContext: {
+      python: 'crystals = [10, 20, 30, 42, 50, 60, 70]\ntarget = 60',
+      javascript: 'const crystals = [10, 20, 30, 42, 50, 60, 70];\nconst target = 60;',
+      typescript: 'const crystals = [10, 20, 30, 42, 50, 60, 70];\nconst target = 60;',
+      ruby: 'crystals = [10, 20, 30, 42, 50, 60, 70]\ntarget = 60',
+      lua: 'crystals = { [0]=10, [1]=20, [2]=30, [3]=42, [4]=50, [5]=60, [6]=70 }\ntarget = 60',
+      rust: 'let crystals = vec![10, 20, 30, 42, 50, 60, 70];\nlet target = 60;',
+    },
     availableActions: [
       {
         name: 'mid',
+        kind: 'variable',
         signature: 'mid = (low + high) // 2',
-        description: 'Computes the midpoint of the current search interval [low, high]',
+        signatures: {
+          python: 'mid = (low + high) // 2',
+          javascript: 'let mid = Math.floor((low + high) / 2);',
+          typescript: 'const mid: number = Math.floor((low + high) / 2);',
+          ruby: 'mid = (low + high) / 2',
+          lua: 'local mid = math.floor((low + high) / 2)',
+          rust: 'let mid = (low + high) / 2;',
+        },
+        description: 'Computes the midpoint index of [low, high]',
       },
       {
         name: 'low',
+        kind: 'variable',
         signature: 'low = mid + 1',
-        description: 'Discards the left half when crystals[mid] < target',
+        signatures: {
+          python: 'low = mid + 1',
+          javascript: 'low = mid + 1;',
+          typescript: 'low = mid + 1;',
+          ruby: 'low = mid + 1',
+          lua: 'low = mid + 1',
+          rust: 'low = mid + 1;',
+        },
+        description: 'Narrows the search to the right half when crystals[mid] < target',
       },
     ],
     gridConfig: {
@@ -183,17 +243,17 @@ export const WORLD_4_LEVELS: Level[] = [
     },
     starterCode: {
       python:
-        '# Sorted vault: crystals = [10, 20, 30, 42, 50, 60, 70], target = 60\nlow = 0\nhigh = 6\nfound_index = -1\n\nwhile low <= high:\n    # 1. Calculate midpoint mid using (low + high) // 2\n    mid = 0\n    if crystals[mid] == target:\n        found_index = mid\n        break\n    elif crystals[mid] < target:\n        # 2. Narrow search to the right half (mid + 1)\n        low = high + 1\n    else:\n        high = mid - 1\n',
+        'low = 0\nhigh = 6\nfound_index = -1\n\nwhile low <= high:\n    # TODO 1: Fix this! Compute midpoint: (low + high) // 2\n    mid = 0\n    if crystals[mid] == target:\n        found_index = mid\n        break\n    elif crystals[mid] < target:\n        # TODO 2: Fix this! Narrow to the right half: mid + 1\n        low = high + 1\n    else:\n        high = mid - 1\n',
       javascript:
-        '// Sorted vault: crystals = [10, 20, 30, 42, 50, 60, 70], target = 60\nlet low = 0;\nlet high = 6;\nlet found_index = -1;\n\nwhile (low <= high) {\n  // 1. Calculate midpoint mid using Math.floor((low + high) / 2)\n  let mid = 0;\n  if (crystals[mid] === target) {\n    found_index = mid;\n    break;\n  } else if (crystals[mid] < target) {\n    // 2. Narrow search to the right half (mid + 1)\n    low = high + 1;\n  } else {\n    high = mid - 1;\n  }\n}\n',
+        'let low = 0;\nlet high = 6;\nlet found_index = -1;\n\nwhile (low <= high) {\n  // TODO 1: Fix this! Compute midpoint: Math.floor((low + high) / 2)\n  let mid = 0;\n  if (crystals[mid] === target) {\n    found_index = mid;\n    break;\n  } else if (crystals[mid] < target) {\n    // TODO 2: Fix this! Narrow to the right half: mid + 1\n    low = high + 1;\n  } else {\n    high = mid - 1;\n  }\n}\n',
       typescript:
-        '// Sorted vault: crystals = [10, 20, 30, 42, 50, 60, 70], target = 60\nlet low: number = 0;\nlet high: number = 6;\nlet found_index: number = -1;\n\nwhile (low <= high) {\n  // 1. Calculate midpoint mid using Math.floor((low + high) / 2)\n  const mid: number = 0;\n  if (crystals[mid] === target) {\n    found_index = mid;\n    break;\n  } else if (crystals[mid] < target) {\n    // 2. Narrow search to the right half (mid + 1)\n    low = high + 1;\n  } else {\n    high = mid - 1;\n  }\n}\n',
+        'let low: number = 0;\nlet high: number = 6;\nlet found_index: number = -1;\n\nwhile (low <= high) {\n  // TODO 1: Fix this! Compute midpoint: Math.floor((low + high) / 2)\n  const mid: number = 0;\n  if (crystals[mid] === target) {\n    found_index = mid;\n    break;\n  } else if (crystals[mid] < target) {\n    // TODO 2: Fix this! Narrow to the right half: mid + 1\n    low = high + 1;\n  } else {\n    high = mid - 1;\n  }\n}\n',
       ruby:
-        '# Sorted vault: crystals = [10, 20, 30, 42, 50, 60, 70], target = 60\nlow = 0\nhigh = 6\nfound_index = -1\n\nwhile low <= high\n  # 1. Calculate midpoint mid using (low + high) / 2\n  mid = 0\n  if crystals[mid] == target\n    found_index = mid\n    break\n  elsif crystals[mid] < target\n    # 2. Narrow search to the right half (mid + 1)\n    low = high + 1\n  else\n    high = mid - 1\n  end\nend\n',
+        'low = 0\nhigh = 6\nfound_index = -1\n\nwhile low <= high\n  # TODO 1: Fix this! Compute midpoint: (low + high) / 2\n  mid = 0\n  if crystals[mid] == target\n    found_index = mid\n    break\n  elsif crystals[mid] < target\n    # TODO 2: Fix this! Narrow to the right half: mid + 1\n    low = high + 1\n  else\n    high = mid - 1\n  end\nend\n',
       lua:
-        '-- Sorted vault: crystals is 0-indexed [0..6], target = 60\nlow = 0\nhigh = 6\nfound_index = -1\n\nwhile low <= high do\n  -- 1. Calculate midpoint mid using math.floor((low + high) / 2)\n  local mid = 0\n  if crystals[mid] == target then\n    found_index = mid\n    break\n  elseif crystals[mid] < target then\n    -- 2. Narrow search to the right half (mid + 1)\n    low = high + 1\n  else\n    high = mid - 1\n  end\nend\n',
+        'low = 0\nhigh = 6\nfound_index = -1\n\nwhile low <= high do\n  -- TODO 1: Fix this! Compute midpoint: math.floor((low + high) / 2)\n  local mid = 0\n  if crystals[mid] == target then\n    found_index = mid\n    break\n  elseif crystals[mid] < target then\n    -- TODO 2: Fix this! Narrow to the right half: mid + 1\n    low = high + 1\n  else\n    high = mid - 1\n  end\nend\n',
       rust:
-        '// Sorted vault: crystals = vec![10, 20, 30, 42, 50, 60, 70], target = 60\nlet mut low = 0;\nlet mut high = 6;\nlet mut found_index = -1;\n\nwhile low <= high {\n    // 1. Calculate midpoint mid using integer division: (low + high) / 2\n    let mid = 0;\n    if crystals[mid] == target {\n        found_index = mid;\n        break;\n    } else if crystals[mid] < target {\n        // 2. Narrow search to the right half (mid + 1)\n        low = high + 1;\n    } else {\n        high = mid - 1;\n    }\n}\n',
+        'let mut low = 0;\nlet mut high = 6;\nlet mut found_index = -1;\n\nwhile low <= high {\n    // TODO 1: Fix this! Compute midpoint: (low + high) / 2\n    let mid = 0;\n    if crystals[mid] == target {\n        found_index = mid;\n        break;\n    } else if crystals[mid] < target {\n        // TODO 2: Fix this! Narrow to the right half: mid + 1\n        low = high + 1;\n    } else {\n        high = mid - 1;\n    }\n}\n',
     },
     solutionCode: {
       python:

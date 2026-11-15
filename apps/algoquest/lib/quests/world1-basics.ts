@@ -24,16 +24,51 @@ export const WORLD_1_LEVELS: Level[] = [
     xp: 100,
     optimalSteps: 5,
     objective:
-      'Step South around the stone wall to (0, 1), face East, and set steps = 3 to march to the chest at (3, 1).',
+      'Move around the stone wall to row y:1, face East, and march 3 tiles to the treasure chest.',
     instructions: [
-      'A stone wall blocks row y:0! The hero must first step South to (0, 1) and turn("east") to face the open corridor.',
-      'Once aligned on row y:1, the variable steps controls how many tiles East the hero marches.',
-      'Update steps from 1 to 3 so the hero marches all the way to the treasure chest at (3, 1)!',
+      'A stone wall blocks row y:0. The starter code already steps South to (0, 1) and turns East.',
+      'Update the steps variable from 1 to 3 so your hero marches to the chest at (3, 1).',
     ],
+    howItWorks:
+      'Your turn() and step() calls move the hero first; then the level automatically steps forward `steps` times.',
     availableActions: [
-      { name: 'turn', signature: 'turn("south" | "east")', description: 'Rotates the hero to face a new compass direction' },
-      { name: 'step', signature: 'step()', description: 'Moves the hero 1 tile forward in the current direction' },
-      { name: 'steps', signature: 'steps = 3', description: 'Number of tiles to march East along row y:1' },
+      {
+        name: 'turn',
+        kind: 'command',
+        signature: 'turn("south" | "east")',
+        signatures: {
+          python: 'turn("south")',
+          javascript: 'turn("south");',
+          typescript: 'turn("south");',
+          ruby: 'turn("south")',
+          lua: 'turn("south")',
+          rust: 'turn("south");',
+        },
+        description: 'Rotates the hero to face a compass direction',
+      },
+      {
+        name: 'step',
+        kind: 'command',
+        signature: 'step()',
+        signatures: {
+          ruby: 'step',
+        },
+        description: 'Moves the hero 1 tile forward',
+      },
+      {
+        name: 'steps',
+        kind: 'variable',
+        signature: 'steps = 3',
+        signatures: {
+          python: 'steps = <number>',
+          javascript: 'let steps = <number>;',
+          typescript: 'const steps: number = <number>;',
+          ruby: 'steps = <number>',
+          lua: 'steps = <number>',
+          rust: 'let steps: i32 = <number>;',
+        },
+        description: 'Sets how many tiles East the hero marches along y:1',
+      },
     ],
     gridConfig: {
       width: 4,
@@ -52,17 +87,17 @@ export const WORLD_1_LEVELS: Level[] = [
     },
     starterCode: {
       python:
-        '# Step around the wall to (0, 1) and face East:\nturn("south")\nstep()\nturn("east")\n\n# Update steps to 3 to reach the treasure chest at (3, 1):\nsteps = 1\n',
+        '# Already done: step around the wall to (0, 1) and face East\nturn("south")\nstep()\nturn("east")\n\n# TODO: Change 1 to the number of tiles needed to reach (3, 1)\nsteps = 1\n',
       javascript:
-        '// Step around the wall to (0, 1) and face East:\nturn("south");\nstep();\nturn("east");\n\n// Update steps to 3 to reach the treasure chest at (3, 1):\nlet steps = 1;\n',
+        '// Already done: step around the wall to (0, 1) and face East\nturn("south");\nstep();\nturn("east");\n\n// TODO: Change 1 to the number of tiles needed to reach (3, 1)\nlet steps = 1;\n',
       typescript:
-        '// Step around the wall to (0, 1) and face East:\nturn("south");\nstep();\nturn("east");\n\n// Update steps to 3 to reach the treasure chest at (3, 1):\nconst steps: number = 1;\n',
+        '// Already done: step around the wall to (0, 1) and face East\nturn("south");\nstep();\nturn("east");\n\n// TODO: Change 1 to the number of tiles needed to reach (3, 1)\nconst steps: number = 1;\n',
       ruby:
-        '# Step around the wall to (0, 1) and face East:\nturn("south")\nstep\nturn("east")\n\n# Update steps to 3 to reach the treasure chest at (3, 1):\nsteps = 1\n',
+        '# Already done: step around the wall to (0, 1) and face East\nturn("south")\nstep\nturn("east")\n\n# TODO: Change 1 to the number of tiles needed to reach (3, 1)\nsteps = 1\n',
       lua:
-        '-- Step around the wall to (0, 1) and face East:\nturn("south")\nstep()\nturn("east")\n\n-- Update steps to 3 to reach the treasure chest at (3, 1):\nsteps = 1\n',
+        '-- Already done: step around the wall to (0, 1) and face East\nturn("south")\nstep()\nturn("east")\n\n-- TODO: Change 1 to the number of tiles needed to reach (3, 1)\nsteps = 1\n',
       rust:
-        '// Step around the wall to (0, 1) and face East:\nturn("south");\nstep();\nturn("east");\n\n// Update steps to 3 to reach the treasure chest at (3, 1):\nlet steps: i32 = 1;\n',
+        '// Already done: step around the wall to (0, 1) and face East\nturn("south");\nstep();\nturn("east");\n\n// TODO: Change 1 to the number of tiles needed to reach (3, 1)\nlet steps: i32 = 1;\n',
     },
     solutionCode: {
       python: 'turn("south")\nstep()\nturn("east")\nsteps = 3\n',
@@ -142,16 +177,41 @@ export const WORLD_1_LEVELS: Level[] = [
     xp: 120,
     optimalSteps: 6,
     objective:
-      'Step South into the gatehouse hall (0, 1), face East, and set password = "open" to cross the gate to (4, 1).',
+      'Enter the lower gatehouse hall and set password = "open" to unseal the iron gate.',
     instructions: [
-      'The iron gate at (2, 1) guards the lower vault hall along row y:1.',
-      'First, step South from (0, 0) to (0, 1) and call turn("east") to face the gate.',
-      'Then set password = "open" to lower the iron bars and march 4 tiles East to the chest at (4, 1)!',
+      'The starter code already steps South to (0, 1) and turns East toward the gate.',
+      'Change password from "closed" to "open" to lower the iron bars and reach the chest at (4, 1).',
     ],
+    howItWorks:
+      'When password == "open", the gate opens and your hero automatically marches 4 tiles East to the chest.',
     availableActions: [
-      { name: 'turn', signature: 'turn("south" | "east")', description: 'Rotates the hero to face the gatehouse corridor' },
-      { name: 'step', signature: 'step()', description: 'Moves 1 tile forward' },
-      { name: 'password', signature: 'password = "open"', description: 'Unseals the gate and advances 4 tiles East' },
+      {
+        name: 'turn',
+        kind: 'command',
+        signature: 'turn("south" | "east")',
+        description: 'Rotates the hero to face the gatehouse corridor',
+      },
+      {
+        name: 'step',
+        kind: 'command',
+        signature: 'step()',
+        signatures: { ruby: 'step' },
+        description: 'Moves 1 tile forward',
+      },
+      {
+        name: 'password',
+        kind: 'variable',
+        signature: 'password = "open"',
+        signatures: {
+          python: 'password = "<word>"',
+          javascript: 'let password = "<word>";',
+          typescript: 'const password: string = "<word>";',
+          ruby: 'password = "<word>"',
+          lua: 'password = "<word>"',
+          rust: 'let password: &str = "<word>";',
+        },
+        description: 'Must be set to "open" to unseal the gate',
+      },
     ],
     gridConfig: {
       width: 5,
@@ -173,17 +233,17 @@ export const WORLD_1_LEVELS: Level[] = [
     },
     starterCode: {
       python:
-        '# Enter the lower gatehouse corridor at (0, 1):\nturn("south")\nstep()\nturn("east")\n\n# Change password to "open" to lower the gate and cross to (4, 1):\npassword = "closed"\n',
+        '# Already done: step into the lower hall at (0, 1) and face East\nturn("south")\nstep()\nturn("east")\n\n# TODO: Change "closed" to "open" to unseal the gate\npassword = "closed"\n',
       javascript:
-        '// Enter the lower gatehouse corridor at (0, 1):\nturn("south");\nstep();\nturn("east");\n\n// Change password to "open" to lower the gate and cross to (4, 1):\nlet password = "closed";\n',
+        '// Already done: step into the lower hall at (0, 1) and face East\nturn("south");\nstep();\nturn("east");\n\n// TODO: Change "closed" to "open" to unseal the gate\nlet password = "closed";\n',
       typescript:
-        '// Enter the lower gatehouse corridor at (0, 1):\nturn("south");\nstep();\nturn("east");\n\n// Change password to "open" to lower the gate and cross to (4, 1):\nconst password: string = "closed";\n',
+        '// Already done: step into the lower hall at (0, 1) and face East\nturn("south");\nstep();\nturn("east");\n\n// TODO: Change "closed" to "open" to unseal the gate\nconst password: string = "closed";\n',
       ruby:
-        '# Enter the lower gatehouse corridor at (0, 1):\nturn("south")\nstep\nturn("east")\n\n# Change password to "open" to lower the gate and cross to (4, 1):\npassword = "closed"\n',
+        '# Already done: step into the lower hall at (0, 1) and face East\nturn("south")\nstep\nturn("east")\n\n# TODO: Change "closed" to "open" to unseal the gate\npassword = "closed"\n',
       lua:
-        '-- Enter the lower gatehouse corridor at (0, 1):\nturn("south")\nstep()\nturn("east")\n\n-- Change password to "open" to lower the gate and cross to (4, 1):\npassword = "closed"\n',
+        '-- Already done: step into the lower hall at (0, 1) and face East\nturn("south")\nstep()\nturn("east")\n\n-- TODO: Change "closed" to "open" to unseal the gate\npassword = "closed"\n',
       rust:
-        '// Enter the lower gatehouse corridor at (0, 1):\nturn("south");\nstep();\nturn("east");\n\n// Change password to "open" to lower the gate and cross to (4, 1):\nlet password: &str = "closed";\n',
+        '// Already done: step into the lower hall at (0, 1) and face East\nturn("south");\nstep();\nturn("east");\n\n// TODO: Change "closed" to "open" to unseal the gate\nlet password: &str = "closed";\n',
     },
     solutionCode: {
       python: 'turn("south")\nstep()\nturn("east")\npassword = "open"\n',
@@ -262,15 +322,37 @@ export const WORLD_1_LEVELS: Level[] = [
     xp: 150,
     optimalSteps: 2,
     objective:
-      'Inspect the tile ahead. If tile == "lava", jump() over the trap to (2, 0), then step() onto the chest at (3, 0).',
+      'Use an if/else check to jump() over the lava tile at (1, 0), then step() onto the chest at (3, 0).',
     instructions: [
-      'A molten lava fissure blocks tile (1, 0). Stepping onto it triggers a fatal HazardError.',
-      'The sensor variable tile is set to "lava". Inside the if branch, call jump() to leap 2 tiles from (0, 0) to (2, 0).',
-      'After the if/else block completes, call step() once more to advance from (2, 0) onto the chest at (3, 0)!',
+      'A molten lava trap sits at (1, 0). Stepping on it triggers a HazardError.',
+      'Inside the if tile == "lava" branch, call jump() to leap 2 tiles safely to (2, 0).',
+      'After the if/else block, call step() once more to reach the chest at (3, 0).',
     ],
+    howItWorks:
+      'Calling jump() moves 2 tiles forward over lava; calling step() moves 1 tile forward to the chest.',
+    preloadedContext: {
+      python: 'tile = "lava"',
+      javascript: 'const tile = "lava";',
+      typescript: 'const tile = "lava";',
+      ruby: 'tile = "lava"',
+      lua: 'tile = "lava"',
+      rust: 'let tile = "lava";',
+    },
     availableActions: [
-      { name: 'jump', signature: 'jump()', description: 'Leaps 2 tiles forward over lava traps' },
-      { name: 'step', signature: 'step()', description: 'Moves hero forward 1 tile' },
+      {
+        name: 'jump',
+        kind: 'command',
+        signature: 'jump()',
+        signatures: { ruby: 'jump' },
+        description: 'Leaps 2 tiles forward over lava traps',
+      },
+      {
+        name: 'step',
+        kind: 'command',
+        signature: 'step()',
+        signatures: { ruby: 'step' },
+        description: 'Moves hero forward 1 tile',
+      },
     ],
     gridConfig: {
       width: 4,
@@ -286,17 +368,17 @@ export const WORLD_1_LEVELS: Level[] = [
     },
     starterCode: {
       python:
-        '# tile is set to "lava" at (1, 0).\n# 1. If tile == "lava", call jump() to land on (2, 0)\n# 2. Then call step() after the if/else block to reach the chest at (3, 0)\n\nif tile == "lava":\n    pass\nelse:\n    step()\n',
+        'if tile == "lava":\n    # TODO: Leap 2 tiles over the lava using jump()\n    pass\nelse:\n    step()\n\n# TODO: Call step() once more to reach the chest at (3, 0)\n',
       javascript:
-        '// tile is set to "lava" at (1, 0).\n// 1. If tile === "lava", call jump() to land on (2, 0)\n// 2. Then call step() after the if/else block to reach the chest at (3, 0)\n\nif (tile === "lava") {\n  // Leap over the lava\n} else {\n  step();\n}\n',
+        'if (tile === "lava") {\n  // TODO: Leap 2 tiles over the lava using jump()\n} else {\n  step();\n}\n\n// TODO: Call step() once more to reach the chest at (3, 0)\n',
       typescript:
-        '// tile is set to "lava" at (1, 0).\n// 1. If tile === "lava", call jump() to land on (2, 0)\n// 2. Then call step() after the if/else block to reach the chest at (3, 0)\n\nif (tile === "lava") {\n  // Leap over the lava\n} else {\n  step();\n}\n',
+        'if (tile === "lava") {\n  // TODO: Leap 2 tiles over the lava using jump()\n} else {\n  step();\n}\n\n// TODO: Call step() once more to reach the chest at (3, 0)\n',
       ruby:
-        '# tile is set to "lava" at (1, 0).\n# 1. If tile == "lava", call jump to land on (2, 0)\n# 2. Then call step after the if/else block to reach the chest at (3, 0)\n\nif tile == "lava"\n  # Leap over the lava\nelse\n  step\nend\n',
+        'if tile == "lava"\n  # TODO: Leap 2 tiles over the lava using jump\nelse\n  step\nend\n\n# TODO: Call step once more to reach the chest at (3, 0)\n',
       lua:
-        '-- tile is set to "lava" at (1, 0).\n-- 1. If tile == "lava", call jump() to land on (2, 0)\n-- 2. Then call step() after the if/else block to reach the chest at (3, 0)\n\nif tile == "lava" then\n  -- Leap over the lava\nelse\n  step()\nend\n',
+        'if tile == "lava" then\n  -- TODO: Leap 2 tiles over the lava using jump()\nelse\n  step()\nend\n\n-- TODO: Call step() once more to reach the chest at (3, 0)\n',
       rust:
-        '// tile is set to "lava" at (1, 0).\n// 1. If tile == "lava", call jump() to land on (2, 0)\n// 2. Then call step() after the if/else block to reach the chest at (3, 0)\n\nif tile == "lava" {\n    // Leap over the lava\n} else {\n    step();\n}\n',
+        'if tile == "lava" {\n    // TODO: Leap 2 tiles over the lava using jump()\n} else {\n    step();\n}\n\n// TODO: Call step() once more to reach the chest at (3, 0)\n',
     },
     solutionCode: {
       python: 'if tile == "lava":\n    jump()\nelse:\n    step()\nstep()\n',

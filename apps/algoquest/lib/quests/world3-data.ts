@@ -24,15 +24,42 @@ export const WORLD_3_LEVELS: Level[] = [
     xp: 250,
     optimalSteps: 5,
     objective:
-      'Push "bronze", "silver", and "cursed" onto the stack, then pop the topmost "cursed" rune off the top to leave ["bronze", "silver"].',
+      'Push "bronze", "silver", and "cursed" onto the stack, then pop "cursed" off the top so ["bronze", "silver"] remain.',
     instructions: [
-      'A Stack is a Last-In, First-Out (LIFO) data structure: the last item pushed is always the first item popped.',
-      'Push "bronze", then "silver", then "cursed" onto the stack.',
-      'Because "cursed" was pushed last, calling pop() removes "cursed" from the top—leaving ["bronze", "silver"] to unlock the altar at (1, 0)!',
+      'A Stack is Last-In, First-Out (LIFO): the last item pushed is the first item removed by pop().',
+      'Push "silver" between "bronze" and "cursed", then pop the top item ("cursed") off the stack.',
     ],
+    howItWorks:
+      'When stack equals ["bronze", "silver"] at the end of your code, the altar unlocks and your hero steps onto (1, 0).',
     availableActions: [
-      { name: 'push', signature: 'stack.push() / append() / table.insert()', description: 'Pushes a rune onto the top of the LIFO stack' },
-      { name: 'pop', signature: 'stack.pop() / table.remove()', description: 'Pops and removes the most recently pushed rune' },
+      {
+        name: 'push',
+        kind: 'command',
+        signature: 'stack.push(item)',
+        signatures: {
+          python: 'stack.append(item)',
+          javascript: 'stack.push(item);',
+          typescript: 'stack.push(item);',
+          ruby: 'stack.push(item)',
+          lua: 'table.insert(stack, item)',
+          rust: 'stack.push(item);',
+        },
+        description: 'Adds an item to the top of the stack',
+      },
+      {
+        name: 'pop',
+        kind: 'command',
+        signature: 'stack.pop()',
+        signatures: {
+          python: 'stack.pop()',
+          javascript: 'stack.pop();',
+          typescript: 'stack.pop();',
+          ruby: 'stack.pop',
+          lua: 'table.remove(stack)',
+          rust: 'stack.pop();',
+        },
+        description: 'Removes the most recently pushed item from the top',
+      },
     ],
     gridConfig: {
       width: 2,
@@ -50,17 +77,17 @@ export const WORLD_3_LEVELS: Level[] = [
     },
     starterCode: {
       python:
-        '# 1. Push "bronze", "silver", and "cursed" onto stack\n# 2. Pop the top "cursed" rune using stack.pop() so only ["bronze", "silver"] remain!\n\nstack = []\nstack.append("bronze")\nstack.append("cursed")\n',
+        'stack = []\nstack.append("bronze")\n# TODO 1: Push "silver" onto stack before "cursed"\nstack.append("cursed")\n\n# TODO 2: Pop the top item ("cursed") off stack\n',
       javascript:
-        '// 1. Push "bronze", "silver", and "cursed" onto stack\n// 2. Pop the top "cursed" rune using stack.pop() so only ["bronze", "silver"] remain!\n\nconst stack = [];\nstack.push("bronze");\nstack.push("cursed");\n',
+        'const stack = [];\nstack.push("bronze");\n// TODO 1: Push "silver" onto stack before "cursed"\nstack.push("cursed");\n\n// TODO 2: Pop the top item ("cursed") off stack\n',
       typescript:
-        '// 1. Push "bronze", "silver", and "cursed" onto stack\n// 2. Pop the top "cursed" rune using stack.pop() so only ["bronze", "silver"] remain!\n\nconst stack: string[] = [];\nstack.push("bronze");\nstack.push("cursed");\n',
+        'const stack: string[] = [];\nstack.push("bronze");\n// TODO 1: Push "silver" onto stack before "cursed"\nstack.push("cursed");\n\n// TODO 2: Pop the top item ("cursed") off stack\n',
       ruby:
-        '# 1. Push "bronze", "silver", and "cursed" onto stack\n# 2. Pop the top "cursed" rune using stack.pop so only ["bronze", "silver"] remain!\n\nstack = []\nstack.push("bronze")\nstack.push("cursed")\n',
+        'stack = []\nstack.push("bronze")\n# TODO 1: Push "silver" onto stack before "cursed"\nstack.push("cursed")\n\n# TODO 2: Pop the top item ("cursed") off stack\n',
       lua:
-        '-- 1. Push "bronze", "silver", and "cursed" onto stack\n-- 2. Pop the top "cursed" rune using table.remove(stack) so only {"bronze", "silver"} remain!\n\nstack = {}\ntable.insert(stack, "bronze")\ntable.insert(stack, "cursed")\n',
+        'stack = {}\ntable.insert(stack, "bronze")\n-- TODO 1: Push "silver" onto stack before "cursed"\ntable.insert(stack, "cursed")\n\n-- TODO 2: Pop the top item ("cursed") off stack\n',
       rust:
-        '// 1. Push "bronze", "silver", and "cursed" onto the mutable Vec\n// 2. Pop the top "cursed" rune using stack.pop() so only ["bronze", "silver"] remain!\n\nlet mut stack = Vec::new();\nstack.push("bronze");\nstack.push("cursed");\n',
+        'let mut stack = Vec::new();\nstack.push("bronze");\n// TODO 1: Push "silver" onto stack before "cursed"\nstack.push("cursed");\n\n// TODO 2: Pop the top item ("cursed") off stack\n',
     },
     solutionCode: {
       python:
@@ -152,14 +179,42 @@ export const WORLD_3_LEVELS: Level[] = [
     xp: 300,
     optimalSteps: 6,
     objective:
-      'Converge left (0) and right (6) inward across the rune weights [2, 3, 5, 7, 8, 11, 15] until they meet at the central keystone (index 3).',
+      'Move left (0) and right (6) inward by 1 each step until both pointers meet at index 3.',
     instructions: [
-      'The Two Pointers pattern scans a sequence from both ends toward the center in O(n) time.',
-      'The bridge pillars hold sorted weights [2, 3, 5, 7, 8, 11, 15] from left = 0 to right = 6.',
-      'Inside the while left < right loop, increment left by 1 and decrement right by 1 so both pointers converge on the keystone weight 7 at index 3!',
+      'Two Pointers scan from both ends toward the middle in O(n) time.',
+      'Inside the while left < right loop, add 1 to left and subtract 1 from right.',
     ],
+    howItWorks:
+      'When the loop finishes with left == 3 and right == 3, the bridge aligns and your hero walks to the chest at (3, 0).',
     availableActions: [
-      { name: 'pointers', signature: 'left += 1 / right -= 1', description: 'Advances left and right pointer indices inward' },
+      {
+        name: 'left',
+        kind: 'variable',
+        signature: 'left += 1',
+        signatures: {
+          python: 'left += 1',
+          javascript: 'left += 1;',
+          typescript: 'left += 1;',
+          ruby: 'left += 1',
+          lua: 'left = left + 1',
+          rust: 'left += 1;',
+        },
+        description: 'Moves the left pointer 1 index toward the center',
+      },
+      {
+        name: 'right',
+        kind: 'variable',
+        signature: 'right -= 1',
+        signatures: {
+          python: 'right -= 1',
+          javascript: 'right -= 1;',
+          typescript: 'right -= 1;',
+          ruby: 'right -= 1',
+          lua: 'right = right - 1',
+          rust: 'right -= 1;',
+        },
+        description: 'Moves the right pointer 1 index toward the center',
+      },
     ],
     gridConfig: {
       width: 7,
@@ -177,17 +232,17 @@ export const WORLD_3_LEVELS: Level[] = [
     },
     starterCode: {
       python:
-        '# Bridge rune weights: [2, 3, 5, 7, 8, 11, 15] (indices 0..6)\n# Converge left and right pointers inward until they meet at index 3.\nleft = 0\nright = 6\n\nwhile left < right:\n    # Increment left and decrement right\n    pass\n',
+        'left = 0\nright = 6\n\nwhile left < right:\n    # TODO 1: Move left inward (+1)\n    # TODO 2: Move right inward (-1)\n    pass\n',
       javascript:
-        '// Bridge rune weights: [2, 3, 5, 7, 8, 11, 15] (indices 0..6)\n// Converge left and right pointers inward until they meet at index 3.\nlet left = 0;\nlet right = 6;\n\nwhile (left < right) {\n  // Increment left and decrement right\n}\n',
+        'let left = 0;\nlet right = 6;\n\nwhile (left < right) {\n  // TODO 1: Move left inward (+1)\n  // TODO 2: Move right inward (-1)\n}\n',
       typescript:
-        '// Bridge rune weights: [2, 3, 5, 7, 8, 11, 15] (indices 0..6)\n// Converge left and right pointers inward until they meet at index 3.\nlet left = 0;\nlet right = 6;\n\nwhile (left < right) {\n  // Increment left and decrement right\n}\n',
+        'let left = 0;\nlet right = 6;\n\nwhile (left < right) {\n  // TODO 1: Move left inward (+1)\n  // TODO 2: Move right inward (-1)\n}\n',
       ruby:
-        '# Bridge rune weights: [2, 3, 5, 7, 8, 11, 15] (indices 0..6)\n# Converge left and right pointers inward until they meet at index 3.\nleft = 0\nright = 6\n\nwhile left < right\n  # Increment left and decrement right\nend\n',
+        'left = 0\nright = 6\n\nwhile left < right\n  # TODO 1: Move left inward (+1)\n  # TODO 2: Move right inward (-1)\nend\n',
       lua:
-        '-- Bridge rune weights: [2, 3, 5, 7, 8, 11, 15] (indices 0..6)\n-- Converge left and right pointers inward until they meet at index 3.\nleft = 0\nright = 6\n\nwhile left < right do\n  -- Increment left and decrement right\nend\n',
+        'left = 0\nright = 6\n\nwhile left < right do\n  -- TODO 1: Move left inward (+1)\n  -- TODO 2: Move right inward (-1)\nend\n',
       rust:
-        '// Bridge rune weights: [2, 3, 5, 7, 8, 11, 15] (indices 0..6)\n// Converge mutable left and right pointers inward until they meet at index 3.\nlet mut left = 0;\nlet mut right = 6;\n\nwhile left < right {\n    // Increment left and decrement right\n}\n',
+        'let mut left = 0;\nlet mut right = 6;\n\nwhile left < right {\n    // TODO 1: Move left inward (+1)\n    // TODO 2: Move right inward (-1)\n}\n',
     },
     solutionCode: {
       python: 'left = 0\nright = 6\n\nwhile left < right:\n    left += 1\n    right -= 1\n',

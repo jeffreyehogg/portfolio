@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 64" fill="none" role="img" aria-label="Jeff Hogg">
+  <!-- Monogram tile -->
+  <rect x="2" y="2" width="60" height="60" rx="15" fill="#111110"/>
+  <rect x="2.75" y="2.75" width="58.5" height="58.5" rx="14.25" stroke="#292524" stroke-width="1.5"/>
+  <path
+    d="M17 19.5H26.5M23.5 19.5V37.5C23.5 41.366 20.366 44.5 16.5 44.5H15"
+    stroke="#FAFAF8"
+    stroke-width="4.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M33.5 19.5V44.5M47.5 19.5V44.5M33.5 32H47.5"
+    stroke="#FAFAF8"
+    stroke-width="4.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <circle cx="53.5" cy="51.5" r="3" fill="#14B8A6"/>
+
+  <!-- Editorial wordmark -->
+  <text
+    x="78"
+    y="34"
+    fill="#111110"
+    font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif"
+    font-size="24"
+    font-weight="600"
+    letter-spacing="-0.6"
+  >Jeff Hogg</text>
+  <text
+    x="79"
+    y="51"
+    fill="#0F766E"
+    font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace"
+    font-size="10.5"
+    font-weight="500"
+    letter-spacing="1.6"
+  >SOFTWARE ENGINEER</text>
+</svg>

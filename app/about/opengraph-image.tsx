@@ -13,66 +13,52 @@ export default async function Image() {
 		(
 			<div
 				style={{
-					background: '#020617',
+					background: '#FAFAF8',
 					width: '100%',
 					height: '100%',
 					display: 'flex',
 					flexDirection: 'column',
 					justifyContent: 'space-between',
-					padding: '64px 80px',
+					padding: '60px 72px',
 					fontFamily: 'system-ui, -apple-system, sans-serif',
-					border: '8px solid #1e293b',
 					position: 'relative',
 				}}
 			>
-				{/* Ambient Glows */}
 				<div
 					style={{
 						position: 'absolute',
-						top: '-80px',
-						right: '-80px',
-						width: '500px',
-						height: '500px',
-						borderRadius: '50%',
-						background: 'radial-gradient(circle, rgba(99, 102, 241, 0.25) 0%, rgba(2, 6, 23, 0) 70%)',
-					}}
-				/>
-				<div
-					style={{
-						position: 'absolute',
-						bottom: '-60px',
-						left: '-60px',
-						width: '400px',
-						height: '400px',
-						borderRadius: '50%',
-						background: 'radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, rgba(2, 6, 23, 0) 70%)',
+						top: 0,
+						left: 0,
+						right: 0,
+						height: '5px',
+						background: '#0F766E',
 					}}
 				/>
 
-				{/* Top Status Header */}
+				{/* Top Header */}
 				<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-					<div
-						style={{
-							display: 'flex',
-							alignItems: 'center',
-							gap: '12px',
-							padding: '10px 20px',
-							borderRadius: '9999px',
-							background: '#0f172a',
-							border: '1px solid #334155',
-							color: '#818cf8',
-							fontSize: '20px',
-							fontFamily: 'monospace',
-						}}
-					>
-						<div style={{ display: 'flex', gap: '6px', alignItems: 'center', marginRight: '6px' }}>
-							<div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#ef4444' }} />
-							<div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#f59e0b' }} />
-							<div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#10b981' }} />
+					<div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+						<div
+							style={{
+								width: '42px',
+								height: '42px',
+								borderRadius: '10px',
+								background: '#111110',
+								display: 'flex',
+								alignItems: 'center',
+								justifyContent: 'center',
+								color: '#FAFAF8',
+								fontSize: '18px',
+								fontWeight: 700,
+							}}
+						>
+							JH
 						</div>
-						<span>jeffhogg.com</span>
-						<span style={{ color: '#475569' }}>/</span>
-						<span style={{ color: '#94a3b8' }}>about</span>
+						<div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '19px', fontFamily: 'monospace' }}>
+							<span style={{ color: '#111110', fontWeight: 600 }}>jeffhogg.com</span>
+							<span style={{ color: '#A8A29E' }}>/</span>
+							<span style={{ color: '#0F766E' }}>about</span>
+						</div>
 					</div>
 
 					<div
@@ -80,21 +66,21 @@ export default async function Image() {
 							display: 'flex',
 							alignItems: 'center',
 							gap: '10px',
-							padding: '10px 20px',
+							padding: '8px 18px',
 							borderRadius: '9999px',
-							background: 'rgba(16, 185, 129, 0.12)',
-							border: '1px solid rgba(16, 185, 129, 0.3)',
-							color: '#34d399',
-							fontSize: '18px',
-							fontWeight: 600,
+							background: '#FFFFFF',
+							border: '1px solid #E7E5E4',
+							color: '#44403C',
+							fontSize: '16px',
+							fontFamily: 'monospace',
 						}}
 					>
 						<div
 							style={{
-								width: '10px',
-								height: '10px',
+								width: '9px',
+								height: '9px',
 								borderRadius: '50%',
-								background: '#10b981',
+								background: '#059669',
 							}}
 						/>
 						<span>Software Engineer • The Woodlands, TX</span>
@@ -103,60 +89,59 @@ export default async function Image() {
 
 				{/* Center Content */}
 				<div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+					<span
+						style={{
+							fontSize: '14px',
+							fontFamily: 'monospace',
+							color: '#0F766E',
+							letterSpacing: '0.14em',
+						}}
+					>
+						01 / PROFILE &amp; CAREER TIMELINE
+					</span>
 					<h1
 						style={{
-							fontSize: '70px',
-							fontWeight: 900,
-							color: '#ffffff',
+							fontSize: '68px',
+							fontWeight: 700,
+							color: '#111110',
 							margin: 0,
-							letterSpacing: '-0.03em',
+							letterSpacing: '-0.035em',
 							lineHeight: 1.05,
 						}}
 					>
-						Career Experience & Background
+						Career Experience &amp; Background
 					</h1>
 					<p
 						style={{
-							fontSize: '30px',
-							fontWeight: 600,
-							color: '#a5b4fc',
-							margin: 0,
-							letterSpacing: '-0.01em',
-						}}
-					>
-						Enterprise Systems, DevOps & Full-Lifecycle Engineering
-					</p>
-					<p
-						style={{
-							fontSize: '22px',
-							color: '#94a3b8',
-							margin: '6px 0 0 0',
+							fontSize: '26px',
+							color: '#57534E',
+							margin: '4px 0 0 0',
 							lineHeight: 1.4,
-							maxWidth: '960px',
+							maxWidth: '940px',
 						}}
 					>
-						Modernizing legacy architectures, building high-throughput API middleware, and running automated CI/CD infrastructure with self-hosted runners.
+						Full-stack web engineering, API middleware, distributed SQL databases, and automated CI/CD infrastructure.
 					</p>
 				</div>
 
 				{/* Bottom Highlight Pills */}
-				<div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap' }}>
+				<div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
 					{[
 						'TWFG Insurance (Software Engineer)',
 						'LGI Homes (Web & Data)',
-						'Cisco (Webex Calling SaaS)',
-						'Distributed MS SQL & MySQL',
-						'Docker & Nginx Containerization',
+						'Cisco (Control Hub)',
+						'MS SQL & MySQL',
+						'Docker & CI/CD',
 					].map((item) => (
 						<div
 							key={item}
 							style={{
-								padding: '8px 18px',
+								padding: '8px 16px',
 								borderRadius: '10px',
-								background: '#1e293b',
-								border: '1px solid #334155',
-								color: '#cbd5e1',
-								fontSize: '18px',
+								background: '#FFFFFF',
+								border: '1px solid #E7E5E4',
+								color: '#44403C',
+								fontSize: '16px',
 								fontFamily: 'monospace',
 							}}
 						>

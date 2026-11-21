@@ -13,39 +13,27 @@ export default async function Image() {
 		(
 			<div
 				style={{
-					background: 'linear-gradient(135deg, #020617 0%, #090f26 55%, #030712 100%)',
+					background: '#FAFAF8',
 					width: '100%',
 					height: '100%',
 					display: 'flex',
 					alignItems: 'center',
 					justifyContent: 'space-between',
-					padding: '52px 60px',
+					padding: '56px 64px',
 					fontFamily: 'system-ui, -apple-system, sans-serif',
 					position: 'relative',
-					overflow: 'hidden',
+					border: '1px solid #E7E5E4',
 				}}
 			>
-				{/* Ambient Glows */}
+				{/* Subtle top teal editorial accent bar */}
 				<div
 					style={{
 						position: 'absolute',
-						top: '-100px',
-						left: '-60px',
-						width: '620px',
-						height: '620px',
-						borderRadius: '50%',
-						background: 'radial-gradient(circle, rgba(79, 70, 229, 0.24) 0%, rgba(2, 6, 23, 0) 70%)',
-					}}
-				/>
-				<div
-					style={{
-						position: 'absolute',
-						bottom: '-100px',
-						right: '-60px',
-						width: '620px',
-						height: '620px',
-						borderRadius: '50%',
-						background: 'radial-gradient(circle, rgba(6, 182, 212, 0.22) 0%, rgba(2, 6, 23, 0) 70%)',
+						top: 0,
+						left: 0,
+						right: 0,
+						height: '5px',
+						background: '#0F766E',
 					}}
 				/>
 
@@ -54,45 +42,47 @@ export default async function Image() {
 					style={{
 						display: 'flex',
 						flexDirection: 'column',
-						width: '545px',
+						width: '560px',
 						gap: '22px',
 					}}
 				>
-					{/* Identity Pill */}
-					<div
-						style={{
-							display: 'flex',
-							alignItems: 'center',
-							alignSelf: 'flex-start',
-							gap: '10px',
-							padding: '8px 18px',
-							borderRadius: '9999px',
-							background: '#0f172a',
-							border: '1px solid rgba(129, 140, 248, 0.4)',
-							fontSize: '16px',
-							fontWeight: 600,
-						}}
-					>
+					{/* Monogram + Domain Header */}
+					<div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
 						<div
 							style={{
-								width: '9px',
-								height: '9px',
-								borderRadius: '50%',
-								background: '#10b981',
+								width: '44px',
+								height: '44px',
+								borderRadius: '11px',
+								background: '#111110',
+								display: 'flex',
+								alignItems: 'center',
+								justifyContent: 'center',
+								color: '#FAFAF8',
+								fontSize: '20px',
+								fontWeight: 700,
+								letterSpacing: '-0.04em',
 							}}
-						/>
-						<span style={{ color: '#f1f5f9', fontFamily: 'monospace' }}>jeffhogg.com</span>
-						<span style={{ color: '#475569' }}>•</span>
-						<span style={{ color: '#34d399' }}>Portfolio</span>
+						>
+							JH
+						</div>
+						<div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '18px' }}>
+							<span style={{ color: '#111110', fontFamily: 'monospace', fontWeight: 600 }}>
+								jeffhogg.com
+							</span>
+							<span style={{ color: '#D6D3D1' }}>/</span>
+							<span style={{ color: '#0F766E', fontFamily: 'monospace', fontSize: '15px' }}>
+								PORTFOLIO
+							</span>
+						</div>
 					</div>
 
-					{/* Headline */}
+					{/* Display Title */}
 					<div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
 						<h1
 							style={{
 								fontSize: '72px',
-								fontWeight: 900,
-								color: '#ffffff',
+								fontWeight: 700,
+								color: '#111110',
 								margin: 0,
 								letterSpacing: '-0.035em',
 								lineHeight: 1.0,
@@ -102,229 +92,145 @@ export default async function Image() {
 						</h1>
 						<div
 							style={{
-								display: 'flex',
-								flexDirection: 'column',
 								fontSize: '34px',
-								fontWeight: 800,
-								color: '#818cf8',
+								fontWeight: 500,
+								color: '#0F766E',
 								letterSpacing: '-0.02em',
-								lineHeight: 1.18,
+								lineHeight: 1.15,
 							}}
 						>
-							<span>Software Engineer &</span>
-							<span style={{ color: '#38bdf8' }}>Systems Architect</span>
+							Software Engineer &amp; Systems Architect
 						</div>
 						<p
 							style={{
 								fontSize: '20px',
-								color: '#cbd5e1',
+								color: '#57534E',
 								margin: '6px 0 0 0',
 								lineHeight: 1.45,
 							}}
 						>
-							Full-stack web & native iOS apps, API middleware, automated CI/CD pipelines, and enterprise database systems.
+							Full-stack web platforms, DevOps CI/CD pipelines, API middleware, and native Swift 6 iOS apps.
 						</p>
 					</div>
 
-					{/* Bottom 3 Pills */}
-					<div style={{ display: 'flex', gap: '10px', marginTop: '6px' }}>
-						{['TypeScript & Swift', 'Docker & CI/CD', 'SQL & APIs'].map((tag) => (
+					{/* Stack Tags */}
+					<div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '4px' }}>
+						{['TypeScript', 'Next.js', 'Swift 6', 'Docker', 'SQL Server', 'CI/CD'].map((tech) => (
 							<div
-								key={tag}
+								key={tech}
 								style={{
-									display: 'flex',
-									alignItems: 'center',
-									padding: '9px 15px',
-									borderRadius: '9999px',
-									background: '#0f172a',
-									border: '1px solid rgba(129, 140, 248, 0.3)',
-									color: '#f1f5f9',
+									padding: '6px 14px',
+									borderRadius: '8px',
+									background: '#FFFFFF',
+									border: '1px solid #E7E5E4',
+									color: '#44403C',
 									fontSize: '15px',
-									fontWeight: 600,
+									fontFamily: 'monospace',
 								}}
 							>
-								{tag}
+								{tech}
 							</div>
 						))}
 					</div>
 				</div>
 
-				{/* Right Column: Browser Card Showcase */}
+				{/* Right Column: Clean Editorial Cards */}
 				<div
 					style={{
 						display: 'flex',
 						flexDirection: 'column',
-						width: '490px',
-						borderRadius: '18px',
-						background: '#090f26',
-						border: '1px solid rgba(148, 163, 184, 0.3)',
-						overflow: 'hidden',
-						boxShadow: '0 25px 50px rgba(0, 0, 0, 0.7)',
+						width: '470px',
+						gap: '14px',
 					}}
 				>
-					{/* Browser Bar */}
-					<div
-						style={{
-							display: 'flex',
-							alignItems: 'center',
-							justifyContent: 'space-between',
-							padding: '12px 16px',
-							background: '#0f172a',
-							borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
-						}}
-					>
-						<div style={{ display: 'flex', gap: '6px' }}>
-							<div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ef4444' }} />
-							<div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#f59e0b' }} />
-							<div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#10b981' }} />
-						</div>
-						<div
-							style={{
-								display: 'flex',
-								alignItems: 'center',
-								gap: '12px',
-								fontSize: '12px',
-								color: '#94a3b8',
-							}}
-						>
-							<span
-								style={{
-									background: '#4f46e5',
-									color: '#ffffff',
-									padding: '3px 10px',
-									borderRadius: '9999px',
-									fontWeight: 600,
-								}}
-							>
-								Home
-							</span>
-							<span>Projects</span>
-							<span>About</span>
-							<span>Contact</span>
-						</div>
-						<div
-							style={{
-								fontSize: '11px',
-								color: '#94a3b8',
-								fontFamily: 'monospace',
-								padding: '2px 7px',
-								borderRadius: '5px',
-								background: '#1e293b',
-							}}
-						>
-							Cmd+K
-						</div>
-					</div>
-
-					{/* Browser Body */}
+					{/* Current Role Card */}
 					<div
 						style={{
 							display: 'flex',
 							flexDirection: 'column',
-							alignItems: 'center',
-							padding: '24px 22px',
-							background: '#020617',
+							background: '#FFFFFF',
+							border: '1px solid #E7E5E4',
+							borderRadius: '16px',
+							padding: '22px 24px',
+							gap: '8px',
 						}}
 					>
-						<div style={{ fontSize: '25px', fontWeight: 800, color: '#ffffff' }}>Software Engineer</div>
-						<div style={{ fontSize: '22px', fontWeight: 800, color: '#38bdf8', marginTop: '2px' }}>
-							DevOps & System Architecture
+						<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+							<span
+								style={{
+									fontSize: '12px',
+									fontFamily: 'monospace',
+									color: '#0F766E',
+									letterSpacing: '0.1em',
+								}}
+							>
+								CURRENT ROLE
+							</span>
+							<div
+								style={{
+									width: '9px',
+									height: '9px',
+									borderRadius: '50%',
+									background: '#059669',
+								}}
+							/>
 						</div>
-						<div
+						<span style={{ fontSize: '22px', fontWeight: 700, color: '#111110' }}>
+							Software Engineer @ TWFG Insurance
+						</span>
+						<span style={{ fontSize: '14px', color: '#78716C', fontFamily: 'monospace' }}>
+							Previously: LGI Homes • Cisco
+						</span>
+					</div>
+
+					{/* Featured Work Card */}
+					<div
+						style={{
+							display: 'flex',
+							flexDirection: 'column',
+							background: '#F3F2EE',
+							border: '1px solid #E7E5E4',
+							borderRadius: '16px',
+							padding: '22px 24px',
+							gap: '14px',
+						}}
+					>
+						<span
 							style={{
 								fontSize: '12px',
-								color: '#94a3b8',
-								textAlign: 'center',
-								marginTop: '8px',
-								marginBottom: '16px',
-								lineHeight: 1.4,
+								fontFamily: 'monospace',
+								color: '#57534E',
+								letterSpacing: '0.1em',
 							}}
 						>
-							Engineering scalable web and native iOS applications, dedicated API middleware, and automated CI/CD pipelines.
-						</div>
+							SELECTED SYSTEMS
+						</span>
 
-						{/* 2x2 Metric Grid */}
-						<div
-							style={{
-								display: 'flex',
-								flexWrap: 'wrap',
-								gap: '10px',
-								width: '100%',
-							}}
-						>
-							{[
-								{ code: '5+', val: '5+ Years', lbl: 'Software Engineering' },
-								{ code: '</>', val: 'TypeScript & Swift', lbl: 'Web & Native iOS' },
-								{ code: 'CI', val: 'Docker & CI/CD', lbl: 'Automated Pipelines' },
-								{ code: 'DB', val: 'MS SQL & MySQL', lbl: 'Database Systems' },
-							].map((item) => (
-								<div
-									key={item.val}
-									style={{
-										display: 'flex',
-										alignItems: 'center',
-										gap: '10px',
-										width: '212px',
-										padding: '10px 12px',
-										borderRadius: '10px',
-										background: '#0f172a',
-										border: '1px solid rgba(255, 255, 255, 0.08)',
-									}}
-								>
-									<div
-										style={{
-											display: 'flex',
-											alignItems: 'center',
-											justifyContent: 'center',
-											width: '30px',
-											height: '30px',
-											borderRadius: '8px',
-											background: 'rgba(99, 102, 241, 0.18)',
-											color: '#818cf8',
-											fontSize: '12px',
-											fontWeight: 700,
-											fontFamily: 'monospace',
-										}}
-									>
-										{item.code}
-									</div>
-									<div style={{ display: 'flex', flexDirection: 'column' }}>
-										<span style={{ fontSize: '13px', fontWeight: 700, color: '#f8fafc' }}>{item.val}</span>
-										<span style={{ fontSize: '10px', color: '#94a3b8' }}>{item.lbl}</span>
-									</div>
-								</div>
-							))}
-						</div>
-
-						{/* Current Role Strip */}
-						<div
-							style={{
-								display: 'flex',
-								alignItems: 'center',
-								justifyContent: 'space-between',
-								width: '100%',
-								marginTop: '4px',
-								padding: '10px 14px',
-								borderRadius: '10px',
-								background: 'rgba(16, 185, 129, 0.08)',
-								border: '1px solid rgba(16, 185, 129, 0.25)',
-							}}
-						>
-							<div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-								<div
-									style={{
-										width: '8px',
-										height: '8px',
-										borderRadius: '9999px',
-										background: '#10b981',
-									}}
-								/>
-								<span style={{ fontSize: '12px', fontWeight: 600, color: '#ecfdf5' }}>
-									Software Engineer @ TWFG Insurance
+						{[
+							{ title: 'Aura — Audiobooks & Podcasts', meta: 'iOS App Store • Swift 6 / SwiftUI' },
+							{ title: 'AlgoQuest', meta: '138KB Rust WASM • 6 Languages' },
+							{ title: 'AutoDBA', meta: 'Zero-DB SQL Optimizer & MCP Server' },
+						].map((item) => (
+							<div
+								key={item.title}
+								style={{
+									display: 'flex',
+									flexDirection: 'column',
+									background: '#FFFFFF',
+									border: '1px solid #E7E5E4',
+									borderRadius: '10px',
+									padding: '12px 16px',
+									gap: '3px',
+								}}
+							>
+								<span style={{ fontSize: '16px', fontWeight: 600, color: '#111110' }}>
+									{item.title}
+								</span>
+								<span style={{ fontSize: '13px', fontFamily: 'monospace', color: '#0F766E' }}>
+									{item.meta}
 								</span>
 							</div>
-							<span style={{ fontSize: '11px', color: '#94a3b8' }}>LGI Homes • Cisco</span>
-						</div>
+						))}
 					</div>
 				</div>
 			</div>

@@ -35,7 +35,7 @@ export default function ScrollProgress() {
 		<div
 			ref={barRef}
 			aria-hidden='true'
-			className='fixed top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500 origin-left z-[60] pointer-events-none motion-reduce:hidden will-change-transform'
+			className='fixed top-0 left-0 right-0 h-[2px] bg-teal-700 origin-left z-[60] pointer-events-none motion-reduce:hidden will-change-transform'
 			style={{ transform: 'scaleX(0)' }}
 		/>
 	)

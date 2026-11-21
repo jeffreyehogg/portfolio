@@ -15,13 +15,16 @@ import { env } from '../../lib/env'
 
 const initialState: FormState = { status: 'idle', message: '' }
 
+const inputClasses =
+	'block w-full rounded-xl border-0 px-3.5 py-2.5 text-stone-950 shadow-sm ring-1 ring-inset ring-stone-300/90 placeholder:text-stone-400 focus:ring-2 focus:ring-inset focus:ring-teal-700 sm:text-sm bg-[#FAFAF8] focus:bg-white transition-colors'
+
 function SubmitButton() {
 	const { pending } = useFormStatus()
 	return (
 		<button
 			type='submit'
 			disabled={pending}
-			className='w-full sm:w-auto inline-flex items-center justify-center py-2.5 px-6 border border-transparent rounded-xl shadow-md text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98] transition-all duration-200'
+			className='w-full sm:w-auto inline-flex items-center justify-center py-2.5 px-6 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-stone-950 hover:bg-stone-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-700 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98] transition-all duration-200 cursor-pointer'
 		>
 			{pending ? (
 				<span className='flex items-center'>
@@ -38,12 +41,12 @@ function SubmitButton() {
 							r='10'
 							stroke='currentColor'
 							strokeWidth='4'
-						></circle>
+						/>
 						<path
 							className='opacity-75'
 							fill='currentColor'
 							d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z'
-						></path>
+						/>
 					</svg>
 					Sending...
 				</span>
@@ -96,10 +99,10 @@ function ContactFormInner() {
 
 	return (
 		<motion.div
-			initial={{ opacity: 0, y: 15 }}
+			initial={{ opacity: 0, y: 12 }}
 			animate={{ opacity: 1, y: 0 }}
-			transition={{ duration: 0.4 }}
-			className='bg-slate-900/80 backdrop-blur-xl rounded-2xl shadow-xl border border-white/[0.08] p-6 sm:p-9 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)]'
+			transition={{ duration: 0.35 }}
+			className='bg-white rounded-2xl shadow-[0_1px_2px_rgba(17,17,16,0.04)] border border-stone-200/90 p-6 sm:p-9'
 		>
 			<form
 				ref={formRef}
@@ -110,7 +113,7 @@ function ContactFormInner() {
 				<div>
 					<label
 						htmlFor='firstName'
-						className='block text-xs font-medium text-slate-300'
+						className='block text-xs font-medium text-stone-700'
 					>
 						First name
 					</label>
@@ -123,11 +126,11 @@ function ContactFormInner() {
 							required
 							aria-invalid={!!state.errors?.firstName}
 							aria-describedby={state.errors?.firstName ? 'firstName-error' : undefined}
-							className='block w-full rounded-xl border-0 px-3.5 py-2.5 text-slate-100 shadow-sm ring-1 ring-inset ring-white/[0.1] placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm bg-slate-950/60 focus:bg-slate-950 transition-colors'
+							className={inputClasses}
 						/>
 					</div>
 					{state.errors?.firstName && (
-						<p id='firstName-error' role='alert' className='text-sm text-red-400 mt-1'>
+						<p id='firstName-error' role='alert' className='text-sm text-red-600 mt-1'>
 							{state.errors.firstName[0]}
 						</p>
 					)}
@@ -135,7 +138,7 @@ function ContactFormInner() {
 				<div>
 					<label
 						htmlFor='lastName'
-						className='block text-xs font-medium text-slate-300'
+						className='block text-xs font-medium text-stone-700'
 					>
 						Last name
 					</label>
@@ -148,11 +151,11 @@ function ContactFormInner() {
 							required
 							aria-invalid={!!state.errors?.lastName}
 							aria-describedby={state.errors?.lastName ? 'lastName-error' : undefined}
-							className='block w-full rounded-xl border-0 px-3.5 py-2.5 text-slate-100 shadow-sm ring-1 ring-inset ring-white/[0.1] placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm bg-slate-950/60 focus:bg-slate-950 transition-colors'
+							className={inputClasses}
 						/>
 					</div>
 					{state.errors?.lastName && (
-						<p id='lastName-error' role='alert' className='text-sm text-red-400 mt-1'>
+						<p id='lastName-error' role='alert' className='text-sm text-red-600 mt-1'>
 							{state.errors.lastName[0]}
 						</p>
 					)}
@@ -161,7 +164,7 @@ function ContactFormInner() {
 				<div className='sm:col-span-2'>
 					<label
 						htmlFor='email'
-						className='block text-xs font-medium text-slate-300'
+						className='block text-xs font-medium text-stone-700'
 					>
 						Email
 					</label>
@@ -174,11 +177,13 @@ function ContactFormInner() {
 							required
 							aria-invalid={!!state.errors?.email}
 							aria-describedby={state.errors?.email ? 'email-error' : undefined}
-							className='block w-full rounded-xl border-0 px-3.5 py-2.5 text-slate-100 shadow-sm ring-1 ring-inset ring-white/[0.1] placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm bg-slate-950/60 focus:bg-slate-950 transition-colors'
+							className={inputClasses}
 						/>
 					</div>
 					{state.errors?.email && (
-						<p id='email-error' role='alert' className='text-sm text-red-400 mt-1'>{state.errors.email[0]}</p>
+						<p id='email-error' role='alert' className='text-sm text-red-600 mt-1'>
+							{state.errors.email[0]}
+						</p>
 					)}
 				</div>
 
@@ -186,11 +191,11 @@ function ContactFormInner() {
 					<div className='flex justify-between'>
 						<label
 							htmlFor='phone'
-							className='block text-xs font-medium text-slate-300'
+							className='block text-xs font-medium text-stone-700'
 						>
 							Phone
 						</label>
-						<span className='text-xs text-slate-500'>Optional</span>
+						<span className='text-xs text-stone-400'>Optional</span>
 					</div>
 					<div className='mt-1.5'>
 						<input
@@ -198,7 +203,7 @@ function ContactFormInner() {
 							name='phone'
 							id='phone'
 							autoComplete='tel'
-							className='block w-full rounded-xl border-0 px-3.5 py-2.5 text-slate-100 shadow-sm ring-1 ring-inset ring-white/[0.1] placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm bg-slate-950/60 focus:bg-slate-950 transition-colors'
+							className={inputClasses}
 						/>
 					</div>
 				</div>
@@ -206,7 +211,7 @@ function ContactFormInner() {
 				<div className='sm:col-span-2'>
 					<label
 						htmlFor='subject'
-						className='block text-xs font-medium text-slate-300'
+						className='block text-xs font-medium text-stone-700'
 					>
 						Subject
 					</label>
@@ -220,11 +225,11 @@ function ContactFormInner() {
 							required
 							aria-invalid={!!state.errors?.subject}
 							aria-describedby={state.errors?.subject ? 'subject-error' : undefined}
-							className='block w-full rounded-xl border-0 px-3.5 py-2.5 text-slate-100 shadow-sm ring-1 ring-inset ring-white/[0.1] placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm bg-slate-950/60 focus:bg-slate-950 transition-colors'
+							className={inputClasses}
 						/>
 					</div>
 					{state.errors?.subject && (
-						<p id='subject-error' role='alert' className='text-sm text-red-400 mt-1'>
+						<p id='subject-error' role='alert' className='text-sm text-red-600 mt-1'>
 							{state.errors.subject[0]}
 						</p>
 					)}
@@ -234,11 +239,11 @@ function ContactFormInner() {
 					<div className='flex justify-between'>
 						<label
 							htmlFor='message'
-							className='block text-xs font-medium text-slate-300'
+							className='block text-xs font-medium text-stone-700'
 						>
 							Message
 						</label>
-						<span className='text-xs font-mono text-slate-500'>
+						<span className='text-xs font-mono text-stone-500'>
 							{messageLength} / 500
 						</span>
 					</div>
@@ -252,11 +257,11 @@ function ContactFormInner() {
 							onChange={(e) => setMessageLength(e.target.value.length)}
 							aria-invalid={!!state.errors?.message}
 							aria-describedby={state.errors?.message ? 'message-error' : undefined}
-							className='block w-full rounded-xl border-0 px-3.5 py-2.5 text-slate-100 shadow-sm ring-1 ring-inset ring-white/[0.1] placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm bg-slate-950/60 focus:bg-slate-950 transition-colors resize-none'
+							className={`${inputClasses} resize-none`}
 						/>
 					</div>
 					{state.errors?.message && (
-						<p id='message-error' role='alert' className='text-sm text-red-400 mt-1'>
+						<p id='message-error' role='alert' className='text-sm text-red-600 mt-1'>
 							{state.errors.message[0]}
 						</p>
 					)}
@@ -278,17 +283,17 @@ function ContactFormInner() {
 								initial={{ opacity: 0, height: 0 }}
 								animate={{ opacity: 1, height: 'auto' }}
 								exit={{ opacity: 0, height: 0 }}
-								className='rounded-md bg-red-900/20 border border-red-900/50 p-4'
+								className='rounded-xl bg-red-50 border border-red-200 p-4'
 							>
 								<div className='flex'>
 									<div className='shrink-0'>
 										<XCircleIcon
-											className='h-5 w-5 text-red-400'
+											className='h-5 w-5 text-red-600'
 											aria-hidden='true'
 										/>
 									</div>
 									<div className='ml-3'>
-										<p className='text-sm font-medium text-red-400'>
+										<p className='text-sm font-medium text-red-800'>
 											{state.message}
 										</p>
 									</div>
@@ -298,14 +303,14 @@ function ContactFormInner() {
 					</AnimatePresence>
 				</div>
 
-				<div className='col-span-1 sm:col-span-2 flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-4 pt-2 border-t border-white/[0.06]'>
-					<p className='text-[11px] text-slate-500 leading-relaxed max-w-sm'>
+				<div className='col-span-1 sm:col-span-2 flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-4 pt-4 border-t border-stone-200/80'>
+					<p className='text-[11px] text-stone-500 leading-relaxed max-w-sm'>
 						Protected by reCAPTCHA. Google&apos;s{' '}
 						<a
 							href='https://policies.google.com/privacy'
 							target='_blank'
 							rel='noopener noreferrer'
-							className='text-slate-400 hover:text-indigo-300 underline underline-offset-2 transition-colors'
+							className='text-stone-700 hover:text-teal-800 underline underline-offset-2 transition-colors'
 						>
 							Privacy Policy
 						</a>{' '}
@@ -314,7 +319,7 @@ function ContactFormInner() {
 							href='https://policies.google.com/terms'
 							target='_blank'
 							rel='noopener noreferrer'
-							className='text-slate-400 hover:text-indigo-300 underline underline-offset-2 transition-colors'
+							className='text-stone-700 hover:text-teal-800 underline underline-offset-2 transition-colors'
 						>
 							Terms of Service
 						</a>{' '}
@@ -332,13 +337,13 @@ export default function ContactForm() {
 
 	if (!recaptchaKey) {
 		return (
-			<div className='rounded-md bg-yellow-900/20 border border-yellow-900/50 p-4'>
+			<div className='rounded-xl bg-amber-50 border border-amber-200 p-4'>
 				<div className='flex'>
 					<div className='ml-3'>
-						<h3 className='text-sm font-medium text-yellow-500'>
+						<h3 className='text-sm font-medium text-amber-900'>
 							Configuration Missing
 						</h3>
-						<div className='mt-2 text-sm text-yellow-600'>
+						<div className='mt-2 text-sm text-amber-800'>
 							<p>
 								reCAPTCHA key not found. Contact form is currently disabled.
 							</p>
@@ -353,7 +358,7 @@ export default function ContactForm() {
 		<GoogleReCaptchaProvider reCaptchaKey={recaptchaKey}>
 			<Suspense
 				fallback={
-					<div className='bg-slate-900/80 backdrop-blur-xl rounded-3xl border border-slate-800 p-8 sm:p-10 animate-pulse h-96' />
+					<div className='bg-white rounded-2xl border border-stone-200 p-8 sm:p-10 animate-pulse h-96' />
 				}
 			>
 				<ContactFormInner />

@@ -9,7 +9,6 @@ import {
 } from '@heroicons/react/24/outline'
 import { projectsData, Project } from '../../lib/data'
 import ProjectCard from '../ui/ProjectCard'
-import BackgroundBlobs from '../ui/BackgroundBlobs'
 import { cn } from '../../lib/utils'
 
 const categoryOptions = ['all', 'apps', 'tools'] as const
@@ -66,31 +65,33 @@ export default function ProjectList() {
 		void setSearchQuery('')
 	}
 
-	return (
-		<section className='relative pt-28 sm:pt-36 pb-24 bg-slate-950 overflow-hidden min-h-screen'>
-			{/* Ambient background lighting */}
-			<div className='absolute inset-0 pointer-events-none opacity-40'>
-				<BackgroundBlobs />
-			</div>
+	// When showing all projects with no search query, spotlight the first project (1 + 6 = symmetrical 3-col grid)
+	const showSpotlight = activeCategory === 'all' && !searchQuery.trim() && filteredProjects.length > 3
+	const spotlightProject = showSpotlight ? filteredProjects[0] : null
+	const gridProjects = showSpotlight ? filteredProjects.slice(1) : filteredProjects
 
-			<div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
-				{/* Clean Header */}
-				<div className='text-center max-w-3xl mx-auto mb-10 sm:mb-12 animate-fade-up'>
-					<div className='inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-medium mb-3.5'>
-						Projects & systems
+	return (
+		<section className='w-full pt-28 sm:pt-36 pb-24 bg-[#FAFAF8] min-h-screen'>
+			<div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+				{/* Editorial Header */}
+				<div className='max-w-3xl mb-10 sm:mb-12 animate-fade-up'>
+					<div className='font-mono text-[11px] uppercase tracking-[0.16em] text-teal-800 mb-2.5'>
+						01 / Directory
 					</div>
-					<h1 className='text-3xl sm:text-5xl font-extrabold text-white tracking-tight'>
-						Systems & applications
+					<h1 className='text-3xl sm:text-5xl font-semibold text-stone-950 tracking-[-0.03em] text-balance'>
+						Systems &amp;{' '}
+						<span className='font-serif italic font-normal text-teal-800'>
+							applications
+						</span>
 					</h1>
-					<p className='mt-3.5 text-base sm:text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed'>
+					<p className='mt-3.5 text-base sm:text-lg text-stone-600 max-w-2xl leading-relaxed text-pretty'>
 						Production web platforms, native iOS apps, API middleware services, and database utilities architected for enterprise and client scale.
 					</p>
 				</div>
 
-				{/* Instant Controls Bar: Category Pills + Search Input */}
-				<div className='max-w-4xl mx-auto mb-10 sm:mb-12 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 animate-fade-up animation-delay-100'>
-					{/* Category Pill Switcher */}
-					<div className='inline-flex p-1 rounded-xl bg-slate-900/80 border border-white/[0.08] shadow-sm w-full sm:w-auto shrink-0'>
+				{/* Controls Bar: Category Pills + Search Input */}
+				<div className='mb-10 sm:mb-12 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 animate-fade-up animation-delay-100'>
+					<div className='inline-flex p-1 rounded-xl bg-[#F3F2EE] border border-stone-200/90 w-full sm:w-auto shrink-0'>
 						{categories.map((cat) => {
 							const isActive = activeCategory === cat.id
 							return (
@@ -101,18 +102,18 @@ export default function ProjectList() {
 									className={cn(
 										'relative flex-1 sm:flex-initial justify-center whitespace-nowrap px-3.5 py-1.5 text-xs sm:text-sm font-medium rounded-lg transition-colors duration-200 cursor-pointer flex items-center gap-1.5 active:scale-[0.98]',
 										isActive
-											? 'bg-indigo-600 text-white shadow-sm shadow-indigo-600/30'
-											: 'text-slate-400 hover:text-slate-200'
+											? 'bg-stone-950 text-white shadow-sm'
+											: 'text-stone-600 hover:text-stone-950'
 									)}
 								>
-									<span className='relative z-10 sm:hidden'>{cat.shortLabel}</span>
-									<span className='relative z-10 hidden sm:inline'>{cat.label}</span>
+									<span className='sm:hidden'>{cat.shortLabel}</span>
+									<span className='hidden sm:inline'>{cat.label}</span>
 									<span
 										className={cn(
-											'relative z-10 text-[11px] font-mono px-1.5 py-0.5 rounded-md transition-colors leading-none',
+											'text-[11px] font-mono px-1.5 py-0.5 rounded-md transition-colors leading-none',
 											isActive
-												? 'bg-indigo-700/70 text-white'
-												: 'bg-slate-800 text-slate-400'
+												? 'bg-stone-800 text-stone-200'
+												: 'bg-white text-stone-500 border border-stone-200/80'
 										)}
 									>
 										{cat.count}
@@ -122,22 +123,21 @@ export default function ProjectList() {
 						})}
 					</div>
 
-					{/* Instant Search Bar */}
-					<div className='relative w-full sm:flex-1'>
-						<MagnifyingGlassIcon className='pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400' />
+					<div className='relative w-full sm:max-w-md sm:ml-auto'>
+						<MagnifyingGlassIcon className='pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400' />
 						<input
 							type='text'
 							value={searchQuery}
 							onChange={(e) => setSearchQuery(e.target.value)}
 							placeholder='Search projects or tech...'
 							aria-label='Search projects or technologies'
-							className='w-full pl-9 pr-9 py-2 rounded-xl bg-slate-900/80 border border-white/[0.08] text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-indigo-500/60 focus:ring-1 focus:ring-indigo-500/40 transition-colors'
+							className='w-full pl-9 pr-9 py-2 rounded-xl bg-white border border-stone-200/90 text-sm text-stone-950 placeholder:text-stone-400 focus:outline-none focus:border-teal-700 focus:ring-1 focus:ring-teal-700 transition-colors'
 						/>
 						{searchQuery && (
 							<button
 								type='button'
 								onClick={() => setSearchQuery('')}
-								className='absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white p-1 rounded-md'
+								className='absolute right-2.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-950 p-1 rounded-md'
 								aria-label='Clear search'
 							>
 								<XMarkIcon className='w-4 h-4' />
@@ -146,48 +146,58 @@ export default function ProjectList() {
 					</div>
 				</div>
 
-				{/* Results Meta / Quick Status */}
+				{/* Results Meta */}
 				{(searchQuery || activeCategory !== 'all') && (
-					<div className='flex items-center justify-between max-w-7xl mx-auto mb-6 text-xs text-slate-400 px-1'>
+					<div className='flex items-center justify-between mb-6 text-xs text-stone-500 px-1'>
 						<span>
-							Showing <strong className='text-white'>{filteredProjects.length}</strong> of{' '}
-							{projectsData.length} projects
+							Showing <strong className='text-stone-950 font-mono'>{filteredProjects.length}</strong> of{' '}
+							<span className='font-mono'>{projectsData.length}</span> projects
 						</span>
 						<button
 							type='button'
 							onClick={clearFilters}
-							className='text-indigo-400 hover:text-indigo-300 transition-colors font-medium cursor-pointer'
+							className='text-teal-800 hover:text-stone-950 transition-colors font-medium cursor-pointer'
 						>
 							Reset filters
 						</button>
 					</div>
 				)}
 
-				{/* Project Cards Grid / Empty State */}
+				{/* Project Cards */}
 				{filteredProjects.length > 0 ? (
-					<div className='grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
-						{filteredProjects.map((project: Project, idx: number) => (
+					<div className='space-y-7'>
+						{spotlightProject && (
 							<ProjectCard
-								key={project.title}
-								project={project}
-								index={idx}
-								priorityImage={idx === 0}
+								project={spotlightProject}
+								index={0}
+								variant='spotlight'
+								priorityImage
 							/>
-						))}
+						)}
+						<div className='grid gap-6 md:grid-cols-2 lg:grid-cols-3'>
+							{gridProjects.map((project: Project, idx: number) => (
+								<ProjectCard
+									key={project.title}
+									project={project}
+									index={idx}
+									priorityImage={!spotlightProject && idx === 0}
+								/>
+							))}
+						</div>
 					</div>
 				) : (
-					<div className='rounded-2xl border border-dashed border-white/[0.1] bg-slate-900/40 p-12 text-center max-w-lg mx-auto'>
-						<div className='w-12 h-12 rounded-xl bg-slate-800/80 border border-white/[0.06] flex items-center justify-center mx-auto mb-4 text-slate-400'>
-							<FunnelIcon className='w-6 h-6 text-indigo-400' />
+					<div className='rounded-2xl border border-dashed border-stone-300 bg-white p-12 text-center max-w-lg mx-auto'>
+						<div className='w-12 h-12 rounded-xl bg-[#F3F2EE] border border-stone-200 flex items-center justify-center mx-auto mb-4 text-teal-800'>
+							<FunnelIcon className='w-6 h-6' />
 						</div>
-						<h3 className='text-base font-semibold text-white mb-1.5'>No matching projects</h3>
-						<p className='text-sm text-slate-400 mb-6'>
+						<h3 className='text-base font-semibold text-stone-950 mb-1.5'>No matching projects</h3>
+						<p className='text-sm text-stone-600 mb-6'>
 							No projects found matching &ldquo;{searchQuery}&rdquo;. Try another term or reset your filters.
 						</p>
 						<button
 							type='button'
 							onClick={clearFilters}
-							className='px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold active:scale-[0.98] transition-colors shadow-md shadow-indigo-600/20'
+							className='px-4 py-2 rounded-xl bg-stone-950 hover:bg-stone-800 text-white text-xs font-medium active:scale-[0.98] transition-colors'
 						>
 							Reset filters
 						</button>

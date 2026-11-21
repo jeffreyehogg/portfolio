@@ -2,24 +2,27 @@ import Link from 'next/link'
 
 export default function NotFound() {
 	return (
-		<main className='grow flex flex-col justify-center max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 bg-slate-950'>
+		<main className='grow flex flex-col justify-center max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 bg-[#FAFAF8]'>
 			<div className='py-36'>
 				<div className='text-center'>
-					<p className='text-sm font-semibold text-indigo-400 uppercase tracking-wide'>
-						404 error
+					<p className='font-mono text-xs uppercase tracking-[0.16em] text-teal-800'>
+						404 / Not found
 					</p>
-					<h1 className='mt-2 text-4xl font-extrabold text-white tracking-tight sm:text-5xl'>
-						Wow, you found a page that doesn&apos;t exist!
+					<h1 className='mt-3 text-4xl font-semibold text-stone-950 tracking-[-0.03em] sm:text-5xl'>
+						This page doesn&apos;t{' '}
+						<span className='font-serif italic font-normal text-teal-800'>
+							exist.
+						</span>
 					</h1>
-					<p className='mt-2 text-base text-slate-400'>
-						How did you even get here? I&apos;m impressed.
+					<p className='mt-3 text-base text-stone-600'>
+						How did you even get here? Let&apos;s get you back on track.
 					</p>
-					<div className='mt-6'>
+					<div className='mt-7'>
 						<Link
 							href='/'
-							className='text-base font-medium text-indigo-400 hover:text-indigo-300 transition-colors'
+							className='inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-stone-950 hover:bg-stone-800 text-white text-sm font-medium transition-colors'
 						>
-							Go back home<span aria-hidden='true'> &rarr;</span>
+							Go back home <span aria-hidden='true'>&rarr;</span>
 						</Link>
 					</div>
 				</div>

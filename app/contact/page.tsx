@@ -1,36 +1,34 @@
-import type { Metadata } from "next";
-import ContactForm from "../../components/forms/ContactForm";
-import BackgroundBlobs from "../../components/ui/BackgroundBlobs";
+import type { Metadata } from 'next'
+import ContactForm from '../../components/forms/ContactForm'
 
 export const metadata: Metadata = {
-  title: "Contact",
-  description: "Get in touch with Jeff Hogg for full-stack engineering, DevOps pipelines, and systems architecture consultations.",
-  alternates: { canonical: '/contact' },
-};
+	title: 'Contact',
+	description:
+		'Get in touch with Jeff Hogg for full-stack engineering, DevOps pipelines, and systems architecture consultations.',
+	alternates: { canonical: '/contact' },
+}
 
 export default function Contact() {
-  return (
-    <div className="w-full min-h-screen bg-slate-950 relative overflow-x-clip pt-28 sm:pt-36 pb-20 px-4 sm:px-6 lg:px-8">
-      {/* Background Blobs with reduced opacity for dark theme */}
-      <div className="absolute inset-0 pointer-events-none opacity-25">
-        <BackgroundBlobs />
-      </div>
+	return (
+		<div className='w-full min-h-screen bg-[#FAFAF8] pt-28 sm:pt-36 pb-20 px-4 sm:px-6 lg:px-8'>
+			<div className='max-w-3xl mx-auto'>
+				<div className='mb-10 sm:mb-12 animate-fade-up'>
+					<div className='font-mono text-[11px] uppercase tracking-[0.16em] text-teal-800 mb-2.5'>
+						01 / Contact
+					</div>
+					<h1 className='text-3xl font-semibold text-stone-950 sm:text-5xl tracking-[-0.03em] text-balance'>
+						Let&apos;s build{' '}
+						<span className='font-serif italic font-normal text-teal-800'>
+							together.
+						</span>
+					</h1>
+					<p className='mt-3.5 text-base sm:text-lg text-stone-600 max-w-xl leading-relaxed text-pretty'>
+						Have a systems architecture challenge, DevOps pipeline to automate, or custom full-stack application to build? Send a message below.
+					</p>
+				</div>
 
-      <div className="max-w-3xl mx-auto relative z-10">
-        <div className="text-center mb-10 sm:mb-12 animate-fade-up">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-medium mb-3.5">
-            Contact &amp; inquiries
-          </div>
-          <h1 className="text-3xl font-extrabold text-white sm:text-5xl tracking-tight text-balance">
-            Let&apos;s build together
-          </h1>
-          <p className="mt-3.5 text-base sm:text-lg text-slate-400 max-w-xl mx-auto leading-relaxed text-pretty">
-            Have a systems architecture challenge, DevOps pipeline to automate, or custom full-stack application to build? Send a message below.
-          </p>
-        </div>
-
-        <ContactForm />
-      </div>
-    </div>
-  );
+				<ContactForm />
+			</div>
+		</div>
+	)
 }

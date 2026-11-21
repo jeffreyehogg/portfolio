@@ -2,10 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import {
-	EnvelopeIcon,
-	ArrowDownTrayIcon,
-} from '@heroicons/react/24/outline'
+import { EnvelopeIcon, ArrowDownTrayIcon } from '@heroicons/react/24/outline'
 import { githubUrl, linkedInUrl, twitterUrl } from '../../lib/data'
 
 const navigation = {
@@ -19,7 +16,7 @@ const navigation = {
 		{
 			name: 'LinkedIn',
 			href: linkedInUrl,
-			icon: (props: any) => (
+			icon: (props: React.SVGProps<SVGSVGElement>) => (
 				<svg fill='currentColor' viewBox='0 0 24 24' {...props}>
 					<path
 						fillRule='evenodd'
@@ -32,7 +29,7 @@ const navigation = {
 		{
 			name: 'GitHub',
 			href: githubUrl,
-			icon: (props: any) => (
+			icon: (props: React.SVGProps<SVGSVGElement>) => (
 				<svg fill='currentColor' viewBox='0 0 24 24' {...props}>
 					<path
 						fillRule='evenodd'
@@ -45,7 +42,7 @@ const navigation = {
 		{
 			name: 'X',
 			href: twitterUrl,
-			icon: (props: any) => (
+			icon: (props: React.SVGProps<SVGSVGElement>) => (
 				<svg fill='currentColor' viewBox='0 0 24 24' {...props}>
 					<path d='M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z' />
 				</svg>
@@ -59,36 +56,31 @@ export default function Footer() {
 	const isContactPage = pathname === '/contact'
 
 	return (
-		<footer className='bg-slate-950 border-t border-white/[0.06] relative z-10'>
-			<div className='max-w-7xl mx-auto py-12 sm:py-16 px-4 sm:px-6 lg:px-8'>
-				{/* Sleek Pre-Footer CTA Card (hidden when already on /contact) */}
+		<footer className='bg-[#F3F2EE] border-t border-stone-200/90 relative z-10'>
+			<div className='max-w-7xl mx-auto py-14 sm:py-16 px-4 sm:px-6 lg:px-8'>
+				{/* Editorial Pre-Footer CTA Card (hidden on /contact) */}
 				{!isContactPage && (
-					<div className='mb-14 relative overflow-hidden rounded-2xl bg-slate-900/70 border border-white/[0.08] p-6 sm:p-10 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6'>
-						<div
-							className='pointer-events-none absolute -top-24 -right-24 h-64 w-64 rounded-full opacity-40'
-							style={{
-								background:
-									'radial-gradient(circle, rgba(99, 102, 241, 0.22), transparent 70%)',
-							}}
-							aria-hidden='true'
-						/>
-						<div className='max-w-2xl relative z-10'>
-							<div className='inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-950/80 border border-white/[0.08] text-xs font-medium text-slate-300 mb-3.5'>
-								<span className='h-2 w-2 rounded-full bg-emerald-400 motion-safe:animate-pulse shrink-0' />
+					<div className='mb-14 rounded-2xl bg-white border border-stone-200/90 p-7 sm:p-10 shadow-[0_1px_2px_rgba(17,17,16,0.04)] flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6'>
+						<div className='max-w-2xl'>
+							<div className='flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.14em] text-teal-800 mb-3'>
+								<span className='h-1.5 w-1.5 rounded-full bg-emerald-600 motion-safe:animate-pulse shrink-0' />
 								<span>Open to engineering &amp; architecture discussions</span>
 							</div>
-							<h2 className='text-2xl sm:text-3xl font-extrabold text-white tracking-tight text-balance'>
-								Ready to modernize legacy systems or build high-craft software?
+							<h2 className='text-2xl sm:text-3xl font-semibold text-stone-950 tracking-[-0.025em] text-balance'>
+								Ready to modernize legacy systems or build{' '}
+								<span className='font-serif italic font-normal text-teal-800'>
+									high-craft software?
+								</span>
 							</h2>
-							<p className='mt-2.5 text-sm sm:text-base text-slate-400 font-light text-pretty'>
-								Have a systems architecture challenge, CI/CD pipeline to automate, or custom web application in mind? Send a message directly through my secure contact form.
+							<p className='mt-2.5 text-sm sm:text-base text-stone-600 leading-relaxed text-pretty'>
+								Have a systems architecture challenge, CI/CD pipeline to automate, or custom web application in mind? Send a message directly through my contact form.
 							</p>
 						</div>
 
-						<div className='flex flex-wrap items-center gap-3 shrink-0 relative z-10'>
+						<div className='flex flex-wrap items-center gap-3 shrink-0'>
 							<Link
 								href='/contact'
-								className='inline-flex items-center gap-2 px-5 py-2.5 sm:py-3 rounded-xl text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-500 shadow-[0_0_20px_rgba(79,70,229,0.3)] transition-colors duration-200 active:scale-[0.98]'
+								className='inline-flex items-center gap-2 px-5 py-2.5 sm:py-3 rounded-xl text-sm font-medium text-white bg-stone-950 hover:bg-stone-800 transition-colors duration-200 active:scale-[0.98]'
 							>
 								<EnvelopeIcon className='w-4 h-4' />
 								Send a message
@@ -97,9 +89,9 @@ export default function Footer() {
 								href='/Jeff_Hogg_Resume.pdf'
 								target='_blank'
 								rel='noopener noreferrer'
-								className='inline-flex items-center gap-2 px-4 py-2.5 sm:py-3 rounded-xl text-sm font-medium text-slate-300 bg-slate-950/70 hover:bg-slate-800/80 hover:text-white border border-white/[0.08] transition-colors duration-200 active:scale-[0.98]'
+								className='inline-flex items-center gap-2 px-4 py-2.5 sm:py-3 rounded-xl text-sm font-medium text-stone-700 bg-[#FAFAF8] hover:bg-stone-100 hover:text-stone-950 border border-stone-200/90 transition-colors duration-200 active:scale-[0.98]'
 							>
-								<ArrowDownTrayIcon className='w-4 h-4 text-slate-400' />
+								<ArrowDownTrayIcon className='w-4 h-4 text-stone-500' />
 								Resume PDF
 							</a>
 						</div>
@@ -108,24 +100,22 @@ export default function Footer() {
 
 				{/* Bottom Footer Bar */}
 				<div className='flex flex-col sm:flex-row items-center justify-between gap-6'>
-					{/* Navigation Links */}
 					<nav
-						className='flex flex-wrap justify-center sm:justify-start gap-x-6 gap-y-2'
+						className='flex flex-wrap justify-center sm:justify-start gap-x-7 gap-y-2'
 						aria-label='Footer'
 					>
 						{navigation.main.map((item) => (
 							<Link
 								key={item.name}
 								href={item.href}
-								className='text-sm text-slate-400 hover:text-white transition-colors duration-200 font-medium'
+								className='text-sm text-stone-600 hover:text-stone-950 transition-colors duration-200 font-medium'
 							>
 								{item.name}
 							</Link>
 						))}
 					</nav>
 
-					{/* Social Icons */}
-					<div className='flex items-center gap-3'>
+					<div className='flex items-center gap-2.5'>
 						{navigation.social.map((item) => (
 							<a
 								key={item.name}
@@ -133,7 +123,7 @@ export default function Footer() {
 								aria-label={item.name}
 								target='_blank'
 								rel='noreferrer'
-								className='p-2.5 rounded-full bg-slate-900/80 border border-white/[0.08] text-slate-400 hover:text-white hover:border-indigo-500/40 hover:bg-slate-800/80 transition-colors duration-200'
+								className='p-2.5 rounded-full bg-white border border-stone-200/90 text-stone-600 hover:text-stone-950 hover:border-stone-400 transition-colors duration-200'
 							>
 								<item.icon className='h-4 w-4' aria-hidden='true' />
 							</a>
@@ -142,9 +132,11 @@ export default function Footer() {
 				</div>
 
 				{/* Copyright */}
-				<div className='mt-8 border-t border-white/[0.06] pt-6 pb-10 sm:pb-0 sm:pr-14 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500'>
+				<div className='mt-8 border-t border-stone-200/90 pt-6 pb-10 sm:pb-0 sm:pr-14 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-stone-500'>
 					<p>&copy; {new Date().getFullYear()} Jeff Hogg. All rights reserved.</p>
-					<p>Built with Next.js, TypeScript &amp; Tailwind CSS.</p>
+					<p className='font-mono text-[11px] text-stone-500'>
+						Built with Next.js, TypeScript &amp; Tailwind CSS.
+					</p>
 				</div>
 			</div>
 		</footer>

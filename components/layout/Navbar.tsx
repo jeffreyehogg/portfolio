@@ -27,7 +27,7 @@ export default function Navbar() {
 	const [commandPaletteOpen, setCommandPaletteOpen] = useState(false)
 
 	useEffect(() => {
-		const onScroll = () => setScrolled(window.scrollY > 30)
+		const onScroll = () => setScrolled(window.scrollY > 24)
 		window.addEventListener('scroll', onScroll, { passive: true })
 		return () => window.removeEventListener('scroll', onScroll)
 	}, [])
@@ -45,29 +45,28 @@ export default function Navbar() {
 
 	return (
 		<>
-			<div className='fixed top-0 inset-x-0 z-50 flex justify-center pointer-events-none p-4 sm:p-5'>
+			<div className='fixed top-0 inset-x-0 z-50 flex justify-center pointer-events-none p-3.5 sm:p-5'>
 				<Disclosure as='nav' className='pointer-events-auto w-full max-w-4xl'>
 					{({ open }) => (
 						<div
 							className={cn(
-								'mx-auto transition-[background-color,border-color,box-shadow] duration-200 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]',
+								'mx-auto transition-[background-color,border-color,box-shadow] duration-200 border px-3 sm:px-5 py-2',
 								open ? 'rounded-2xl' : 'rounded-full',
 								scrolled || open
-									? 'bg-slate-900/95 backdrop-blur-xl border-white/[0.12] shadow-2xl shadow-black/50'
-									: 'bg-slate-900/75 backdrop-blur-md border-white/[0.08] shadow-lg shadow-black/20',
-								'border px-3 sm:px-5 py-2'
+									? 'bg-white/95 backdrop-blur-xl border-stone-200/95 shadow-[0_8px_30px_-12px_rgba(17,17,16,0.14)]'
+									: 'bg-[#FAFAF8]/90 backdrop-blur-md border-stone-200/80 shadow-[0_2px_10px_-4px_rgba(17,17,16,0.06)]'
 							)}
 						>
 							<div className='flex items-center justify-between h-10 sm:h-11'>
 								{/* Left: Brand Identity */}
 								<Link
 									href='/'
-									className='flex items-center gap-2.5 text-white hover:text-indigo-300 transition-colors group'
+									className='flex items-center gap-2.5 text-stone-950 hover:text-teal-800 transition-colors group'
 								>
-									<div className='h-8 w-8 overflow-hidden rounded-full border border-slate-700/80 group-hover:border-indigo-500/50 transition-colors flex-shrink-0'>
+									<div className='h-8 w-8 overflow-hidden rounded-full border border-stone-200 group-hover:border-stone-400 transition-colors flex-shrink-0'>
 										<Avatar />
 									</div>
-									<span className='font-bold text-sm sm:text-base tracking-tight hidden sm:inline'>
+									<span className='font-semibold text-sm sm:text-[15px] tracking-tight hidden sm:inline'>
 										Jeff Hogg
 									</span>
 								</Link>
@@ -87,12 +86,12 @@ export default function Navbar() {
 												className={cn(
 													'relative px-4 py-1.5 text-xs sm:text-sm font-medium rounded-full transition-colors duration-200',
 													isCurrent
-														? 'text-white bg-indigo-600 shadow-sm'
-														: 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+														? 'text-white bg-stone-950 shadow-sm'
+														: 'text-stone-600 hover:text-stone-950 hover:bg-stone-100'
 												)}
 												aria-current={isCurrent ? 'page' : undefined}
 											>
-												<span className='relative z-10'>{item.name}</span>
+												{item.name}
 											</Link>
 										)
 									})}
@@ -100,29 +99,28 @@ export default function Navbar() {
 
 								{/* Right: Quick Search, Socials & Mobile Toggle */}
 								<div className='flex items-center gap-1.5 sm:gap-2'>
-									{/* Search / Command Palette Trigger */}
 									<button
 										type='button'
 										onClick={() => setCommandPaletteOpen(true)}
-										className='flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-xs text-slate-300 bg-slate-800/70 hover:text-white hover:bg-slate-800 border border-white/[0.08] hover:border-indigo-500/40 active:scale-[0.98] transition-colors cursor-pointer'
+										className='flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-xs text-stone-600 bg-stone-100/90 hover:text-stone-950 hover:bg-stone-200/70 border border-stone-200/90 active:scale-[0.98] transition-colors cursor-pointer'
 										aria-label='Quick Search (Press ⌘K)'
 										title='Quick Search (⌘K)'
 									>
-										<MagnifyingGlassIcon className='w-3.5 h-3.5 text-indigo-400' />
-										<span className='hidden md:inline'>Search</span>
-										<kbd className='px-1.5 py-0.5 text-[10px] font-mono font-medium rounded bg-slate-900/80 text-slate-300 border border-white/[0.08]'>
+										<MagnifyingGlassIcon className='w-3.5 h-3.5 text-stone-500' />
+										<span className='hidden md:inline font-medium'>Search</span>
+										<kbd className='px-1.5 py-0.5 text-[10px] font-mono font-medium rounded bg-white text-stone-600 border border-stone-200'>
 											⌘K
 										</kbd>
 									</button>
 
 									{/* Social Icons for Desktop */}
-									<div className='hidden sm:flex items-center gap-1 border-l border-slate-800/80 pl-2 ml-1'>
+									<div className='hidden sm:flex items-center gap-0.5 border-l border-stone-200 pl-2 ml-1'>
 										<a
 											href={githubUrl}
 											target='_blank'
 											rel='noreferrer'
 											aria-label='GitHub Profile'
-											className='p-1.5 rounded-full text-slate-400 hover:text-white hover:bg-white/10 transition-colors'
+											className='p-1.5 rounded-full text-stone-500 hover:text-stone-950 hover:bg-stone-100 transition-colors'
 										>
 											<svg className='h-4 w-4' fill='currentColor' viewBox='0 0 24 24'>
 												<path
@@ -137,7 +135,7 @@ export default function Navbar() {
 											target='_blank'
 											rel='noreferrer'
 											aria-label='LinkedIn Profile'
-											className='p-1.5 rounded-full text-slate-400 hover:text-white hover:bg-white/10 transition-colors'
+											className='p-1.5 rounded-full text-stone-500 hover:text-stone-950 hover:bg-stone-100 transition-colors'
 										>
 											<svg className='h-4 w-4' fill='currentColor' viewBox='0 0 24 24'>
 												<path
@@ -151,7 +149,7 @@ export default function Navbar() {
 
 									{/* Mobile Menu Button */}
 									<div className='flex md:hidden'>
-										<DisclosureButton className='inline-flex items-center justify-center p-1.5 rounded-full text-slate-400 hover:text-white hover:bg-white/10 focus:outline-none'>
+										<DisclosureButton className='inline-flex items-center justify-center p-1.5 rounded-full text-stone-600 hover:text-stone-950 hover:bg-stone-100 focus:outline-none'>
 											<span className='sr-only'>Open main menu</span>
 											{open ? (
 												<XMarkIcon className='block h-5 w-5' aria-hidden='true' />
@@ -164,7 +162,7 @@ export default function Navbar() {
 							</div>
 
 							{/* Mobile Menu Panel */}
-							<DisclosurePanel className='md:hidden border-t border-slate-800/80 mt-3 pt-3'>
+							<DisclosurePanel className='md:hidden border-t border-stone-200/80 mt-3 pt-3'>
 								<div className='space-y-1 pb-2'>
 									{navigation.map((item) => {
 										const isCurrent =
@@ -179,8 +177,8 @@ export default function Navbar() {
 												href={item.href}
 												className={cn(
 													isCurrent
-														? 'bg-indigo-600 text-white'
-														: 'text-slate-300 hover:bg-slate-800 hover:text-white',
+														? 'bg-stone-950 text-white'
+														: 'text-stone-700 hover:bg-stone-100 hover:text-stone-950',
 													'block rounded-xl px-4 py-2 text-sm font-medium transition-colors'
 												)}
 												aria-current={isCurrent ? 'page' : undefined}
@@ -190,12 +188,12 @@ export default function Navbar() {
 										)
 									})}
 								</div>
-								<div className='flex items-center gap-3 pt-3 border-t border-slate-800/80 px-4'>
+								<div className='flex items-center gap-4 pt-3 border-t border-stone-200/80 px-4'>
 									<a
 										href={githubUrl}
 										target='_blank'
 										rel='noreferrer'
-										className='text-xs text-slate-400 hover:text-white flex items-center gap-1.5 py-1'
+										className='text-xs font-medium text-stone-600 hover:text-stone-950 flex items-center gap-1 py-1'
 									>
 										GitHub ↗
 									</a>
@@ -203,7 +201,7 @@ export default function Navbar() {
 										href={linkedInUrl}
 										target='_blank'
 										rel='noreferrer'
-										className='text-xs text-slate-400 hover:text-white flex items-center gap-1.5 py-1'
+										className='text-xs font-medium text-stone-600 hover:text-stone-950 flex items-center gap-1 py-1'
 									>
 										LinkedIn ↗
 									</a>
@@ -215,7 +213,10 @@ export default function Navbar() {
 			</div>
 
 			{commandPaletteOpen && (
-				<CommandPalette isOpen={commandPaletteOpen} setIsOpen={setCommandPaletteOpen} />
+				<CommandPalette
+					isOpen={commandPaletteOpen}
+					setIsOpen={setCommandPaletteOpen}
+				/>
 			)}
 		</>
 	)

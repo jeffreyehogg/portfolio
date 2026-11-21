@@ -211,7 +211,7 @@ export default function CommandPalette({ isOpen, setIsOpen }: CommandPaletteProp
 					leaveFrom='opacity-100'
 					leaveTo='opacity-0'
 				>
-					<div className='fixed inset-0 bg-slate-950/80 backdrop-blur-md transition-opacity' />
+					<div className='fixed inset-0 bg-stone-950/45 backdrop-blur-sm transition-opacity' />
 				</TransitionChild>
 
 				<div className='fixed inset-0 z-10 overflow-y-auto p-4 sm:p-6 md:p-20 flex justify-center items-start pt-20 sm:pt-24'>
@@ -224,22 +224,27 @@ export default function CommandPalette({ isOpen, setIsOpen }: CommandPaletteProp
 						leaveFrom='opacity-100 scale-100'
 						leaveTo='opacity-0 scale-95'
 					>
-						<DialogPanel className='w-full max-w-xl transform divide-y divide-white/[0.08] overflow-hidden rounded-2xl bg-slate-900/95 border border-white/[0.1] shadow-2xl shadow-black/70 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] transition-all'>
+						<DialogPanel className='w-full max-w-xl transform divide-y divide-stone-200 overflow-hidden rounded-2xl bg-white border border-stone-200/90 shadow-2xl shadow-stone-950/15 transition-all'>
 							<Combobox onChange={handleSelect}>
 								<div className='relative'>
 									<MagnifyingGlassIcon
-										className='pointer-events-none absolute left-4 top-3.5 h-5 w-5 text-indigo-400'
+										className='pointer-events-none absolute left-4 top-3.5 h-5 w-5 text-stone-400'
 										aria-hidden='true'
 									/>
 									<ComboboxInput
-										className='h-12 w-full border-0 bg-transparent pl-11 pr-14 text-white placeholder:text-slate-400 focus:ring-0 sm:text-sm focus:outline-none'
+										className='h-12 w-full border-0 bg-transparent pl-11 pr-14 text-stone-950 placeholder:text-stone-400 focus:ring-0 sm:text-sm focus:outline-none'
 										placeholder='Search projects, tech (MCP, WASM, Docker), or actions...'
 										onChange={(event) => setQuery(event.target.value)}
 										autoFocus
 									/>
-									<kbd className='absolute right-3.5 top-3.5 hidden sm:inline-flex items-center gap-0.5 px-2 py-0.5 text-[10px] font-mono text-slate-400 bg-slate-800/80 rounded border border-white/[0.08]'>
+									<button
+										type='button'
+										onClick={() => setIsOpen(false)}
+										aria-label='Close command palette'
+										className='absolute right-3.5 top-3 hidden sm:inline-flex items-center gap-0.5 px-2 py-0.5 text-[10px] font-mono text-stone-500 hover:text-stone-950 bg-stone-100 hover:bg-stone-200/80 rounded border border-stone-200 transition-colors cursor-pointer'
+									>
 										ESC
-									</kbd>
+									</button>
 								</div>
 
 								{filteredItems.length > 0 ? (
@@ -249,7 +254,7 @@ export default function CommandPalette({ isOpen, setIsOpen }: CommandPaletteProp
 									>
 										{groupedItems.map((group) => (
 											<div key={group.category} className='space-y-0.5'>
-												<div className='px-3 pt-1.5 pb-1 text-[10px] font-mono font-semibold uppercase tracking-wider text-slate-500'>
+												<div className='px-3 pt-1.5 pb-1 text-[10px] font-mono font-semibold uppercase tracking-wider text-stone-400'>
 													{group.category}
 												</div>
 												{group.items.map((item) => (
@@ -259,8 +264,8 @@ export default function CommandPalette({ isOpen, setIsOpen }: CommandPaletteProp
 														className={({ focus }) =>
 															`group flex cursor-pointer select-none items-center justify-between gap-3 rounded-xl px-3 py-2 text-sm transition-colors ${
 																focus
-																	? 'bg-indigo-600 text-white shadow-sm shadow-indigo-600/20'
-																	: 'text-slate-200 hover:text-white'
+																	? 'bg-stone-950 text-white'
+																	: 'text-stone-800 hover:text-stone-950'
 															}`
 														}
 													>
@@ -269,7 +274,7 @@ export default function CommandPalette({ isOpen, setIsOpen }: CommandPaletteProp
 																<div className='flex items-center gap-3 min-w-0'>
 																	<item.icon
 																		className={`h-4 w-4 flex-shrink-0 ${
-																			focus ? 'text-white' : 'text-indigo-400'
+																			focus ? 'text-white' : 'text-teal-700'
 																		}`}
 																		aria-hidden='true'
 																	/>
@@ -280,7 +285,7 @@ export default function CommandPalette({ isOpen, setIsOpen }: CommandPaletteProp
 																		{item.subtitle && (
 																			<span
 																				className={`text-xs font-normal truncate leading-snug ${
-																					focus ? 'text-indigo-100' : 'text-slate-400'
+																					focus ? 'text-stone-300' : 'text-stone-500'
 																				}`}
 																			>
 																				{item.subtitle}
@@ -292,8 +297,8 @@ export default function CommandPalette({ isOpen, setIsOpen }: CommandPaletteProp
 																	<kbd
 																		className={`px-1.5 py-0.5 text-[10px] font-mono rounded shrink-0 ${
 																			focus
-																				? 'bg-indigo-700 text-white'
-																				: 'bg-slate-800/80 text-slate-400 border border-white/[0.08]'
+																				? 'bg-stone-800 text-stone-200 border border-stone-700'
+																				: 'bg-stone-100 text-stone-500 border border-stone-200'
 																		}`}
 																	>
 																		{item.shortcut}
@@ -307,23 +312,23 @@ export default function CommandPalette({ isOpen, setIsOpen }: CommandPaletteProp
 										))}
 									</ComboboxOptions>
 								) : (
-									<div className='py-12 px-6 text-center text-sm text-slate-400'>
+									<div className='py-12 px-6 text-center text-sm text-stone-600'>
 										<p>No results found for &ldquo;{query}&rdquo;.</p>
-										<p className='mt-1 text-xs text-slate-500'>
+										<p className='mt-1 text-xs text-stone-400'>
 											Try searching for &ldquo;AutoDBA&rdquo;, &ldquo;WASM&rdquo;, &ldquo;Docker&rdquo;, or &ldquo;resume&rdquo;.
 										</p>
 									</div>
 								)}
 
-								<div className='flex items-center justify-between px-4 py-2.5 text-xs text-slate-400 bg-slate-950/50 border-t border-white/[0.06] font-mono'>
+								<div className='flex items-center justify-between px-4 py-2.5 text-xs text-stone-500 bg-[#FAFAF8] border-t border-stone-200/80 font-mono'>
 									<div className='flex items-center gap-1.5'>
 										<span>Navigate</span>
-										<span className='px-1.5 py-0.5 rounded bg-slate-800 border border-white/[0.08] text-slate-300'>↑</span>
-										<span className='px-1.5 py-0.5 rounded bg-slate-800 border border-white/[0.08] text-slate-300'>↓</span>
+										<span className='px-1.5 py-0.5 rounded bg-white border border-stone-200 text-stone-600'>↑</span>
+										<span className='px-1.5 py-0.5 rounded bg-white border border-stone-200 text-stone-600'>↓</span>
 									</div>
 									<div className='flex items-center gap-1.5'>
 										<span>Open</span>
-										<span className='px-1.5 py-0.5 rounded bg-slate-800 border border-white/[0.08] text-slate-300'>↵</span>
+										<span className='px-1.5 py-0.5 rounded bg-white border border-stone-200 text-stone-600'>↵</span>
 									</div>
 								</div>
 							</Combobox>

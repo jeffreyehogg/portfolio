@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter, JetBrains_Mono } from 'next/font/google'
+import { Inter, Instrument_Serif, JetBrains_Mono } from 'next/font/google'
 import Navbar from '../components/layout/Navbar'
 import Footer from '../components/layout/Footer'
 import ScrollProgress from '../components/ui/ScrollProgress'
@@ -16,6 +16,14 @@ const inter = Inter({
 	variable: '--font-inter',
 })
 
+const instrumentSerif = Instrument_Serif({
+	subsets: ['latin'],
+	weight: '400',
+	style: ['normal', 'italic'],
+	display: 'swap',
+	variable: '--font-serif',
+})
+
 const jetbrainsMono = JetBrains_Mono({
 	subsets: ['latin'],
 	display: 'swap',
@@ -23,7 +31,7 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const viewport: Viewport = {
-	themeColor: '#020617',
+	themeColor: '#FAFAF8',
 	width: 'device-width',
 	initialScale: 1,
 }
@@ -78,11 +86,14 @@ export default function RootLayout({
 	children: React.ReactNode
 }) {
 	return (
-		<html lang='en' className={`${inter.variable} ${jetbrainsMono.variable}`}>
-			<body className='bg-slate-950 font-sans antialiased text-slate-100'>
+		<html
+			lang='en'
+			className={`${inter.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable}`}
+		>
+			<body className='bg-[#FAFAF8] font-sans antialiased text-[#111110]'>
 				<a
 					href='#main-content'
-					className='sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-indigo-600 focus:text-white focus:rounded-lg focus:shadow-lg focus:outline-none'
+					className='sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-stone-950 focus:text-white focus:rounded-lg focus:shadow-lg focus:outline-none'
 				>
 					Skip to main content
 				</a>

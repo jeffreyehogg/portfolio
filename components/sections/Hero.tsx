@@ -1,125 +1,103 @@
 import Link from 'next/link'
 import {
-	ChevronDownIcon,
-	CommandLineIcon,
-	BriefcaseIcon,
-	ServerStackIcon,
-	CircleStackIcon,
-	CodeBracketIcon,
+	ArrowRightIcon,
 	ArrowDownTrayIcon,
 } from '@heroicons/react/24/outline'
 import { profileData } from '../../lib/data'
 
 const metrics = [
-	{ label: 'Software engineering', value: '5+ Years', icon: BriefcaseIcon },
-	{ label: 'Web & native iOS', value: 'TypeScript & Swift', icon: CodeBracketIcon },
-	{ label: 'Automated infrastructure', value: 'Docker & CI/CD', icon: ServerStackIcon },
-	{ label: 'Database administration', value: 'MS SQL & MySQL', icon: CircleStackIcon },
+	{ label: 'Software engineering', value: '5+ Years' },
+	{ label: 'Web & native iOS', value: 'TypeScript & Swift' },
+	{ label: 'Automated infrastructure', value: 'Docker & CI/CD' },
+	{ label: 'Database systems', value: 'MS SQL & MySQL' },
 ]
 
 export default function Hero() {
 	return (
-		<div className='relative min-h-[calc(100svh-3.5rem)] flex items-center justify-center overflow-hidden bg-slate-950 pt-28 pb-14 sm:pb-18'>
-			{/* Grid Background Pattern with soft radial mask */}
+		<section className='relative bg-[#FAFAF8] pt-32 pb-20 sm:pt-40 sm:pb-24 overflow-hidden border-b border-stone-200/80'>
+			{/* Subtle masked architectural paper grid */}
 			<div
-				className='absolute inset-0 bg-grid opacity-35 z-[1]'
+				className='absolute inset-0 bg-grid opacity-70 pointer-events-none'
 				style={{
-					maskImage: 'radial-gradient(ellipse 70% 60% at 50% 40%, #000 35%, transparent 100%)',
+					maskImage: 'radial-gradient(ellipse 80% 70% at 30% 35%, #000 20%, transparent 100%)',
 					WebkitMaskImage:
-						'radial-gradient(ellipse 70% 60% at 50% 40%, #000 35%, transparent 100%)',
+						'radial-gradient(ellipse 80% 70% at 30% 35%, #000 20%, transparent 100%)',
 				}}
 				aria-hidden='true'
 			/>
 
-			{/* GPU-Friendly Ambient Radial Glows (replaces heavy blur-[140px] offscreen textures on mobile) */}
-			<div
-				className='absolute inset-0 z-[2] pointer-events-none'
-				style={{
-					background:
-						'radial-gradient(640px 400px at 50% 30%, rgba(99, 102, 241, 0.16), transparent 70%), radial-gradient(420px 320px at 32% 72%, rgba(6, 182, 212, 0.09), transparent 70%)',
-				}}
-				aria-hidden='true'
-			/>
-
-			{/* Subtle linear gradient overlays */}
-			<div
-				className='absolute inset-0 bg-gradient-to-b from-slate-950/60 via-slate-950/20 to-slate-950 z-[2]'
-				aria-hidden='true'
-			/>
-
-			{/* Main Content — Server-rendered at opacity:1 for instant mobile FCP/LCP */}
-			<div className='relative z-10 px-4 sm:px-6 lg:px-8 text-center max-w-5xl mx-auto'>
-				<div className='animate-fade-up'>
+			<div className='relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+				<div className='max-w-4xl animate-fade-up'>
+					{/* Live Current Role Mono Status */}
 					<Link
 						href='/about#experience'
-						className='inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/80 border border-white/[0.1] hover:border-indigo-400/40 text-xs font-medium text-slate-300 hover:text-white transition-colors mb-6 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]'
+						className='inline-flex items-center gap-2.5 text-xs font-mono text-stone-600 hover:text-stone-950 transition-colors mb-7 group'
 					>
 						<span className='relative flex h-2 w-2 shrink-0'>
-							<span className='motion-safe:animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75' />
-							<span className='relative inline-flex rounded-full h-2 w-2 bg-emerald-400' />
+							<span className='motion-safe:animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75' />
+							<span className='relative inline-flex rounded-full h-2 w-2 bg-emerald-600' />
 						</span>
-						<span>Software Engineer @ TWFG Insurance</span>
-						<span className='text-slate-600 hidden sm:inline'>•</span>
-						<span className='text-slate-400 font-mono text-[11px] hidden sm:inline'>
-							The Woodlands, TX
+						<span className='font-medium text-stone-800 group-hover:text-teal-800 transition-colors'>
+							Software Engineer @ TWFG Insurance
 						</span>
+						<span className='text-stone-300 hidden sm:inline'>/</span>
+						<span className='text-stone-500 hidden sm:inline'>The Woodlands, TX</span>
 					</Link>
 
-					<h1 className='text-4xl font-extrabold tracking-[-0.03em] leading-[1.08] sm:text-5xl lg:text-6xl mb-5 text-white text-balance'>
-						<span className='block mb-1.5 sm:mb-2.5'>Software Engineer</span>
-						<span className='text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 via-cyan-300 to-indigo-400'>
-							DevOps &amp; system architecture
+					{/* Editorial Display Heading */}
+					<h1 className='text-4xl sm:text-6xl lg:text-[4.25rem] font-semibold tracking-[-0.035em] leading-[1.06] text-stone-950 text-balance'>
+						Software Engineer focused on{' '}
+						<span className='font-serif italic font-normal text-teal-800 tracking-[-0.01em]'>
+							DevOps &amp; system architecture.
 						</span>
 					</h1>
 
-					<p className='mt-4 text-base sm:text-lg text-slate-300/90 sm:max-w-2xl mx-auto leading-relaxed font-light text-pretty'>
+					<p className='mt-6 text-base sm:text-xl text-stone-600 max-w-2xl leading-relaxed font-normal text-pretty'>
 						{profileData.headline}
 					</p>
+
+					{/* Action Buttons */}
+					<div className='mt-9 flex flex-wrap gap-3.5 items-center'>
+						<Link
+							href='/portfolio'
+							className='group inline-flex items-center gap-2 px-6 py-3 text-sm sm:text-base font-medium rounded-xl text-white bg-stone-950 hover:bg-stone-800 active:scale-[0.98] transition-colors duration-200 shadow-sm'
+						>
+							Explore projects
+							<ArrowRightIcon className='w-4 h-4 group-hover:translate-x-0.5 transition-transform' />
+						</Link>
+						<a
+							href='/Jeff_Hogg_Resume.pdf'
+							target='_blank'
+							rel='noopener noreferrer'
+							className='group inline-flex items-center gap-2 px-5 py-3 text-sm sm:text-base font-medium rounded-xl text-stone-700 border border-stone-300/90 bg-white hover:bg-stone-100 hover:text-stone-950 active:scale-[0.98] transition-colors duration-200'
+						>
+							<ArrowDownTrayIcon className='w-4 h-4 text-stone-500 group-hover:text-stone-900 transition-colors' />
+							Resume PDF
+						</a>
+					</div>
 				</div>
 
-				{/* Action Buttons */}
-				<div className='mt-8 sm:mt-9 flex flex-wrap gap-3.5 justify-center items-center animate-fade-up animation-delay-100'>
-					<Link
-						href='/portfolio'
-						className='group inline-flex items-center gap-2 px-6 py-2.5 sm:py-3 text-sm sm:text-base font-semibold rounded-xl text-white bg-indigo-600 hover:bg-indigo-500 active:scale-[0.98] transition-colors duration-200 shadow-[0_0_20px_rgba(79,70,229,0.35)] hover:shadow-[0_0_30px_rgba(79,70,229,0.5)]'
-					>
-						<CommandLineIcon className='w-4 h-4' />
-						Explore projects
-					</Link>
-					<a
-						href='/Jeff_Hogg_Resume.pdf'
-						target='_blank'
-						rel='noopener noreferrer'
-						className='group inline-flex items-center gap-2 px-5 py-2.5 sm:py-3 text-sm sm:text-base font-medium rounded-xl text-slate-300 border border-white/[0.08] bg-slate-900/70 hover:bg-slate-800/80 hover:text-white active:scale-[0.98] transition-colors duration-200'
-					>
-						<ArrowDownTrayIcon className='w-4 h-4 text-slate-400 group-hover:text-indigo-400 transition-colors' />
-						Resume PDF
-					</a>
-				</div>
-
-				{/* Metrics Grid */}
-				<div className='mt-12 sm:mt-14 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 max-w-4xl mx-auto animate-fade-up animation-delay-200'>
-					{metrics.map((item) => (
+				{/* Hairline-Divided Editorial Metadata Strip */}
+				<div className='mt-16 sm:mt-20 pt-8 border-t border-stone-200/90 grid grid-cols-2 lg:grid-cols-4 gap-y-6 gap-x-8 animate-fade-up animation-delay-100'>
+					{metrics.map((item, idx) => (
 						<div
 							key={item.label}
-							className='flex flex-col items-center justify-center p-3.5 sm:p-4 rounded-2xl bg-slate-900/65 border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] hover:border-white/[0.16] hover:bg-slate-900/90 text-center transition-colors duration-200 group cursor-default'
+							className={
+								idx > 0
+									? 'lg:border-l lg:border-stone-200/90 lg:pl-8'
+									: undefined
+							}
 						>
-							<item.icon className='w-5 h-5 text-indigo-400 mb-1.5 group-hover:scale-110 group-hover:text-cyan-300 transition-transform duration-200' />
-							<div className='text-white font-semibold text-sm sm:text-base leading-tight group-hover:text-indigo-200 transition-colors'>
-								{item.value}
-							</div>
-							<div className='text-xs text-slate-400 mt-1 font-normal'>
+							<div className='font-mono text-[11px] uppercase tracking-[0.12em] text-stone-500 mb-1.5'>
 								{item.label}
+							</div>
+							<div className='text-stone-950 font-semibold text-base sm:text-lg tracking-tight'>
+								{item.value}
 							</div>
 						</div>
 					))}
 				</div>
 			</div>
-
-			{/* Subtle Bottom Arrow */}
-			<div className='absolute bottom-4 left-1/2 -translate-x-1/2 z-10 motion-safe:animate-bounce' aria-hidden='true'>
-				<ChevronDownIcon className='w-4 h-4 text-slate-500' />
-			</div>
-		</div>
+		</section>
 	)
 }

@@ -25,7 +25,7 @@ export default function ScrollToTop() {
 						: 'smooth',
 				})
 			}
-			className='fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-40 p-2.5 rounded-full bg-slate-900/90 backdrop-blur-md border border-white/[0.12] text-slate-300 hover:text-white hover:border-indigo-400/50 hover:bg-slate-800/90 transition-colors duration-200 shadow-lg shadow-black/40 cursor-pointer animate-fade-up active:scale-95'
+			className='fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-40 p-2.5 rounded-full bg-white/95 backdrop-blur-md border border-stone-200/90 text-stone-600 hover:text-stone-950 hover:border-stone-400 hover:bg-white transition-colors duration-200 shadow-md shadow-stone-950/5 cursor-pointer animate-fade-up active:scale-95'
 			aria-label='Scroll to top'
 		>
 			<ArrowUpIcon className='w-4 h-4' />

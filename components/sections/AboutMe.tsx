@@ -6,15 +6,12 @@ import Link from 'next/link'
 import Socials from './Socials'
 import Experience from './Experience'
 import { skillsData, educationData } from '../../lib/data'
-import BackgroundBlobs from '../ui/BackgroundBlobs'
 import { CheckCircleIcon } from '@heroicons/react/24/solid'
 import {
 	ArrowDownTrayIcon,
 	EnvelopeIcon,
-	AcademicCapIcon,
 	ChevronDownIcon,
 	ChevronUpIcon,
-	WrenchScrewdriverIcon,
 } from '@heroicons/react/24/outline'
 
 const coreCapabilities = [
@@ -30,58 +27,67 @@ export default function AboutMe() {
 	const [showExtendedBio, setShowExtendedBio] = useState(false)
 
 	return (
-		<div className='w-full min-h-screen bg-slate-950 relative overflow-x-clip'>
-			<div className='absolute inset-0 pointer-events-none opacity-40'>
-				<BackgroundBlobs />
-			</div>
-
-			<div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 sm:pt-36 pb-24 relative z-10'>
+		<div className='w-full min-h-screen bg-[#FAFAF8] relative overflow-x-clip'>
+			<div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 sm:pt-36 pb-24'>
 				<div className='grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16'>
-					{/* Left Column: Bio & Image */}
+					{/* Left Column: Sticky Profile & Bio */}
 					<div className='lg:col-span-5 space-y-8 lg:sticky lg:top-28 self-start'>
-						{/* Profile Image with Glow */}
-						<div className='relative w-48 h-48 sm:w-56 sm:h-56 mx-auto lg:mx-0 animate-fade-up'>
-							<div className='absolute -inset-3 bg-gradient-to-r from-indigo-500 to-cyan-500 rounded-2xl blur-xl opacity-20' />
+						<div className='relative w-44 h-44 sm:w-52 sm:h-52 mx-auto lg:mx-0 animate-fade-up'>
 							<Image
-								className='relative rounded-2xl shadow-xl object-cover border border-white/[0.1]'
+								className='rounded-2xl shadow-[0_8px_28px_-12px_rgba(17,17,16,0.2)] object-cover border border-stone-200/90'
 								fill
 								src='/images/headshots/me.jpg'
 								alt='Jeff Hogg headshot'
-								sizes='224px'
+								sizes='208px'
 								priority
 								fetchPriority='high'
 							/>
 						</div>
 
 						<div className='animate-fade-up animation-delay-100'>
-							<div className='inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-medium mb-3'>
-								Engineering profile
+							<div className='font-mono text-[11px] uppercase tracking-[0.16em] text-teal-800 mb-2.5'>
+								01 / Profile
 							</div>
-							<h1 className='text-3xl font-extrabold tracking-tight text-white sm:text-4xl mb-4 text-balance'>
+							<h1 className='text-3xl font-semibold tracking-[-0.03em] text-stone-950 sm:text-4xl mb-4 text-balance'>
 								Built for{' '}
-								<span className='text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 via-cyan-300 to-indigo-300'>
-									systems & scale
+								<span className='font-serif italic font-normal text-teal-800'>
+									systems &amp; scale.
 								</span>
 							</h1>
 
 							{/* Scannable Executive Summary */}
-							<div className='space-y-4 text-sm sm:text-base text-slate-300 leading-relaxed font-light'>
+							<div className='space-y-4 text-sm sm:text-base text-stone-600 leading-relaxed'>
 								<p>
-									Software Engineer at <strong className='text-white font-medium'>TWFG Insurance (The Woodlands Financial Group)</strong>, specializing in modern full-stack web applications, API integrations, and relational databases. Previously at <strong className='text-white font-medium'>LGI Homes</strong> as <strong className='text-white font-medium'>Web &amp; Data Administrator</strong>, built full-stack internal web apps, Node.js/TypeScript API middleware, Docker/Nginx/GitHub Actions CI/CD, and MS SQL Server &amp; MySQL query tuning.
+									Software Engineer at{' '}
+									<strong className='text-stone-950 font-semibold'>
+										TWFG Insurance (The Woodlands Financial Group)
+									</strong>
+									, specializing in modern full-stack web applications, API integrations, and relational databases. Previously at{' '}
+									<strong className='text-stone-950 font-semibold'>LGI Homes</strong> as{' '}
+									<strong className='text-stone-950 font-semibold'>
+										Web &amp; Data Administrator
+									</strong>
+									, built full-stack internal web apps, Node.js/TypeScript API middleware, Docker/Nginx/GitHub Actions CI/CD, and MS SQL Server &amp; MySQL query tuning.
 								</p>
 								<p>
-									Earlier, engineered enterprise administration features for Webex Calling at <strong className='text-white font-medium'>Cisco</strong> (Control Hub) with TypeScript, Angular, and Cypress end-to-end regression suites, and independently shipped <strong className='text-white font-medium'>Aura</strong>, a native Swift 6 iOS audiobook and podcast app, to the Apple App Store.
+									Earlier, engineered enterprise administration features for Webex Calling at{' '}
+									<strong className='text-stone-950 font-semibold'>Cisco</strong> (Control Hub) with TypeScript, Angular, and Cypress end-to-end regression suites, and independently shipped{' '}
+									<strong className='text-stone-950 font-semibold'>Aura</strong>, a native Swift 6 iOS audiobook and podcast app, to the Apple App Store.
 								</p>
 
-								{/* Progressive Disclosure: Deep Architectural Details */}
+								{/* Progressive Disclosure */}
 								<div className='pt-1'>
 									<button
 										type='button'
 										onClick={() => setShowExtendedBio(!showExtendedBio)}
-										className='inline-flex items-center gap-1.5 text-xs font-semibold text-indigo-400 hover:text-indigo-300 transition-colors py-1 cursor-pointer active:scale-[0.98]'
+										className='inline-flex items-center gap-1.5 text-xs font-medium text-teal-800 hover:text-stone-950 transition-colors py-1 cursor-pointer active:scale-[0.98]'
 										aria-expanded={showExtendedBio}
 									>
-										<span>{showExtendedBio ? 'Hide detailed background' : 'Show full engineering background'}</span>
+										<span>
+											{showExtendedBio
+												? 'Hide detailed background'
+												: 'Show full engineering background'}
+										</span>
 										{showExtendedBio ? (
 											<ChevronUpIcon className='w-3.5 h-3.5' />
 										) : (
@@ -90,7 +96,7 @@ export default function AboutMe() {
 									</button>
 
 									{showExtendedBio && (
-										<div className='mt-3 space-y-3.5 text-xs sm:text-sm text-slate-400 border-l-2 border-indigo-500/30 pl-3.5 animate-fade-up'>
+										<div className='mt-3 space-y-3.5 text-xs sm:text-sm text-stone-600 border-l-2 border-teal-700/30 pl-4 animate-fade-up'>
 											<p>
 												At LGI Homes, migrated manually deployed on-premise servers into a disciplined, automated Git workflow. Containerized core applications with Docker and automated SSL/DNS routing, eliminating deployment downtime.
 											</p>
@@ -106,14 +112,17 @@ export default function AboutMe() {
 							</div>
 
 							{/* Core Capabilities Checklist */}
-							<div className='mt-7 pt-6 border-t border-white/[0.08]'>
-								<h3 className='text-xs font-semibold text-slate-300 mb-3.5'>
+							<div className='mt-7 pt-6 border-t border-stone-200/90'>
+								<h3 className='font-mono text-[11px] uppercase tracking-[0.14em] text-stone-500 mb-3.5'>
 									Key competencies
 								</h3>
 								<ul className='space-y-2.5'>
 									{coreCapabilities.map((item) => (
-										<li key={item} className='flex items-start gap-2.5 text-xs sm:text-sm text-slate-300'>
-											<CheckCircleIcon className='w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5' />
+										<li
+											key={item}
+											className='flex items-start gap-2.5 text-xs sm:text-sm text-stone-700'
+										>
+											<CheckCircleIcon className='w-4 h-4 text-teal-700 flex-shrink-0 mt-0.5' />
 											<span>{item}</span>
 										</li>
 									))}
@@ -121,51 +130,56 @@ export default function AboutMe() {
 							</div>
 
 							{/* Actions: Resume & Contact */}
-							<div className='mt-7 pt-6 border-t border-white/[0.08] flex flex-col sm:flex-row gap-3'>
+							<div className='mt-7 pt-6 border-t border-stone-200/90 flex flex-col sm:flex-row gap-3'>
 								<a
 									href='/Jeff_Hogg_Resume.pdf'
 									target='_blank'
 									rel='noopener noreferrer'
-									className='inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-500 active:scale-[0.98] shadow-sm transition-colors duration-200'
+									className='inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-white bg-stone-950 hover:bg-stone-800 active:scale-[0.98] shadow-sm transition-colors duration-200'
 								>
 									<ArrowDownTrayIcon className='w-4 h-4' />
 									Download resume (PDF)
 								</a>
 								<Link
 									href='/contact'
-									className='inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-slate-300 bg-slate-900/80 border border-white/[0.08] hover:bg-slate-800 hover:text-white active:scale-[0.98] transition-colors duration-200'
+									className='inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-stone-700 bg-white border border-stone-300/90 hover:bg-stone-100 hover:text-stone-950 active:scale-[0.98] transition-colors duration-200'
 								>
-									<EnvelopeIcon className='w-4 h-4 text-indigo-400' />
+									<EnvelopeIcon className='w-4 h-4 text-teal-800' />
 									Get in touch
 								</Link>
 							</div>
 
-							<div className='mt-6 pt-5 border-t border-white/[0.06]'>
+							<div className='mt-6 pt-5 border-t border-stone-200/80'>
 								<Socials />
 							</div>
 						</div>
 					</div>
 
-					{/* Right Column: Experience & Skills */}
-					<div className='lg:col-span-7 space-y-12 sm:space-y-14'>
+					{/* Right Column: Experience, Skills & Education */}
+					<div className='lg:col-span-7 space-y-14 sm:space-y-16'>
 						<Experience />
 
 						{/* Skills Section */}
-						<div>
-							<h3 className='text-xl sm:text-2xl font-bold text-white mb-6 flex items-center gap-2.5'>
-								<WrenchScrewdriverIcon className='w-5 h-5 text-indigo-400' />
-								Technical stack & tooling
+						<div className='pt-10 border-t border-stone-200/90'>
+							<div className='font-mono text-[11px] uppercase tracking-[0.16em] text-teal-800 mb-2'>
+								03 / Technical stack
+							</div>
+							<h3 className='text-2xl font-semibold text-stone-950 tracking-tight mb-6'>
+								Languages, databases &amp;{' '}
+								<span className='font-serif italic font-normal text-teal-800'>
+									tooling
+								</span>
 							</h3>
 							<div className='grid gap-3.5'>
 								{skillsData.map((skill) => (
 									<div
 										key={skill.category}
-										className='group bg-slate-900/70 p-5 rounded-2xl border border-white/[0.08] hover:border-indigo-500/30 transition-colors duration-200 hover:bg-slate-900/90 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)]'
+										className='bg-white p-5 rounded-2xl border border-stone-200/90 hover:border-stone-300 transition-colors duration-200 shadow-[0_1px_2px_rgba(17,17,16,0.03)]'
 									>
-										<h4 className='font-semibold text-indigo-300 mb-1.5 text-sm'>
+										<h4 className='font-mono text-xs uppercase tracking-wider text-teal-800 mb-1.5'>
 											{skill.category}
 										</h4>
-										<p className='text-slate-300 leading-relaxed text-sm font-light'>
+										<p className='text-stone-700 leading-relaxed text-sm'>
 											{skill.list}
 										</p>
 									</div>
@@ -174,21 +188,26 @@ export default function AboutMe() {
 						</div>
 
 						{/* Education */}
-						<div>
-							<h3 className='text-xl sm:text-2xl font-bold text-white mb-5 flex items-center gap-2.5'>
-								<AcademicCapIcon className='w-5 h-5 text-indigo-400' />
-								Education
+						<div className='pt-10 border-t border-stone-200/90'>
+							<div className='font-mono text-[11px] uppercase tracking-[0.16em] text-teal-800 mb-2'>
+								04 / Education
+							</div>
+							<h3 className='text-2xl font-semibold text-stone-950 tracking-tight mb-6'>
+								Academic{' '}
+								<span className='font-serif italic font-normal text-teal-800'>
+									background
+								</span>
 							</h3>
 							<div className='grid gap-3.5'>
 								{educationData.map((edu) => (
 									<div
 										key={edu.school}
-										className='group bg-slate-900/70 p-5 rounded-2xl border border-white/[0.08] hover:border-indigo-500/30 transition-colors duration-200 hover:bg-slate-900/90 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)]'
+										className='bg-white p-5 rounded-2xl border border-stone-200/90 hover:border-stone-300 transition-colors duration-200 shadow-[0_1px_2px_rgba(17,17,16,0.03)]'
 									>
-										<h4 className='font-bold text-white text-base mb-1'>
+										<h4 className='font-semibold text-stone-950 text-base mb-1'>
 											{edu.school}
 										</h4>
-										<p className='text-indigo-300 text-sm'>
+										<p className='text-stone-600 text-sm'>
 											{edu.degree}
 										</p>
 									</div>

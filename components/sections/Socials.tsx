@@ -4,10 +4,10 @@ const Socials = () => {
 	return (
 		<div className='space-y-4 sm:items-start sm:gap-6 sm:space-y-0'>
 			<div className='text-lg leading-6 font-medium space-y-1'>
-				<ul role='list' className='mt-8 flex space-x-12'>
+				<ul role='list' className='flex space-x-6'>
 					<li>
 						<a
-							className='text-slate-400 hover:text-indigo-400 transition-colors'
+							className='text-stone-500 hover:text-teal-700 transition-colors'
 							href={linkedInUrl}
 							target='_blank'
 							rel='noreferrer'
@@ -27,7 +27,7 @@ const Socials = () => {
 					</li>
 					<li>
 						<a
-							className='text-slate-400 hover:text-indigo-400 transition-colors'
+							className='text-stone-500 hover:text-teal-700 transition-colors'
 							href={githubUrl}
 							target='_blank'
 							rel='noreferrer'
@@ -51,7 +51,7 @@ const Socials = () => {
 					</li>
 					<li>
 						<a
-							className='text-slate-400 hover:text-indigo-400 transition-colors'
+							className='text-stone-500 hover:text-teal-700 transition-colors'
 							href={twitterUrl}
 							target='_blank'
 							rel='noreferrer'

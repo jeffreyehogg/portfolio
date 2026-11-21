@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
+	experimental: {
+		agentUpgrade: 'security',
+	},
 	images: {
 		formats: ['image/avif', 'image/webp'],
 		remotePatterns: [

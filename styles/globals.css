@@ -45,6 +45,11 @@
 		background-color: rgba(99, 102, 241, 0.3);
 		color: #fff;
 	}
+
+	/* Hide default floating white reCAPTCHA v3 badge; compliant attribution is rendered inline in ContactForm */
+	.grecaptcha-badge {
+		visibility: hidden !important;
+	}
 }
 
 @layer utilities {

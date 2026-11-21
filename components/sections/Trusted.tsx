@@ -62,9 +62,9 @@ export default function Trusted() {
 											</div>
 										)}
 									</div>
-									<span className='inline-flex items-center gap-1.5 text-xs font-medium text-slate-400 bg-slate-950/70 border border-white/[0.07] px-2.5 py-1 rounded-full shrink-0'>
+									<span className='inline-flex items-center gap-1.5 text-[11px] font-mono font-medium text-slate-300 bg-slate-950/75 border border-white/[0.08] px-2.5 py-1 rounded-full shrink-0'>
 										{company.current && (
-											<span className='h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse' />
+											<span className='h-1.5 w-1.5 rounded-full bg-emerald-400 motion-safe:animate-pulse' />
 										)}
 										{company.period}
 									</span>

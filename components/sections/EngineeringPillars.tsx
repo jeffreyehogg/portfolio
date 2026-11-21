@@ -78,7 +78,7 @@ export default function EngineeringPillars() {
 								<div>
 									{pillar.stats && (
 										<div className='text-xs text-emerald-400 font-medium mb-4 flex items-center gap-2'>
-											<span className='h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse' />
+											<span className='h-1.5 w-1.5 rounded-full bg-emerald-400 motion-safe:animate-pulse' />
 											{pillar.stats}
 										</div>
 									)}

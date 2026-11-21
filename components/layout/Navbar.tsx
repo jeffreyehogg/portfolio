@@ -50,10 +50,10 @@ export default function Navbar() {
 					{({ open }) => (
 						<div
 							className={cn(
-								'mx-auto transition-[background-color,border-color,box-shadow,border-radius] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]',
+								'mx-auto transition-[background-color,border-color,box-shadow] duration-200 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]',
 								open ? 'rounded-2xl' : 'rounded-full',
-								scrolled
-									? 'bg-slate-900/90 backdrop-blur-xl border-white/[0.12] shadow-2xl shadow-black/40'
+								scrolled || open
+									? 'bg-slate-900/95 backdrop-blur-xl border-white/[0.12] shadow-2xl shadow-black/50'
 									: 'bg-slate-900/75 backdrop-blur-md border-white/[0.08] shadow-lg shadow-black/20',
 								'border px-3 sm:px-5 py-2'
 							)}
@@ -104,13 +104,13 @@ export default function Navbar() {
 									<button
 										type='button'
 										onClick={() => setCommandPaletteOpen(true)}
-										className='flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs text-slate-400 bg-slate-800/60 hover:text-white hover:bg-slate-800 border border-white/[0.08] hover:border-indigo-500/40 active:scale-[0.98] transition-colors cursor-pointer'
+										className='flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-xs text-slate-300 bg-slate-800/70 hover:text-white hover:bg-slate-800 border border-white/[0.08] hover:border-indigo-500/40 active:scale-[0.98] transition-colors cursor-pointer'
 										aria-label='Quick Search (Press ⌘K)'
 										title='Quick Search (⌘K)'
 									>
 										<MagnifyingGlassIcon className='w-3.5 h-3.5 text-indigo-400' />
-										<span className='hidden lg:inline'>Search</span>
-										<kbd className='px-1 py-0.2 text-[10px] font-sans font-semibold rounded bg-slate-700/60 text-slate-300 border border-slate-600/40'>
+										<span className='hidden md:inline'>Search</span>
+										<kbd className='px-1.5 py-0.5 text-[10px] font-mono font-medium rounded bg-slate-900/80 text-slate-300 border border-white/[0.08]'>
 											⌘K
 										</kbd>
 									</button>

@@ -27,27 +27,25 @@ export default function Experience() {
 						/>
 
 						{/* Header Row */}
-						<div className='flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-2.5 gap-2'>
-							<div>
-								<div className='flex items-center gap-2 flex-wrap'>
-									<h4 className='text-lg sm:text-xl font-bold text-slate-100 group-hover:text-white transition-colors'>
-										{job.role}
-									</h4>
-								</div>
-								<div className='text-indigo-400 font-medium text-sm sm:text-base flex items-center gap-2 mt-0.5'>
+						<div className='flex flex-col sm:flex-row sm:items-start sm:justify-between mb-3 gap-2'>
+							<div className='min-w-0'>
+								<h4 className='text-lg sm:text-xl font-bold text-slate-100 group-hover:text-white transition-colors tracking-tight'>
+									{job.role}
+								</h4>
+								<div className='text-indigo-400 font-medium text-sm sm:text-base flex flex-wrap items-center gap-x-2 gap-y-1 mt-1'>
 									<span>{job.company}</span>
-									<span className='text-slate-600 text-xs'>•</span>
-									<span className='text-xs font-normal text-slate-400 flex items-center gap-1'>
-										<MapPinIcon className='w-3.5 h-3.5 text-slate-500' />
+									<span className='text-slate-600 text-xs' aria-hidden='true'>•</span>
+									<span className='text-xs font-normal text-slate-400 inline-flex items-center gap-1 whitespace-nowrap'>
+										<MapPinIcon className='w-3.5 h-3.5 text-slate-500 shrink-0' />
 										{job.location}
 									</span>
 								</div>
 							</div>
 
-							<span className='text-xs text-slate-300 bg-slate-900/90 border border-white/[0.08] px-3 py-1 rounded-full w-fit flex items-center gap-2'>
+							<span className='text-[11px] font-mono text-slate-300 bg-slate-900/90 border border-white/[0.08] px-3 py-1 rounded-full w-fit shrink-0 flex items-center gap-2 whitespace-nowrap'>
 								{job.current && (
 									<span className='relative flex h-2 w-2'>
-										<span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75' />
+										<span className='motion-safe:animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75' />
 										<span className='relative inline-flex rounded-full h-2 w-2 bg-emerald-400' />
 									</span>
 								)}

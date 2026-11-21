@@ -63,21 +63,29 @@ export default function Footer() {
 			<div className='max-w-7xl mx-auto py-12 sm:py-16 px-4 sm:px-6 lg:px-8'>
 				{/* Sleek Pre-Footer CTA Card (hidden when already on /contact) */}
 				{!isContactPage && (
-					<div className='mb-14 rounded-2xl bg-slate-900/65 border border-white/[0.08] p-7 sm:p-10 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6'>
-						<div className='max-w-2xl'>
-							<div className='inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-950/80 border border-white/[0.08] text-xs font-medium text-slate-300 mb-3'>
-								<span className='h-2 w-2 rounded-full bg-emerald-400 animate-pulse' />
-								<span>Open to software engineering &amp; architecture discussions</span>
+					<div className='mb-14 relative overflow-hidden rounded-2xl bg-slate-900/70 border border-white/[0.08] p-6 sm:p-10 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6'>
+						<div
+							className='pointer-events-none absolute -top-24 -right-24 h-64 w-64 rounded-full opacity-40'
+							style={{
+								background:
+									'radial-gradient(circle, rgba(99, 102, 241, 0.22), transparent 70%)',
+							}}
+							aria-hidden='true'
+						/>
+						<div className='max-w-2xl relative z-10'>
+							<div className='inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-950/80 border border-white/[0.08] text-xs font-medium text-slate-300 mb-3.5'>
+								<span className='h-2 w-2 rounded-full bg-emerald-400 motion-safe:animate-pulse shrink-0' />
+								<span>Open to engineering &amp; architecture discussions</span>
 							</div>
 							<h2 className='text-2xl sm:text-3xl font-extrabold text-white tracking-tight text-balance'>
 								Ready to modernize legacy systems or build high-craft software?
 							</h2>
-							<p className='mt-2 text-sm sm:text-base text-slate-400 font-light text-pretty'>
+							<p className='mt-2.5 text-sm sm:text-base text-slate-400 font-light text-pretty'>
 								Have a systems architecture challenge, CI/CD pipeline to automate, or custom web application in mind? Send a message directly through my secure contact form.
 							</p>
 						</div>
 
-						<div className='flex flex-wrap items-center gap-3 shrink-0'>
+						<div className='flex flex-wrap items-center gap-3 shrink-0 relative z-10'>
 							<Link
 								href='/contact'
 								className='inline-flex items-center gap-2 px-5 py-2.5 sm:py-3 rounded-xl text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-500 shadow-[0_0_20px_rgba(79,70,229,0.3)] transition-colors duration-200 active:scale-[0.98]'
@@ -134,7 +142,7 @@ export default function Footer() {
 				</div>
 
 				{/* Copyright */}
-				<div className='mt-8 border-t border-white/[0.06] pt-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500'>
+				<div className='mt-8 border-t border-white/[0.06] pt-6 pb-10 sm:pb-0 sm:pr-14 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500'>
 					<p>&copy; {new Date().getFullYear()} Jeff Hogg. All rights reserved.</p>
 					<p>Built with Next.js, TypeScript &amp; Tailwind CSS.</p>
 				</div>

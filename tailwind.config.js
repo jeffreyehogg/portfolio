@@ -8,6 +8,7 @@ module.exports = {
 		extend: {
 			fontFamily: {
 				sans: ['var(--font-inter)', ...defaultTheme.fontFamily.sans],
+				mono: ['var(--font-mono)', ...defaultTheme.fontFamily.mono],
 			},
 			colors: {
 				slate: {

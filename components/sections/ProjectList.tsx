@@ -28,15 +28,17 @@ export default function ProjectList() {
 
 	const categories = useMemo(
 		() => [
-			{ id: 'all' as CategoryFilter, label: 'All', count: projectsData.length },
+			{ id: 'all' as CategoryFilter, label: 'All', shortLabel: 'All', count: projectsData.length },
 			{
 				id: 'apps' as CategoryFilter,
 				label: 'Web & mobile apps',
+				shortLabel: 'Apps',
 				count: projectsData.filter((p) => p.category === 'apps').length,
 			},
 			{
 				id: 'tools' as CategoryFilter,
 				label: 'Tools & systems',
+				shortLabel: 'Tools',
 				count: projectsData.filter((p) => p.category === 'tools').length,
 			},
 		],
@@ -86,9 +88,9 @@ export default function ProjectList() {
 				</div>
 
 				{/* Instant Controls Bar: Category Pills + Search Input */}
-				<div className='max-w-3xl mx-auto mb-10 sm:mb-12 flex flex-col sm:flex-row items-center gap-3 sm:gap-4 animate-fade-up animation-delay-100'>
+				<div className='max-w-4xl mx-auto mb-10 sm:mb-12 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 animate-fade-up animation-delay-100'>
 					{/* Category Pill Switcher */}
-					<div className='inline-flex p-1 rounded-xl bg-slate-900/80 border border-white/[0.08] shadow-sm w-full sm:w-auto justify-center'>
+					<div className='inline-flex p-1 rounded-xl bg-slate-900/80 border border-white/[0.08] shadow-sm w-full sm:w-auto shrink-0'>
 						{categories.map((cat) => {
 							const isActive = activeCategory === cat.id
 							return (
@@ -97,18 +99,19 @@ export default function ProjectList() {
 									type='button'
 									onClick={() => startTransition(() => { void setActiveCategory(cat.id) })}
 									className={cn(
-										'relative px-3.5 py-1.5 text-xs sm:text-sm font-medium rounded-lg transition-colors duration-200 cursor-pointer flex items-center gap-1.5 active:scale-[0.98]',
+										'relative flex-1 sm:flex-initial justify-center whitespace-nowrap px-3.5 py-1.5 text-xs sm:text-sm font-medium rounded-lg transition-colors duration-200 cursor-pointer flex items-center gap-1.5 active:scale-[0.98]',
 										isActive
 											? 'bg-indigo-600 text-white shadow-sm shadow-indigo-600/30'
 											: 'text-slate-400 hover:text-slate-200'
 									)}
 								>
-									<span className='relative z-10'>{cat.label}</span>
+									<span className='relative z-10 sm:hidden'>{cat.shortLabel}</span>
+									<span className='relative z-10 hidden sm:inline'>{cat.label}</span>
 									<span
 										className={cn(
-											'relative z-10 text-[11px] px-1.5 py-0.2 rounded-md transition-colors',
+											'relative z-10 text-[11px] font-mono px-1.5 py-0.5 rounded-md transition-colors leading-none',
 											isActive
-												? 'bg-indigo-700/60 text-white'
+												? 'bg-indigo-700/70 text-white'
 												: 'bg-slate-800 text-slate-400'
 										)}
 									>
@@ -126,7 +129,7 @@ export default function ProjectList() {
 							type='text'
 							value={searchQuery}
 							onChange={(e) => setSearchQuery(e.target.value)}
-							placeholder='Search projects or tech (e.g. Swift, Next.js, Docker, SQL)...'
+							placeholder='Search projects or tech...'
 							aria-label='Search projects or technologies'
 							className='w-full pl-9 pr-9 py-2 rounded-xl bg-slate-900/80 border border-white/[0.08] text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-indigo-500/60 focus:ring-1 focus:ring-indigo-500/40 transition-colors'
 						/>

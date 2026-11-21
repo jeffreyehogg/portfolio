@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, JetBrains_Mono } from 'next/font/google'
 import Navbar from '../components/layout/Navbar'
 import Footer from '../components/layout/Footer'
 import ScrollProgress from '../components/ui/ScrollProgress'
@@ -14,6 +14,12 @@ const inter = Inter({
 	subsets: ['latin'],
 	display: 'swap',
 	variable: '--font-inter',
+})
+
+const jetbrainsMono = JetBrains_Mono({
+	subsets: ['latin'],
+	display: 'swap',
+	variable: '--font-mono',
 })
 
 export const viewport: Viewport = {
@@ -72,7 +78,7 @@ export default function RootLayout({
 	children: React.ReactNode
 }) {
 	return (
-		<html lang='en' className={`${inter.variable}`}>
+		<html lang='en' className={`${inter.variable} ${jetbrainsMono.variable}`}>
 			<body className='bg-slate-950 font-sans antialiased text-slate-100'>
 				<a
 					href='#main-content'

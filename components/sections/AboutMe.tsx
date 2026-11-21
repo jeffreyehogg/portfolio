@@ -30,7 +30,7 @@ export default function AboutMe() {
 	const [showExtendedBio, setShowExtendedBio] = useState(false)
 
 	return (
-		<div className='min-h-screen bg-slate-950 relative overflow-hidden'>
+		<div className='w-full min-h-screen bg-slate-950 relative overflow-x-clip'>
 			<div className='absolute inset-0 pointer-events-none opacity-40'>
 				<BackgroundBlobs />
 			</div>
@@ -38,7 +38,7 @@ export default function AboutMe() {
 			<div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 sm:pt-36 pb-24 relative z-10'>
 				<div className='grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16'>
 					{/* Left Column: Bio & Image */}
-					<div className='lg:col-span-5 space-y-8 lg:sticky lg:top-32 self-start'>
+					<div className='lg:col-span-5 space-y-8 lg:sticky lg:top-28 self-start'>
 						{/* Profile Image with Glow */}
 						<div className='relative w-48 h-48 sm:w-56 sm:h-56 mx-auto lg:mx-0 animate-fade-up'>
 							<div className='absolute -inset-3 bg-gradient-to-r from-indigo-500 to-cyan-500 rounded-2xl blur-xl opacity-20' />

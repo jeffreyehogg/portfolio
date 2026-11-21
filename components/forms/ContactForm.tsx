@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useActionState, Suspense } from 'react'
+import { useEffect, useRef, useState, useActionState, Suspense } from 'react'
 import { useFormStatus } from 'react-dom'
 import { useSearchParams } from 'next/navigation'
 import { sendEmail, type FormState } from '../../app/actions/contact-action'
@@ -61,6 +61,7 @@ function ContactFormInner() {
 
 	const { executeRecaptcha } = useGoogleReCaptcha()
 	const formRef = useRef<HTMLFormElement>(null)
+	const [messageLength, setMessageLength] = useState(0)
 
 	const [state, formAction] = useActionState(
 		async (prevState: FormState, formData: FormData): Promise<FormState> => {
@@ -103,6 +104,7 @@ function ContactFormInner() {
 			<form
 				ref={formRef}
 				action={formAction}
+				onReset={() => setMessageLength(0)}
 				className='grid grid-cols-1 gap-y-5 sm:grid-cols-2 sm:gap-x-6'
 			>
 				<div>
@@ -236,7 +238,9 @@ function ContactFormInner() {
 						>
 							Message
 						</label>
-						<span className='text-xs text-slate-500'>Max. 500 characters</span>
+						<span className='text-xs font-mono text-slate-500'>
+							{messageLength} / 500
+						</span>
 					</div>
 					<div className='mt-1.5'>
 						<textarea
@@ -245,6 +249,7 @@ function ContactFormInner() {
 							rows={4}
 							required
 							maxLength={500}
+							onChange={(e) => setMessageLength(e.target.value.length)}
 							aria-invalid={!!state.errors?.message}
 							aria-describedby={state.errors?.message ? 'message-error' : undefined}
 							className='block w-full rounded-xl border-0 px-3.5 py-2.5 text-slate-100 shadow-sm ring-1 ring-inset ring-white/[0.1] placeholder:text-slate-500 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm bg-slate-950/60 focus:bg-slate-950 transition-colors resize-none'
@@ -293,7 +298,28 @@ function ContactFormInner() {
 					</AnimatePresence>
 				</div>
 
-				<div className='col-span-1 sm:col-span-2 flex justify-end mt-4'>
+				<div className='col-span-1 sm:col-span-2 flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-4 pt-2 border-t border-white/[0.06]'>
+					<p className='text-[11px] text-slate-500 leading-relaxed max-w-sm'>
+						Protected by reCAPTCHA. Google&apos;s{' '}
+						<a
+							href='https://policies.google.com/privacy'
+							target='_blank'
+							rel='noopener noreferrer'
+							className='text-slate-400 hover:text-indigo-300 underline underline-offset-2 transition-colors'
+						>
+							Privacy Policy
+						</a>{' '}
+						and{' '}
+						<a
+							href='https://policies.google.com/terms'
+							target='_blank'
+							rel='noopener noreferrer'
+							className='text-slate-400 hover:text-indigo-300 underline underline-offset-2 transition-colors'
+						>
+							Terms of Service
+						</a>{' '}
+						apply.
+					</p>
 					<SubmitButton />
 				</div>
 			</form>

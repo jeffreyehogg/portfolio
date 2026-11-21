@@ -20,36 +20,59 @@ const metrics = [
 export default function Hero() {
 	return (
 		<div className='relative min-h-[calc(100svh-3.5rem)] flex items-center justify-center overflow-hidden bg-slate-950 pt-28 pb-14 sm:pb-18'>
-			{/* Grid Background Pattern */}
-			<div className='absolute inset-0 bg-grid opacity-25 z-[1]' aria-hidden='true' />
+			{/* Grid Background Pattern with soft radial mask */}
+			<div
+				className='absolute inset-0 bg-grid opacity-35 z-[1]'
+				style={{
+					maskImage: 'radial-gradient(ellipse 70% 60% at 50% 40%, #000 35%, transparent 100%)',
+					WebkitMaskImage:
+						'radial-gradient(ellipse 70% 60% at 50% 40%, #000 35%, transparent 100%)',
+				}}
+				aria-hidden='true'
+			/>
 
 			{/* GPU-Friendly Ambient Radial Glows (replaces heavy blur-[140px] offscreen textures on mobile) */}
 			<div
 				className='absolute inset-0 z-[2] pointer-events-none'
 				style={{
 					background:
-						'radial-gradient(600px 380px at 50% 35%, rgba(79, 70, 229, 0.14), transparent 70%), radial-gradient(400px 320px at 35% 75%, rgba(8, 145, 178, 0.08), transparent 70%)',
+						'radial-gradient(640px 400px at 50% 30%, rgba(99, 102, 241, 0.16), transparent 70%), radial-gradient(420px 320px at 32% 72%, rgba(6, 182, 212, 0.09), transparent 70%)',
 				}}
 				aria-hidden='true'
 			/>
 
 			{/* Subtle linear gradient overlays */}
 			<div
-				className='absolute inset-0 bg-gradient-to-b from-slate-950/70 via-slate-950/30 to-slate-950 z-[2]'
+				className='absolute inset-0 bg-gradient-to-b from-slate-950/60 via-slate-950/20 to-slate-950 z-[2]'
 				aria-hidden='true'
 			/>
 
 			{/* Main Content — Server-rendered at opacity:1 for instant mobile FCP/LCP */}
 			<div className='relative z-10 px-4 sm:px-6 lg:px-8 text-center max-w-5xl mx-auto'>
 				<div className='animate-fade-up'>
-					<h1 className='text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl mb-5 text-white text-balance'>
-						<span className='block mb-2 sm:mb-3'>Software Engineer</span>
-						<span className='text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-cyan-300 to-indigo-300'>
-							DevOps & system architecture
+					<Link
+						href='/about#experience'
+						className='inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/80 border border-white/[0.1] hover:border-indigo-400/40 text-xs font-medium text-slate-300 hover:text-white transition-colors mb-6 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]'
+					>
+						<span className='relative flex h-2 w-2 shrink-0'>
+							<span className='motion-safe:animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75' />
+							<span className='relative inline-flex rounded-full h-2 w-2 bg-emerald-400' />
+						</span>
+						<span>Software Engineer @ TWFG Insurance</span>
+						<span className='text-slate-600 hidden sm:inline'>•</span>
+						<span className='text-slate-400 font-mono text-[11px] hidden sm:inline'>
+							The Woodlands, TX
+						</span>
+					</Link>
+
+					<h1 className='text-4xl font-extrabold tracking-[-0.03em] leading-[1.08] sm:text-5xl lg:text-6xl mb-5 text-white text-balance'>
+						<span className='block mb-1.5 sm:mb-2.5'>Software Engineer</span>
+						<span className='text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 via-cyan-300 to-indigo-400'>
+							DevOps &amp; system architecture
 						</span>
 					</h1>
 
-					<p className='mt-4 text-base sm:text-lg text-slate-300 sm:max-w-2xl mx-auto leading-relaxed font-light text-pretty'>
+					<p className='mt-4 text-base sm:text-lg text-slate-300/90 sm:max-w-2xl mx-auto leading-relaxed font-light text-pretty'>
 						{profileData.headline}
 					</p>
 				</div>

@@ -155,6 +155,13 @@ interface CommandPaletteProps {
 	setIsOpen: (open: boolean) => void
 }
 
+const categoryOrder: CommandItem['category'][] = [
+	'Quick Actions',
+	'Navigation',
+	'Experience',
+	'Projects & Systems',
+]
+
 export default function CommandPalette({ isOpen, setIsOpen }: CommandPaletteProps) {
 	const router = useRouter()
 	const [query, setQuery] = useState('')
@@ -171,6 +178,15 @@ export default function CommandPalette({ isOpen, setIsOpen }: CommandPaletteProp
 				(item.keywords && item.keywords.toLowerCase().includes(trimmed))
 		)
 	}, [query])
+
+	const groupedItems = useMemo(() => {
+		return categoryOrder
+			.map((category) => ({
+				category,
+				items: filteredItems.filter((item) => item.category === category),
+			}))
+			.filter((group) => group.items.length > 0)
+	}, [filteredItems])
 
 	const handleSelect = (item: CommandItem | null) => {
 		setIsOpen(false)
@@ -229,65 +245,65 @@ export default function CommandPalette({ isOpen, setIsOpen }: CommandPaletteProp
 								{filteredItems.length > 0 ? (
 									<ComboboxOptions
 										static
-										className='max-h-80 scroll-py-2 overflow-y-auto p-2 focus:outline-none space-y-0.5'
+										className='max-h-96 scroll-py-2 overflow-y-auto p-2 focus:outline-none space-y-2'
 									>
-										{filteredItems.map((item) => (
-											<ComboboxOption
-												key={item.id}
-												value={item}
-												className={({ focus }) =>
-													`group flex cursor-pointer select-none items-center justify-between rounded-xl px-3.5 py-2.5 text-sm transition-colors ${
-														focus
-															? 'bg-indigo-600 text-white shadow-sm shadow-indigo-600/20'
-															: 'text-slate-300 hover:text-white'
-													}`
-												}
-											>
-												{({ focus }) => (
-													<>
-														<div className='flex items-center gap-3 min-w-0 pr-3'>
-															<item.icon
-																className={`h-4 w-4 flex-shrink-0 ${
-																	focus ? 'text-white' : 'text-indigo-400'
-																}`}
-																aria-hidden='true'
-															/>
-															<div className='truncate'>
-																<span className='font-medium'>{item.title}</span>
-																{item.subtitle && (
-																	<span
-																		className={`ml-2 text-xs font-normal ${
-																			focus ? 'text-indigo-100' : 'text-slate-500'
+										{groupedItems.map((group) => (
+											<div key={group.category} className='space-y-0.5'>
+												<div className='px-3 pt-1.5 pb-1 text-[10px] font-mono font-semibold uppercase tracking-wider text-slate-500'>
+													{group.category}
+												</div>
+												{group.items.map((item) => (
+													<ComboboxOption
+														key={item.id}
+														value={item}
+														className={({ focus }) =>
+															`group flex cursor-pointer select-none items-center justify-between gap-3 rounded-xl px-3 py-2 text-sm transition-colors ${
+																focus
+																	? 'bg-indigo-600 text-white shadow-sm shadow-indigo-600/20'
+																	: 'text-slate-200 hover:text-white'
+															}`
+														}
+													>
+														{({ focus }) => (
+															<>
+																<div className='flex items-center gap-3 min-w-0'>
+																	<item.icon
+																		className={`h-4 w-4 flex-shrink-0 ${
+																			focus ? 'text-white' : 'text-indigo-400'
+																		}`}
+																		aria-hidden='true'
+																	/>
+																	<div className='flex flex-col min-w-0'>
+																		<span className='font-medium truncate leading-snug'>
+																			{item.title}
+																		</span>
+																		{item.subtitle && (
+																			<span
+																				className={`text-xs font-normal truncate leading-snug ${
+																					focus ? 'text-indigo-100' : 'text-slate-400'
+																				}`}
+																			>
+																				{item.subtitle}
+																			</span>
+																		)}
+																	</div>
+																</div>
+																{item.shortcut && (
+																	<kbd
+																		className={`px-1.5 py-0.5 text-[10px] font-mono rounded shrink-0 ${
+																			focus
+																				? 'bg-indigo-700 text-white'
+																				: 'bg-slate-800/80 text-slate-400 border border-white/[0.08]'
 																		}`}
 																	>
-																		{item.subtitle}
-																	</span>
+																		{item.shortcut}
+																	</kbd>
 																)}
-															</div>
-														</div>
-														<div className='flex items-center gap-2 shrink-0'>
-															<span
-																className={`text-[11px] font-normal hidden sm:inline ${
-																	focus ? 'text-indigo-200' : 'text-slate-500'
-																}`}
-															>
-																{item.category}
-															</span>
-															{item.shortcut && (
-																<kbd
-																	className={`px-1.5 py-0.5 text-[10px] font-mono rounded ${
-																		focus
-																			? 'bg-indigo-700 text-white'
-																			: 'bg-slate-800/80 text-slate-400 border border-white/[0.08]'
-																	}`}
-																>
-																	{item.shortcut}
-																</kbd>
-															)}
-														</div>
-													</>
-												)}
-											</ComboboxOption>
+															</>
+														)}
+													</ComboboxOption>
+												))}
+											</div>
 										))}
 									</ComboboxOptions>
 								) : (

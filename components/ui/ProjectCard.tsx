@@ -74,26 +74,14 @@ export default function ProjectCard({ project, priorityImage = false }: ProjectC
 				{/* Card Body */}
 				<div className='p-5 sm:p-6 flex-1 flex flex-col justify-between'>
 					<div>
-						{/* Title & Action Links */}
-						<div className='flex items-center justify-between gap-3 mb-2'>
-							<h3 className='text-lg sm:text-xl font-bold text-white group-hover:text-indigo-200 transition-colors tracking-tight'>
+						{/* Title & Compact External Links */}
+						<div className='flex items-start justify-between gap-2.5 mb-2'>
+							<h3 className='text-lg font-bold text-white group-hover:text-indigo-200 transition-colors tracking-tight leading-snug'>
 								<Link href={project.href} target='_blank' rel='noopener noreferrer'>
 									{project.title}
 								</Link>
 							</h3>
-							<div className='flex items-center gap-1 shrink-0'>
-								{project.highlights && project.highlights.length > 0 && (
-									<button
-										type='button'
-										onClick={() => setIsModalOpen(true)}
-										className='inline-flex items-center gap-1 px-2 py-1 rounded-lg text-[11px] font-medium text-slate-300 hover:text-white bg-slate-800/70 hover:bg-indigo-600/25 border border-white/[0.07] hover:border-indigo-500/40 transition-colors cursor-pointer active:scale-[0.97]'
-										aria-label={`Inspect system architecture for ${project.title}`}
-										title='Inspect system architecture & highlights'
-									>
-										<CpuChipIcon className='w-3.5 h-3.5 text-indigo-400' />
-										<span>Architecture</span>
-									</button>
-								)}
+							<div className='flex items-center gap-0.5 shrink-0 -mr-1'>
 								{project.githubUrl && (
 									<a
 										href={project.githubUrl}
@@ -127,7 +115,7 @@ export default function ProjectCard({ project, priorityImage = false }: ProjectC
 
 						{/* Key Engineering Metrics Telemetry Pill */}
 						{project.metrics && (
-							<div className='text-[11px] font-medium text-indigo-300/90 mb-2.5 flex items-center gap-1.5'>
+							<div className='text-[11px] font-mono text-indigo-300/90 mb-2.5 flex items-center gap-1.5'>
 								<span className='h-1.5 w-1.5 rounded-full bg-indigo-400 shrink-0' />
 								<span className='truncate'>{project.metrics}</span>
 							</div>
@@ -139,23 +127,37 @@ export default function ProjectCard({ project, priorityImage = false }: ProjectC
 						</p>
 					</div>
 
-					{/* Tech Stack Pills */}
-					<div className='flex flex-wrap items-center gap-1.5 pt-3.5 border-t border-white/[0.06]'>
-						{displayTags.map((tag) => (
-							<span
-								key={tag}
-								className='text-xs text-slate-300 bg-slate-800/50 border border-white/[0.06] px-2.5 py-0.5 rounded-md'
-							>
-								{tag}
-							</span>
-						))}
-						{remainingCount > 0 && (
+					{/* Tech Stack Pills & Architecture Action */}
+					<div className='space-y-3.5 pt-3.5 border-t border-white/[0.06]'>
+						<div className='flex flex-wrap items-center gap-1.5'>
+							{displayTags.map((tag) => (
+								<span
+									key={tag}
+									className='text-xs text-slate-300 bg-slate-800/50 border border-white/[0.06] px-2.5 py-0.5 rounded-md'
+								>
+									{tag}
+								</span>
+							))}
+							{remainingCount > 0 && (
+								<button
+									type='button'
+									onClick={() => setIsModalOpen(true)}
+									className='text-[11px] font-mono text-slate-400 hover:text-indigo-300 bg-slate-800/30 border border-white/[0.06] px-2 py-0.5 rounded-md transition-colors cursor-pointer'
+								>
+									+{remainingCount}
+								</button>
+							)}
+						</div>
+
+						{project.highlights && project.highlights.length > 0 && (
 							<button
 								type='button'
 								onClick={() => setIsModalOpen(true)}
-								className='text-[11px] text-slate-400 hover:text-indigo-300 bg-slate-800/30 border border-white/[0.06] px-2 py-0.5 rounded-md transition-colors cursor-pointer'
+								className='w-full inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium text-slate-300 hover:text-white bg-slate-950/60 hover:bg-indigo-600/20 border border-white/[0.07] hover:border-indigo-500/40 transition-colors cursor-pointer active:scale-[0.98]'
+								aria-label={`Inspect system architecture for ${project.title}`}
 							>
-								+{remainingCount} more
+								<CpuChipIcon className='w-3.5 h-3.5 text-indigo-400' />
+								<span>Architecture &amp; highlights</span>
 							</button>
 						)}
 					</div>

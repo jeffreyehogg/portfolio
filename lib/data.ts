@@ -148,23 +148,22 @@ export const experienceData: ExperienceItem[] = [
 	},
 	{
 		company: 'LGI Homes',
-		role: 'Software Engineer - Web & Data',
+		role: 'Web & Data Administrator',
 		period: 'March 2026 - November 2026',
 		location: 'The Woodlands, TX',
 		current: false,
 		summary:
-			'Engineered frontend and backend web applications, custom Node.js/TypeScript middleware, Claude MCP extensions and connectors, and SQL Server database administration.',
+			'Built full-stack web features, custom Node.js/TypeScript API middleware, automated Docker/Nginx CI/CD deployments, and managed Microsoft SQL Server & MySQL databases.',
 		highlights: [
-			'Frontend & Backend Web Development: Engineered end-to-end feature releases across internal and customer-facing web applications with modernized frontends and backend services.',
-			'API & Middleware Engineering: Developed custom Node.js and TypeScript middleware to integrate third-party APIs with on-premise Microsoft SQL Server and MySQL databases.',
-			'Claude MCP Extensions & Connectors: Built custom Claude Model Context Protocol (MCP) extensions and data connectors to streamline engineering workflows, query profiling, and internal tool integration.',
-			'SQL Server DBA & DevOps: Administered Microsoft SQL Server and MySQL databases (refactoring stored procedures and tuning queries) while modernizing legacy deployments with Docker, Nginx, and GitHub Actions CI/CD.',
+			'Full-Stack Web Modernization: Built full-stack features and modernized frontends for internal web applications.',
+			'DevOps & CI/CD Automation: Updated legacy apps and set up automated deployments using Git, GitHub Actions, Docker, and Nginx with SSL and DNS configuration.',
+			'API & Middleware Engineering: Wrote custom Node.js and TypeScript middleware to connect third-party APIs with on-premise Microsoft SQL Server databases.',
+			'Database Administration: Managed Microsoft SQL Server and MySQL databases, profiling queries and refactoring slow stored procedures.',
 		],
 		technologies: [
 			'TypeScript',
 			'JavaScript',
 			'Node.js',
-			'Claude MCP',
 			'MS SQL Server',
 			'MySQL',
 			'Docker',
@@ -172,6 +171,7 @@ export const experienceData: ExperienceItem[] = [
 			'GitHub Actions',
 			'CI/CD',
 			'REST APIs',
+			'Git',
 		],
 	},
 	{
@@ -225,19 +225,20 @@ export const experienceData: ExperienceItem[] = [
 	},
 	{
 		company: 'Cisco',
-		role: 'Technical Director / Camera Op',
+		role: 'Broadcast Camera Operator, Video Playback & Technical Director',
 		period: 'June 2013 - December 2021',
-		location: 'Spring, TX',
+		location: 'San Jose, CA',
 		current: false,
 		summary:
-			'Directed technical broadcast operations for live multi-camera studio productions, executive communications, and enterprise-scale audiences.',
+			'Operated cameras for live studio broadcasts and executive events, along with video playback and Technical Director (TD) operations.',
 		highlights: [
-			'Broadcast Operations: Operated cameras and directed technical broadcast operations for live multi-camera studio productions, executive communications, and enterprise-scale audiences.',
+			'Broadcast & Technical Operations: Primarily operated cameras for live studio broadcasts and executive events, along with video playback and Technical Director (TD) responsibilities.',
 		],
 		technologies: [
 			'Studio Production',
 			'Live Broadcasting',
-			'Executive Communications',
+			'Video Playback',
+			'Technical Direction',
 			'Multi-Camera Systems',
 		],
 	},
@@ -400,7 +401,11 @@ export const skillsData: SkillCategory[] = [
 export const educationData: EducationItem[] = [
 	{
 		school: 'San Francisco State University',
-		degree: 'B.A. in Broadcast & Electronic Communication Arts',
+		degree: 'B.A. in Broadcast & Electronic Communication Arts (2010 – 2012)',
+	},
+	{
+		school: 'Napa Valley College',
+		degree: 'A.S. in Broadcast Engineering (2007 – 2009)',
 	},
 ]
 
@@ -424,11 +429,11 @@ export const trustedCompaniesData: CompanyLogo[] = [
 		imageUrl: '/images/logos/lgi-homes.svg',
 		width: 150,
 		height: 60,
-		role: 'Software Engineer - Web & Data',
+		role: 'Web & Data Administrator',
 		period: '2026',
-		badge: 'Web, Middleware, MCP & SQL DBA',
+		badge: 'Full-Stack Web, Middleware & SQL DBA',
 		impact:
-			'Engineered frontend/backend web apps, Node.js/TypeScript middleware, custom Claude MCP extensions & connectors, Docker/GitHub Actions CI/CD, and MS SQL Server DBA operations.',
+			'Built full-stack internal web features, Node.js/TypeScript API middleware, Docker/Nginx/GitHub Actions CI/CD deployments, and MS SQL Server & MySQL query tuning.',
 		current: false,
 	},
 	{

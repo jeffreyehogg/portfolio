@@ -91,12 +91,12 @@ const baseCommandItems: CommandItem[] = [
 	},
 	{
 		id: 'exp-lgi',
-		title: 'LGI Homes — Software Engineer - Web & Data',
-		subtitle: 'Web Apps, Node.js Middleware, Claude MCP Connectors & SQL Server DBA',
+		title: 'LGI Homes — Web & Data Administrator',
+		subtitle: 'Full-Stack Web Apps, Node.js Middleware, Docker CI/CD & SQL DBA',
 		category: 'Experience',
 		href: '/about#experience',
 		icon: ServerStackIcon,
-		keywords: 'lgi homes devops sql docker nginx claude mcp connectors middleware',
+		keywords: 'lgi homes web data administrator devops sql mysql docker nginx github actions middleware',
 	},
 	{
 		id: 'exp-cisco',

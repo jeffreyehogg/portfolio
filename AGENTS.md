@@ -71,7 +71,7 @@ pnpm install
 - **Core Focus**: 100% Software Engineering / Senior Software Engineer.
 - **Identity & Positioning**: Software Engineer | DevOps, System Architecture, Web & Native iOS.
   - *Software Engineer @ TWFG Insurance (The Woodlands Financial Group) (November 2026 – Present)*: Engineering full-stack enterprise insurance platforms, internal web applications, API integrations, and relational database systems.
-  - *Software Engineer @ LGI Homes (March 2026 – November 2026)*: Modernized legacy systems, Docker/Nginx containerization, automated CI/CD (GitHub Actions + self-hosted runners), Node.js/TypeScript middleware, distributed MS SQL & MySQL, and agentic workflows.
+  - *Web & Data Administrator @ LGI Homes (March 2026 – November 2026)*: Full-stack internal web features, Docker/Nginx containerization, automated CI/CD (GitHub Actions + self-hosted runners), Node.js/TypeScript middleware, and MS SQL Server & MySQL query tuning.
   - *Enterprise Software Engineer @ Cisco (Webex Calling)*: Enterprise frontend (Control Hub), Cypress E2E, Jenkins, Kibana/PagerDuty production operations.
   - *Independent Software Engineer*: Native iOS App Store apps (`Aura` in Swift 6 / SwiftUI / SwiftData), Next.js full-stack apps on Vercel, and enterprise data migrations (Python/SQL).
 - **Design & Layout (User Preference)**: Bento grids, stat cards, subtle glows, and developer badges are welcome as long as the design looks good, clean, and simple. Keep text concise, avoid walls of text, and ensure the primary interface is intuitive and easy to use.

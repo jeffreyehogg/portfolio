@@ -61,7 +61,7 @@ export default function Navbar() {
 								{/* Left: Brand Identity */}
 								<Link
 									href='/'
-									className='flex items-center gap-2.5 text-stone-950 hover:text-teal-800 transition-colors group'
+									className='flex items-center gap-2.5 text-stone-950 hover:text-indigo-600 transition-colors group'
 								>
 									<div className='h-8 w-8 overflow-hidden rounded-full border border-stone-200 group-hover:border-stone-400 transition-colors flex-shrink-0'>
 										<Avatar />

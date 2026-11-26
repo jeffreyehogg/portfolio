@@ -4,18 +4,18 @@ import AboutMe from '../../components/sections/AboutMe'
 export const metadata: Metadata = {
 	title: 'About & Career Experience',
 	description:
-		'Learn about Jeff Hogg, Software Engineer specializing in DevOps automation, distributed SQL, modern web & iOS applications, and resilient system architecture.',
+		'Learn about Jeff Hogg, Software Engineer building full-stack web apps with TypeScript, Angular, React, Next.js, native Swift iOS apps, APIs, and SQL databases.',
 	alternates: { canonical: '/about' },
 	openGraph: {
 		title: 'About & Career Experience | Jeff Hogg',
 		description:
-			'Software Engineer — modernizing enterprise systems, managing distributed databases, and automating CI/CD pipelines.',
+			'Software Engineer — TypeScript, Angular, React, Next.js, Swift iOS apps, APIs, and SQL.',
 		url: '/about',
 	},
 	twitter: {
 		title: 'About & Career Experience | Jeff Hogg',
 		description:
-			'Software Engineer — DevOps, distributed SQL, and enterprise system architecture.',
+			'Software Engineer — TypeScript, Angular, React, Next.js, Swift iOS apps, APIs, and SQL.',
 	},
 }
 

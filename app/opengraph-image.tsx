@@ -99,7 +99,7 @@ export default async function Image() {
 								lineHeight: 1.15,
 							}}
 						>
-							Software Engineer &amp; Systems Architect
+							Software Engineer
 						</div>
 						<p
 							style={{
@@ -109,13 +109,13 @@ export default async function Image() {
 								lineHeight: 1.45,
 							}}
 						>
-							Full-stack web platforms, DevOps CI/CD pipelines, API middleware, and native Swift 6 iOS apps.
+							Full-stack web apps (TypeScript, Angular, React, Next.js), native Swift iOS apps, APIs, and SQL.
 						</p>
 					</div>
 
 					{/* Stack Tags */}
 					<div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '4px' }}>
-						{['TypeScript', 'Next.js', 'Swift 6', 'Docker', 'SQL Server', 'CI/CD'].map((tech) => (
+						{['TypeScript', 'Angular', 'React', 'Next.js', 'Swift 6', 'SQL'].map((tech) => (
 							<div
 								key={tech}
 								style={{

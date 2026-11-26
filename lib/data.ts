@@ -164,51 +164,51 @@ export const freeAppsData: FreeAppInfo[] = [
 export const profileData = {
 	name: 'Jeff Hogg',
 	role: 'Software Engineer',
-	specialization: 'DevOps, System Architecture & API Integration',
+	specialization: 'Full-Stack Web, Native iOS & APIs',
 	location: 'The Woodlands, TX',
 	status: 'Software Engineer',
 	headline:
-		'Engineering scalable web and native iOS applications, dedicated API middleware, and automated CI/CD pipelines — modernizing enterprise systems from the ground up.',
+		'Building full-stack web applications with TypeScript, Angular, React, and Next.js, alongside native Swift iOS apps, REST APIs, and SQL databases.',
 	bio:
-		'Software Engineer with enterprise engineering experience across modern React/Node.js and native iOS applications, legacy system migrations, and relational databases. Extensive background leading end-to-end delivery: building dedicated API middleware, automating CI/CD pipelines, and leveraging AI-assisted developer tooling to optimize SQL stored procedures.',
+		'Software Engineer at TWFG Insurance (previously Cisco) building full-stack web apps, REST APIs, and SQL-backed services with TypeScript, Angular, React, Next.js, and Python. Outside of work, I build native Swift iOS apps and shoot live pro sports broadcasts.',
 }
 
 export const engineeringPillars: EngineeringPillar[] = [
 	{
-		id: 'devops-cicd',
-		title: 'DevOps & CI/CD Automation',
-		badge: 'Infrastructure',
+		id: 'fullstack-web',
+		title: 'Full-Stack Web Applications',
+		badge: 'Frontend & Full-Stack',
 		description:
-			'Transitioning manual, server-direct deployments to automated, Git-based version control with self-hosted GitHub Runners and GitHub Actions for continuous delivery.',
-		stats: 'Zero-Downtime Pipelines',
-		technologies: ['GitHub Actions', 'Self-Hosted Runners', 'Docker', 'Nginx', 'Linux', 'SSL/DNS'],
+			'Building responsive, maintainable web applications across Angular, React, and Next.js with TypeScript, Tailwind CSS, and modern Node.js or Python backends.',
+		stats: 'TypeScript • Angular • React • Next.js',
+		technologies: ['TypeScript', 'Angular', 'React', 'Next.js', 'Node.js', 'Tailwind CSS'],
+	},
+	{
+		id: 'native-ios',
+		title: 'Native iOS Applications',
+		badge: 'Swift & SwiftUI',
+		description:
+			'Designing and shipping native iOS apps end-to-end—including Aura, Tend, and AlgoQuest—using Swift 6, SwiftUI, SwiftData, WidgetKit, and App Store Connect.',
+		stats: 'Shipped to the App Store',
+		technologies: ['Swift 6', 'SwiftUI', 'SwiftData', 'WidgetKit', 'CloudKit', 'App Store Connect'],
 	},
 	{
 		id: 'api-middleware',
-		title: 'API & Middleware Architecture',
-		badge: 'Backend Integration',
+		title: 'APIs & Backend Services',
+		badge: 'Integrations',
 		description:
-			'Designing dedicated API layers and high-throughput Node.js/TypeScript middleware to securely ingest, sanitize, and synchronize 3rd-party data into distributed environments.',
-		stats: 'Secure Enterprise Sync',
-		technologies: ['Node.js', 'TypeScript', 'REST APIs', 'Express', 'JSONB Ingestion'],
+			'Developing RESTful APIs, backend services, and TypeScript or Python integration layers that connect third-party platforms with internal databases.',
+		stats: 'Clean API Integrations',
+		technologies: ['TypeScript', 'Python', 'Node.js', 'REST APIs', 'Express', 'MCP'],
 	},
 	{
 		id: 'database-systems',
-		title: 'Database Administration & Tuning',
-		badge: 'Data Layer',
+		title: 'SQL Databases & Delivery',
+		badge: 'Data & Tooling',
 		description:
-			'Managing, maintaining, and tuning distributed Microsoft SQL Server and MySQL databases, leveraging MCP tooling to profile queries and refactor stored procedures.',
-		stats: 'Fast Query Response',
-		technologies: ['MS SQL Server', 'MySQL', 'MCP Tooling', 'Stored Procedures', 'PostgreSQL'],
-	},
-	{
-		id: 'agentic-engineering',
-		title: 'Claude MCP Extensions & Connectors',
-		badge: 'AI & Velocity',
-		description:
-			'Building custom Claude Model Context Protocol (MCP) extensions and connectors to integrate internal databases, accelerate stored procedure optimization, and automate engineering workflows.',
-		stats: 'Custom MCP Connectors',
-		technologies: ['Claude MCP', 'Custom Connectors', 'TypeScript', 'Python', 'Automated QA'],
+			'Working with Microsoft SQL Server, MySQL, and PostgreSQL for schema design, stored procedures, and query tuning, backed by GitHub Actions and Docker.',
+		stats: 'SQL & Automated Deploys',
+		technologies: ['MS SQL Server', 'MySQL', 'PostgreSQL', 'GitHub Actions', 'Docker', 'Vercel'],
 	},
 ]
 
@@ -220,20 +220,18 @@ export const experienceData: ExperienceItem[] = [
 		location: 'The Woodlands, TX',
 		current: true,
 		summary:
-			'Engineering full-stack enterprise insurance platforms, internal web applications, API integrations, and relational database systems.',
+			'Building internal web applications and backend services using Angular, TypeScript, and Python.',
 		highlights: [
-			'Full-Stack Application Engineering: Designing and developing modern enterprise web applications and internal software systems supporting nationwide insurance operations.',
-			'API & System Integration: Building and maintaining backend services, RESTful APIs, and data pipelines connecting core policy, agency, and carrier platforms.',
-			'Database & DevOps Workflows: Collaborating across engineering teams to optimize relational database performance, streamline CI/CD delivery, and modernize enterprise workflows.',
+			'Full-Stack Application Engineering: Building internal web applications and enterprise features using Angular and TypeScript.',
+			'Backend Services & APIs: Developing backend services and RESTful APIs in Python and TypeScript to support insurance workflows.',
+			'Data & Team Collaboration: Working with SQL databases and collaborating across engineering teams to ship reliable software.',
 		],
 		technologies: [
+			'Angular',
 			'TypeScript',
-			'JavaScript',
-			'React',
-			'Node.js',
+			'Python',
 			'SQL',
 			'REST APIs',
-			'CI/CD',
 			'Git',
 		],
 	},

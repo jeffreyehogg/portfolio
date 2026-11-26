@@ -15,12 +15,12 @@ import {
 } from '@heroicons/react/24/outline'
 
 const coreCapabilities = [
-	'Frontend & backend web application engineering (React, Next.js, Node.js, TypeScript)',
-	'Custom Node.js/TypeScript API & middleware architecture',
+	'Full-stack web apps (TypeScript, Angular, React, Next.js, Node.js)',
+	'Native iOS applications (Swift 6, SwiftUI, SwiftData)',
+	'REST APIs, backend services & third-party integrations (TypeScript, Python)',
+	'Relational databases & SQL (MS SQL Server, MySQL, PostgreSQL)',
+	'Automated deployments & tooling (GitHub Actions, Docker, Nginx, Vercel)',
 	'Custom Claude MCP extensions, connectors & AI developer workflows',
-	'Microsoft SQL Server & MySQL DBA (query profiling & stored procedures)',
-	'Docker containerization, Nginx, and automated GitHub Actions CI/CD',
-	'Native iOS application engineering (Swift 6, SwiftUI, SwiftData)',
 ]
 
 export default function AboutMe() {
@@ -45,13 +45,13 @@ export default function AboutMe() {
 						</div>
 
 						<div className='animate-fade-up animation-delay-100'>
-							<div className='font-mono text-[11px] uppercase tracking-[0.16em] text-teal-800 mb-2.5'>
+							<div className='font-mono text-[11px] uppercase tracking-[0.16em] text-indigo-600 mb-2.5'>
 								01 / Profile
 							</div>
 							<h1 className='text-3xl font-semibold tracking-[-0.03em] text-stone-950 sm:text-4xl mb-4 text-balance'>
-								Built for{' '}
-								<span className='font-serif italic font-normal text-teal-800'>
-									systems &amp; scale.
+								Building software for{' '}
+								<span className='font-serif italic font-normal text-indigo-600'>
+									web &amp; iOS.
 								</span>
 							</h1>
 
@@ -62,17 +62,19 @@ export default function AboutMe() {
 									<strong className='text-stone-950 font-semibold'>
 										TWFG Insurance (The Woodlands Financial Group)
 									</strong>
-									, specializing in modern full-stack web applications, API integrations, and relational databases. Previously at{' '}
+									, building internal web applications and backend services with Angular, TypeScript, and Python. Previously at{' '}
 									<strong className='text-stone-950 font-semibold'>LGI Homes</strong> as{' '}
 									<strong className='text-stone-950 font-semibold'>
 										Web &amp; Data Administrator
 									</strong>
-									, built full-stack internal web apps, Node.js/TypeScript API middleware, Docker/Nginx/GitHub Actions CI/CD, and MS SQL Server &amp; MySQL query tuning.
+									, where I modernized internal web apps, built Node.js/TypeScript API integrations, and worked with MS SQL Server and MySQL.
 								</p>
 								<p>
 									Earlier, engineered enterprise administration features for Webex Calling at{' '}
-									<strong className='text-stone-950 font-semibold'>Cisco</strong> (Control Hub) with TypeScript, Angular, and Cypress end-to-end regression suites, and independently shipped{' '}
-									<strong className='text-stone-950 font-semibold'>Aura</strong>, a native Swift 6 iOS audiobook and podcast app, to the Apple App Store.
+									<strong className='text-stone-950 font-semibold'>Cisco</strong> (Control Hub) with TypeScript, Angular, and Cypress end-to-end suites. Outside of work, I build native Swift iOS apps like{' '}
+									<strong className='text-stone-950 font-semibold'>Aura</strong>,{' '}
+									<strong className='text-stone-950 font-semibold'>Tend</strong>, and{' '}
+									<strong className='text-stone-950 font-semibold'>AlgoQuest</strong>, and shoot live pro sports broadcasts.
 								</p>
 
 								{/* Progressive Disclosure */}
@@ -80,7 +82,7 @@ export default function AboutMe() {
 									<button
 										type='button'
 										onClick={() => setShowExtendedBio(!showExtendedBio)}
-										className='inline-flex items-center gap-1.5 text-xs font-medium text-teal-800 hover:text-stone-950 transition-colors py-1 cursor-pointer active:scale-[0.98]'
+										className='inline-flex items-center gap-1.5 text-xs font-medium text-indigo-600 hover:text-stone-950 transition-colors py-1 cursor-pointer active:scale-[0.98]'
 										aria-expanded={showExtendedBio}
 									>
 										<span>
@@ -96,7 +98,7 @@ export default function AboutMe() {
 									</button>
 
 									{showExtendedBio && (
-										<div className='mt-3 space-y-3.5 text-xs sm:text-sm text-stone-600 border-l-2 border-teal-700/30 pl-4 animate-fade-up'>
+										<div className='mt-3 space-y-3.5 text-xs sm:text-sm text-stone-600 border-l-2 border-indigo-600/30 pl-4 animate-fade-up'>
 											<p>
 												At LGI Homes, migrated manually deployed on-premise servers into a disciplined, automated Git workflow. Containerized core applications with Docker and automated SSL/DNS routing, eliminating deployment downtime.
 											</p>
@@ -122,7 +124,7 @@ export default function AboutMe() {
 											key={item}
 											className='flex items-start gap-2.5 text-xs sm:text-sm text-stone-700'
 										>
-											<CheckCircleIcon className='w-4 h-4 text-teal-700 flex-shrink-0 mt-0.5' />
+											<CheckCircleIcon className='w-4 h-4 text-indigo-600 flex-shrink-0 mt-0.5' />
 											<span>{item}</span>
 										</li>
 									))}
@@ -135,16 +137,16 @@ export default function AboutMe() {
 									href='/Jeff_Hogg_Resume.pdf'
 									target='_blank'
 									rel='noopener noreferrer'
-									className='inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-white bg-stone-950 hover:bg-stone-800 active:scale-[0.98] shadow-sm transition-colors duration-200'
+									className='inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium text-white bg-stone-950 hover:bg-indigo-600 active:scale-[0.98] shadow-sm transition-colors duration-200'
 								>
 									<ArrowDownTrayIcon className='w-4 h-4' />
 									Download resume (PDF)
 								</a>
 								<Link
 									href='/contact'
-									className='inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-stone-700 bg-white border border-stone-300/90 hover:bg-stone-100 hover:text-stone-950 active:scale-[0.98] transition-colors duration-200'
+									className='inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium text-stone-700 bg-white border border-stone-300/90 hover:bg-stone-100 hover:border-stone-400 hover:text-stone-950 active:scale-[0.98] transition-colors duration-200'
 								>
-									<EnvelopeIcon className='w-4 h-4 text-teal-800' />
+									<EnvelopeIcon className='w-4 h-4 text-indigo-600' />
 									Get in touch
 								</Link>
 							</div>
@@ -161,12 +163,12 @@ export default function AboutMe() {
 
 						{/* Skills Section */}
 						<div className='pt-10 border-t border-stone-200/90'>
-							<div className='font-mono text-[11px] uppercase tracking-[0.16em] text-teal-800 mb-2'>
+							<div className='font-mono text-[11px] uppercase tracking-[0.16em] text-indigo-600 mb-2'>
 								03 / Technical stack
 							</div>
 							<h3 className='text-2xl font-semibold text-stone-950 tracking-tight mb-6'>
 								Languages, databases &amp;{' '}
-								<span className='font-serif italic font-normal text-teal-800'>
+								<span className='font-serif italic font-normal text-indigo-600'>
 									tooling
 								</span>
 							</h3>
@@ -176,7 +178,7 @@ export default function AboutMe() {
 										key={skill.category}
 										className='bg-white p-5 rounded-2xl border border-stone-200/90 hover:border-stone-300 transition-colors duration-200 shadow-[0_1px_2px_rgba(17,17,16,0.03)]'
 									>
-										<h4 className='font-mono text-xs uppercase tracking-wider text-teal-800 mb-1.5'>
+										<h4 className='font-mono text-xs uppercase tracking-wider text-indigo-600 mb-1.5'>
 											{skill.category}
 										</h4>
 										<p className='text-stone-700 leading-relaxed text-sm'>
@@ -189,12 +191,12 @@ export default function AboutMe() {
 
 						{/* Education */}
 						<div className='pt-10 border-t border-stone-200/90'>
-							<div className='font-mono text-[11px] uppercase tracking-[0.16em] text-teal-800 mb-2'>
+							<div className='font-mono text-[11px] uppercase tracking-[0.16em] text-indigo-600 mb-2'>
 								04 / Education
 							</div>
 							<h3 className='text-2xl font-semibold text-stone-950 tracking-tight mb-6'>
 								Academic{' '}
-								<span className='font-serif italic font-normal text-teal-800'>
+								<span className='font-serif italic font-normal text-indigo-600'>
 									background
 								</span>
 							</h3>

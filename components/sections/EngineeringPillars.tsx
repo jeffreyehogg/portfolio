@@ -1,18 +1,18 @@
 import {
-	ServerStackIcon,
+	CodeBracketSquareIcon,
+	DevicePhoneMobileIcon,
 	CommandLineIcon,
 	CircleStackIcon,
-	CpuChipIcon,
 	ArrowRightIcon,
 } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import { engineeringPillars } from '../../lib/data'
 
 const iconMap = {
-	'devops-cicd': ServerStackIcon,
+	'fullstack-web': CodeBracketSquareIcon,
+	'native-ios': DevicePhoneMobileIcon,
 	'api-middleware': CommandLineIcon,
 	'database-systems': CircleStackIcon,
-	'agentic-engineering': CpuChipIcon,
 }
 
 export default function EngineeringPillars() {
@@ -21,26 +21,26 @@ export default function EngineeringPillars() {
 			<div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
 				<div className='flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-14 gap-4'>
 					<div className='max-w-2xl'>
-						<div className='font-mono text-[11px] uppercase tracking-[0.16em] text-teal-800 mb-2.5'>
+						<div className='font-mono text-[11px] uppercase tracking-[0.16em] text-indigo-600 mb-2.5'>
 							02 / Capabilities
 						</div>
 						<h2 className='text-3xl sm:text-4xl font-semibold text-stone-950 tracking-[-0.025em] text-balance'>
-							Architecting resilient systems &amp;{' '}
-							<span className='font-serif italic font-normal text-teal-800'>
-								modern automation
+							Full-stack web, mobile &amp;{' '}
+							<span className='font-serif italic font-normal text-indigo-600'>
+								API engineering
 							</span>
 						</h2>
 						<p className='mt-3 text-base sm:text-lg text-stone-600 leading-relaxed text-pretty'>
-							Software engineering across web and native iOS applications,
-							distributed database administration, and automated CI/CD DevOps.
+							Building production web applications with TypeScript, Angular, React, and Next.js,
+							native Swift iOS apps, REST APIs, and SQL-backed services.
 						</p>
 					</div>
 
 					<Link
 						href='/portfolio'
-						className='inline-flex items-center gap-2 text-sm font-medium text-stone-800 hover:text-teal-800 transition-colors group active:scale-[0.98] shrink-0'
+						className='inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-stone-200/90 text-sm font-medium text-stone-800 hover:text-indigo-600 hover:border-indigo-200 transition-colors group active:scale-[0.98] shrink-0 shadow-[0_1px_2px_rgba(17,17,16,0.03)]'
 					>
-						Explore systems
+						Explore projects
 						<ArrowRightIcon className='w-4 h-4 group-hover:translate-x-1 transition-transform' />
 					</Link>
 				</div>
@@ -48,7 +48,7 @@ export default function EngineeringPillars() {
 				{/* 4-Pillar Editorial Grid */}
 				<div className='grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6'>
 					{engineeringPillars.map((pillar, idx) => {
-						const Icon = iconMap[pillar.id as keyof typeof iconMap] || ServerStackIcon
+						const Icon = iconMap[pillar.id as keyof typeof iconMap] || CodeBracketSquareIcon
 
 						return (
 							<div
@@ -58,14 +58,14 @@ export default function EngineeringPillars() {
 								<div>
 									<div className='flex items-center justify-between mb-5'>
 										<div className='flex items-center gap-3'>
-											<div className='p-2.5 rounded-xl bg-[#F3F2EE] border border-stone-200/80 text-teal-800 group-hover:bg-stone-950 group-hover:text-white group-hover:border-stone-950 transition-colors duration-200'>
+											<div className='p-2.5 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white group-hover:border-indigo-600 transition-colors duration-200'>
 												<Icon className='w-5 h-5' />
 											</div>
 											<span className='font-mono text-xs text-stone-400'>
 												0{idx + 1}
 											</span>
 										</div>
-										<span className='font-mono text-[11px] uppercase tracking-wider text-stone-600 bg-[#F3F2EE] px-2.5 py-1 rounded-md border border-stone-200/80'>
+										<span className='font-mono text-[11px] uppercase tracking-wider text-stone-600 bg-[#F3F2EE] px-3 py-1 rounded-full border border-stone-200/80'>
 											{pillar.badge}
 										</span>
 									</div>
@@ -81,8 +81,8 @@ export default function EngineeringPillars() {
 
 								<div>
 									{pillar.stats && (
-										<div className='font-mono text-xs text-teal-800 font-medium mb-4 flex items-center gap-2'>
-											<span className='h-1.5 w-1.5 rounded-full bg-teal-700' />
+										<div className='font-mono text-xs text-indigo-600 font-medium mb-4 flex items-center gap-2'>
+											<span className='h-1.5 w-1.5 rounded-full bg-indigo-600' />
 											{pillar.stats}
 										</div>
 									)}
@@ -90,7 +90,7 @@ export default function EngineeringPillars() {
 										{pillar.technologies.map((tech) => (
 											<span
 												key={tech}
-												className='text-xs text-stone-600 bg-[#FAFAF8] px-2.5 py-1 rounded-md border border-stone-200/80'
+												className='text-xs text-stone-600 bg-[#FAFAF8] px-3 py-1 rounded-full border border-stone-200/80'
 											>
 												{tech}
 											</span>

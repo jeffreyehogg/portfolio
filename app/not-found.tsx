@@ -5,12 +5,12 @@ export default function NotFound() {
 		<main className='grow flex flex-col justify-center max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 bg-[#FAFAF8]'>
 			<div className='py-36'>
 				<div className='text-center'>
-					<p className='font-mono text-xs uppercase tracking-[0.16em] text-teal-800'>
+					<p className='font-mono text-xs uppercase tracking-[0.16em] text-indigo-600'>
 						404 / Not found
 					</p>
 					<h1 className='mt-3 text-4xl font-semibold text-stone-950 tracking-[-0.03em] sm:text-5xl'>
 						This page doesn&apos;t{' '}
-						<span className='font-serif italic font-normal text-teal-800'>
+						<span className='font-serif italic font-normal text-indigo-600'>
 							exist.
 						</span>
 					</h1>
@@ -20,7 +20,7 @@ export default function NotFound() {
 					<div className='mt-7'>
 						<Link
 							href='/'
-							className='inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-stone-950 hover:bg-stone-800 text-white text-sm font-medium transition-colors'
+							className='inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-stone-950 hover:bg-indigo-600 text-white text-sm font-medium transition-colors'
 						>
 							Go back home <span aria-hidden='true'>&rarr;</span>
 						</Link>

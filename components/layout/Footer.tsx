@@ -62,25 +62,25 @@ export default function Footer() {
 				{!isContactPage && (
 					<div className='mb-14 rounded-2xl bg-white border border-stone-200/90 p-7 sm:p-10 shadow-[0_1px_2px_rgba(17,17,16,0.04)] flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6'>
 						<div className='max-w-2xl'>
-							<div className='flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.14em] text-teal-800 mb-3'>
+							<div className='flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.14em] text-indigo-600 mb-3'>
 								<span className='h-1.5 w-1.5 rounded-full bg-emerald-600 motion-safe:animate-pulse shrink-0' />
-								<span>Open to engineering &amp; architecture discussions</span>
+								<span>Open to engineering discussions</span>
 							</div>
 							<h2 className='text-2xl sm:text-3xl font-semibold text-stone-950 tracking-[-0.025em] text-balance'>
-								Ready to modernize legacy systems or build{' '}
-								<span className='font-serif italic font-normal text-teal-800'>
-									high-craft software?
+								Let&apos;s build something{' '}
+								<span className='font-serif italic font-normal text-indigo-600'>
+									together.
 								</span>
 							</h2>
 							<p className='mt-2.5 text-sm sm:text-base text-stone-600 leading-relaxed text-pretty'>
-								Have a systems architecture challenge, CI/CD pipeline to automate, or custom web application in mind? Send a message directly through my contact form.
+								Have a web app, native iOS project, or API integration in mind? Send a message directly through my contact form.
 							</p>
 						</div>
 
 						<div className='flex flex-wrap items-center gap-3 shrink-0'>
 							<Link
 								href='/contact'
-								className='inline-flex items-center gap-2 px-5 py-2.5 sm:py-3 rounded-xl text-sm font-medium text-white bg-stone-950 hover:bg-stone-800 transition-colors duration-200 active:scale-[0.98]'
+								className='inline-flex items-center gap-2 px-5 py-2.5 sm:py-3 rounded-full text-sm font-medium text-white bg-stone-950 hover:bg-indigo-600 transition-colors duration-200 active:scale-[0.98]'
 							>
 								<EnvelopeIcon className='w-4 h-4' />
 								Send a message
@@ -89,7 +89,7 @@ export default function Footer() {
 								href='/Jeff_Hogg_Resume.pdf'
 								target='_blank'
 								rel='noopener noreferrer'
-								className='inline-flex items-center gap-2 px-4 py-2.5 sm:py-3 rounded-xl text-sm font-medium text-stone-700 bg-[#FAFAF8] hover:bg-stone-100 hover:text-stone-950 border border-stone-200/90 transition-colors duration-200 active:scale-[0.98]'
+								className='inline-flex items-center gap-2 px-5 py-2.5 sm:py-3 rounded-full text-sm font-medium text-stone-700 bg-[#FAFAF8] hover:bg-stone-100 hover:border-stone-300 hover:text-stone-950 border border-stone-200/90 transition-colors duration-200 active:scale-[0.98]'
 							>
 								<ArrowDownTrayIcon className='w-4 h-4 text-stone-500' />
 								Resume PDF

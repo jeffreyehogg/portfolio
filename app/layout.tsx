@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter, Instrument_Serif, JetBrains_Mono } from 'next/font/google'
+import { Plus_Jakarta_Sans, Newsreader, JetBrains_Mono } from 'next/font/google'
 import Navbar from '../components/layout/Navbar'
 import Footer from '../components/layout/Footer'
 import ScrollProgress from '../components/ui/ScrollProgress'
@@ -10,15 +10,15 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import '../styles/globals.css'
 
-const inter = Inter({
+const plusJakarta = Plus_Jakarta_Sans({
 	subsets: ['latin'],
 	display: 'swap',
-	variable: '--font-inter',
+	variable: '--font-sans',
 })
 
-const instrumentSerif = Instrument_Serif({
+const newsreader = Newsreader({
 	subsets: ['latin'],
-	weight: '400',
+	weight: ['400', '500'],
 	style: ['normal', 'italic'],
 	display: 'swap',
 	variable: '--font-serif',
@@ -39,18 +39,18 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
 	metadataBase: new URL('https://www.jeffhogg.com'),
 	title: {
-		default: 'Jeff Hogg | Software Engineer & Systems Architect',
+		default: 'Jeff Hogg | Software Engineer',
 		template: '%s | Jeff Hogg',
 	},
 	description:
-		'Software Engineer specializing in DevOps automation, system architecture, API middleware, modern web platforms, and native iOS applications.',
+		'Software Engineer building full-stack web applications (TypeScript, Angular, React, Next.js), native Swift iOS apps, REST APIs, and SQL-backed services.',
 	alternates: {
 		canonical: '/',
 	},
 	openGraph: {
-		title: 'Jeff Hogg | Software Engineer & Systems Architect',
+		title: 'Jeff Hogg | Software Engineer',
 		description:
-			'Software Engineer specializing in DevOps automation, system architecture, API middleware, modern web platforms, and native iOS applications.',
+			'Software Engineer building full-stack web applications (TypeScript, Angular, React, Next.js), native Swift iOS apps, REST APIs, and SQL-backed services.',
 		url: 'https://www.jeffhogg.com/',
 		siteName: 'Jeff Hogg',
 		type: 'website',
@@ -58,9 +58,9 @@ export const metadata: Metadata = {
 	},
 	twitter: {
 		card: 'summary_large_image',
-		title: 'Jeff Hogg | Software Engineer & Systems Architect',
+		title: 'Jeff Hogg | Software Engineer',
 		description:
-			'Software Engineer specializing in DevOps automation, system architecture, API middleware, modern web platforms, and native iOS applications.',
+			'Software Engineer building full-stack web applications (TypeScript, Angular, React, Next.js), native Swift iOS apps, REST APIs, and SQL-backed services.',
 		creator: '@jeffehogg',
 	},
 	robots: {
@@ -88,7 +88,7 @@ export default function RootLayout({
 	return (
 		<html
 			lang='en'
-			className={`${inter.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable}`}
+			className={`${plusJakarta.variable} ${newsreader.variable} ${jetbrainsMono.variable}`}
 		>
 			<body className='bg-[#FAFAF8] font-sans antialiased text-[#111110]'>
 				<a

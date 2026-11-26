@@ -64,5 +64,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
 			changeFrequency: 'yearly',
 			priority: 0.5,
 		},
+		{
+			url: `${baseUrl}/algoquest`,
+			lastModified: new Date(),
+			changeFrequency: 'monthly',
+			priority: 0.8,
+		},
+		{
+			url: `${baseUrl}/algoquest/privacy`,
+			lastModified: new Date(),
+			changeFrequency: 'yearly',
+			priority: 0.5,
+		},
 	]
 }

@@ -14,12 +14,12 @@ import BackgroundBlobs from "../../components/ui/BackgroundBlobs";
 export const metadata: Metadata = {
   title: "Aura — Audiobooks & Podcasts",
   description:
-    "A native iOS and watchOS listening app for classic public-domain audiobooks and top podcasts. Stream or download offline—100% free, zero ads, no login required.",
+    "100% free audiobooks and podcasts—instantly playable. No account, no library card, no waitlists, and no ads. Built natively for iOS, CarPlay, and Apple Watch.",
   alternates: { canonical: "/aura" },
   openGraph: {
     title: "Aura — Audiobooks & Podcasts",
     description:
-      "Stream or download timeless literature and top podcasts with a calm, distraction-free listening experience. 100% free, no login or ads.",
+      "100% free audiobooks and podcasts—instantly playable. No account, no library card, no waitlists, and no ads.",
     url: "https://www.jeffhogg.com/aura",
     images: ["/images/projects/aura.png"],
   },
@@ -29,27 +29,27 @@ const screenshots = [
   {
     src: "/images/projects/aura/discover.png",
     title: "Discover",
-    caption: "Editorial shelves & rotating spotlight",
+    caption: "Press Play. Nothing in the Way.",
   },
   {
     src: "/images/projects/aura/detail.png",
     title: "Book & Podcast Detail",
-    caption: "One-tap offline downloads & alerts",
+    caption: "One-tap offline downloads & quiet episode alerts",
   },
   {
     src: "/images/projects/aura/now-playing.png",
     title: "Now Playing",
-    caption: "Cover-derived warm ambient lighting",
-  },
-  {
-    src: "/images/projects/aura/search.png",
-    title: "Search",
-    caption: "Instant audiobook & podcast discovery",
+    caption: "Smart Rewind, 0.75x–2x speed & sleep timer",
   },
   {
     src: "/images/projects/aura/library.png",
     title: "Library",
     caption: "Continue Listening, saved shows & bookmarks",
+  },
+  {
+    src: "/images/projects/aura/search.png",
+    title: "Search",
+    caption: "Classic literature & open podcast discovery",
   },
 ] as const;
 
@@ -123,10 +123,10 @@ export default function AuraPage() {
             Aura
           </h1>
           <p className="mt-3 text-lg sm:text-xl text-amber-300/95 font-serif italic max-w-xl mx-auto">
-            Classic Audiobooks &amp; Top Podcasts. 100% Free.
+            100% Free. Just Press Play.
           </p>
           <p className="mt-4 text-slate-400 max-w-2xl mx-auto leading-relaxed">
-            Stream or download timeless public-domain literature and top podcasts in a calm, editorial listening experience. Built natively in Swift 6 with offline downloads, per-show new episode alerts, CarPlay, Apple Watch, Widgets, and Siri—with zero logins or ads.
+            Free audiobooks and podcasts—instantly playable. Explore timeless literature from LibriVox and Internet Archive alongside open podcast feeds, with one-tap offline downloads, CarPlay, Apple Watch, Widgets, and Siri. No login, no library card, no waitlists, and no ads.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
@@ -175,10 +175,10 @@ export default function AuraPage() {
         </div>
 
         {/* Hero Preview Showcase */}
-        <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden border border-amber-500/20 shadow-2xl shadow-black/60 mb-14 bg-slate-950">
+        <div className="relative aspect-[2400/1254] w-full rounded-2xl overflow-hidden border border-amber-500/20 shadow-2xl shadow-black/60 mb-14 bg-slate-950">
           <Image
             src="/images/projects/aura.png"
-            alt="Aura iOS App Store screens — Detail, Discover, and Now Playing"
+            alt="Aura — 100% Free. Just Press Play. Classic audiobooks and top podcasts on iOS"
             fill
             priority
             className="object-cover"
@@ -209,8 +209,8 @@ export default function AuraPage() {
                   <Image
                     src={shot.src}
                     alt={`Aura ${shot.title} screen — ${shot.caption}`}
-                    width={660}
-                    height={1434}
+                    width={1320}
+                    height={2868}
                     className="w-full h-auto block group-hover:scale-[1.02] transition-transform duration-300"
                     sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 190px"
                   />

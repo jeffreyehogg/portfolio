@@ -28,7 +28,7 @@ export default function AuraPrivacy() {
             Privacy Policy for Aura
           </h1>
           <p className="mt-2 text-sm text-slate-400">
-            Effective Date: October 16, 2026 • Last updated: November 13, 2026
+            Effective Date: October 16, 2026 • Last updated: November 25, 2026
           </p>
         </div>
 

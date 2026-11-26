@@ -12,16 +12,16 @@ import {
 } from "@heroicons/react/24/outline";
 
 export const metadata: Metadata = {
-  title: "Tend — Baby Care & First Foods Log",
+  title: "Tend — Baby Tracker & First Foods",
   description:
-    "Calm, zero-account nursing, bottle, sleep, and diaper tracking paired with a 66-food starter & allergen guide for iOS 18+.",
+    "100% free baby tracker & first foods guide. Log nursing, bottles, naps, diapers, and 66 starter foods in one tap—no login, no subscriptions, no ads.",
   alternates: { canonical: "/tend" },
   openGraph: {
-    title: "Tend — Baby Care & First Foods Log",
+    title: "Tend — Baby Tracker & First Foods",
     description:
-      "Calm, zero-account nursing, bottle, sleep, and diaper tracking paired with a 66-food starter & allergen guide for iOS 18+.",
+      "100% free baby tracker & first foods guide. Log nursing, bottles, naps, diapers, and 66 starter foods in one tap—no login, no subscriptions, no ads.",
     url: "https://www.jeffhogg.com/tend",
-    images: ["/tend/app-icon.png"],
+    images: ["/tend/banner.png"],
   },
 };
 
@@ -58,34 +58,29 @@ const features = [
 
 const screenshots = [
   {
-    src: "/tend/01_today_overview.png",
+    src: "/tend/01_today.png",
     title: "Today Overview",
     caption: "Last feed, wake window & 24h diaper counts",
   },
   {
-    src: "/tend/02_live_nursing_timer.png",
-    title: "Live Nursing Timer",
-    caption: "Left/right stopwatch that survives screen locks",
-  },
-  {
-    src: "/tend/03_first_foods_allergens.png",
+    src: "/tend/02_first_foods.png",
     title: "First Foods & Allergens",
-    caption: "66 starter foods & 9 major allergen tags",
+    caption: "66 starter foods & Big 9 allergen tracking",
   },
   {
-    src: "/tend/04_food_prep_guide.png",
+    src: "/tend/03_live_timer.png",
+    title: "Live Nursing Timer",
+    caption: "Persistent timers across screen locks",
+  },
+  {
+    src: "/tend/04_prep_guide.png",
     title: "Age-Matched Prep Guide",
-    caption: "6m, 9m & 12m+ serving tips + reaction flags",
+    caption: "6m, 9m & 12m+ prep tips + reaction flags",
   },
   {
-    src: "/tend/05_quick_log_sheet.png",
-    title: "Quick-Log Sheet",
-    caption: "Calm, 2 a.m.-friendly one-handed logging",
-  },
-  {
-    src: "/tend/06_baby_vitals_sharing.png",
+    src: "/tend/05_baby_vitals.png",
     title: "Baby, Vitals & Sharing",
-    caption: "Partner iCloud Drive sync, Vitamin D & vitals",
+    caption: "Private iCloud, Partner Handoff & vitals",
   },
 ] as const;
 
@@ -150,11 +145,15 @@ export default function TendPage() {
           </div>
 
           <h1 className="text-4xl sm:text-5xl font-extrabold text-[#1F2421] tracking-tight text-balance">
-            Tend — Baby Care &amp; First Foods Log
+            Tend
           </h1>
 
+          <p className="mt-3 text-lg sm:text-xl text-[#3D6B52] font-serif italic max-w-xl mx-auto">
+            100% Free. Calm Baby Care.
+          </p>
+
           <p className="mt-4 text-base sm:text-lg text-[#4B524E] max-w-2xl mx-auto leading-relaxed text-pretty">
-            Calm, zero-account nursing, bottle, sleep, and diaper tracking paired with a 66-food starter &amp; allergen guide.
+            Log nursing, bottles, naps, diapers, and 66 starter foods in one tap—even at 2 a.m. No sign-up, no login, no subscriptions, and no ads.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3.5">
@@ -199,6 +198,18 @@ export default function TendPage() {
             </Link>
           </div>
         </header>
+
+        {/* Hero Preview Showcase */}
+        <div className="relative aspect-[2400/1254] w-full rounded-2xl overflow-hidden border border-[#E6DFD3] shadow-xl shadow-[#1F2421]/10 mb-14 bg-[#0D211A]">
+          <Image
+            src="/tend/banner.png"
+            alt="Tend — 100% Free. Calm Baby Care. Feeds, naps, diapers & 66 starter foods on iOS"
+            fill
+            priority
+            className="object-cover"
+            sizes="(max-width: 1024px) 100vw, 1024px"
+          />
+        </div>
 
         {/* Feature Overview (4 cards) */}
         <section aria-labelledby="features-heading" className="mb-16">
@@ -258,7 +269,7 @@ export default function TendPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
             {screenshots.map((shot) => (
               <figure
                 key={shot.src}
@@ -268,10 +279,10 @@ export default function TendPage() {
                   <Image
                     src={shot.src}
                     alt={`Tend ${shot.title} screen — ${shot.caption}`}
-                    width={1206}
-                    height={2622}
+                    width={1320}
+                    height={2868}
                     className="w-full h-auto block group-hover:scale-[1.02] transition-transform duration-300"
-                    sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 160px"
+                    sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 190px"
                   />
                 </div>
                 <figcaption className="mt-2.5 px-1">

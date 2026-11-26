@@ -132,7 +132,7 @@ export const freeAppsData: FreeAppInfo[] = [
 		name: 'Aura',
 		tagline: 'Audiobooks & Podcasts',
 		description:
-			'Public-domain classics and open RSS podcasts with offline downloads, CarPlay, Apple Watch, and Siri—zero ads or logins.',
+			'100% free classic audiobooks and podcasts with offline downloads, CarPlay, Apple Watch, and Siri—no login, no library card, no ads.',
 		href: '/aura',
 		appStoreUrl: 'https://apps.apple.com/app/aura-audiobooks-podcasts/id6823766817',
 		iconUrl: '/images/projects/aura-icon.png',
@@ -141,9 +141,9 @@ export const freeAppsData: FreeAppInfo[] = [
 	},
 	{
 		name: 'Tend',
-		tagline: 'Baby Care & First Foods Log',
+		tagline: 'Baby Tracker & First Foods',
 		description:
-			'Calm, zero-account nursing, bottle, sleep, and diaper tracking paired with a 66-food starter & allergen guide.',
+			'100% free baby tracker & first foods guide. Log nursing, bottles, naps, diapers, and 66 starter foods in one tap—no login or ads.',
 		href: '/tend',
 		iconUrl: '/tend/app-icon.png',
 		badge: 'iOS 18+ • Coming Soon',
@@ -151,10 +151,11 @@ export const freeAppsData: FreeAppInfo[] = [
 	},
 	{
 		name: 'AlgoQuest',
-		tagline: 'Swift & Python Coding Puzzles',
+		tagline: 'Code & Algorithms',
 		description:
-			'Interactive coding puzzles and data-structure visualizers running completely offline on iPhone with zero tracking.',
+			'Learn Swift, Python & algorithms through playable dungeon quests and live visualizers—100% free, offline, no login or ads.',
 		href: '/algoquest',
+		iconUrl: '/algoquest/app-icon.png',
 		badge: 'iOS • Free & Offline',
 		accentClass: 'bg-teal-50 border-teal-200/80 text-teal-900',
 	},

@@ -128,7 +128,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
 										key={idx}
 										className='flex items-start gap-2.5 text-xs sm:text-sm text-stone-700 leading-relaxed text-pretty'
 									>
-										<CheckCircleIcon className='w-4 h-4 text-indigo-600 shrink-0 mt-0.5' />
+										<CheckCircleIcon className='w-4 h-4 text-gblue-600 shrink-0 mt-0.5' />
 										<span>{item}</span>
 									</li>
 								))}
@@ -185,7 +185,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
 							href={project.href}
 							target='_blank'
 							rel='noopener noreferrer'
-							className='flex-1 sm:flex-initial whitespace-nowrap inline-flex items-center justify-center gap-1.5 px-5 py-2 rounded-full text-xs font-medium text-white bg-stone-950 hover:bg-indigo-600 transition-colors active:scale-[0.98]'
+							className='flex-1 sm:flex-initial whitespace-nowrap inline-flex items-center justify-center gap-1.5 px-5 py-2 rounded-full text-xs font-medium text-white bg-stone-950 hover:bg-gblue-600 transition-colors active:scale-[0.98]'
 						>
 							{project.appStoreUrl ? 'View on App Store' : 'Visit live project'}
 							<ArrowTopRightOnSquareIcon className='w-3.5 h-3.5 shrink-0' />

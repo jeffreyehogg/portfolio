@@ -7,7 +7,7 @@ const Socials = () => {
 				<ul role='list' className='flex space-x-6'>
 					<li>
 						<a
-							className='text-stone-500 hover:text-indigo-600 transition-colors'
+							className='text-stone-500 hover:text-gblue-600 transition-colors'
 							href={linkedInUrl}
 							target='_blank'
 							rel='noreferrer'
@@ -27,7 +27,7 @@ const Socials = () => {
 					</li>
 					<li>
 						<a
-							className='text-stone-500 hover:text-indigo-600 transition-colors'
+							className='text-stone-500 hover:text-gblue-600 transition-colors'
 							href={githubUrl}
 							target='_blank'
 							rel='noreferrer'
@@ -51,7 +51,7 @@ const Socials = () => {
 					</li>
 					<li>
 						<a
-							className='text-stone-500 hover:text-indigo-600 transition-colors'
+							className='text-stone-500 hover:text-gblue-600 transition-colors'
 							href={twitterUrl}
 							target='_blank'
 							rel='noreferrer'

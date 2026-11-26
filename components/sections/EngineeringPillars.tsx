@@ -21,12 +21,12 @@ export default function EngineeringPillars() {
 			<div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
 				<div className='flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-14 gap-4'>
 					<div className='max-w-2xl'>
-						<div className='font-mono text-[11px] uppercase tracking-[0.16em] text-indigo-600 mb-2.5'>
+						<div className='font-mono text-[11px] uppercase tracking-[0.16em] text-gblue-600 mb-2.5'>
 							02 / Capabilities
 						</div>
 						<h2 className='text-3xl sm:text-4xl font-semibold text-stone-950 tracking-[-0.025em] text-balance'>
 							Full-stack web, mobile &amp;{' '}
-							<span className='font-serif italic font-normal text-indigo-600'>
+							<span className='font-serif italic font-normal text-gblue-600'>
 								API engineering
 							</span>
 						</h2>
@@ -38,7 +38,7 @@ export default function EngineeringPillars() {
 
 					<Link
 						href='/portfolio'
-						className='inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-stone-200/90 text-sm font-medium text-stone-800 hover:text-indigo-600 hover:border-indigo-200 transition-colors group active:scale-[0.98] shrink-0 shadow-[0_1px_2px_rgba(17,17,16,0.03)]'
+						className='inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-stone-200/90 text-sm font-medium text-stone-800 hover:text-gblue-600 hover:border-gblue-200 transition-colors group active:scale-[0.98] shrink-0 shadow-[0_1px_2px_rgba(17,17,16,0.03)]'
 					>
 						Explore projects
 						<ArrowRightIcon className='w-4 h-4 group-hover:translate-x-1 transition-transform' />
@@ -58,7 +58,7 @@ export default function EngineeringPillars() {
 								<div>
 									<div className='flex items-center justify-between mb-5'>
 										<div className='flex items-center gap-3'>
-											<div className='p-2.5 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white group-hover:border-indigo-600 transition-colors duration-200'>
+											<div className='p-2.5 rounded-full bg-gblue-50 border border-gblue-100 text-gblue-600 group-hover:bg-gblue-600 group-hover:text-white group-hover:border-gblue-600 transition-colors duration-200'>
 												<Icon className='w-5 h-5' />
 											</div>
 											<span className='font-mono text-xs text-stone-400'>
@@ -81,8 +81,8 @@ export default function EngineeringPillars() {
 
 								<div>
 									{pillar.stats && (
-										<div className='font-mono text-xs text-indigo-600 font-medium mb-4 flex items-center gap-2'>
-											<span className='h-1.5 w-1.5 rounded-full bg-indigo-600' />
+										<div className='font-mono text-xs text-gblue-600 font-medium mb-4 flex items-center gap-2'>
+											<span className='h-1.5 w-1.5 rounded-full bg-gblue-600' />
 											{pillar.stats}
 										</div>
 									)}

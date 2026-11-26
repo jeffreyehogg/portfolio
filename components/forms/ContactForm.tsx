@@ -16,7 +16,7 @@ import { env } from '../../lib/env'
 const initialState: FormState = { status: 'idle', message: '' }
 
 const inputClasses =
-	'block w-full rounded-xl border-0 px-3.5 py-2.5 text-stone-950 shadow-sm ring-1 ring-inset ring-stone-300/90 placeholder:text-stone-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm bg-[#FAFAF8] focus:bg-white transition-colors'
+	'block w-full rounded-xl border-0 px-3.5 py-2.5 text-stone-950 shadow-sm ring-1 ring-inset ring-stone-300/90 placeholder:text-stone-400 focus:ring-2 focus:ring-inset focus:ring-gblue-600 sm:text-sm bg-[#FAFAF8] focus:bg-white transition-colors'
 
 function SubmitButton() {
 	const { pending } = useFormStatus()
@@ -24,7 +24,7 @@ function SubmitButton() {
 		<button
 			type='submit'
 			disabled={pending}
-			className='w-full sm:w-auto inline-flex items-center justify-center py-2.5 px-7 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-stone-950 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98] transition-all duration-200 cursor-pointer'
+			className='w-full sm:w-auto inline-flex items-center justify-center py-2.5 px-7 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-stone-950 hover:bg-gblue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gblue-600 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98] transition-all duration-200 cursor-pointer'
 		>
 			{pending ? (
 				<span className='flex items-center'>

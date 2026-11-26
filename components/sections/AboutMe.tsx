@@ -45,12 +45,12 @@ export default function AboutMe() {
 						</div>
 
 						<div className='animate-fade-up animation-delay-100'>
-							<div className='font-mono text-[11px] uppercase tracking-[0.16em] text-indigo-600 mb-2.5'>
+							<div className='font-mono text-[11px] uppercase tracking-[0.16em] text-gblue-600 mb-2.5'>
 								01 / Profile
 							</div>
 							<h1 className='text-3xl font-semibold tracking-[-0.03em] text-stone-950 sm:text-4xl mb-4 text-balance'>
 								Building software for{' '}
-								<span className='font-serif italic font-normal text-indigo-600'>
+								<span className='font-serif italic font-normal text-gblue-600'>
 									web &amp; iOS.
 								</span>
 							</h1>
@@ -82,7 +82,7 @@ export default function AboutMe() {
 									<button
 										type='button'
 										onClick={() => setShowExtendedBio(!showExtendedBio)}
-										className='inline-flex items-center gap-1.5 text-xs font-medium text-indigo-600 hover:text-stone-950 transition-colors py-1 cursor-pointer active:scale-[0.98]'
+										className='inline-flex items-center gap-1.5 text-xs font-medium text-gblue-600 hover:text-stone-950 transition-colors py-1 cursor-pointer active:scale-[0.98]'
 										aria-expanded={showExtendedBio}
 									>
 										<span>
@@ -98,7 +98,7 @@ export default function AboutMe() {
 									</button>
 
 									{showExtendedBio && (
-										<div className='mt-3 space-y-3.5 text-xs sm:text-sm text-stone-600 border-l-2 border-indigo-600/30 pl-4 animate-fade-up'>
+										<div className='mt-3 space-y-3.5 text-xs sm:text-sm text-stone-600 border-l-2 border-gblue-600/30 pl-4 animate-fade-up'>
 											<p>
 												At LGI Homes, migrated manually deployed on-premise servers into a disciplined, automated Git workflow. Containerized core applications with Docker and automated SSL/DNS routing, eliminating deployment downtime.
 											</p>
@@ -124,7 +124,7 @@ export default function AboutMe() {
 											key={item}
 											className='flex items-start gap-2.5 text-xs sm:text-sm text-stone-700'
 										>
-											<CheckCircleIcon className='w-4 h-4 text-indigo-600 flex-shrink-0 mt-0.5' />
+											<CheckCircleIcon className='w-4 h-4 text-gblue-600 flex-shrink-0 mt-0.5' />
 											<span>{item}</span>
 										</li>
 									))}
@@ -137,7 +137,7 @@ export default function AboutMe() {
 									href='/Jeff_Hogg_Resume.pdf'
 									target='_blank'
 									rel='noopener noreferrer'
-									className='inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium text-white bg-stone-950 hover:bg-indigo-600 active:scale-[0.98] shadow-sm transition-colors duration-200'
+									className='inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium text-white bg-stone-950 hover:bg-gblue-600 active:scale-[0.98] shadow-sm transition-colors duration-200'
 								>
 									<ArrowDownTrayIcon className='w-4 h-4' />
 									Download resume (PDF)
@@ -146,7 +146,7 @@ export default function AboutMe() {
 									href='/contact'
 									className='inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium text-stone-700 bg-white border border-stone-300/90 hover:bg-stone-100 hover:border-stone-400 hover:text-stone-950 active:scale-[0.98] transition-colors duration-200'
 								>
-									<EnvelopeIcon className='w-4 h-4 text-indigo-600' />
+									<EnvelopeIcon className='w-4 h-4 text-gblue-600' />
 									Get in touch
 								</Link>
 							</div>
@@ -163,12 +163,12 @@ export default function AboutMe() {
 
 						{/* Skills Section */}
 						<div className='pt-10 border-t border-stone-200/90'>
-							<div className='font-mono text-[11px] uppercase tracking-[0.16em] text-indigo-600 mb-2'>
+							<div className='font-mono text-[11px] uppercase tracking-[0.16em] text-gblue-600 mb-2'>
 								03 / Technical stack
 							</div>
 							<h3 className='text-2xl font-semibold text-stone-950 tracking-tight mb-6'>
 								Languages, databases &amp;{' '}
-								<span className='font-serif italic font-normal text-indigo-600'>
+								<span className='font-serif italic font-normal text-gblue-600'>
 									tooling
 								</span>
 							</h3>
@@ -178,7 +178,7 @@ export default function AboutMe() {
 										key={skill.category}
 										className='bg-white p-5 rounded-2xl border border-stone-200/90 hover:border-stone-300 transition-colors duration-200 shadow-[0_1px_2px_rgba(17,17,16,0.03)]'
 									>
-										<h4 className='font-mono text-xs uppercase tracking-wider text-indigo-600 mb-1.5'>
+										<h4 className='font-mono text-xs uppercase tracking-wider text-gblue-600 mb-1.5'>
 											{skill.category}
 										</h4>
 										<p className='text-stone-700 leading-relaxed text-sm'>
@@ -191,12 +191,12 @@ export default function AboutMe() {
 
 						{/* Education */}
 						<div className='pt-10 border-t border-stone-200/90'>
-							<div className='font-mono text-[11px] uppercase tracking-[0.16em] text-indigo-600 mb-2'>
+							<div className='font-mono text-[11px] uppercase tracking-[0.16em] text-gblue-600 mb-2'>
 								04 / Education
 							</div>
 							<h3 className='text-2xl font-semibold text-stone-950 tracking-tight mb-6'>
 								Academic{' '}
-								<span className='font-serif italic font-normal text-indigo-600'>
+								<span className='font-serif italic font-normal text-gblue-600'>
 									background
 								</span>
 							</h3>

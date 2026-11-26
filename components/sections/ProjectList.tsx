@@ -75,12 +75,12 @@ export default function ProjectList() {
 			<div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
 				{/* Editorial Header */}
 				<div className='max-w-3xl mb-10 sm:mb-12 animate-fade-up'>
-					<div className='font-mono text-[11px] uppercase tracking-[0.16em] text-indigo-600 mb-2.5'>
+					<div className='font-mono text-[11px] uppercase tracking-[0.16em] text-gblue-600 mb-2.5'>
 						01 / Directory
 					</div>
 					<h1 className='text-3xl sm:text-5xl font-semibold text-stone-950 tracking-[-0.03em] text-balance'>
 						Systems &amp;{' '}
-						<span className='font-serif italic font-normal text-indigo-600'>
+						<span className='font-serif italic font-normal text-gblue-600'>
 							applications
 						</span>
 					</h1>
@@ -131,7 +131,7 @@ export default function ProjectList() {
 							onChange={(e) => setSearchQuery(e.target.value)}
 							placeholder='Search projects or tech...'
 							aria-label='Search projects or technologies'
-							className='w-full pl-10 pr-10 py-2 rounded-full bg-white border border-stone-200/90 text-sm text-stone-950 placeholder:text-stone-400 focus:outline-none focus:border-indigo-600 focus:ring-1 focus:ring-indigo-600 transition-colors'
+							className='w-full pl-10 pr-10 py-2 rounded-full bg-white border border-stone-200/90 text-sm text-stone-950 placeholder:text-stone-400 focus:outline-none focus:border-gblue-600 focus:ring-1 focus:ring-gblue-600 transition-colors'
 						/>
 						{searchQuery && (
 							<button
@@ -156,7 +156,7 @@ export default function ProjectList() {
 						<button
 							type='button'
 							onClick={clearFilters}
-							className='text-indigo-600 hover:text-stone-950 transition-colors font-medium cursor-pointer'
+							className='text-gblue-600 hover:text-stone-950 transition-colors font-medium cursor-pointer'
 						>
 							Reset filters
 						</button>
@@ -187,7 +187,7 @@ export default function ProjectList() {
 					</div>
 				) : (
 					<div className='rounded-2xl border border-dashed border-stone-300 bg-white p-12 text-center max-w-lg mx-auto'>
-						<div className='w-12 h-12 rounded-full bg-indigo-50 border border-indigo-100 flex items-center justify-center mx-auto mb-4 text-indigo-600'>
+						<div className='w-12 h-12 rounded-full bg-gblue-50 border border-gblue-100 flex items-center justify-center mx-auto mb-4 text-gblue-600'>
 							<FunnelIcon className='w-6 h-6' />
 						</div>
 						<h3 className='text-base font-semibold text-stone-950 mb-1.5'>No matching projects</h3>
@@ -197,7 +197,7 @@ export default function ProjectList() {
 						<button
 							type='button'
 							onClick={clearFilters}
-							className='px-5 py-2 rounded-full bg-stone-950 hover:bg-indigo-600 text-white text-xs font-medium active:scale-[0.98] transition-colors'
+							className='px-5 py-2 rounded-full bg-stone-950 hover:bg-gblue-600 text-white text-xs font-medium active:scale-[0.98] transition-colors'
 						>
 							Reset filters
 						</button>

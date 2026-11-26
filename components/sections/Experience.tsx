@@ -5,12 +5,12 @@ export default function Experience() {
 	return (
 		<div id='experience' className='scroll-mt-28 sm:scroll-mt-32'>
 			<div className='mb-8'>
-				<div className='font-mono text-[11px] uppercase tracking-[0.16em] text-indigo-600 mb-2'>
+				<div className='font-mono text-[11px] uppercase tracking-[0.16em] text-gblue-600 mb-2'>
 					02 / Career timeline
 				</div>
 				<h2 className='text-2xl sm:text-3xl font-semibold text-stone-950 tracking-tight'>
 					Experience &amp;{' '}
-					<span className='font-serif italic font-normal text-indigo-600'>
+					<span className='font-serif italic font-normal text-gblue-600'>
 						leadership
 					</span>
 				</h2>
@@ -20,14 +20,14 @@ export default function Experience() {
 				{experienceData.map((job) => (
 					<div
 						key={job.company + job.period}
-						className='group relative pl-7 sm:pl-9 border-l border-stone-300/90 hover:border-indigo-600/60 transition-colors duration-200'
+						className='group relative pl-7 sm:pl-9 border-l border-stone-300/90 hover:border-gblue-600/60 transition-colors duration-200'
 					>
 						{/* Timeline Dot */}
 						<div
 							className={`absolute top-1.5 -left-[5.5px] w-2.5 h-2.5 rounded-full ring-4 ring-[#FAFAF8] transition-colors duration-200 ${
 								job.current
 									? 'bg-emerald-600'
-									: 'bg-stone-400 group-hover:bg-indigo-600'
+									: 'bg-stone-400 group-hover:bg-gblue-600'
 							}`}
 						/>
 
@@ -37,7 +37,7 @@ export default function Experience() {
 								<h3 className='text-lg sm:text-xl font-semibold text-stone-950 tracking-tight'>
 									{job.role}
 								</h3>
-								<div className='text-indigo-600 font-medium text-sm sm:text-base flex flex-wrap items-center gap-x-2 gap-y-1 mt-1'>
+								<div className='text-gblue-600 font-medium text-sm sm:text-base flex flex-wrap items-center gap-x-2 gap-y-1 mt-1'>
 									<span>{job.company}</span>
 									<span className='text-stone-300 text-xs' aria-hidden='true'>•</span>
 									<span className='text-xs font-normal text-stone-500 inline-flex items-center gap-1 whitespace-nowrap'>
@@ -71,7 +71,7 @@ export default function Experience() {
 
 								return (
 									<li key={hIdx} className='flex items-start gap-2.5 leading-relaxed'>
-										<span className='text-indigo-600 text-xs mt-1'>—</span>
+										<span className='text-gblue-600 text-xs mt-1'>—</span>
 										<span>
 											{detail ? (
 												<>

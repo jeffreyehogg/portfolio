@@ -22,6 +22,14 @@ module.exports = {
 					600: '#4f46e5',
 					700: '#4338ca',
 				},
+				gblue: {
+					50: '#e8f0fe',
+					100: '#d2e3fc',
+					200: '#aecbfa',
+					500: '#4285f4',
+					600: '#1a73e8',
+					700: '#1557b0',
+				},
 			},
 			animation: {
 				'fade-in': 'fadeIn 0.5s ease-in-out',

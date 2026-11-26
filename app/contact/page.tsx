@@ -13,12 +13,12 @@ export default function Contact() {
 		<div className='w-full min-h-screen bg-[#FAFAF8] pt-28 sm:pt-36 pb-20 px-4 sm:px-6 lg:px-8'>
 			<div className='max-w-3xl mx-auto'>
 				<div className='mb-10 sm:mb-12 animate-fade-up'>
-					<div className='font-mono text-[11px] uppercase tracking-[0.16em] text-indigo-600 mb-2.5'>
+					<div className='font-mono text-[11px] uppercase tracking-[0.16em] text-gblue-600 mb-2.5'>
 						01 / Contact
 					</div>
 					<h1 className='text-3xl font-semibold text-stone-950 sm:text-5xl tracking-[-0.03em] text-balance'>
 						Let&apos;s build{' '}
-						<span className='font-serif italic font-normal text-indigo-600'>
+						<span className='font-serif italic font-normal text-gblue-600'>
 							together.
 						</span>
 					</h1>

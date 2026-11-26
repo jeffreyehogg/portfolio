@@ -9,12 +9,12 @@ export default function Trusted() {
 			<div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
 				<div className='flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-14 gap-4'>
 					<div>
-						<div className='font-mono text-[11px] uppercase tracking-[0.16em] text-indigo-600 mb-2.5'>
+						<div className='font-mono text-[11px] uppercase tracking-[0.16em] text-gblue-600 mb-2.5'>
 							03 / Experience
 						</div>
 						<h2 className='text-3xl sm:text-4xl font-semibold text-stone-950 tracking-[-0.025em] text-balance'>
 							Production{' '}
-							<span className='font-serif italic font-normal text-indigo-600'>
+							<span className='font-serif italic font-normal text-gblue-600'>
 								credentials &amp; impact
 							</span>
 						</h2>
@@ -25,7 +25,7 @@ export default function Trusted() {
 
 					<Link
 						href='/about#experience'
-						className='inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-stone-200/90 text-sm font-medium text-stone-800 hover:text-indigo-600 hover:border-indigo-200 transition-colors group active:scale-[0.98] shrink-0 shadow-[0_1px_2px_rgba(17,17,16,0.03)]'
+						className='inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-stone-200/90 text-sm font-medium text-stone-800 hover:text-gblue-600 hover:border-gblue-200 transition-colors group active:scale-[0.98] shrink-0 shadow-[0_1px_2px_rgba(17,17,16,0.03)]'
 					>
 						Full career timeline
 						<ArrowRightIcon className='w-4 h-4 group-hover:translate-x-1 transition-transform' />
@@ -71,10 +71,10 @@ export default function Trusted() {
 								</div>
 
 								{/* Badge & Role Title */}
-								<div className='font-mono text-[11px] uppercase tracking-wider text-indigo-600 mb-2'>
+								<div className='font-mono text-[11px] uppercase tracking-wider text-gblue-600 mb-2'>
 									{company.badge}
 								</div>
-								<h3 className='text-lg font-semibold text-stone-950 group-hover:text-indigo-600 transition-colors mb-2.5 tracking-tight'>
+								<h3 className='text-lg font-semibold text-stone-950 group-hover:text-gblue-600 transition-colors mb-2.5 tracking-tight'>
 									{company.role}
 									{company.organization && (
 										<>

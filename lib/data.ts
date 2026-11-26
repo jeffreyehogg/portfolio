@@ -70,6 +70,96 @@ export const githubUrl = 'https://github.com/jeffreyehogg'
 export const twitterUrl = 'https://x.com/jeffehogg'
 export const xUrl = twitterUrl
 
+export interface DonationProvider {
+	id: 'buymeacoffee' | 'kofi' | 'stripe' | 'paypal' | 'github'
+	name: string
+	description: string
+	badge: string
+	url?: string
+}
+
+export const donationProviders: DonationProvider[] = [
+	{
+		id: 'buymeacoffee',
+		name: 'Buy Me a Coffee',
+		description: 'Quick one-time tip via card or Apple Pay without creating an account.',
+		badge: 'Quick Tip',
+		url: process.env.NEXT_PUBLIC_BUYMEACOFFEE_URL,
+	},
+	{
+		id: 'kofi',
+		name: 'Ko-fi',
+		description: 'Zero-platform-fee tip jar supporting indie iOS development.',
+		badge: '0% Fee',
+		url: process.env.NEXT_PUBLIC_KOFI_URL,
+	},
+	{
+		id: 'stripe',
+		name: 'Stripe Payment Link',
+		description: 'Direct checkout with Apple Pay, Google Pay, or credit card.',
+		badge: 'Apple Pay & Card',
+		url: process.env.NEXT_PUBLIC_STRIPE_DONATE_URL,
+	},
+	{
+		id: 'paypal',
+		name: 'PayPal',
+		description: 'Send a one-time contribution securely through PayPal.',
+		badge: 'PayPal',
+		url: process.env.NEXT_PUBLIC_PAYPAL_DONATE_URL,
+	},
+	{
+		id: 'github',
+		name: 'GitHub Sponsors',
+		description: 'Sponsor ongoing open-source and indie app work on GitHub.',
+		badge: 'Open Source',
+		url: process.env.NEXT_PUBLIC_GITHUB_SPONSORS_URL,
+	},
+]
+
+export interface FreeAppInfo {
+	name: string
+	tagline: string
+	description: string
+	href: string
+	appStoreUrl?: string
+	iconUrl?: string
+	badge: string
+	accentClass: string
+}
+
+export const freeAppsData: FreeAppInfo[] = [
+	{
+		name: 'Aura',
+		tagline: 'Audiobooks & Podcasts',
+		description:
+			'Public-domain classics and open RSS podcasts with offline downloads, CarPlay, Apple Watch, and Siri—zero ads or logins.',
+		href: '/aura',
+		appStoreUrl: 'https://apps.apple.com/app/aura-audiobooks-podcasts/id6823766817',
+		iconUrl: '/images/projects/aura-icon.png',
+		badge: 'iOS & watchOS • Live',
+		accentClass: 'bg-amber-50 border-amber-200/80 text-amber-900',
+	},
+	{
+		name: 'Tend',
+		tagline: 'Baby Care & First Foods Log',
+		description:
+			'Calm, zero-account nursing, bottle, sleep, and diaper tracking paired with a 66-food starter & allergen guide.',
+		href: '/tend',
+		iconUrl: '/tend/app-icon.png',
+		badge: 'iOS 18+ • Coming Soon',
+		accentClass: 'bg-emerald-50 border-emerald-200/80 text-emerald-900',
+	},
+	{
+		name: 'AlgoQuest',
+		tagline: 'Swift & Python Coding Puzzles',
+		description:
+			'Interactive coding puzzles and data-structure visualizers running completely offline on iPhone with zero tracking.',
+		href: '/algoquest',
+		badge: 'iOS • Free & Offline',
+		accentClass: 'bg-teal-50 border-teal-200/80 text-teal-900',
+	},
+]
+
 export const profileData = {
 	name: 'Jeff Hogg',
 	role: 'Software Engineer',

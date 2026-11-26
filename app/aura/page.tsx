@@ -164,6 +164,13 @@ export default function AuraPage() {
             >
               Support &amp; FAQ
             </Link>
+            <span className="text-slate-600">•</span>
+            <Link
+              href="/donate"
+              className="text-xs font-medium text-amber-400 hover:text-amber-300 underline underline-offset-4"
+            >
+              Support This App
+            </Link>
           </div>
         </div>
 

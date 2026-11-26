@@ -185,6 +185,13 @@ export default function TendPage() {
             </Link>
             <span className="text-[#C8C0B4]">•</span>
             <Link
+              href="/donate"
+              className="text-[#B85441] hover:text-[#984232] underline underline-offset-4"
+            >
+              Support This App
+            </Link>
+            <span className="text-[#C8C0B4]">•</span>
+            <Link
               href="/"
               className="text-[#636B66] hover:text-[#1F2421] transition-colors"
             >

@@ -73,6 +73,12 @@ export default function AlgoQuestPage() {
             >
               Support &amp; Feedback
             </Link>
+            <Link
+              href="/donate"
+              className="px-4 py-2 rounded-xl bg-slate-900 border border-slate-700 text-emerald-300 text-sm font-medium hover:border-emerald-500/50 transition-colors"
+            >
+              Support Free Apps
+            </Link>
           </div>
         </div>
 
